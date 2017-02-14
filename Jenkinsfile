@@ -6,19 +6,19 @@ node() {
     }
 
     stage('Dependency Start') {
-        withMaven(maven: 'M3') {
+        withMaven(maven: 'Maven 3.3.9') {
             sh "mvn generate-resources"
         }
     }
 
     stage('Compile') {
-        withMaven(maven: 'M3') {
+        withMaven(maven: 'Maven 3.3.9') {
             sh "mvn compile"
         }
     }
 
     stage('Test') {
-        withMaven(maven: 'M3') {
+        withMaven(maven: 'Maven 3.3.9') {
             sh "mvn test"
         }
     }
