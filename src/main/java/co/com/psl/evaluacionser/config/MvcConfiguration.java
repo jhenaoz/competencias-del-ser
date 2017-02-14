@@ -46,7 +46,7 @@ public class MvcConfiguration implements ServletContextInitializer, EmbeddedServ
     private void setLocationForStaticAssets(ConfigurableEmbeddedServletContainer container) {
         File root;
         String prefixPath = resolvePathPrefix();
-        root = new File(prefixPath + "src/main/resources/static/app");
+        root = new File(prefixPath + "src/main/resources/static/dist");
         if (root.exists() && root.isDirectory()) {
             container.setDocumentRoot(root);
         }
