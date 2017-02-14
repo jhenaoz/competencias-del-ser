@@ -1,5 +1,7 @@
-stage('Dependecy Start') {
-
+stage('Dependency Start') {
+    node() {
+        checkout scm
+    }
 }
 
 stage('Compile') {
