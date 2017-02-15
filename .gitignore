@@ -100,6 +100,7 @@ hs_err_pid*
 
 ### Maven ###
 target/
+dist/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -146,6 +147,7 @@ bower_components
 build/Release
 
 # Dependency directories
+node/
 node_modules
 jspm_packages
 
