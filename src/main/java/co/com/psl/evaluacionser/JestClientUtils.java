@@ -6,7 +6,6 @@ import io.searchbox.client.config.HttpClientConfig;
 
 public class JestClientUtils {
 
-	// XXX:Parameterize me!
 	private static final String ELASTIC_SEARCH_URL = "http://localhost:9200";
 
 	private static JestClient client;
