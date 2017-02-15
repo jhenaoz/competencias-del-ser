@@ -1,7 +1,10 @@
 package co.com.psl.evaluacionser.domain;
 
-public class Person {
+import io.searchbox.annotations.JestId;
 
+public class Person {
+	
+	@JestId
     private String id;
 
     private String name;
