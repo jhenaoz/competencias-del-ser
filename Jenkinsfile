@@ -19,7 +19,9 @@ node() {
 
     stage('Test') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            sh "mvn test"
+            withEnv(["ENV=CI"]) {
+                sh "mvn test"
+            }
         }
     }
 
