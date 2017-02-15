@@ -1,8 +1,5 @@
 package co.com.psl.evaluacionser.domain;
 
-/**
- * Created by fcastillao on 15/02/2017.
- */
 public class Behavior {
 
     private String id;
@@ -14,8 +11,7 @@ public class Behavior {
     public Behavior() {
     }
 
-    public Behavior(String id, String en, String es) {
-        this.id = id;
+    public Behavior(String en, String es) {
         this.en = en;
         this.es = es;
     }
@@ -44,12 +40,5 @@ public class Behavior {
         this.es = es;
     }
 
-    @Override
-    public String toString() {
-        return "Behavior{" +
-                "id='" + id + '\'' +
-                ", en='" + en + '\'' +
-                ", es='" + es + '\'' +
-                '}';
-    }
+
 }
