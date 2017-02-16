@@ -57,4 +57,8 @@ public class Aptitude {
 
     }
 
+
+    public Long getId() {
+        return id;
+    }
 }

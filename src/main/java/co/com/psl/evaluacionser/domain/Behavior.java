@@ -8,7 +8,7 @@ public class Behavior {
 
     private String es;
 
-    public Behavior() {
+    public Behavior(long l, String es, String en) {
     }
 
     public Behavior(String en, String es) {
