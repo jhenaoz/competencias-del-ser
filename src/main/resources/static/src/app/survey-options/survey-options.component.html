@@ -9,9 +9,9 @@
     <div class="container">
         <form>
             <div class="block">
-                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluated" | translate}}</label>
-                <app-employee></app-employee>
+                <app-employee id="evaluatedAppEmployee"></app-employee>
             </div>
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
@@ -25,7 +25,7 @@
             </div>
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
             <div class="block">
-                <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluator" | translate}}</label>
                 <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide">
                 <app-employee id="evaluatorAppEmployee"></app-employee>
