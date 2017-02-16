@@ -1,6 +1,8 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
 import { TranslateService } from 'ng2-translate';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,24 +10,32 @@ import { TranslateService } from 'ng2-translate';
   styleUrls: ['./navbar.component.css', '../app.component.css']
 })
 export class NavbarComponent implements OnInit, OnChanges {
+  
   isWelcome: boolean = false
   url: string
-  welcome = '/welcome'
-  constructor(private translate: TranslateService) { }
+
+  constructor(private translate: TranslateService, private router: Router) {}
 
   ngOnInit() {
-    this.url = this.url = window.location.pathname
-    if(this.url === '/welcome') this.isWelcome = true 
+    this.url = this.getPath()
+    this.isWelcome = this.isWelcomePath()
   }
 
   ngOnChanges(){
-    this.url = window.location.pathname
-    if(this.url === '/welcome') this.isWelcome = true
+    this.url = this.getPath()
+    this.isWelcome = this.isWelcomePath()
   }
 
   changeLang(lang: string) {
     this.translate.use(lang);
   }
 
+  isWelcomePath() : boolean {
+    return this.url == "/welcome" ? true : false 
+  }
+
+  getPath(){
+    return window.location.pathname
+  }
 
 }
