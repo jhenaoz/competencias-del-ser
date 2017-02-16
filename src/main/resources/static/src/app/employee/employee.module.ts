@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule} from '@angular/router';
 
 import { 
-  EmployeeService
+  EmployeeService,
+  EmployeeComponent
  } from './index';
 
 @NgModule({
@@ -11,7 +12,7 @@ import {
     CommonModule
   ],
   declarations: [
-
+    EmployeeComponent
   ],
   providers: [
     EmployeeService

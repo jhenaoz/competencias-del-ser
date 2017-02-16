@@ -1,0 +1,48 @@
+/**********************************************************
+* BOX: */
+
+.box {
+    height: 175px;
+    background-color: #F0F0F0;
+    cursor: pointer;
+}
+
+.box>h4 {
+    color: #515151;
+    position: absolute;
+    font-weight: 100;
+    margin: 80px 0 0 200px;
+}
+
+.left-picture-grid {
+    width: 170px;
+    height: 100%;
+    position: relative;
+    background-color: #E5E5E5;
+}
+
+.left-picture-grid>img {
+    margin: 30px 0px 0px 30px;
+}
+
+.box:hover {
+    background-color: #7C9AAE;
+}
+
+.left-picture-grid:hover {
+    background-color: #08446D;
+}
+
+.box:hover+.left-picture-grid {}
+
+.box:hover>.left-picture-grid {
+    background-color: #08446D;
+}
+
+.box:hover>h4 {
+    color: #FFF;
+}
+
+
+/* /BOX: *
+**********************************************************/

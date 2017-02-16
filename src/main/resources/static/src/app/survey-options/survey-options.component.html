@@ -1,0 +1,63 @@
+<div class="main">
+    <p class="text-center title">{{ "Survey-options.title-all" | translate}}</p>
+    <hr>
+    <p class="description">
+       {{ "Survey-options.description" | translate}}
+        <br><br>
+       {{ "Survey-options.information" | translate}}
+    </p>
+
+    <div class="container">
+        <form>
+            <div class="block">
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                {{ "Survey-options.evaluated" | translate}}</label>
+                <!--<select class="form-control" id="evaluatorSelect">
+                  <option>Julian Mongo</option>
+                  <option>Adrian Moto</option>
+                  <option>Santiago Carnitas</option>
+                  <option>Adrian ignoradoporlina</option>
+                </select>-->
+                <app-employee></app-employee>
+            </div>
+            <div class="block">
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                {{ "Survey-options.evaluator" | translate}}</label>
+                <!--<select class="form-control" id="evaluatorSelect">
+                    <option>Julian Mongo</option>
+                  <option>Adrian Moto</option>
+                  <option>Santiago Carnitas</option>
+                  <option>Adrian ignoradoporlina</option>
+                </select>-->
+                <app-employee></app-employee>
+            </div>
+            <div class="block">
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                {{ "Survey-options.relationship" | translate}}</label>
+                <select class="form-control" id="evaluatorSelect">
+                  <option>{{ "Survey-options.relation-teammate" | translate}}</option>
+                  <option>{{ "Survey-options.relation-client" | translate}}</option>
+                  <option>{{ "Survey-options.relation-own" | translate}}</option>
+                </select>
+            </div>
+
+            <a href="#" rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover"><img src="assets/images/see-more.png"></a>
+        </form>
+
+    </div>
+    
+    <div class="popover" id="pop-content">
+        <h4>{{ "Survey-options.relation-teammate" | translate}}</h4>
+        <p>
+            {{ "Survey-options.relation-teanmate-description" | translate}}
+        </p>
+        <h4>{{ "Survey-options.relation-client" | translate}}</h4>
+        <p>
+            {{ "Survey-options.relation-client-description" | translate}}
+        </p>
+        <h4>{{ "Survey-options.relation-own" | translate}}</h4>
+        <p>
+            {{ "Survey-options.relation-own-description" | translate}}
+        </p>
+    </div>
+</div>
