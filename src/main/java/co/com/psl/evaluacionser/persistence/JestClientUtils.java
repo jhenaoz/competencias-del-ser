@@ -8,28 +8,28 @@ public class JestClientUtils {
 
     private static final String ELASTIC_SEARCH_URL = "http://localhost:9200";
 
-	private static JestClient client;
+    private static JestClient client;
 
-	private JestClientUtils() {
-	}
+    private JestClientUtils() {
+    }
 
-	public static synchronized JestClient getClient() {
-		if (client == null) {
-			JestClientFactory factory = new JestClientFactory();
-			factory.setHttpClientConfig(new HttpClientConfig.Builder(ELASTIC_SEARCH_URL).multiThreaded(true).build());
-			client = factory.getObject();
-		}
+    public static synchronized JestClient getClient() {
+        if (client == null) {
+            JestClientFactory factory = new JestClientFactory();
+            factory.setHttpClientConfig(new HttpClientConfig.Builder(ELASTIC_SEARCH_URL).multiThreaded(true).build());
+            client = factory.getObject();
+        }
 
-		return client;
-	}
+        return client;
+    }
 
-	public static void closeClient() {
-		if (client != null) {
-			try {
-				client.shutdownClient();
-			} catch (Exception e) {
-			}
-		}
-	}
+    public static void closeClient() {
+        if (client != null) {
+            try {
+                client.shutdownClient();
+            } catch (Exception e) {
+            }
+        }
+    }
 }
 

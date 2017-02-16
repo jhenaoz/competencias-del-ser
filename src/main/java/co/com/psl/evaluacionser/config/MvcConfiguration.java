@@ -5,6 +5,7 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ public class MvcConfiguration implements ServletContextInitializer, EmbeddedServ
         String rootPath = Paths.get(".").toUri().normalize().getPath();
         String extractedPath = fullExecutablePath.replace(rootPath, "");
         int extractionEndIndex = extractedPath.indexOf("target/");
-        if(extractionEndIndex <= 0) {
+        if (extractionEndIndex <= 0) {
             return "";
         }
         return extractedPath.substring(0, extractionEndIndex);

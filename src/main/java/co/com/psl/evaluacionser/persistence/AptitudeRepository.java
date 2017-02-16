@@ -18,4 +18,6 @@ public interface AptitudeRepository {
     Behavior addBehavior(BehaviorDto behaviorDto, String id);
 
     Behavior findBehaviorById(String id, String behaviorId);
+
+    Aptitude deleteBehavior(String id, String behaviorId);
 }

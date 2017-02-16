@@ -4,13 +4,13 @@ import io.searchbox.annotations.JestId;
 
 public class Person {
 
-	@JestId
+    @JestId
     private String id;
 
     private String name;
 
-	public Person() {
-	}
+    public Person() {
+    }
 
     public Person(String id, String name) {
         this.id = id;

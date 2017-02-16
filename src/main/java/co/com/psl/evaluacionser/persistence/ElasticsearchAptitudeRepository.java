@@ -87,16 +87,25 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     }
 
-        //TODO
-        private Aptitude updateAptitude(){
+    //TODO
+    private Aptitude updateAptitude() {
         return null;
-        }
+    }
 
     public Behavior findBehaviorById(String id, String behaviorId) {
         Aptitude aptitude;
         aptitude = findById(id);
         return aptitude.getBehaviors().get(Integer.parseInt(behaviorId));
 
+    }
+
+    @Override
+    public Aptitude deleteBehavior(String id, String behaviorId) {
+        Aptitude aptitude;
+        aptitude = findById(id);
+        aptitude.getBehaviors().remove(behaviorId);
+        save(aptitude);
+        return aptitude;
     }
 
 
