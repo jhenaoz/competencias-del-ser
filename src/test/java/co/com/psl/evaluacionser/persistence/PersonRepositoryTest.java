@@ -15,7 +15,7 @@ import co.com.psl.evaluacionser.domain.Person;
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class PersonRepositoryTest {
-
+//Test is failing in jenkins
 //	@Autowired
 //	PersonRepository personRepository;
 //	
