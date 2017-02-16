@@ -1,0 +1,66 @@
+/**********************************************************
+* MAIN: */
+
+.main>.container {
+    margin-top: 5%;
+    padding: 30px;
+    background-color: #F0F0F0;
+}
+
+
+/* /MAIN: *
+**********************************************************/
+
+
+/**********************************************************
+* SELECT FORM: */
+
+select {
+    width: 420px;
+    margin: 10px 0 10px 10px;
+    cursor: pointer;
+    font-size: initial;
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    border-radius: 0px;
+    background: url("assets/images/down-arrow.svg");
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-color: #FFF;
+}
+
+form {
+    text-align: center;
+}
+
+.block {
+    align-content: center;
+}
+
+.block>label {
+    font-size: large;
+    font-weight: 100;
+    text-align: center;
+    display: inline-block;
+    *display: inline;
+    padding-top: 5px;
+    text-align: right;
+    width: 400px;
+}
+
+a {
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    margin-left: 430px;
+    margin-top: -37px;
+}
+
+a>img {
+    height: 20px;
+}
+
+/* /SELECT FORM: *
+**********************************************************/

@@ -1,0 +1,40 @@
+/**********************************************************
+* NAVBAR: */
+
+.navbar {
+    height: 64px;
+    background-color: #134C96;
+    border-radius: 0 !important;
+}
+
+.navbar .nav {
+    margin-top: 5px;
+}
+
+.navbar-header {
+    margin-left: 30px;
+}
+
+.navbar-brand>img {
+    height: 32px;
+}
+
+.navbar .navbar-nav>li>a {
+    color: #FFF;
+    text-transform: uppercase;
+}
+
+.navbar .navbar-nav>li>a:hover,
+.navbar .navbar-nav>li>a:focus,
+.navbar .navbar-nav>li>a:active {
+    background-color: #134C96;
+    color: #FFF;
+}
+
+.navbar .navbar-nav>li>ul>li>a {
+    color: #000;
+}
+
+
+/* /NAVBAR: *
+**********************************************************/

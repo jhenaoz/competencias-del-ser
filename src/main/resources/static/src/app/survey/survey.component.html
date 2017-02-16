@@ -1,0 +1,176 @@
+<app-navbar></app-navbar>
+
+<div class="main">
+    <div class="steps">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1 step active">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">1</button>
+                    <p>Apertura</p>
+                </div>
+                <div class="col-md-1 step">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">2</button>
+                    <p>Comunicación</p>
+                </div>
+                <div class="col-md-1 step">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">3</button>
+                    <p>Iniciativa</p>
+                </div>
+                <div class="col-md-1 step">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">4</button>
+                    <p>Orientación al Cliente</p>
+                </div>
+                <div class="col-md-1 step">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">5</button>
+                    <p>Logros y Resultados</p>
+                </div>
+                <div class="col-md-1 step">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">6</button>
+                    <p>Trabajo en Equipo</p>
+                </div>
+                <div class="col-md-1 step">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">7</button>
+                    <p>Liderazgo para el Desarrollo</p>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn bg-faded btn-circle btn-lg disabled">8</button>
+                    <p class="text-center">Liderazgo para el logro</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <hr>
+
+    <div class="container">
+        <!--Titles-->
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-1">
+                <h4>
+                    {{ "Survey.always" | translate }}
+                  </h4>
+            </div>
+            <div class="col-md-1">
+                <h4>
+                    {{ "Survey.almost-always" | translate }}
+                  </h4>
+            </div>
+            <div class="col-md-1">
+                <h4>
+                    {{ "Survey.occasionally" | translate }}
+                  </h4>
+            </div>
+            <div class="col-md-1">
+                <h4>
+                    {{ "Survey.never" | translate }}
+                  </h4>
+            </div>
+            <div class="col-md-1">
+               <h4>
+                    {{ "Survey.information" | translate }}
+                  </h4>
+            </div>
+        </div>
+        <!--Data-->
+        <div class="row">
+            <form>
+                <div class="col-md-4">
+                    <p>Acepta sugerencias sin distinción de quien lo dé</p>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio1" id="radio1" value="option1">
+                        <label for="radio1">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio1" id="radio2" value="option2">
+                        <label for="radio2">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio1" id="radio3" value="option3">
+                        <label for="radio3">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio1" id="radio4" value="option4">
+                        <label for="radio4">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio1" id="radio5" value="option5">
+                        <label for="radio5">
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--BORRAR-->
+        <div class="row">
+            <form>
+                <div class="col-md-4">
+                    <p>Reconoce sus errores</p>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio2" id="1radio1" value="option1">
+                        <label for="1radio1">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio2" id="1radio2" value="option2">
+                        <label for="1radio2">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio2" id="1radio3" value="option3">
+                        <label for="1radio3">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio2" id="1radio4" value="option4">
+                        <label for="1radio4">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio2" id="1radio5" value="option5">
+                        <label for="1radio5">
+                        </label>
+                    </div>
+                </div>
+                <!--/BORRAR-->
+            </form>
+        </div>
+
+
+
+        <h4>
+          {{ "Survey.observations" | translate }}
+        </h4>
+        <textarea class="form-control" rows="3"></textarea>
+
+    </div>
+</div>
+
+<app-footer></app-footer>

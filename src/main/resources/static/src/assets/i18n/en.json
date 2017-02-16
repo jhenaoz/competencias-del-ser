@@ -1,0 +1,10 @@
+{
+    "Navbar":{
+        "language-change": "Change language"
+    },
+    "Footer":{
+        "back": "Back",
+        "forward": "Next",
+        "start": "Start Survey"
+    }
+}
