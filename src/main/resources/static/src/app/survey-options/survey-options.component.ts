@@ -19,6 +19,18 @@ export class SurveyOptionsComponent implements OnInit {
             return clone;
         }
       });
+
+      $("select[title='relationshipSelect']").focusout(function(){
+          // Now see if it's the value you want
+          if ($(this).val() === "Cliente"|| $(this).val() === "Client"){
+            $("#evaluatorAppEmployee").addClass('hide');  
+            $("#evaluatorAppEmployeeText").removeClass('hide');            
+          }else{
+            $("#evaluatorAppEmployee").removeClass('hide');  
+            $("#evaluatorAppEmployeeText").addClass('hide'); 
+          }
+      });
+
   }
 
 }
