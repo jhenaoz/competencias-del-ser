@@ -33,19 +33,19 @@ module.exports = function (config) {
       environment: 'dev'
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['progress', 'karma-remap-istanbul']
-              : ['progress'],
+              ? ['progress', 'dots', 'karma-remap-istanbul']
+              : ['progress', 'dots'],
+    autoWatch: true,
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     browsers: ['Chrome'],
-    singleRun: true,
-    reporters: ['dots']
-
+    singleRun: false
   };
 
   console.log("ENV= ", process.env.ENV);
   if(process.env.ENV === 'CI'){
+    defaultConfig.autoWatch = false;
     defaultConfig.singleRun = true;
     defaultConfig.browsers = ['PhantomJS'];
     defaultConfig.reporters.push('junit');

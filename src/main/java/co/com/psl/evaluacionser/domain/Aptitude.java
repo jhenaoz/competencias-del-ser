@@ -8,6 +8,8 @@ public class Aptitude {
     private String es;
     private List<Behavior> behaviors;
 
+    public Aptitude() {}
+
     public Aptitude(String en, String es) {
         this.en = en;
         this.es = es;

@@ -4,6 +4,6 @@ import co.com.psl.evaluacionser.domain.Person;
 
 public interface PersonRepository {
 
-    void save(Person person);
+    Person save(Person person);
 
 }
