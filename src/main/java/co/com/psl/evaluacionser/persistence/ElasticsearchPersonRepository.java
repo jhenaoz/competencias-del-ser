@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.psl.evaluacionser.domain.Person;
@@ -14,14 +15,23 @@ import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
 
-
+/**
+ * The implementation of the PersonReposotiry with elasticsearch
+ * @author salveara
+ *
+ */
 @Component
 public class ElasticsearchPersonRepository implements PersonRepository {
 
+	//These names are congruent with the DB
 	private String PERSON_INDEX_NAME = "person";
 	private String PERSON_TYPE_NAME = "employee";
-	private JestClient client = JestClientUtils.getClient();
 	
+	//Ask Spring for a created bean
+	@Autowired
+	private JestClient client;
+	
+	//Returns all the people of the employee type
 	@Override
 	public List<Person> findAll(){
 		SearchResult result = null;

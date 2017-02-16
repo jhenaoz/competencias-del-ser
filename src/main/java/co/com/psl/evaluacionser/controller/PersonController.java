@@ -9,15 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.com.psl.evaluacionser.domain.Person;
 import co.com.psl.evaluacionser.persistence.PersonRepository;
-
+/**
+ * Controller for the person requests
+ * @author salveara
+ *
+ */
 @RestController
-@RequestMapping(value = "/person")
 public class PersonController {
 
 	@Autowired
 	private PersonRepository personRepository;
-	
-	@RequestMapping(method = RequestMethod.GET)
+
+	//This method returns the list of all employees in the elasticsearch
+	@RequestMapping(value = "/person", method = RequestMethod.GET)
 	public List<Person> getAllPeople(){
 		return personRepository.findAll();
 	}
