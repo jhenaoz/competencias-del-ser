@@ -19,13 +19,18 @@ import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 
 @RestController
+@RequestMapping(value = "/aptitude")
 public class AptitudeController {
 
 	@Autowired
 	private AptitudeRepository aptitudeRepository;
 
-	// get the list of all available aptitudes
-	@RequestMapping(value = "/aptitude", method = RequestMethod.GET)
+	/**
+	 * Mapping for getting all the aptitudes (with their respective behaviors)
+	 *
+	 * @return a JSON with all the data according to ElasticSearch
+	 */
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	private ResponseEntity<List<AptitudeDto>> getAptitudes() {
 		List<AptitudeDto> aptitudes = aptitudeRepository.findAll().stream().map(AptitudeDtoTransformer::convertToDto)
 				.collect(Collectors.toList());
@@ -33,8 +38,15 @@ public class AptitudeController {
 		return new ResponseEntity<List<AptitudeDto>>(aptitudes, HttpStatus.OK);
 	}
 
-	// get a specific aptitude using an ID
-	@RequestMapping(value = "/aptitude/{id}", method = RequestMethod.GET)
+	/**
+	 * This method provides a mapping to get one specific aptitude via an URL
+	 * ID, the aptitude you get also contains its Behaviors
+	 *
+	 * @param id
+	 *            the ID corresponding to the Aptitude you want
+	 * @return Json schema of the specific {id} Aptitude
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	private ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
 		Aptitude aptitudeFound = aptitudeRepository.findById(id);
 
@@ -45,8 +57,16 @@ public class AptitudeController {
 
 	}
 
-	// get all behavior from a specific aptitude
-	@RequestMapping(value = "/aptitude/{id}/behavior", method = RequestMethod.GET)
+	/**
+	 * Via this requestMethod you can get all the Behaviors corresponding to an
+	 * Aptitude (but you dont get the Aptitude INFO)
+	 *
+	 * @param id
+	 *            the ID of the Aptitude you want to get the Behaviors from
+	 * @return the JSON corresponding to the Behaviors from the {id} specified
+	 *         Aptitude
+	 */
+	@RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
 	private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
 		List<Behavior> behaviorsFound = aptitudeRepository.findAllBehaviors(id);
 
@@ -56,8 +76,18 @@ public class AptitudeController {
 		return new ResponseEntity<List<Behavior>>(behaviorsFound, HttpStatus.OK);
 	}
 
-	// get one specific behavior using an ID
-	@RequestMapping(value = "/aptitude/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
+	/**
+	 * Gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
+	 *
+	 * @param id
+	 *            URL param that specifies the aptitude you want to get the
+	 *            behavior from
+	 * @param behaviorId
+	 *            URL param that specifies the specific behavior from the
+	 *            aptitude you want
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
 	private ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
 													 @PathVariable("behaviorId") String behaviorId) {
 		Behavior behaviorFound = aptitudeRepository.findBehaviorById(id, behaviorId);
