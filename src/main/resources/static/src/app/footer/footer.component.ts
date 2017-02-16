@@ -8,13 +8,16 @@ import { Router } from '@angular/router';
 })
 export class FooterComponent implements OnInit {
 
+  currentUrl
   constructor(private router:Router) { }
 
   ngOnInit() {
+    this.currentUrl = this.router.url
+    //console.log(this.currentUrl == '/welcome')
   }
 
   cancel(){
-    if(window.location.pathname == '/survey-setup') this.router.navigate(['welcome'])
+    if(window.location.pathname == '/survey-setup' || '/surveyteam-setup') this.router.navigate(['welcome'])
   }
 
 }

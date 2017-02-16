@@ -8,5 +8,7 @@ export const appRoutes:Routes = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' }, 
     { path: 'welcome', component: WelcomeComponent },
     { path: 'survey-setup', component: SurveyOptionsComponent },
-    { path: 'survey', component: SurveyComponent }     
+    { path: 'surveyteam-setup', component: SurveyOptionsComponent}, 
+    { path: 'survey', component: SurveyComponent },
+        
 ]

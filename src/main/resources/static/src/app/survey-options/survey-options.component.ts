@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import * as jQuery from 'jquery';
 
@@ -8,10 +10,17 @@ import * as jQuery from 'jquery';
   styleUrls: ['./survey-options.component.css', '../app.component.css']
 })
 export class SurveyOptionsComponent implements OnInit {
+  currentUrl: string
+  selectSurvey: boolean
+  newSurveyForm: FormGroup
+  evaluator: FormControl
+  evaluated: FormControl
+  relationship: FormControl
+  competenceToEvaluate: FormControl
 
-  constructor() { }
+  constructor(private router:Router) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     (<any> $('[data-toggle="popover"]')).popover({
         html: true,
         content: function () {
@@ -37,9 +46,24 @@ export class SurveyOptionsComponent implements OnInit {
             $("#evaluatorAppEmployeeText").addClass('hide'); 
           }
       });
+      this.currentUrl = this.router.url
+      this.selectSurvey = this.isOnePath();
+      this.evaluated = new FormControl('', Validators.required)
+      this.evaluator = new FormControl('', Validators.required)
+      this.relationship = new FormControl('', Validators.required)
+      this.competenceToEvaluate = new FormControl('')
 
+      this.newSurveyForm = new FormGroup({
+        evaluated: this.evaluated,
+        evaluator: this.evaluator,
+        relationship: this.relationship,
+        competenceToEvaluate: this.competenceToEvaluate
+      })
   }
 
+  isOnePath() : boolean {
+    return this.currentUrl == "/survey-setup" ? true : false 
+  }
 
 
 }
