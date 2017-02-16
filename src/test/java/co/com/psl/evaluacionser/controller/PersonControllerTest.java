@@ -19,14 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class PersonControllerTest {
 
-	@Autowired
-    private MockMvc mockMvc;
-	
-	//Implementar, aun no hay persistencia
-	@Test
-	public void findAllPeople() throws Exception{
-		assertTrue(true);
-	}
-
+//	@Autowired
+//    private MockMvc mockMvc;
 	
 }

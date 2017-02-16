@@ -16,18 +16,7 @@ import co.com.psl.evaluacionser.domain.Person;
 @SpringBootTest
 public class PersonRepositoryTest {
 
-	@Autowired
-	PersonRepository personRepository;
-	
-	//Implementar, aun no hay persistencia
-	@Test
-	public void personListNotNull() {
-		assertTrue(true);
-	}
-	
-	@Test
-	public void personList() {
-		assertTrue(true);
-	}
+//	@Autowired
+//	PersonRepository personRepository;
 
 }
