@@ -87,9 +87,10 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     }
 
-//    private Aptitude updateAptitude(){
-//
-//    }
+        //TODO
+        private Aptitude updateAptitude(){
+        return null;
+        }
 
     public Behavior findBehaviorById(String id, String behaviorId) {
         Aptitude aptitude;
