@@ -106,6 +106,12 @@ public class AptitudeController {
         //return aptitudeRepository.modifyBehaviour(id,behaviorId,behaviorDto)
     }
 
+    /**
+     * deletes the behavior in the corresponding URL
+     * @param id the id of the Aptitude
+     * @param behaviorId the id of the Behavior to delete
+     * @return should return the Aptitude without the Behavior
+     */
     @RequestMapping(value = "/aptitude/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     private ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
         return new ResponseEntity(aptitudeRepository.deleteBehavior(id, behaviorId), HttpStatus.OK);
