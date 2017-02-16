@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeService } from './employee/index';
-import { SharedService } from './shared/shared.service';
 
 import { appRoutes } from './routes';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -45,7 +44,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],  
   providers: [
     EmployeeService,
-    SharedService
   ],
   bootstrap: [AppComponent]
 })

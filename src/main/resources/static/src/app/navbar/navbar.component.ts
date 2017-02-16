@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { TranslateService } from 'ng2-translate';
 
@@ -7,13 +7,20 @@ import { TranslateService } from 'ng2-translate';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css', '../app.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnChanges {
   isWelcome: boolean = false
-  url: string = window.location.pathname
+  url: string
+  welcome = '/welcome'
   constructor(private translate: TranslateService) { }
 
   ngOnInit() {
+    this.url = this.url = window.location.pathname
     if(this.url === '/welcome') this.isWelcome = true 
+  }
+
+  ngOnChanges(){
+    this.url = window.location.pathname
+    if(this.url === '/welcome') this.isWelcome = true
   }
 
   changeLang(lang: string) {
