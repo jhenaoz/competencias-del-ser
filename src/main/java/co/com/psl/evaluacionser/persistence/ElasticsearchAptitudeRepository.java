@@ -22,6 +22,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     private static final String APTITUDE_INDEX_NAME = "aptitude";
     private static final String APTITUDE_TYPE_NAME = "aptitude";
 
+    /**
+     * receives one aptitude and saves it in the DB
+     * @param aptitude the aptitude you want to save
+     * @return the aptitude you just saved, now with its ID included
+     */
     @Override
     public Aptitude save(Aptitude aptitude) {
         Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).build();
@@ -34,6 +39,10 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         }
     }
 
+    /**
+     * searches the DB for all the diferent Aptitudes
+     * @return an Aptitude List with all the aptitudes in the DB
+     */
     @Override
     public List<Aptitude> findAll() {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -52,6 +61,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         }
     }
 
+    /**
+     * makes the Hit from the Search an Aptitude
+     * @param hit the Hit from the previously done Search to the DB
+     * @return an Aptitude with the data corresponding to the Source of the hit
+     */
     private Aptitude getAptitude(Hit<Aptitude, Void> hit) {
         if (hit == null)
             return null;
@@ -59,6 +73,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         return hit.source;
     }
 
+    /**
+     * finds one specific Aptitude using its ID
+     * @param id the id of the aptitude you are looking for
+     * @return an Aptitude with ES text, EN text, and a ID
+     */
     @Override
     public Aptitude findById(String id) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -75,7 +94,12 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         }
     }
 
-
+    /**
+     * add a new behavior to the Aptitude
+     * @param behaviorDto a JSON with the structure of the Behavior, without the ID
+     * @param aptitudeId the ID of the Aptitude in wich yoy are adding the Behavior
+     * @return The behavior you just added, now with its ID
+     */
     @Override
     public Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId) {
         Aptitude aptitude;
@@ -87,11 +111,12 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     }
 
-    //TODO
-    private Aptitude updateAptitude() {
-        return null;
-    }
-
+    /**
+     * finds one specific behavior in the DB
+     * @param id the ID of the Aptitude the Behavior is in
+     * @param behaviorId the id of the Behavior you are looking for
+     * @return Behavior schemed JSON with the data of the behavior you looked for
+     */
     public Behavior findBehaviorById(String id, String behaviorId) {
         Aptitude aptitude;
         aptitude = findById(id);
@@ -99,6 +124,12 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     }
 
+    /**
+     * deletes a specific behavior from a Aptitude
+     * @param id this is the id of the Aptitude containing the Behavior
+     * @param behaviorId this is the id of the behavior you want to delete
+     * @return an Aptitude without the Behavior specified
+     */
     @Override
     public Aptitude deleteBehavior(String id, String behaviorId) {
         Aptitude aptitude;
