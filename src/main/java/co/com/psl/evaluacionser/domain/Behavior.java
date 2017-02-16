@@ -2,43 +2,42 @@ package co.com.psl.evaluacionser.domain;
 
 public class Behavior {
 
-    private String id;
+	private Long id;
 
-    private String en;
+	private String sp;
 
-    private String es;
+	private String en;
 
-    public Behavior() {
-    }
+	public Behavior() {
+	}
 
-    public Behavior(String en, String es) {
-        this.en = en;
-        this.es = es;
-    }
+	public Behavior(Long id, String sp, String en) {
+		this.id = id;
+		this.sp = sp;
+		this.en = en;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getEn() {
-        return en;
-    }
+	public String getEn() {
+		return en;
+	}
 
-    public void setEn(String en) {
-        this.en = en;
-    }
+	public void setEn(String en) {
+		this.en = en;
+	}
 
-    public String getEs() {
-        return es;
-    }
+	public String getSp() {
+		return sp;
+	}
 
-    public void setEs(String es) {
-        this.es = es;
-    }
-
-
+	public void setSp(String sp) {
+		this.sp = sp;
+	}
 }
