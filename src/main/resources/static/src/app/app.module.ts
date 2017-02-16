@@ -16,7 +16,8 @@ import { SurveyOptionsComponent } from './survey-options/survey-options.componen
 import { SurveyComponent } from './survey/survey.component';
 
 //Translate imports
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { TranslateModule } from 'ng2-translate';
+import { TranslateLoader, TranslateStaticLoader } from "ng2-translate/src/translate.service";
 //CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -28,7 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpModule,
     TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+            useFactory: translateLoaderFactory,
             deps: [Http]
         })
   ],
@@ -47,3 +48,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function translateLoaderFactory(http: any) {
+    return new TranslateStaticLoader(http, 'assets/i18n', '.json');
+}
