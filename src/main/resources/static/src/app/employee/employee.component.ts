@@ -8,7 +8,7 @@ import {
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  styleUrls: ['./employee.component.css', '../survey-options/survey-options.component.css']
 })
 export class EmployeeComponent implements OnInit {
   pageTitle: string = 'Product List';

@@ -1,5 +1,3 @@
-<app-navbar></app-navbar>
-
 <div class="main">
     <p class="text-center title">{{ "Survey-options.title-all" | translate}}</p>
     <hr>
@@ -14,22 +12,24 @@
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluated" | translate}}</label>
-                <select class="form-control" id="evaluatorSelect">
+                <!--<select class="form-control" id="evaluatorSelect">
                   <option>Julian Mongo</option>
                   <option>Adrian Moto</option>
                   <option>Santiago Carnitas</option>
                   <option>Adrian ignoradoporlina</option>
-                </select>
+                </select>-->
+                <app-employee></app-employee>
             </div>
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluator" | translate}}</label>
-                <select class="form-control" id="evaluatorSelect">
+                <!--<select class="form-control" id="evaluatorSelect">
                     <option>Julian Mongo</option>
                   <option>Adrian Moto</option>
                   <option>Santiago Carnitas</option>
                   <option>Adrian ignoradoporlina</option>
-                </select>
+                </select>-->
+                <app-employee></app-employee>
             </div>
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
@@ -61,5 +61,3 @@
         </p>
     </div>
 </div>
-
-<app-footer></app-footer>
