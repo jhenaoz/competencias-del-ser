@@ -1,2 +1,5 @@
 server:
     port: 9000
+
+elasticport: 9200
+elastichost: http://localhost
