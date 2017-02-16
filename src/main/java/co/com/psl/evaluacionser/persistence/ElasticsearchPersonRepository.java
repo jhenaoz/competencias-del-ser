@@ -8,7 +8,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Component;
 
-import co.com.psl.evaluacionser.JestClientUtils;
 import co.com.psl.evaluacionser.domain.Person;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;

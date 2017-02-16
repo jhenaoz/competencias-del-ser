@@ -14,19 +14,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
-//@AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class PersonControllerTest {
-	//Test is failing in jenkins
-//	@Autowired
-//    private MockMvc mockMvc;
-//	
-//	@Test
-//	public void getAllPokemons() throws Exception{
-//		this.mockMvc.perform(get("/person"))
-//		 .andExpect(status().isOk());
-//	}
+
+	@Autowired
+    private MockMvc mockMvc;
+	
+	//Implementar, aun no hay persistencia
+	@Test
+	public void findAllPeople() throws Exception{
+		assertTrue(true);
+	}
 
 	
 }

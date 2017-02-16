@@ -1,4 +1,4 @@
-package co.com.psl.evaluacionser;
+package co.com.psl.evaluacionser.persistence;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
