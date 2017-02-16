@@ -18,17 +18,34 @@
                 {{ "Survey-options.evaluator" | translate}}</label>
                 <app-employee></app-employee>
             </div>
+
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.relationship" | translate}}</label>
                 <select class="form-control" id="evaluatorSelect">
+                  <option></option>
                   <option>{{ "Survey-options.relation-teammate" | translate}}</option>
                   <option>{{ "Survey-options.relation-client" | translate}}</option>
                   <option>{{ "Survey-options.relation-own" | translate}}</option>
                 </select>
             </div>
-
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
+            <div class="block hide">
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                {{ "Competences.title" | translate}}</label>
+                <select class="form-control" id="evaluatorSelect">
+                    <option></option>
+                    <option>{{ "Competences.competence-opening" | translate}}</option>
+                    <option>{{ "Competences.competence-communication" | translate}}</option>
+                    <option>{{ "Competences.competence-initiative" | translate}}</option>
+                    <option>{{ "Competences.competence-client-orientation" | translate}}</option>
+                    <option>{{ "Competences.competence-goals" | translate}}</option>
+                    <option>{{ "Competences.competence-teamwork" | translate}}</option>
+                    <option>{{ "Competences.competence-development" | translate}}</option>
+                    <option>{{ "Competences.competence-goal" | translate}}</option>
+                </select>
+            </div>
+
         </form>
 
     </div>

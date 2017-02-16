@@ -1,13 +1,13 @@
 {
-    "Navbar":{
+    "Navbar": {
         "language-change": "Cambiar idioma"
     },
-    "Footer":{
+    "Footer": {
         "back": "Anterior",
         "forward": "Siguiente",
         "start": "Iniciar Valoración"
     },
-    "Welcome":{
+    "Welcome": {
         "title": "VALORACIÓN COMPETENCIAS DEL SER",
         "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
         "information": "Utilice el campo observaciones para completar la valoración.",
@@ -15,7 +15,7 @@
         "option-one": "Una competencia para todo el equipo",
         "option-all": "Todas las competencias a una persona"
     },
-    "Survey-options":{
+    "Survey-options": {
         "title-all": "TODAS LAS COMPETENCIAS A UNA PERSONA",
         "title-one": "UNA COMPETENCIA PARA EL EQUIPO",
         "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
@@ -33,10 +33,22 @@
     "Survey": {
         "always": "Siempre",
         "almost-always": "Casi Siempre",
-        "occasionally":"A veces",
+        "occasionally": "A veces",
         "never": "Nunca",
-        "information":"Sin información",
-        "observations": "Observaciones"       
+        "information": "Sin información",
+        "observations": "Observaciones"
+    },
+    "Competences": {
+        "title": "Competencia a valorar",
+        "competence-opening": "Apertura",
+        "competence-communication": "Comunicación",
+        "competence-initiative": "Iniciativa",
+        "competence-client-orientation": "Orientación al Cliente",
+        "competence-goals": "Logros y Resultados",
+        "competence-teamwork": "Trabajo en Equipo",
+        "competence-development": "Liderazgo para el Desarrollo",
+        "competence-goal": "Liderazgo para el logro"
     }
-    
+
+
 }
