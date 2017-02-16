@@ -24,6 +24,10 @@
     text-transform: uppercase;
 }
 
+.nav .open>a {
+    background-color: #134C96;
+}
+
 .navbar .navbar-nav>li>a:hover,
 .navbar .navbar-nav>li>a:focus,
 .navbar .navbar-nav>li>a:active {
@@ -32,7 +36,13 @@
 }
 
 .navbar .navbar-nav>li>ul>li>a {
+    cursor: pointer;
     color: #000;
+}
+
+.navbar .navbar-nav>li>ul>li>a:hover {
+    color: #FFF;
+    background-color: #134C96;
 }
 
 
