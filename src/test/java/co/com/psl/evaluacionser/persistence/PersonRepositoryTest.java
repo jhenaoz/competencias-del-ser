@@ -17,7 +17,7 @@ import co.com.psl.evaluacionser.domain.Person;
 public class PersonRepositoryTest {
 
 	@Autowired
-	PersonRepositoryInterface personRepository;
+	PersonRepository personRepository;
 	
 	@Test
 	public void personListNotNull() {

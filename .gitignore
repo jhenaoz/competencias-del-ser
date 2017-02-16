@@ -219,4 +219,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#Folder of elasticsearch
+/data/
+
 # End of https://www.gitignore.io/api/java,maven,windows,osx,eclipse,intellij,node,code

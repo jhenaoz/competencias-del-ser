@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.psl.evaluacionser.domain.Person;
-import co.com.psl.evaluacionser.persistence.PersonRepositoryInterface;
+import co.com.psl.evaluacionser.persistence.PersonRepository;
 
 @RestController
 @RequestMapping(value = "/person")
 public class PersonController {
 
 	@Autowired
-	private PersonRepositoryInterface personRepository;
+	private PersonRepository personRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Person> getAllPeople(){
