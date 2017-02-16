@@ -15,7 +15,7 @@ import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 
 @RestController
-public class AptitudeRepositoryController {
+public class AptitudeController {
 
 	@Autowired
 	private AptitudeRepository aptitudeRepository;
@@ -23,7 +23,7 @@ public class AptitudeRepositoryController {
 	// get the list of all available aptitudes
 	@RequestMapping(value = "/aptitude", method = RequestMethod.GET)
 	private ResponseEntity<List<Aptitude>> getAptitudes() {
-		return new ResponseEntity<>(aptitudeRepository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<List<Aptitude>>(aptitudeRepository.findAll(), HttpStatus.OK);
 	}
 
 	// get a specific aptitude using an ID
@@ -41,17 +41,25 @@ public class AptitudeRepositoryController {
 	// get all behavior from a specific aptitude
 	@RequestMapping(value = "/aptitude/{id}/behavior", method = RequestMethod.GET)
 	private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
-		return null;
-		// return new
-		// ResponseEntity(aptitudeRepository.getBehaviors(id),HttpStatus.OK);
+		List<Behavior> behaviorsFound = aptitudeRepository.findAllBehaviors(id);
+
+		if (behaviorsFound == null)
+			return new ResponseEntity<List<Behavior>>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<List<Behavior>>(behaviorsFound, HttpStatus.OK);
 	}
 
 	// get one specific behavior using an ID
 	@RequestMapping(value = "/aptitude/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
 	private ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
 			@PathVariable("behaviorId") String behaviorId) {
-		return null;
-		// return aptitudeRepository.getBehaviorById(id,behaviorId);
+		Behavior behaviorFound = aptitudeRepository.findBehaviorById(id, behaviorId);
+
+		if (behaviorFound == null)
+			return new ResponseEntity<Behavior>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<Behavior>(behaviorFound, HttpStatus.OK);
+
 	}
 
 }

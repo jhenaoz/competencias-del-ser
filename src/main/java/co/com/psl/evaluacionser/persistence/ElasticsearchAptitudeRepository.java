@@ -10,6 +10,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.stereotype.Component;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
+import co.com.psl.evaluacionser.domain.Behavior;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -72,6 +73,30 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<Behavior> findAllBehaviors(String aptitudeId) {
+		Aptitude aptitude = findById(aptitudeId);
+
+		if (aptitude == null)
+			return null;
+
+		return aptitude.getBehaviors();
+	}
+
+	@Override
+	public Behavior findBehaviorById(String aptitudeId, String id) {
+		List<Behavior> behaviors = findAllBehaviors(aptitudeId);
+
+		if (behaviors == null)
+			return null;
+
+		for (Behavior behavior : behaviors)
+			if (id.equals(behavior.getId()))
+				return behavior;
+
+		return null;
 	}
 
 }
