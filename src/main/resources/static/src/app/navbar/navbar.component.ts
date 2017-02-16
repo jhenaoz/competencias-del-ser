@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
 
 import { TranslateService } from 'ng2-translate';
 
@@ -10,11 +9,10 @@ import { TranslateService } from 'ng2-translate';
 })
 export class NavbarComponent implements OnInit {
   isWelcome: boolean = false
-  @Input() url: string
-  constructor(private translate: TranslateService, private route: Router) { }
+  url: string = window.location.pathname
+  constructor(private translate: TranslateService) { }
 
   ngOnInit() {
-    console.log(this.route.url);
     if(this.url === '/welcome') this.isWelcome = true 
   }
 
