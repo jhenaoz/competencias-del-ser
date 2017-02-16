@@ -9,16 +9,16 @@ public class Aptitude {
 	@JestId
 	private Long id;
 
-	private String sp;
+	private String es;
 	private String en;
 	private List<Behavior> behaviors;
 
 	public Aptitude() {
 	}
 
-	public Aptitude(Long id, String sp, String en, List<Behavior> behaviors) {
+	public Aptitude(Long id, String es, String en, List<Behavior> behaviors) {
 		this.id = id;
-		this.sp = sp;
+		this.es = es;
 		this.en = en;
 		this.behaviors = behaviors;
 	}
@@ -31,12 +31,12 @@ public class Aptitude {
 		this.id = id;
 	}
 
-	public String getSp() {
-		return sp;
+	public String getEs() {
+		return es;
 	}
 
-	public void setSp(String sp) {
-		this.sp = sp;
+	public void setEs(String es) {
+		this.es = es;
 	}
 
 	public String getEn() {

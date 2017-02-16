@@ -4,16 +4,16 @@ public class Behavior {
 
 	private Long id;
 
-	private String sp;
+	private String es;
 
 	private String en;
 
 	public Behavior() {
 	}
 
-	public Behavior(Long id, String sp, String en) {
+	public Behavior(Long id, String es, String en) {
 		this.id = id;
-		this.sp = sp;
+		this.es = es;
 		this.en = en;
 	}
 
@@ -33,11 +33,11 @@ public class Behavior {
 		this.en = en;
 	}
 
-	public String getSp() {
-		return sp;
+	public String getEs() {
+		return es;
 	}
 
-	public void setSp(String sp) {
-		this.sp = sp;
+	public void setEs(String es) {
+		this.es = es;
 	}
 }
