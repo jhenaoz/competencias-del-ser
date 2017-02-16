@@ -25,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    FormsModule,    
+    FormsModule,
+    ReactiveFormsModule,   
     HttpModule,
     TranslateModule.forRoot({
             provide: TranslateLoader,

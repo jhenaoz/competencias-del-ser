@@ -48,9 +48,10 @@ export class SurveyOptionsComponent implements OnInit {
       });
       this.currentUrl = this.router.url
       this.selectSurvey = this.isOnePath();
-      this.evaluated = new FormControl('', Validators.required)
-      this.evaluator = new FormControl('', Validators.required)
-      this.relationship = new FormControl('', Validators.required)
+      
+      this.evaluated = new FormControl('')
+      this.evaluator = new FormControl('')
+      this.relationship = new FormControl('')
       this.competenceToEvaluate = new FormControl('')
 
       this.newSurveyForm = new FormGroup({

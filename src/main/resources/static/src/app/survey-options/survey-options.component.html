@@ -6,21 +6,18 @@
         {{ "Survey-options.description" | translate}}
         <br><br> {{ "Survey-options.information" | translate}}
     </p>
-<!--formControlName="evaluated"
-formControlName="relationship"
-formControlName="evaluator"
-formControlName="competenceToEvaluate"-->
+
     <div class="container">
-        <form [formGroup]="newSurveyForm">
+        <form>
             <div class="block">
                 <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluated" | translate}}</label>
-                <app-employee formControlName="evaluated"  id="evaluatedAppEmployee"></app-employee>
+                <app-employee id="evaluatedAppEmployee"></app-employee>
             </div>
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.relationship" | translate}}</label>
-                <select formControlName="relationship" class="form-control" id="relationshipSelect" title="relationshipSelect">
+                <select class="form-control" id="relationshipSelect" title="relationshipSelect">
                   <option></option>
                   <option>{{ "Survey-options.relation-teammate" | translate}}</option>
                   <option>{{ "Survey-options.relation-client" | translate}}</option>
@@ -31,13 +28,13 @@ formControlName="competenceToEvaluate"-->
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluator" | translate}}</label>
-                <input formControlName="evaluator" type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide">
+                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide">
                 <app-employee id="evaluatorAppEmployee"></app-employee>
             </div>
             <div *ngIf="!selectSurvey"   class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Competences.title" | translate}}</label>
-                <select formControlName="competenceToEvaluate" class="form-control" id="evaluatedSelect">
+                <select class="form-control" id="evaluatedSelect">
                     <option></option>
                     <option>{{ "Competences.competence-opening" | translate}}</option>
                     <option>{{ "Competences.competence-communication" | translate}}</option>
