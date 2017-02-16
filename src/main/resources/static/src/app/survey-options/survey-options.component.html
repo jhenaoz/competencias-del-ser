@@ -2,9 +2,8 @@
     <p class="text-center title">{{ "Survey-options.title-all" | translate}}</p>
     <hr>
     <p class="description">
-       {{ "Survey-options.description" | translate}}
-        <br><br>
-       {{ "Survey-options.information" | translate}}
+        {{ "Survey-options.description" | translate}}
+        <br><br> {{ "Survey-options.information" | translate}}
     </p>
 
     <div class="container">
@@ -12,23 +11,11 @@
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluated" | translate}}</label>
-                <!--<select class="form-control" id="evaluatorSelect">
-                  <option>Julian Mongo</option>
-                  <option>Adrian Moto</option>
-                  <option>Santiago Carnitas</option>
-                  <option>Adrian ignoradoporlina</option>
-                </select>-->
                 <app-employee></app-employee>
             </div>
             <div class="block">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluator" | translate}}</label>
-                <!--<select class="form-control" id="evaluatorSelect">
-                    <option>Julian Mongo</option>
-                  <option>Adrian Moto</option>
-                  <option>Santiago Carnitas</option>
-                  <option>Adrian ignoradoporlina</option>
-                </select>-->
                 <app-employee></app-employee>
             </div>
             <div class="block">
@@ -41,12 +28,12 @@
                 </select>
             </div>
 
-            <a href="#" rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover"><img src="assets/images/see-more.png"></a>
+            <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
         </form>
 
     </div>
-    
-    <div class="popover" id="pop-content">
+
+    <div class="hide" id="myPopover">
         <h4>{{ "Survey-options.relation-teammate" | translate}}</h4>
         <p>
             {{ "Survey-options.relation-teanmate-description" | translate}}

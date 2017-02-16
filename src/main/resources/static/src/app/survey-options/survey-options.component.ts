@@ -13,8 +13,11 @@ export class SurveyOptionsComponent implements OnInit {
 
   ngOnInit() {
     (<any> $('[data-toggle="popover"]')).popover({
-        content: $('#pop-content').addClass('.popover').html(),
-        html: true
+        html: true,
+        content: function () {
+            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+            return clone;
+        }
       });
   }
 
