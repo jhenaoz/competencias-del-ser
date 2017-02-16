@@ -8,9 +8,6 @@ public class Behavior {
 
     private String es;
 
-    public Behavior(long l, String es, String en) {
-    }
-
     public Behavior(String en, String es) {
         this.en = en;
         this.es = es;

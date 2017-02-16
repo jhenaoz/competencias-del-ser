@@ -12,6 +12,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping(value = "/aptitude")
 public class AptitudeController {
 
 
@@ -23,7 +24,7 @@ public class AptitudeController {
      *
      * @return a JSON with all the data according to ElasticSearch
      */
-    @RequestMapping(value = "/aptitude", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     private ResponseEntity<List<Aptitude>> getAptitudes() {
         return new ResponseEntity<>(aptitudeRepository.findAll(), HttpStatus.OK);
     }
@@ -36,7 +37,7 @@ public class AptitudeController {
      * @param id the ID corresponding to the Aptitude you want
      * @return Json schema of the specific {id} Aptitude
      */
-    @RequestMapping(value = "/aptitude/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     private ResponseEntity<Aptitude> getAptitudeById(@PathVariable("id") String id) {
         Aptitude aptitudeFound = aptitudeRepository.findById(id);
 
@@ -53,7 +54,7 @@ public class AptitudeController {
      * @param id the ID of the Aptitude you want to get the Behaviors from
      * @return the JSON corresponding to the Behaviors from the {id} specified Aptitude
      */
-    @RequestMapping(value = "/aptitude/{id}/behavior", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
     private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
 
         return new ResponseEntity<List<Behavior>>(aptitudeRepository.findById(id).getBehaviors(), HttpStatus.OK);
@@ -72,7 +73,7 @@ public class AptitudeController {
      * @return ResponseEntity according
      */
 
-    @RequestMapping(value = "/aptitude/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
     private ResponseEntity<Behavior> addBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
 
         return new ResponseEntity<>(aptitudeRepository.addBehavior(behaviorDto, id), HttpStatus.CREATED);
@@ -85,7 +86,7 @@ public class AptitudeController {
      * @param behaviorId URL param that specifies the specific behavior from the aptitude you want
      * @return
      */
-    @RequestMapping(value = "/aptitude/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
     private ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
                                                      @PathVariable("behaviorId") String behaviorId) {
 
@@ -100,7 +101,7 @@ public class AptitudeController {
      * @param behaviorDto the behavior your are overwriting the old one with
      * @return ResponseEntity according
      */
-    @RequestMapping(value = "/aptitude/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
     private ResponseEntity ModifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
         return null;//TODO HOW?
         //return aptitudeRepository.modifyBehaviour(id,behaviorId,behaviorDto)
@@ -112,7 +113,7 @@ public class AptitudeController {
      * @param behaviorId the id of the Behavior to delete
      * @return should return the Aptitude without the Behavior
      */
-    @RequestMapping(value = "/aptitude/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     private ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
         return new ResponseEntity(aptitudeRepository.deleteBehavior(id, behaviorId), HttpStatus.OK);
     }
