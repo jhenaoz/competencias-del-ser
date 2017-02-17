@@ -1,0 +1,5 @@
+server:
+ port: 8080
+
+elasticport: 9200
+elastichost: localhost
