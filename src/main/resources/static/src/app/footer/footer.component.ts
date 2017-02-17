@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  currentUrl
+  constructor(private router:Router) { }
 
   ngOnInit() {
+    this.currentUrl = this.router.url
+    //console.log(this.currentUrl == '/welcome')
+  }
+
+  cancel(){
+    if(window.location.pathname == '/survey-setup' || '/surveyteam-setup') this.router.navigate(['welcome'])
   }
 
 }

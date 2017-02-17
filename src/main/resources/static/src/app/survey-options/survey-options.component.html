@@ -1,52 +1,57 @@
-<app-navbar></app-navbar>
-
 <div class="main">
-    <p class="text-center title">{{ "Survey-options.title-all" | translate}}</p>
+    <p *ngIf="!selectSurvey" class="text-center title">{{ "Survey-options.title-one" | translate}}</p>
+    <p *ngIf="selectSurvey" class="text-center title">{{ "Survey-options.title-all" | translate}}</p>
     <hr>
     <p class="description">
-       {{ "Survey-options.description" | translate}}
-        <br><br>
-       {{ "Survey-options.information" | translate}}
+        {{ "Survey-options.description" | translate}}
+        <br><br> {{ "Survey-options.information" | translate}}
     </p>
 
     <div class="container">
         <form>
             <div class="block">
-                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluated" | translate}}</label>
-                <select class="form-control" id="evaluatorSelect">
-                  <option>Julian Mongo</option>
-                  <option>Adrian Moto</option>
-                  <option>Santiago Carnitas</option>
-                  <option>Adrian ignoradoporlina</option>
-                </select>
+                <app-employee id="evaluatedAppEmployee"></app-employee>
             </div>
             <div class="block">
-                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey-options.evaluator" | translate}}</label>
-                <select class="form-control" id="evaluatorSelect">
-                    <option>Julian Mongo</option>
-                  <option>Adrian Moto</option>
-                  <option>Santiago Carnitas</option>
-                  <option>Adrian ignoradoporlina</option>
-                </select>
-            </div>
-            <div class="block">
-                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                <label for="relationshipSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.relationship" | translate}}</label>
-                <select class="form-control" id="evaluatorSelect">
+                <select class="form-control" id="relationshipSelect" title="relationshipSelect">
+                  <option></option>
                   <option>{{ "Survey-options.relation-teammate" | translate}}</option>
                   <option>{{ "Survey-options.relation-client" | translate}}</option>
                   <option>{{ "Survey-options.relation-own" | translate}}</option>
                 </select>
             </div>
+            <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
+            <div class="block">
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                {{ "Survey-options.evaluator" | translate}}</label>
+                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide">
+                <app-employee id="evaluatorAppEmployee"></app-employee>
+            </div>
+            <div *ngIf="!selectSurvey"   class="block">
+                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                {{ "Competences.title" | translate}}</label>
+                <select class="form-control" id="evaluatedSelect">
+                    <option></option>
+                    <option>{{ "Competences.competence-opening" | translate}}</option>
+                    <option>{{ "Competences.competence-communication" | translate}}</option>
+                    <option>{{ "Competences.competence-initiative" | translate}}</option>
+                    <option>{{ "Competences.competence-client-orientation" | translate}}</option>
+                    <option>{{ "Competences.competence-goals" | translate}}</option>
+                    <option>{{ "Competences.competence-teamwork" | translate}}</option>
+                    <option>{{ "Competences.competence-development" | translate}}</option>
+                    <option>{{ "Competences.competence-goal" | translate}}</option>
+                </select>
+            </div>
 
-            <a href="#" rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover"><img src="assets/images/see-more.png"></a>
         </form>
 
     </div>
-    
-    <div class="popover" id="pop-content">
+
+    <div class="hide" id="myPopover">
         <h4>{{ "Survey-options.relation-teammate" | translate}}</h4>
         <p>
             {{ "Survey-options.relation-teanmate-description" | translate}}
@@ -61,5 +66,4 @@
         </p>
     </div>
 </div>
-
 <app-footer></app-footer>

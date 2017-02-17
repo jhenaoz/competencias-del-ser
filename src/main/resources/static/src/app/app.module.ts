@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -25,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    FormsModule,    
+    FormsModule,
+    ReactiveFormsModule,   
     HttpModule,
     TranslateModule.forRoot({
             provide: TranslateLoader,
@@ -43,7 +44,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SurveyComponent
   ],  
   providers: [
-    EmployeeService
+    EmployeeService,
   ],
   bootstrap: [AppComponent]
 })
