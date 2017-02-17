@@ -23,10 +23,7 @@ public class PersonControllerTest {
     private MockMvc mockMvc;
 	
 	//Implementar, aun no hay persistencia
-	@Test
-	public void findAllPeople() throws Exception{
-		assertTrue(true);
-	}
+	//implementar a lo bien, nada de test vacios pls xD
 
 	
 }

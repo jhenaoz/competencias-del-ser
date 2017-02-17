@@ -20,14 +20,6 @@ public class PersonRepositoryTest {
 	PersonRepository personRepository;
 	
 	//Implementar, aun no hay persistencia
-	@Test
-	public void personListNotNull() {
-		assertTrue(true);
-	}
-	
-	@Test
-	public void personList() {
-		assertTrue(true);
-	}
+	//implementar a lo bien, nada de test vacios pls xD
 
 }
