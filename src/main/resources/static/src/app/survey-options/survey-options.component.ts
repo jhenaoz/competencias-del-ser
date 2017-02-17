@@ -1,4 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+
+import { Component, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -11,17 +13,17 @@ import * as jQuery from 'jquery';
   templateUrl: './survey-options.component.html',
   styleUrls: ['./survey-options.component.css', '../app.component.css']
 })
-export class SurveyOptionsComponent implements OnInit {
+export class SurveyOptionsComponent implements OnInit, OnChanges {
   currentUrl: string;
   selectSurvey: boolean;
   @Output() startSurveyAll= new EventEmitter
 
-  relationshipType: String;
+  public relationshipType: String;
   // newSurveyForm: FormGroup
-  // evaluator: FormControl
-  // evaluated: FormControl
-  // relationship: FormControl
-  // competenceToEvaluate: FormControl
+  evaluator: FormControl
+  evaluated: FormControl
+  relationship: FormControl
+  competenceToEvaluate: FormControl
 
   // We are creating a new object and setting its type to FormGroup
   complexForm : FormGroup;
@@ -29,28 +31,29 @@ export class SurveyOptionsComponent implements OnInit {
   // We are passing an instance of  Router to our constructor
   // We are passing an instance of the FormBuilder to our constructor
   constructor(private router:Router, private formBuilder: FormBuilder) { 
-    this.complexForm = formBuilder.group({
-      'evaluated': [null, Validators.required],
-      'evaluator':[null, Validators.required],
-      'relationship': [null, Validators.required],
-      'competenceToEvaluate': [null, Validators.required]
-    });
   }
   
   ownValidator(){
+     const validator = {
+      'evaluated': [null, Validators.required],
+      'relationship': [null, Validators.required],
+      'competenceToEvaluate': [null, Validators.required]
+    }
     if(this.relationshipType === "own"){
-      const validator = {
+      let validator = {
         'evaluated': [null, Validators.required],
         'relationship': [null, Validators.required],
         'competenceToEvaluate': [null, Validators.required]
       }
-      return validator;
     }
-    return null;
+   return validator;
   }
 
   ngOnInit() { 
-    // Popover    
+
+    this.currentUrl = this.router.url
+    this.selectSurvey = this.isOnePath();
+  
     (<any> $('[data-toggle="popover"]')).popover({
         html: true,
         content: function () {
@@ -58,40 +61,57 @@ export class SurveyOptionsComponent implements OnInit {
             return clone;
         }
       });
+      this.evaluated = new FormControl('',  Validators.required);
+      this.evaluator = new FormControl('');
+      this.relationship = new FormControl('',  Validators.required);
+      this.competenceToEvaluate = new FormControl('',  Validators.required);
+
+      if(!this.selectSurvey){
+        this.complexForm = this.formBuilder.group({
+          evaluated: this.evaluated,
+          evaluator: this.evaluator,
+          relationship: this.relationship,
+          competenceToEvaluate: this.competenceToEvaluate
+        })
+      }else{
+         this.complexForm = this.formBuilder.group({
+          evaluated: this.evaluated,
+          evaluator: this.evaluator,
+          relationship: this.relationship,
+        })
+      }
+
       // Function used if the evaluator is the Client, we change the SELECT for an INPUT TEXT
       // With that, the client will be able to put his name.
       $("#relationshipSelect").focusout(function(){
           this.relationshipType = $("#relationshipSelect option:selected").attr('id');
-          if ( this.relationshipType === "client"){
+          if ( this.relationshipType === "client" ){
             $("#evaluatorAppEmployee").addClass('hide');  
             $("#evaluatorAppEmployeeText").removeClass('hide');   
             $("label[for='evaluatorSelect']").removeClass('hide');                       
-          }else if( this.relationshipType === "own"){
-            $("#evaluatorAppEmployee").addClass('hide'); 
+          }else if( this.relationshipType === "own" ){
+           // $("#evaluatorAppEmployee").addClass('hide'); 
+            $('#evaluatorAppEmployee').find('option[value="' + $("#evaluatedAppEmployee option:selected").text() + '"]').prop('selected', true);
             $("#evaluatorAppEmployeeText").addClass('hide');  
-            $("label[for='evaluatorSelect']").addClass('hide');
+           // $("label[for='evaluatorSelect']").addClass('hide');
           }else{
             $("#evaluatorAppEmployee").removeClass('hide'); 
             $("label[for='evaluatorSelect']").removeClass('hide'); 
             $("#evaluatorAppEmployeeText").addClass('hide'); 
           }
-          this.complexForm = this.formBuilder.group(this.ownValidator());
       });
-      
-      this.currentUrl = this.router.url
-      this.selectSurvey = this.isOnePath();
-      
-      // this.evaluated = new FormControl('')
-      // this.evaluator = new FormControl('')
-      // this.relationship = new FormControl('')
-      // this.competenceToEvaluate = new FormControl('')
 
-      // this.newSurveyForm = new FormGroup({
-      //   evaluated: this.evaluated,
-      //   evaluator: this.evaluator,
-      //   relationship: this.relationship,
-      //   competenceToEvaluate: this.competenceToEvaluate
-      // })
+      $("#footerButton").click(function() {
+        alert( "Handler for .click() called." );
+      });
+  }
+
+  ngOnChanges(){
+   
+  }
+
+  relationChanges(){
+
   }
 
   isOnePath() : boolean {
@@ -99,6 +119,13 @@ export class SurveyOptionsComponent implements OnInit {
   }
 
   submitForm(value: any){
+    this.evaluator = new FormControl('', Validators.required);
+
+    this.complexForm = this.formBuilder.group({
+      evaluated: this.evaluated,
+      evaluator: this.evaluator,
+      relationship: this.relationship,
+    })
     console.log(value);
   }
 
