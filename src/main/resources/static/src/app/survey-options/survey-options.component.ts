@@ -4,7 +4,9 @@ import { Component, OnInit, EventEmitter, Output, OnChanges } from '@angular/cor
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { ISurvey } from '../survey/survey-model';
+import { ISurvey, IAptitude, IBehavior } from '../survey/survey-model';
+import { IEmployee } from '../employee/employee.model';
+import { SurveyService } from '../survey/survey.service';
 
 import * as jQuery from 'jquery';
 
@@ -30,7 +32,7 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
 
   // We are passing an instance of  Router to our constructor
   // We are passing an instance of the FormBuilder to our constructor
-  constructor(private router:Router, private formBuilder: FormBuilder) { 
+  constructor(private router:Router, private formBuilder: FormBuilder, private surveyService: SurveyService) { 
   }
   
   ownValidator(){
@@ -118,7 +120,7 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
     return this.currentUrl == "/survey-setup" ? true : false 
   }
 
-  submitForm(value: any){
+ /* submitForm(value: any){
     this.evaluator = new FormControl('', Validators.required);
 
     this.complexForm = this.formBuilder.group({
@@ -127,15 +129,22 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
       relationship: this.relationship,
     })
     console.log(value);
-  }
+  }*/
 
   startSurvey(){
-    // this.router.navigate(['/survey'])
+    
+  
+    //Next steps are just for testing component's communication, they are not yet the real way.
 /*    let survey: ISurvey = {
-        evaluator: this.complexForm.get('evaluator')
-    }*/
-
-    this.startSurveyAll.emit()
+        evaluator: "evaluator1",
+        evaluated: [{employeeId: 1, name: "evaluated1"}],
+        role: "teammate",
+        aptitudes: <IAptitude[]>[]
+    }
+    this.surveyService.startSurvey(survey)*/
+    this.router.navigate(['/survey'])
+    
+    // this.startSurveyAll.emit(survey)
 
   }
 

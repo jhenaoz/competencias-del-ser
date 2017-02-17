@@ -14,6 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SurveyOptionsComponent } from './survey-options/survey-options.component';
 import { SurveyComponent } from './survey/survey.component';
+import { SurveyService } from './survey/survey.service';
 
 //Translate imports
 import { TranslateModule } from 'ng2-translate';
@@ -45,6 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],  
   providers: [
     EmployeeService,
+    SurveyService,
   ],
   bootstrap: [AppComponent]
 })

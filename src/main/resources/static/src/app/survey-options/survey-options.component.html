@@ -8,7 +8,7 @@
     </p>
 
     <div class="container">
-        <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+        <form  [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
             <!--Evaluated select-->
             <div class="block">
                 <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
@@ -23,7 +23,7 @@
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.relationship" | translate}}</label>
-                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']" [(ngModel)]="relationshipType" (change)="relationChanges()">
+                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']" (change)="relationChanges()">
                   <option></option>
                   <option id="team">{{ "Survey-options.relation-teammate" | translate}}</option>
                   <option id="client">{{ "Survey-options.relation-client" | translate}}</option>                  
@@ -43,7 +43,7 @@
                 <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl>
                 </app-employee>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="!complexForm.controls['evaluator'].valid && complexForm.controls['relationship']!='own'">You must select someone.</div>
+                <div class="alert alert-danger" *ngIf="complexForm.controls['evaluator'].touched && complexForm.controls['evaluator'].dirty">You must select someone.</div>
             </div>
 
             <!--Competence select-->
