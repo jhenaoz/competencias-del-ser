@@ -17,7 +17,7 @@ public class JestClientUtils {
 
     @Bean
     public JestClient getClient() {
-        String elasticsearchUrl = "http://" + host + ":" + port;
+        String elasticsearchUrl = host + ":" + port;
         JestClient client;
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(new HttpClientConfig.Builder(elasticsearchUrl).multiThreaded(true).build());
