@@ -4,49 +4,49 @@
     },
     "Footer": {
         "back": "Back",
-        "forward": "Forward",
-        "start": "Start"
+        "forward": "Next",
+        "start": "Start Assessment"
     },
     "Welcome": {
-        "title": "VALORACIÓN COMPETENCIAS DEL SER",
-        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
-        "information": "Utilice el campo observaciones para completar la valoración.",
-        "options-title": "¿Qué valoración deseas hacer?",
-        "option-one": "Una competencia para todo el equipo",
-        "option-all": "Todas las competencias a una persona"
+        "title": "SOFT SKILLS ASSESSMENT",
+        "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.",
+        "information": "Use the observations field to complete the assessment.",
+        "options-title": "What assessment do you want to do?",
+        "option-one": "One skill of the whole team",
+        "option-all": "Every skill of one person"
     },
     "Survey-options": {
-        "title-all": "TODAS LAS COMPETENCIAS A UNA PERSONA",
-        "title-one": "UNA COMPETENCIA PARA EL EQUIPO",
-        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
-        "information": "Utilice el campo observaciones para completar la valoración.",
-        "evaluated": "Persona a quien se le hará la valoración:",
-        "evaluator": "Persona quien realiza la valoración:",
-        "relationship": "Tipo de relación:",
-        "relation-teammate": "Equipo de trabajo",
-        "relation-teanmate-description": "Seleccione equipo de trabajo si a quien va a valorar, corresponde a aquellas personas a quienes ha colaborado, trabajado en su desarrollo y crecimiento, y apoyado en el direccionamiento de sus actividades",
-        "relation-client": "Cliente",
-        "relation-client-description": "Son las personas que han podido trabajar con el valorado desde la vista de cliente (es decir, han recibido algún entregable por parte de la persona valorada), han tenido interacción directa con la persona y cuentan con la información, gracias a la observación de sus comportamientos. El cliente puede hacer referencia tanto a clientes internos, como externos.",
-        "relation-own": "Auto-Valoración",
-        "relation-own-description": " Es la valoración que la persona hace de sí mismo, de acuerdo con sus comportamientos actuales y recientes (últimos 3 meses). Esta medición es de gran importancia para conocer la percepción que el valorado tiene de sí mismo y es de gran ayuda en el análisis de los resultados para la generación de los planes de desarrollo."
+        "title-all": "EVERY SKILL OF ONE PERSON",
+        "title-one": "ONE SKILL OF THE WHOLE TEAM",
+        "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.",
+        "information": "Use the observations field to complete the assessment.",
+        "evaluated": "Person being assessed",
+        "evaluator": "Evaluator",
+        "relationship": "Type of relationship",
+        "relation-teammate": "Teammate",
+        "relation-teammate-description": "Choose teammate if the person you are evaluating corresponds to a person you have collaborated with, worked towards their development and growth, and supported in the improvement of their activities",
+        "relation-client": "Client",
+        "relation-client-description": "The people who have worked with the evaluated from a client perspective (that is, they're received a deliverable from the person being assessed), they've had direct interaction with the person and have the respective information, thanks to the observation of their behavior. Client can reference both internal and external clients.",
+        "relation-own": "Self-assessment",
+        "relation-own-description": "It's the assessment a person makes of themselves, according to their current and recent behavior (last 3 months). This measurement is of great importance to recognize the perception the assessed has of themselves and it's of great help in the analysis of the results to aid the creation of development plans."
     },
     "Survey": {
-        "always": "Siempre",
-        "almost-always": "Casi Siempre",
-        "occasionally": "A veces",
-        "never": "Nunca",
-        "information": "Sin información",
-        "observations": "Observaciones"
+        "always": "Always",
+        "almost-always": "Almost Always",
+        "occasionally":"Occasionally",
+        "never": "Never",
+        "information":"No information",
+        "observations": "Observations"
     },
     "Competences": {
-        "title": "Competencia a valorar",
-        "competence-opening": "Apertura",
-        "competence-communication": "Comunicación",
-        "competence-initiative": "Iniciativa",
-        "competence-client-orientation": "Orientación al Cliente",
-        "competence-goals": "Logros y Resultados",
-        "competence-teamwork": "Trabajo en Equipo",
-        "competence-development": "Liderazgo para el Desarrollo",
-        "competence-goal": "Liderazgo para el logro"
+        "title": "Skill to assess",
+        "competence-opening": "Openness",
+        "competence-communication": "Communication",
+        "competence-initiative": "Initiative",
+        "competence-client-orientation": "Client orientation",
+        "competence-goals": "Achievement and results",
+        "competence-teamwork": "Teamwork",
+        "competence-development": "Development oriented leadership",
+        "competence-goal": "Achievement oriented leadership"
     }
 }

@@ -20,9 +20,9 @@
         "title-one": "UNA COMPETENCIA PARA EL EQUIPO",
         "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
         "information": "Utilice el campo observaciones para completar la valoración.",
-        "evaluated": "Persona a quien se le hará la valoración:",
-        "evaluator": "Persona quien realiza la valoración:",
-        "relationship": "Tipo de relación:",
+        "evaluated": "Persona a quien se le hará la valoración",
+        "evaluator": "Persona quien realiza la valoración",
+        "relationship": "Tipo de relación",
         "relation-teammate": "Equipo de trabajo",
         "relation-teanmate-description": "Seleccione equipo de trabajo si a quien va a valorar, corresponde a aquellas personas a quienes ha colaborado, trabajado en su desarrollo y crecimiento, y apoyado en el direccionamiento de sus actividades",
         "relation-client": "Cliente",
@@ -49,6 +49,4 @@
         "competence-development": "Liderazgo para el Desarrollo",
         "competence-goal": "Liderazgo para el logro"
     }
-
-
 }
