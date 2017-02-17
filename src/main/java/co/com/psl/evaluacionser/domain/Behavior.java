@@ -8,6 +8,9 @@ public class Behavior {
 
     private String es;
 
+    public Behavior() {
+    }
+
     public Behavior(String en, String es) {
         this.en = en;
         this.es = es;
@@ -17,10 +20,6 @@ public class Behavior {
         this.id = id;
         this.en = en;
         this.es = es;
-    }
-
-    public Behavior() {
-
     }
 
     public Long getId() {
