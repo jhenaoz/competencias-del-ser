@@ -1,5 +1,6 @@
 package co.com.psl.evaluacionser.persistence;
 
+import co.com.psl.evaluacionser.config.ElasticSearchUtils;
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.domain.BehaviorDto;
