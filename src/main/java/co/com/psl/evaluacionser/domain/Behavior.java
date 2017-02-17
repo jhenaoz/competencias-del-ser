@@ -19,6 +19,10 @@ public class Behavior {
         this.es = es;
     }
 
+    public Behavior() {
+
+    }
+
     public Long getId() {
         return id;
     }

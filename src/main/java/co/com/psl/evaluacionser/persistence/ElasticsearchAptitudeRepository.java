@@ -10,6 +10,7 @@ import io.searchbox.core.SearchResult.Hit;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,6 +22,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     private static final String APTITUDE_INDEX_NAME = "aptitude";
     private static final String APTITUDE_TYPE_NAME = "aptitude";
+    @Autowired
+    ElasticSearchUtils elasticSearchUtils;
 
     /**
      * receives one aptitude and saves it in the DB
@@ -31,7 +34,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Aptitude save(Aptitude aptitude) {
         Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).build();
         try {
-            JestClientUtils.getClient().execute(index);
+            elasticSearchUtils.getClient().execute(index);
             return aptitude;
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,13 +55,27 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(APTITUDE_INDEX_NAME).build();
 
         try {
-            SearchResult result = JestClientUtils.getClient().execute(search);
+            SearchResult result = elasticSearchUtils.getClient().execute(search);
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Behavior modifyBehaviour(String id, String behaviorId, BehaviorDto behaviorDto) {
+        Aptitude aptitude;
+        aptitude = findById(id);
+        Behavior behavior= new Behavior();
+        behavior.setEs(behaviorDto.getEs());
+        behavior.setEn(behaviorDto.getEn());
+        behavior.setId(Long.getLong(id));
+        aptitude.getBehaviors().remove(behaviorId);
+        aptitude.addBehavior(behavior);
+       save(aptitude);
+       return aptitude.getBehaviors().get(Integer.getInteger(id));
     }
 
     /**
@@ -86,7 +103,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(APTITUDE_INDEX_NAME).build();
 
         try {
-            SearchResult result = JestClientUtils.getClient().execute(search);
+            SearchResult result = elasticSearchUtils.getClient().execute(search);
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
             e.printStackTrace();

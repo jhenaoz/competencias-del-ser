@@ -7,6 +7,7 @@ import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,7 +20,9 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
     private String PERSON_INDEX_NAME = "person";
     private String PERSON_TYPE_NAME = "employee";
-    private JestClient client = JestClientUtils.getClient();
+
+    @Autowired
+    ElasticSearchUtils elasticSearchUtils;
 
     @Override
     public List<Person> findAll() {
@@ -31,7 +34,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
                 .addType(PERSON_TYPE_NAME)
                 .build();
         try {
-            result = client.execute(search);
+            result = elasticSearchUtils.getClient().execute(search);
         } catch (IOException e) {
         }
         List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);

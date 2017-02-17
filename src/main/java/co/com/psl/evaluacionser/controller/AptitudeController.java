@@ -103,8 +103,8 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
     private ResponseEntity ModifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
-        return null;//TODO HOW?
-        //return aptitudeRepository.modifyBehaviour(id,behaviorId,behaviorDto)
+
+        return new ResponseEntity(aptitudeRepository.modifyBehaviour(id,behaviorId,behaviorDto),HttpStatus.OK);
     }
 
     /**

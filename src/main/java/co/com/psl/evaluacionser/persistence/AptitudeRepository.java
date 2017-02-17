@@ -1,6 +1,5 @@
 package co.com.psl.evaluacionser.persistence;
 
-import co.com.psl.evaluacionser.controller.AptitudeController;
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.domain.BehaviorDto;
@@ -19,4 +18,6 @@ public interface AptitudeRepository{
     Aptitude findById(String id);
 
     List<Aptitude> findAll();
+
+    Behavior modifyBehaviour(String id, String behaviorId, BehaviorDto behaviorDto);
 }
