@@ -54,6 +54,14 @@
     color: #3EA8E4;
 }
 
+.done>button {
+    background-color: #5CB85C;
+}
+
+.done>p {
+    color: #5CB85C;
+}
+
 .col-md-4>p {
     font-size: medium;
 }
