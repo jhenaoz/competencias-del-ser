@@ -35,21 +35,6 @@ public class AptitudeController {
     }
 
     /**
-     * via this requestMethod you can get all the Behaviors corresponding to an Aptitude (but you dont get the Aptitude INFO)
-     *
-     * @param id the ID of the Aptitude you want to get the Behaviors from
-     * @return the JSON corresponding to the Behaviors from the {id} specified Aptitude
-     */
-    @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
-    private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
-        if (aptitudeRepository.findById(id) == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(aptitudeRepository.findById(id).getBehaviors(), HttpStatus.OK);
-        }
-    }
-
-    /**
      * this method provides a mapping to get one specific aptitude via an
      * URL ID, the aptitude you get also contains its Behaviors
      *
@@ -68,6 +53,21 @@ public class AptitudeController {
     }
 
     /**
+     * via this requestMethod you can get all the Behaviors corresponding to an Aptitude (but you dont get the Aptitude INFO)
+     *
+     * @param id the ID of the Aptitude you want to get the Behaviors from
+     * @return the JSON corresponding to the Behaviors from the {id} specified Aptitude
+     */
+    @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
+    private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
+        if (aptitudeRepository.findById(id) == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(aptitudeRepository.findById(id).getBehaviors(), HttpStatus.OK);
+        }
+    }
+
+     /**
      * gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
      *
      * @param id         URL param that specifies the aptitude you want to get the behavior from
