@@ -101,6 +101,7 @@ hs_err_pid*
 ### Maven ###
 target/
 dist/
+test_results/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -222,6 +223,7 @@ $RECYCLE.BIN/
 # compiled output
 /dist
 /tmp
+test-results.xml
 
 # dependencies
 /node_modules
@@ -257,6 +259,8 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+/src/main/resources/static/src/api/employee/employee.json
+
 #Folder of elasticsearch
 /data/
 
