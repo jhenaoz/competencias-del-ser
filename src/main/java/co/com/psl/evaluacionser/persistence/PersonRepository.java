@@ -9,6 +9,7 @@ import co.com.psl.evaluacionser.domain.Person;
  *
  */
 public interface PersonRepository {
-  Person save(Person person);
+
+	Person save(Person person);
 	List<Person> findAll();
 }

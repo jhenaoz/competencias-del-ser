@@ -51,4 +51,10 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 	private Person getPerson(Hit<Person, Void> hit){
 		return hit.source;
 	}
+
+	@Override
+	public Person save(Person person) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

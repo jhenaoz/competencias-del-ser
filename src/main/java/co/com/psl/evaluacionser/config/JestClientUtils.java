@@ -27,7 +27,7 @@ public class JestClientUtils {
 	// Creates the bean for be consumed in all the app
 	@Bean
 	public JestClient getClient() {
-		String url = "http://" + host + ":" + port;
+		String url = host + ":" + port;
 		JestClient client;
 		JestClientFactory factory = new JestClientFactory();
 		factory.setHttpClientConfig(new HttpClientConfig.Builder(url).multiThreaded(true).build());

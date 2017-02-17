@@ -9,7 +9,6 @@ import io.searchbox.annotations.JestId;
  */
 public class Person {
 	
-	@JestId //Indicates the id for elasticsearch
     private String id;
 
     private String name;
