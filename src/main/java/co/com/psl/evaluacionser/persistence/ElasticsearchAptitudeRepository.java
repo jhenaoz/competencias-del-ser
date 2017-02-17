@@ -175,11 +175,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     @Override
     public Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto) {
-        Behavior behavior = new Behavior(Long.getLong(behaviorId),behaviorDto.getEn(),behaviorDto.getEs());
-        Behavior oldBehavior =findBehaviorById(id, behaviorId);
+        Behavior behavior = new Behavior(Long.getLong(behaviorId), behaviorDto.getEn(), behaviorDto.getEs());
+        Behavior oldBehavior = findBehaviorById(id, behaviorId);
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = new ArrayList<>();
-        behaviors.set(behaviors.indexOf(oldBehavior),behavior);
+        behaviors.set(behaviors.indexOf(oldBehavior), behavior);
         aptitude.setBehaviors(behaviors);
         save(aptitude);
         return behavior;
@@ -202,7 +202,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             return null;
 
         for (Behavior behavior : behaviors)
-            if (id.equals(behavior.getId()))
+            if (Long.getLong(id).equals(behavior.getId()))
                 return behavior;
 
         return null;

@@ -61,14 +61,14 @@ public class AptitudeController {
     @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
     private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
         Aptitude aptitude = aptitudeRepository.findById(id);
-        if (aptitude==null) {
+        if (aptitude == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(aptitude.getBehaviors(), HttpStatus.OK);
         }
     }
 
-     /**
+    /**
      * gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
      *
      * @param id         URL param that specifies the aptitude you want to get the behavior from
@@ -126,7 +126,8 @@ public class AptitudeController {
         }
         if (aptitudeRepository.findBehaviorById(id, behaviorId) == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity(aptitudeRepository.updateBehaviorById(id, behaviorId, behaviorDto), HttpStatus.ACCEPTED);
+        } else
+            return new ResponseEntity(aptitudeRepository.updateBehaviorById(id, behaviorId, behaviorDto), HttpStatus.ACCEPTED);
     }
 
     /**
