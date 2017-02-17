@@ -1,7 +1,6 @@
 package co.com.psl.evaluacionser.persistence;
 
 import co.com.psl.evaluacionser.domain.Person;
-import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
@@ -18,11 +17,10 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchPersonRepository implements PersonRepository {
 
-    private String PERSON_INDEX_NAME = "person";
-    private String PERSON_TYPE_NAME = "employee";
-
     @Autowired
     ElasticSearchUtils elasticSearchUtils;
+    private String PERSON_INDEX_NAME = "person";
+    private String PERSON_TYPE_NAME = "employee";
 
     @Override
     public List<Person> findAll() {

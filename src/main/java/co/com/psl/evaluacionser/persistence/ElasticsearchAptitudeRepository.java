@@ -27,6 +27,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     /**
      * receives one aptitude and saves it in the DB
+     *
      * @param aptitude the aptitude you want to save
      * @return the aptitude you just saved, now with its ID included
      */
@@ -44,6 +45,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     /**
      * searches the DB for all the diferent Aptitudes
+     *
      * @return an Aptitude List with all the aptitudes in the DB
      */
     @Override
@@ -68,18 +70,19 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Behavior modifyBehaviour(String id, String behaviorId, BehaviorDto behaviorDto) {
         Aptitude aptitude;
         aptitude = findById(id);
-        Behavior behavior= new Behavior();
+        Behavior behavior = new Behavior();
         behavior.setEs(behaviorDto.getEs());
         behavior.setEn(behaviorDto.getEn());
-        behavior.setId(Long.getLong(id));
-        aptitude.getBehaviors().remove(behaviorId);
+        behavior.setId(Long.getLong(behaviorId));
+        aptitude.getBehaviors().remove(Integer.parseInt(behaviorId));
         aptitude.addBehavior(behavior);
-       save(aptitude);
-       return aptitude.getBehaviors().get(Integer.getInteger(id));
+        save(aptitude);
+        return aptitude.getBehaviors().get(Integer.getInteger(id));
     }
 
     /**
      * makes the Hit from the Search an Aptitude
+     *
      * @param hit the Hit from the previously done Search to the DB
      * @return an Aptitude with the data corresponding to the Source of the hit
      */
@@ -92,6 +95,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     /**
      * finds one specific Aptitude using its ID
+     *
      * @param id the id of the aptitude you are looking for
      * @return an Aptitude with ES text, EN text, and a ID
      */
@@ -113,8 +117,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     /**
      * add a new behavior to the Aptitude
+     *
      * @param behaviorDto a JSON with the structure of the Behavior, without the ID
-     * @param aptitudeId the ID of the Aptitude in wich yoy are adding the Behavior
+     * @param aptitudeId  the ID of the Aptitude in which you are adding the Behavior
      * @return The behavior you just added, now with its ID
      */
     @Override
@@ -130,31 +135,50 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     /**
      * finds one specific behavior in the DB
-     * @param id the ID of the Aptitude the Behavior is in
+     *
+     * @param id         the ID of the Aptitude the Behavior is in
      * @param behaviorId the id of the Behavior you are looking for
      * @return Behavior schemed JSON with the data of the behavior you looked for
      */
     public Behavior findBehaviorById(String id, String behaviorId) {
         Aptitude aptitude;
         aptitude = findById(id);
-        return aptitude.getBehaviors().get(Integer.parseInt(behaviorId));
+        List<Behavior> behaviors = aptitude.getBehaviors();
+        for (Behavior behavior : behaviors) {
+            if (behavior.getId().equals(Long.getLong(behaviorId))) {
+                return behavior;
+
+            }
+
+        }
+        return null;
 
     }
 
     /**
      * deletes a specific behavior from a Aptitude
-     * @param id this is the id of the Aptitude containing the Behavior
+     *
+     * @param id         this is the id of the Aptitude containing the Behavior
      * @param behaviorId this is the id of the behavior you want to delete
      * @return an Aptitude without the Behavior specified
      */
     @Override
     public Aptitude deleteBehavior(String id, String behaviorId) {
-        Aptitude aptitude;
-        aptitude = findById(id);
-        aptitude.getBehaviors().remove(behaviorId);
-        save(aptitude);
-        return aptitude;
+        if (findBehaviorById(id, behaviorId) == null) return null;
+        else {
+            Aptitude aptitude;
+            aptitude = findById(id);
+            List<Behavior> behaviors = aptitude.getBehaviors();
+            for (Behavior behavior : behaviors) {
+                if (behavior.getId().equals(Long.getLong(behaviorId))) {
+                    behaviors.remove(behavior);
+                    aptitude.setBehaviors(behaviors);
+                    break;
+                }
+            }
+            save(aptitude);
+            return aptitude;
+        }
+
     }
-
-
 }
