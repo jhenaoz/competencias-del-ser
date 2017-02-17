@@ -60,10 +60,11 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
     private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
-        if (aptitudeRepository.findById(id) == null) {
+        Aptitude aptitude = aptitudeRepository.findById(id);
+        if (aptitude==null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(aptitudeRepository.findById(id).getBehaviors(), HttpStatus.OK);
+            return new ResponseEntity<>(aptitude.getBehaviors(), HttpStatus.OK);
         }
     }
 
