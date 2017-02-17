@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { ISurvey } from '../survey/survey-model';
 
 import * as jQuery from 'jquery';
 
@@ -12,6 +14,7 @@ import * as jQuery from 'jquery';
 export class SurveyOptionsComponent implements OnInit {
   currentUrl: string;
   selectSurvey: boolean;
+  @Output() startSurveyAll= new EventEmitter
 
   relationshipType: String;
   // newSurveyForm: FormGroup
@@ -97,6 +100,16 @@ export class SurveyOptionsComponent implements OnInit {
 
   submitForm(value: any){
     console.log(value);
+  }
+
+  startSurvey(){
+    // this.router.navigate(['/survey'])
+    let survey: ISurvey = {
+        evaluator: this.complexForm.get('evaluator')
+    }
+
+    this.startSurveyAll.emit()
+
   }
 
 

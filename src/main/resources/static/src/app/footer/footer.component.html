@@ -1,5 +1,5 @@
 <footer class="footer">
-    <button *ngIf="!(this.currentUrl == '/welcome')" type="button" class="btn right-button"> 
+    <button *ngIf="!(this.currentUrl == '/welcome')" (click)="advance()" type="button" class="btn right-button"> 
         {{ "Footer.start" | translate }} 
         <img src="assets/images/go.svg">
     </button>
