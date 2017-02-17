@@ -28,6 +28,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>5.2.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -74,6 +83,17 @@
                         <configuration>
                             <arguments>run build</arguments>
                         </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm test</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>test -- --single-run</arguments>
+                        </configuration>
+                        <phase>test</phase>
                     </execution>
                 </executions>
             </plugin>
