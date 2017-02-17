@@ -1,0 +1,7 @@
+<footer class="footer">
+    <button *ngIf="!(this.currentUrl == '/welcome')" type="button" class="btn right-button"> 
+        {{ "Footer.start" | translate }} 
+        <img src="assets/images/go.svg">
+    </button>
+    <button *ngIf="!(this.currentUrl == '/welcome')" (click)="cancel()" type="button" class="btn left-button"><img src="assets/images/go.svg">  {{ "Footer.back" | translate }}</button>
+</footer>

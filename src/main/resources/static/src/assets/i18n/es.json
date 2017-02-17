@@ -1,0 +1,54 @@
+{
+    "Navbar": {
+        "language-change": "Cambiar idioma"
+    },
+    "Footer": {
+        "back": "Anterior",
+        "forward": "Siguiente",
+        "start": "Iniciar Valoración"
+    },
+    "Welcome": {
+        "title": "VALORACIÓN COMPETENCIAS DEL SER",
+        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
+        "information": "Utilice el campo observaciones para completar la valoración.",
+        "options-title": "¿Qué valoración deseas hacer?",
+        "option-one": "Una competencia para todo el equipo",
+        "option-all": "Todas las competencias a una persona"
+    },
+    "Survey-options": {
+        "title-all": "TODAS LAS COMPETENCIAS A UNA PERSONA",
+        "title-one": "UNA COMPETENCIA PARA EL EQUIPO",
+        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
+        "information": "Utilice el campo observaciones para completar la valoración.",
+        "evaluated": "Persona a quien se le hará la valoración:",
+        "evaluator": "Persona quien realiza la valoración:",
+        "relationship": "Tipo de relación:",
+        "relation-teammate": "Equipo de trabajo",
+        "relation-teanmate-description": "Seleccione equipo de trabajo si a quien va a valorar, corresponde a aquellas personas a quienes ha colaborado, trabajado en su desarrollo y crecimiento, y apoyado en el direccionamiento de sus actividades",
+        "relation-client": "Cliente",
+        "relation-client-description": "Son las personas que han podido trabajar con el valorado desde la vista de cliente (es decir, han recibido algún entregable por parte de la persona valorada), han tenido interacción directa con la persona y cuentan con la información, gracias a la observación de sus comportamientos. El cliente puede hacer referencia tanto a clientes internos, como externos.",
+        "relation-own": "Auto-Valoración",
+        "relation-own-description": " Es la valoración que la persona hace de sí mismo, de acuerdo con sus comportamientos actuales y recientes (últimos 3 meses). Esta medición es de gran importancia para conocer la percepción que el valorado tiene de sí mismo y es de gran ayuda en el análisis de los resultados para la generación de los planes de desarrollo."
+    },
+    "Survey": {
+        "always": "Siempre",
+        "almost-always": "Casi Siempre",
+        "occasionally": "A veces",
+        "never": "Nunca",
+        "information": "Sin información",
+        "observations": "Observaciones"
+    },
+    "Competences": {
+        "title": "Competencia a valorar",
+        "competence-opening": "Apertura",
+        "competence-communication": "Comunicación",
+        "competence-initiative": "Iniciativa",
+        "competence-client-orientation": "Orientación al Cliente",
+        "competence-goals": "Logros y Resultados",
+        "competence-teamwork": "Trabajo en Equipo",
+        "competence-development": "Liderazgo para el Desarrollo",
+        "competence-goal": "Liderazgo para el logro"
+    }
+
+
+}
