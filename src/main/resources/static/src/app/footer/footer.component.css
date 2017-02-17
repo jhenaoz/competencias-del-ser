@@ -1,0 +1,42 @@
+/**********************************************************
+* FOOTER: */
+
+footer {
+    background-color: #EDEDED;
+    position: absolute;
+    border-radius: 0px;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+}
+
+.right-button,
+.left-button {
+    height: 70px;
+    width: 250px;
+    font-size: large;
+}
+
+footer>.text {
+    width: 10px;
+}
+
+.right-button {
+    margin-right: 50px;
+    float: right;
+    background-color: #5CB85C;
+    color: #FFF;
+}
+
+.left-button {
+    margin-left: 50px;
+    float: left;
+}
+
+.left-button>img {
+    transform: rotate(180deg);
+}
+
+
+/* /FOOTER: *
+**********************************************************/

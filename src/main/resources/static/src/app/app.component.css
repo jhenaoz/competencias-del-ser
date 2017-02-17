@@ -1,0 +1,82 @@
+/**********************************************************
+* 
+* COLORS:
+* --main-primary: #134C96
+**********************************************************
+* FONTS: */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+/* /FONTS: *
+**********************************************************/
+
+
+/**********************************************************
+* GLOBAL: */
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #134C96;
+    font-weight: bold;
+}
+
+
+/* /GLOBAL: *
+**********************************************************/
+/**********************************************************
+* MAIN: */
+
+.main {
+    margin: -20px 50px 0 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: #F9F9F9;
+}
+
+.title {
+    padding-top: 35px;
+    color: #134C96;
+    font-weight: bold;
+    font-size: large;
+}
+
+.description {
+    margin: 55px;
+    color: #828282;
+    font-size: 2ch;
+}
+
+.main>hr {
+    background-color: #ddd;
+    border: 0 none;
+    color: #000;
+    height: 1px;
+}
+
+.main>h4 {
+    padding-top: 100px;
+}
+
+.main>.container {
+    padding-top: 30px;
+}
+
+
+/* /MAIN: *
+**********************************************************/
