@@ -80,9 +80,11 @@ public class AptitudeController {
                                                      @PathVariable("behaviorId") String behaviorId) {
         if (aptitudeRepository.findById(id) == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (aptitudeRepository.findBehaviorById(id, behaviorId) == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } else {
+            Behavior behavior = aptitudeRepository.findBehaviorById(id, behaviorId);
+            if (behavior == null) {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
         }
         return new ResponseEntity<>(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.OK);
     }
@@ -101,7 +103,7 @@ public class AptitudeController {
      */
 
     @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
-    private ResponseEntity<Behavior> addBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
+    private ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
         if (aptitudeRepository.findById(id) == null) {
             return new ResponseEntity<Behavior>(HttpStatus.BAD_REQUEST);
         } else {
