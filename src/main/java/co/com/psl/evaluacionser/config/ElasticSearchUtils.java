@@ -8,16 +8,11 @@ import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
 
-/**
- * This class provide a singleton client for elasticsearch as a bean
- * 
- * @author salveara
- *
- */
+//This class provide a singleton client for elasticsearch as a bean
 @Configuration
 public class ElasticSearchUtils {
 
-	//Application var for the hot and the port
+	// Application var for the hot and the port
 	@Value("${elasticport}")
 	private String port;
 
