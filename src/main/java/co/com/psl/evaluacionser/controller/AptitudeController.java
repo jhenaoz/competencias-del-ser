@@ -56,8 +56,9 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
     private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
-
-        return new ResponseEntity<List<Behavior>>(aptitudeRepository.findById(id).getBehaviors(), HttpStatus.OK);
+        if (aptitudeRepository.findById(id)==null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
+        else{
+        return new ResponseEntity<>(aptitudeRepository.findById(id).getBehaviors(), HttpStatus.OK);}
     }
 
     /**
@@ -75,8 +76,11 @@ public class AptitudeController {
 
     @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
     private ResponseEntity<Behavior> addBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
+        if (aptitudeRepository.findById(id)==null){return new ResponseEntity<Behavior>(HttpStatus.BAD_REQUEST);}
+        else{
+            return new ResponseEntity<>(aptitudeRepository.addBehavior(behaviorDto, id), HttpStatus.CREATED);
+        }
 
-        return new ResponseEntity<>(aptitudeRepository.addBehavior(behaviorDto, id), HttpStatus.CREATED);
     }
 
     /**
@@ -84,13 +88,14 @@ public class AptitudeController {
      *
      * @param id         URL param that specifies the aptitude you want to get the behavior from
      * @param behaviorId URL param that specifies the specific behavior from the aptitude you want
-     * @return
+     * @return returns a Response Entity with the HttpStatus of the operation, HttpStatus.OK if Successful
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
     private ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
                                                      @PathVariable("behaviorId") String behaviorId) {
-
-        return new ResponseEntity<>(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.ACCEPTED);
+        if (aptitudeRepository.findById(id)==null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
+        if (aptitudeRepository.findBehaviorById(id,behaviorId)==null){return new ResponseEntity(HttpStatus.NOT_FOUND);}
+        return new ResponseEntity<>(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.OK);
     }
 
     /**
@@ -104,7 +109,9 @@ public class AptitudeController {
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
     private ResponseEntity ModifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
 
-        return new ResponseEntity(aptitudeRepository.modifyBehaviour(id,behaviorId,behaviorDto),HttpStatus.OK);
+        if (aptitudeRepository.findById(id)==null){return new ResponseEntity(HttpStatus.BAD_REQUEST);}
+        if (aptitudeRepository.findBehaviorById(id, behaviorId)==null){return new ResponseEntity(HttpStatus.NOT_FOUND);}
+        else return new ResponseEntity(aptitudeRepository.findBehaviorById(id,behaviorId),HttpStatus.ACCEPTED);
     }
 
     /**
@@ -115,7 +122,9 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     private ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
-        return new ResponseEntity(aptitudeRepository.deleteBehavior(id, behaviorId), HttpStatus.OK);
+        if (aptitudeRepository.findById(id)==null){return new ResponseEntity(HttpStatus.BAD_REQUEST);}
+        if (aptitudeRepository.findBehaviorById(id, behaviorId)==null){return new ResponseEntity(HttpStatus.NOT_FOUND);}
+        return new ResponseEntity(aptitudeRepository.deleteBehavior(id, behaviorId), HttpStatus.ACCEPTED);
     }
 
 }

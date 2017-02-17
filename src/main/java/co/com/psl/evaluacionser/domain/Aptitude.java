@@ -2,6 +2,7 @@ package co.com.psl.evaluacionser.domain;
 
 import io.searchbox.annotations.JestId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Aptitude {
@@ -10,7 +11,7 @@ public class Aptitude {
     private Long id;
     private String es;
     private String en;
-    private List<Behavior> behaviors;
+    private List<Behavior> behaviors = new ArrayList<>();
 
     public Aptitude() {
     }

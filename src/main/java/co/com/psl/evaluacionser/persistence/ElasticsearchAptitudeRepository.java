@@ -11,6 +11,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         if (findBehaviorById(id,behaviorId)==null)return null;
         Aptitude aptitude;
         aptitude = findById(id);
-        List<Behavior> behaviors = new ArrayList<>();
+        List<Behavior> behaviors;
         behaviors = aptitude.getBehaviors();
         for (Behavior behavior:behaviors) {
             if (behavior.getId().equals(Long.getLong(behaviorId))){
@@ -114,6 +115,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
         try {
             SearchResult result = elasticSearchUtils.getClient().execute(search);
+            if (result.getTotal()==null)return null;
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
             e.printStackTrace();
