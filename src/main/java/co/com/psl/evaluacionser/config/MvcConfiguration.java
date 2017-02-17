@@ -5,6 +5,7 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class MvcConfiguration implements ServletContextInitializer, EmbeddedServ
     private void setLocationForStaticAssets(ConfigurableEmbeddedServletContainer container) {
         File root;
         String prefixPath = resolvePathPrefix();
-        root = new File(prefixPath + "src/main/resources/static/app");
+        root = new File(prefixPath + "src/main/resources/static/dist");
         if (root.exists() && root.isDirectory()) {
             container.setDocumentRoot(root);
         }
