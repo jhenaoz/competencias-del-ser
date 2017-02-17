@@ -38,13 +38,6 @@
             <version>5.2.0</version>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sonatype</id>
-            <name>Sonatype Groups</name>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
     <build>
         <plugins>
             <plugin>
