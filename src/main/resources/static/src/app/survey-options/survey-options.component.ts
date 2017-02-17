@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import * as jQuery from 'jquery';
 
@@ -18,9 +18,15 @@ export class SurveyOptionsComponent implements OnInit {
   relationship: FormControl
   competenceToEvaluate: FormControl
 
-  constructor(private router:Router) { }
+  // We are creating a new object and setting its type to FormGroup
+  complexForm : FormGroup;
 
-  ngOnInit() {    
+  // We are passing an instance of  Router to our constructor
+  // We are passing an instance of the FormBuilder to our constructor
+  constructor(private router:Router, formBuilder: FormBuilder) { }
+
+  ngOnInit() { 
+    // Popover    
     (<any> $('[data-toggle="popover"]')).popover({
         html: true,
         content: function () {
@@ -30,22 +36,22 @@ export class SurveyOptionsComponent implements OnInit {
       });
       // Function used if the evaluator is the Client, we change the SELECT for an INPUT TEXT
       // With that, the client will be able to put his name.
-      // XXX - Organize if values
-      $("select[title='relationshipSelect']").focusout(function(){
-          if ($(this).val() === "Cliente"|| $(this).val() === "Client"){
+      $("#relationshipSelect").focusout(function(){
+          if ($("#relationshipSelect option:selected").attr('id') === "client"){
             $("#evaluatorAppEmployee").addClass('hide');  
-            $("#evaluatorAppEmployeeText").removeClass('hide');            
-          }else if($(this).val() === "Auto-Valoración"){
-            $("#evaluatorAppEmployee select").val($("#evaluatedAppEmployee option:selected" ).text());
-            $("#evaluatorAppEmployee").prop("disabled", true);
-            
-            $("#evaluatorAppEmployee").removeClass('hide');  
-            $("#evaluatorAppEmployeeText").addClass('hide'); 
+            $("#evaluatorAppEmployeeText").removeClass('hide');   
+            $("label[for='evaluatorSelect']").removeClass('hide');                       
+          }else if($("#relationshipSelect option:selected").attr('id') === "own"){
+            $("#evaluatorAppEmployee").addClass('hide'); 
+            $("#evaluatorAppEmployeeText").addClass('hide');  
+            $("label[for='evaluatorSelect']").addClass('hide');
           }else{
-            $("#evaluatorAppEmployee").removeClass('hide');  
+            $("#evaluatorAppEmployee").removeClass('hide'); 
+            $("label[for='evaluatorSelect']").removeClass('hide'); 
             $("#evaluatorAppEmployeeText").addClass('hide'); 
           }
       });
+      
       this.currentUrl = this.router.url
       this.selectSurvey = this.isOnePath();
       
@@ -65,6 +71,4 @@ export class SurveyOptionsComponent implements OnInit {
   isOnePath() : boolean {
     return this.currentUrl == "/survey-setup" ? true : false 
   }
-
-
 }
