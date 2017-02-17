@@ -62,7 +62,7 @@
                     <option>{{ "Competences.competence-goal" | translate}}</option>
                 </select>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="!complexForm.controls['competenceToEvaluate'].valid">You must select a competence.</div>
+                <div class="alert alert-danger" *ngIf="complexForm.controls['competenceToEvaluate'].invalid && complexForm.controls['competenceToEvaluate'].dirty">You must select a competence.</div>
             </div>
             <button type="submit" class="btn btn-default" [disabled]="!complexForm.valid">Submit</button>
         </form>
