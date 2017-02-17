@@ -2,40 +2,56 @@ package co.com.psl.evaluacionser.domain;
 
 import java.util.List;
 
+import io.searchbox.annotations.JestId;
+
 public class Aptitude {
 
-    private String en;
-    private String es;
-    private List<Behavior> behaviors;
+	@JestId
+	private Long id;
 
-    public Aptitude() {}
+	private String es;
+	private String en;
+	private List<Behavior> behaviors;
 
-    public Aptitude(String en, String es) {
-        this.en = en;
-        this.es = es;
-    }
+	public Aptitude() {
+	}
 
-    public String getEn() {
-        return en;
-    }
+	public Aptitude(Long id, String es, String en, List<Behavior> behaviors) {
+		this.id = id;
+		this.es = es;
+		this.en = en;
+		this.behaviors = behaviors;
+	}
 
-    public void setEn(String en) {
-        this.en = en;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getEs() {
-        return es;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setEs(String es) {
-        this.es = es;
-    }
+	public String getEs() {
+		return es;
+	}
 
-    public List<Behavior> getBehaviors() {
-        return behaviors;
-    }
+	public void setEs(String es) {
+		this.es = es;
+	}
 
-    public void setBehaviors(List<Behavior> behaviors) {
-        this.behaviors = behaviors;
-    }
+	public String getEn() {
+		return en;
+	}
+
+	public void setEn(String en) {
+		this.en = en;
+	}
+
+	public List<Behavior> getBehaviors() {
+		return behaviors;
+	}
+
+	public void setBehaviors(List<Behavior> behaviors) {
+		this.behaviors = behaviors;
+	}
 }

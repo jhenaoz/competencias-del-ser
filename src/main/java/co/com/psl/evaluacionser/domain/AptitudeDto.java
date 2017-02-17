@@ -1,17 +1,15 @@
 package co.com.psl.evaluacionser.domain;
 
-public class Behavior {
+public class AptitudeDto {
 
 	private String id;
-
 	private String es;
-
 	private String en;
 
-	public Behavior() {
+	public AptitudeDto() {
 	}
 
-	public Behavior(String id, String es, String en) {
+	public AptitudeDto(String id, String es, String en) {
 		this.id = id;
 		this.es = es;
 		this.en = en;
@@ -25,6 +23,14 @@ public class Behavior {
 		this.id = id;
 	}
 
+	public String getEs() {
+		return es;
+	}
+
+	public void setEs(String es) {
+		this.es = es;
+	}
+
 	public String getEn() {
 		return en;
 	}
@@ -33,11 +39,4 @@ public class Behavior {
 		this.en = en;
 	}
 
-	public String getEs() {
-		return es;
-	}
-
-	public void setEs(String es) {
-		this.es = es;
-	}
 }
