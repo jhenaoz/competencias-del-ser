@@ -15,7 +15,7 @@ import io.searchbox.client.config.HttpClientConfig;
  *
  */
 @Configuration
-public class JestClientUtils {
+public class ElasticSearchUtils {
 
 	//Application var for the hot and the port
 	@Value("${elasticport}")
