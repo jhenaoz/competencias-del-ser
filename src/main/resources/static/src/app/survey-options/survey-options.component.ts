@@ -131,9 +131,9 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
 
   startSurvey(){
     // this.router.navigate(['/survey'])
-    let survey: ISurvey = {
+/*    let survey: ISurvey = {
         evaluator: this.complexForm.get('evaluator')
-    }
+    }*/
 
     this.startSurveyAll.emit()
 
