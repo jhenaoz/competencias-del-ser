@@ -19,9 +19,7 @@ public interface AptitudeRepository {
 
     List<Aptitude> findAll();
 
-    Behavior modifyBehaviour(String id, String behaviorId, BehaviorDto behaviorDto);
+    List<Behavior> findAllBehaviors(String aptitudeId);
 
-    public List<Behavior> findAllBehaviors(String aptitudeId);
-
-
+    Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto);
 }

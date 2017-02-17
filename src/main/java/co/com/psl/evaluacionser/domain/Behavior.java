@@ -11,11 +11,6 @@ public class Behavior {
     public Behavior() {
     }
 
-    public Behavior(String en, String es) {
-        this.en = en;
-        this.es = es;
-    }
-
     public Behavior(Long id, String en, String es) {
         this.id = id;
         this.en = en;

@@ -119,14 +119,14 @@ public class AptitudeController {
      * @return ResponseEntity according
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
-    private ResponseEntity ModifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
+    private ResponseEntity modifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
 
         if (aptitudeRepository.findById(id) == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         if (aptitudeRepository.findBehaviorById(id, behaviorId) == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.ACCEPTED);
+        } else return new ResponseEntity(aptitudeRepository.updateBehaviorById(id, behaviorId, behaviorDto), HttpStatus.ACCEPTED);
     }
 
     /**

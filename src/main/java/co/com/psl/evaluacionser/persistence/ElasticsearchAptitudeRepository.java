@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,26 +26,6 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     private static final String APTITUDE_TYPE_NAME = "aptitude";
     @Autowired
     private JestClient client;
-
-    @Override
-    public Behavior modifyBehaviour(String id, String behaviorId, BehaviorDto behaviorDto) {
-        if (findBehaviorById(id, behaviorId) == null) return null;
-        Aptitude aptitude;
-        aptitude = findById(id);
-        List<Behavior> behaviors;
-        behaviors = aptitude.getBehaviors();
-        for (Behavior behavior : behaviors) {
-            if (behavior.getId().equals(Long.getLong(behaviorId))) {
-                behavior.setEn(behaviorDto.getEn());
-                behavior.setEs(behaviorDto.getEs());
-                break;
-            }
-
-        }
-        aptitude.setBehaviors(behaviors);
-        save(aptitude);
-        return findBehaviorById(id, behaviorId);
-    }
 
     /**
      * makes the Hit from the Search an Aptitude
@@ -190,6 +171,19 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             return null;
 
         return aptitude.getBehaviors();
+    }
+
+    @Override
+    public Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto) {
+        Behavior behavior = new Behavior(Long.getLong(behaviorId),behaviorDto.getEn(),behaviorDto.getEs());
+        Behavior oldBehavior =findBehaviorById(id, behaviorId);
+        Aptitude aptitude = findById(id);
+        List<Behavior> behaviors = new ArrayList<>();
+        behaviors.set(behaviors.indexOf(oldBehavior),behavior);
+        aptitude.setBehaviors(behaviors);
+        save(aptitude);
+        return behavior;
+
     }
 
     /**
