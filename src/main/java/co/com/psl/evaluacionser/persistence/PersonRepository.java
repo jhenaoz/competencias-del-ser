@@ -1,15 +1,12 @@
 package co.com.psl.evaluacionser.persistence;
 
-import co.com.psl.evaluacionser.domain.Person;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import co.com.psl.evaluacionser.domain.Person;
 
-
-@Component
+// This interface is the firm for the person implementations
 public interface PersonRepository {
 
+	Person save(Person person);
 
-    public List<Person> findAll();
-
+	List<Person> findAll();
 }
