@@ -5,6 +5,7 @@ import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.domain.BehaviorDto;
 
 import java.util.List;
+import co.com.psl.evaluacionser.domain.Behavior;
 
 public interface AptitudeRepository{
     Aptitude save(Aptitude aptitude);
@@ -20,4 +21,9 @@ public interface AptitudeRepository{
     List<Aptitude> findAll();
 
     Behavior modifyBehaviour(String id, String behaviorId, BehaviorDto behaviorDto);
+
+	public List<Behavior> findAllBehaviors(String aptitudeId);
+
+
+
 }

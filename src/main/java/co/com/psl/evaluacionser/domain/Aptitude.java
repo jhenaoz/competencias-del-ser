@@ -5,44 +5,53 @@ import io.searchbox.annotations.JestId;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.annotations.JestId;
+
 public class Aptitude {
 
     @JestId
     private Long id;
     private String es;
     private String en;
-    private List<Behavior> behaviors = new ArrayList<>();
+    private List<Behavior> behaviors= new ArrayList<>();
 
     public Aptitude() {
     }
 
-    public Aptitude(Long id, String es, String en, List<Behavior> behaviors) {
-        this.id = id;
-        this.es = es;
-        this.en = en;
-        this.behaviors = behaviors;
-    }
+	public Aptitude(Long id, String es, String en, List<Behavior> behaviors) {
+		this.id = id;
+		this.es = es;
+		this.en = en;
+		this.behaviors = behaviors;
+	}
 
-    public String getEs() {
-        return es;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setEs(String es) {
-        this.es = es;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    }
+	public String getEs() {
+		return es;
+	}
 
-    public String getEn() {
-        return en;
-    }
+	public void setEs(String es) {
+		this.es = es;
+	}
 
-    public void setEn(String en) {
-        this.en = en;
-    }
+	public String getEn() {
+		return en;
+	}
 
-    public List<Behavior> getBehaviors() {
-        return behaviors;
-    }
+	public void setEn(String en) {
+		this.en = en;
+	}
+
+	public List<Behavior> getBehaviors() {
+		return behaviors;
+	}
 
     public void setBehaviors(List<Behavior> behaviors) {
         this.behaviors = behaviors;
@@ -52,12 +61,3 @@ public class Aptitude {
         this.behaviors.add(behavior);
 
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-}
