@@ -8,33 +8,45 @@
     </p>
 
     <div class="container">
-        <form>
+        <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+            <!--Evaluated select-->
             <div class="block">
                 <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluated" | translate}}</label>
-                <app-employee id="evaluatedAppEmployee"></app-employee>
+                <app-employee id="evaluatedAppEmployee" [formControl]="complexForm.controls['evaluated']" ngDefaultControl>
+                </app-employee>
+                <div class="alert alert-danger" *ngIf="!complexForm.controls['evaluated'].valid">You must select someone.</div>
             </div>
+
+            <!--Relationship select-->
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.relationship" | translate}}</label>
-                <select class="form-control" id="relationshipSelect" title="relationshipSelect">
+                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']">
                   <option></option>
                   <option id="team">{{ "Survey-options.relation-teammate" | translate}}</option>
                   <option id="client">{{ "Survey-options.relation-client" | translate}}</option>
                   <option id="own">{{ "Survey-options.relation-own" | translate}}</option>
                 </select>
+                <div class="alert alert-danger" *ngIf="!complexForm.controls['relationship'].valid">You must select a relation.</div>
             </div>
+            <!--Popover-->
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
-            <div class="block">
+
+            <!--Evaluator select-->
+            <div class="block" id="evaluatorBlock">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey-options.evaluator" | translate}}</label>
-                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide">
-                <app-employee id="evaluatorAppEmployee"></app-employee>
+                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide" [formControl]="complexForm.controls['evaluator']">
+                <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl></app-employee>
+                <div class="alert alert-danger" *ngIf="!complexForm.controls['evaluator'].valid">You must select someone.</div>
             </div>
+
+            <!--Competence select-->
             <div *ngIf="!selectSurvey" class="block">
                 <label for="competencesSelect"><span style="color: #134C96">*</span> 
                 {{ "Competences.title" | translate}}</label>
-                <select class="form-control" id="competencesSelect">
+                <select class="form-control" id="competencesSelect" [formControl]="complexForm.controls['competenceToEvaluate']">
                     <option></option>
                     <option>{{ "Competences.competence-opening" | translate}}</option>
                     <option>{{ "Competences.competence-communication" | translate}}</option>
@@ -45,11 +57,14 @@
                     <option>{{ "Competences.competence-development" | translate}}</option>
                     <option>{{ "Competences.competence-goal" | translate}}</option>
                 </select>
+                <div class="alert alert-danger" *ngIf="!complexForm.controls['competenceToEvaluate'].valid">You must select a competence.</div>
             </div>
+            <button type="submit" class="btn btn-default">Submit</button>
         </form>
 
     </div>
 
+    <!--Popover content-->
     <div class="hide" id="myPopover">
         <h4>{{ "Survey-options.relation-teammate" | translate}}</h4>
         <p>
