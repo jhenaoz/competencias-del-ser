@@ -23,13 +23,20 @@ public class Aptitude {
         this.behaviors = behaviors;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getEs() {
         return es;
     }
 
     public void setEs(String es) {
         this.es = es;
-
     }
 
     public String getEn() {
@@ -51,13 +58,5 @@ public class Aptitude {
     public void addBehavior(Behavior behavior) {
         this.behaviors.add(behavior);
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
