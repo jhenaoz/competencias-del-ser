@@ -76,7 +76,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         aptitude = findById(aptitudeId);
         Behavior behavior = new Behavior((long) (aptitude.getBehaviors().size() + 1), behaviorDto.getEs(), behaviorDto.getEn());
         aptitude.addBehavior(behavior);
-        save(aptitude);//TODO revisar que esto si funciona como lo imagino
+        updateAptitude(aptitude);//TODO revisar que esto si funciona como lo imagino
         return behavior;
 
     }
@@ -102,7 +102,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                     break;
                 }
             }
-            save(aptitude);
+            updateAptitude(aptitude);
             return aptitude;
         }
 
@@ -181,7 +181,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         List<Behavior> behaviors = new ArrayList<>();
         behaviors.set(behaviors.indexOf(oldBehavior), behavior);
         aptitude.setBehaviors(behaviors);
-        save(aptitude);
+        updateAptitude(aptitude);
         return behavior;
 
     }
@@ -206,6 +206,17 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 return behavior;
 
         return null;
+    }
+
+    public Aptitude updateAptitude(Aptitude aptitude) {
+        Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).id(String.valueOf(aptitude.getId())).build();
+        try {
+            client.execute(index);
+            return aptitude;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 }
