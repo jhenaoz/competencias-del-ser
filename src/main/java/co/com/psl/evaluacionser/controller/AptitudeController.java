@@ -85,7 +85,7 @@ public class AptitudeController {
         } else {
             Behavior behavior = aptitudeRepository.findBehaviorById(id, behaviorId);
             if (behavior == null) {
-                return new ResponseEntity("behavior with ID "+behaviorId+" doesn't exist",HttpStatus.NOT_FOUND);
+                return new ResponseEntity("behavior with ID "+behaviorId+" doesnt exist",HttpStatus.NOT_FOUND);
             }
         }
         return new ResponseEntity<>(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.OK);
