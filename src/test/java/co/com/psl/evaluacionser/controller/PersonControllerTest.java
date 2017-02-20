@@ -1,6 +1,8 @@
 package co.com.psl.evaluacionser.controller;
 
 import static org.junit.Assert.*;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +15,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
-//@AutoConfigureMockMvc
-public class PersonControllerTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Ignore("integration tests aren't ready yet") public class PersonControllerTest {
 //TODO wait for Jenkins until it can run integration test
 	
-//	@Autowired
-//	private MockMvc mockMvc;
-//	
-//	@Test
-//	public void getPeopleIsNotNull() throws Exception{
-//		mockMvc.perform(get("/person"))
-//		.andExpect(status().isOk());
-//	}
-//	
-//	@Test
-//	public void getPeopleIsNotEmpty() throws Exception{
-//		mockMvc.perform(get("/person"))
-//		.andExpect(status().isOk())
-//		.andExpect(jsonPath("$[0].name").exists());
-//	}
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@Test
+	public void getPeopleIsNotNull() throws Exception{
+		mockMvc.perform(get("/person"))
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void getPeopleIsNotEmpty() throws Exception{
+		mockMvc.perform(get("/person"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$[0].name").exists());
+	}
 }
