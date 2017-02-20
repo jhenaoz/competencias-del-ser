@@ -1,6 +1,8 @@
 package co.com.psl.evaluacionser.domain;
 
-//This class represents the person in an object
+/**
+ * Person class represents the person in an object
+ */
 public class Person {
 
 	private String id;
@@ -9,7 +11,9 @@ public class Person {
 
 	public Person() {
 	}
-
+	public Person(String name) {
+		this.name = name;
+	}
 	public Person(String id, String name) {
 		this.id = id;
 		this.name = name;
