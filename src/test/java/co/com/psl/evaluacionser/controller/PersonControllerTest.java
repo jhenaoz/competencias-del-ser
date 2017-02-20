@@ -1,7 +1,5 @@
 package co.com.psl.evaluacionser.controller;
 
-import static org.junit.Assert.*;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +17,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @Ignore("integration tests aren't ready yet") public class PersonControllerTest {
-//TODO wait for Jenkins until it can run integration test
 	
 	@Autowired
 	private MockMvc mockMvc;
