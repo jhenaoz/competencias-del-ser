@@ -2,7 +2,7 @@ package co.com.psl.evaluacionser.domain;
 
 public class Behavior {
 
-    private Long id;
+    private String id;
 
     private String en;
 
@@ -11,17 +11,17 @@ public class Behavior {
     public Behavior() {
     }
 
-    public Behavior(Long id, String en, String es) {
+    public Behavior(String id, String en, String es) {
         this.id = id;
         this.en = en;
         this.es = es;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

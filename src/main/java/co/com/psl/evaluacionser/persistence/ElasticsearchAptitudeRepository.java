@@ -74,7 +74,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId) {
         Aptitude aptitude;
         aptitude = findById(aptitudeId);
-        Behavior behavior = new Behavior((long) (aptitude.getBehaviors().size() + 1), behaviorDto.getEs(), behaviorDto.getEn());
+        Behavior behavior = new Behavior(String.valueOf((aptitude.getBehaviors().size()+1)), behaviorDto.getEs(), behaviorDto.getEn());
         aptitude.addBehavior(behavior);
         updateAptitude(aptitude);//TODO revisar que esto si funciona como lo imagino
         return behavior;
@@ -175,7 +175,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     @Override
     public Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto) {
-        Behavior behavior = new Behavior(Long.getLong(behaviorId), behaviorDto.getEn(), behaviorDto.getEs());
+        Behavior behavior = new Behavior(behaviorId, behaviorDto.getEn(), behaviorDto.getEs());
         Behavior oldBehavior = findBehaviorById(id, behaviorId);
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = new ArrayList<>();
