@@ -93,13 +93,18 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
           if ( this.relationshipType === "client" ){
             $("#evaluatorAppEmployee").addClass('hide');  
             $("#evaluatorAppEmployeeText").removeClass('hide'); 
+            
             $("#evaluatorAppEmployeeText").val('')
             $("#evaluatorAppEmployeeText").prop('required', true)  
+            
             $("label[for='evaluatorSelect']").removeClass('hide');                       
           }else{
+            $("#evaluatorAppEmployee option[value='']").remove();
             $("#evaluatorAppEmployee option[value='"+ $("#evaluatedAppEmployee option:selected").text() +"']").remove();
+           
             $("#evaluatorAppEmployee").removeClass('hide'); 
             $("label[for='evaluatorSelect']").removeClass('hide'); 
+            
             $("#evaluatorAppEmployeeText").addClass('hide'); 
             $("#evaluatorAppEmployeeText").prop('required', false); 
           }
