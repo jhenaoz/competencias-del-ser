@@ -30,10 +30,15 @@ public class AptitudeController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     private ResponseEntity<List<AptitudeDto>> getAptitudes() {
-        List<AptitudeDto> aptitudes = aptitudeRepository.findAll().stream().map(AptitudeDtoTransformer::convertToDto)
+        List<Aptitude> aptitudes = aptitudeRepository.findAll();
+
+        if (aptitudes == null)
+            return new ResponseEntity<List<AptitudeDto>>(HttpStatus.NOT_FOUND);
+
+        List<AptitudeDto> aptitudesDto = aptitudes.stream().map(AptitudeDtoTransformer::convertToDto)
                 .collect(Collectors.toList());
 
-		return new ResponseEntity<List<AptitudeDto>>(aptitudes, HttpStatus.OK);
+        return new ResponseEntity<List<AptitudeDto>>(aptitudesDto, HttpStatus.OK);
     }
 
     /**
@@ -44,13 +49,13 @@ public class AptitudeController {
      * @return Json schema of the specific {id} Aptitude
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	private ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
+    private ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
         Aptitude aptitudeFound = aptitudeRepository.findById(id);
 
         if (aptitudeFound == null)
-			return new ResponseEntity<AptitudeDto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<AptitudeDto>(HttpStatus.NOT_FOUND);
 
-		return new ResponseEntity<AptitudeDto>(convertToDto(aptitudeFound), HttpStatus.OK);
+        return new ResponseEntity<AptitudeDto>(convertToDto(aptitudeFound), HttpStatus.OK);
 
     }
 
@@ -71,7 +76,7 @@ public class AptitudeController {
     }
 
     /**
-	 * Gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
+     * Gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
      *
      * @param id         URL param that specifies the aptitude you want to get the behavior from
      * @param behaviorId URL param that specifies the specific behavior from the aptitude you want
@@ -83,9 +88,9 @@ public class AptitudeController {
         if (aptitudeRepository.findById(id) == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            Behavior behavior = aptitudeRepository.findBehaviorById(id, behaviorId);
-            if (behavior == null) {
-                return new ResponseEntity("behavior with ID "+behaviorId+" doesnt exist",HttpStatus.NOT_FOUND);
+            Behavior behaviors = aptitudeRepository.findBehaviorById(id, behaviorId);
+            if (behaviors == null) {
+                return new ResponseEntity("behaviors with ID " + behaviorId + " doesnt exist", HttpStatus.NOT_FOUND);
             }
         }
         return new ResponseEntity<>(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.OK);
@@ -138,8 +143,8 @@ public class AptitudeController {
      * deletes the behavior in the corresponding URL
      *
      * @param id         the id of the Aptitude
-     * @param behaviorId the id of the Behavior to delete
-     * @return should return the Aptitude without the Behavior
+     * @param behaviorId the id of the Behaviors to delete
+     * @return should return the Aptitude without the Behaviors
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     private ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {

@@ -41,10 +41,10 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     /**
-     * finds one specific Aptitude using its ID
+     * Finds one specific aptitude in the DB
      *
-     * @param id the id of the aptitude you are looking for
-     * @return an Aptitude with ES text, EN text, and a ID
+     * @param id the ID of the Aptitude
+     * @return the aptitude found
      */
     @Override
     public Aptitude findById(String id) {
@@ -55,7 +55,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
         try {
             SearchResult result = client.execute(search);
-            if (result.getTotal() ==0) return null;
+
+            if (!result.isSucceeded())
+                return null;
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,15 +68,15 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     /**
      * add a new behavior to the Aptitude
      *
-     * @param behaviorDto a JSON with the structure of the Behavior, without the ID
-     * @param aptitudeId  the ID of the Aptitude in which you are adding the Behavior
+     * @param behaviorDto a JSON with the structure of the Behaviors, without the ID
+     * @param aptitudeId  the ID of the Aptitude in which you are adding the Behaviors
      * @return The behavior you just added, now with its ID
      */
     @Override
     public Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId) {
         Aptitude aptitude;
         aptitude = findById(aptitudeId);
-        Behavior behavior = new Behavior(String.valueOf((aptitude.getBehaviors().size()+1)), behaviorDto.getEs(), behaviorDto.getEn());
+        Behavior behavior = new Behavior(String.valueOf((aptitude.getBehaviors().size() + 1)), behaviorDto.getEs(), behaviorDto.getEn());
         aptitude.addBehavior(behavior);
         updateAptitude(aptitude);//TODO revisar que esto si funciona como lo imagino
         return behavior;
@@ -84,9 +86,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     /**
      * deletes a specific behavior from a Aptitude
      *
-     * @param id         this is the id of the Aptitude containing the Behavior
+     * @param id         this is the id of the Aptitude containing the Behaviors
      * @param behaviorId this is the id of the behavior you want to delete
-     * @return an Aptitude without the Behavior specified
+     * @return an Aptitude without the Behaviors specified
      */
     @Override
     public Aptitude deleteBehavior(String id, String behaviorId) {
@@ -96,7 +98,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             aptitude = findById(id);
             List<Behavior> behaviors = aptitude.getBehaviors();
             for (Behavior behavior : behaviors) {
-                if (behavior.getId().equals(Long.getLong(behaviorId))) {
+                if (behavior.getId().equals(behaviorId)) {
                     behaviors.remove(behavior);
                     aptitude.setBehaviors(behaviors);
                     break;
@@ -142,6 +144,10 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
         try {
             SearchResult result = client.execute(search);
+
+            if (result == null)
+                return null;
+
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
@@ -161,7 +167,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     /**
      * Searches the DB for all the different Behaviors of an Aptitude
      *
-     * @return an Behavior List with all the behaviors in that aptitude
+     * @return an Behaviors List with all the behaviors in that aptitude
      */
     @Override
     public List<Behavior> findAllBehaviors(String aptitudeId) {
@@ -174,39 +180,32 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     @Override
+    public Behavior findBehaviorById(String aptitudeId, String id) {
+        List<Behavior> behaviorss = findAllBehaviors(aptitudeId);
+
+        if (behaviorss == null)
+            return null;
+
+        for (Behavior behavior : behaviorss)
+            if (id.equals(behavior.getId()))
+                return behavior;
+
+        return null;
+    }
+
+    @Override
     public Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto) {
         Behavior behavior = new Behavior(behaviorId, behaviorDto.getEn(), behaviorDto.getEs());
-        Behavior oldBehavior = findBehaviorById(id, behaviorId);
+        Behavior oldBehaviors = findBehaviorById(id, behaviorId);
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = new ArrayList<>();
-        behaviors.set(behaviors.indexOf(oldBehavior), behavior);
+        behaviors.set(behaviors.indexOf(oldBehaviors), behavior);
         aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
         return behavior;
 
     }
 
-    /**
-     * Finds one specific behavior in the DB
-     *
-     * @param aptitudeId the ID of the Aptitude the Behavior is in
-     * @param id         the id of the Behavior you are looking for
-     * @return Behavior schemed JSON with the data of the behavior you looked
-     * for
-     */
-    @Override
-    public Behavior findBehaviorById(String aptitudeId, String id) {
-        List<Behavior> behaviors = findAllBehaviors(aptitudeId);
-
-        if (behaviors == null)
-            return null;
-
-        for (Behavior behavior : behaviors)
-            if (behavior.getId().equalsIgnoreCase(id))
-                return behavior;
-
-        return null;
-    }
 
     public Aptitude updateAptitude(Aptitude aptitude) {
         Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).id(String.valueOf(aptitude.getId())).build();
