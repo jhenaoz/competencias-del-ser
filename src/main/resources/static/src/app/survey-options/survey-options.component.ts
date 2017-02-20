@@ -101,6 +101,7 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
             $("#evaluatorAppEmployee").removeClass('hide'); 
             $("label[for='evaluatorSelect']").removeClass('hide'); 
             $("#evaluatorAppEmployeeText").addClass('hide'); 
+            $("#evaluatorAppEmployeeText").prop('required', false); 
           }
       });
   }
@@ -136,7 +137,6 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
         }
         console.log(value);
     }
-    
   }
 
 
