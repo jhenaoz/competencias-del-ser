@@ -36,6 +36,7 @@ module.exports = function (config) {
               ? ['progress', 'dots', 'karma-remap-istanbul']
               : ['progress', 'dots'],
     autoWatch: true,
+    failOnEmptyTestSuite: false,
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
