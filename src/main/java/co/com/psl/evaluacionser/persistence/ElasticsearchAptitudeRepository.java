@@ -77,10 +77,14 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude;
         aptitude = findById(aptitudeId);
         List<Behavior> behaviors = aptitude.getBehaviors();
-        int nextId=1;
-        Behavior behavior = new Behavior(String.valueOf((1)),behaviorDto.getEn(),behaviorDto.getEs());
+        int nextId = 1;
+        Behavior behavior = new Behavior(String.valueOf((1)), behaviorDto.getEn(), behaviorDto.getEs());
         for (Behavior behavior1 : behaviors) {
-            if (behavior1.getId().equals(behavior.getId())){nextId++;behavior.setId(String.valueOf(nextId));continue;}
+            if (behavior1.getId().equals(behavior.getId())) {
+                nextId++;
+                behavior.setId(String.valueOf(nextId));
+                continue;
+            }
 
         }
         aptitude.addBehavior(behavior);
