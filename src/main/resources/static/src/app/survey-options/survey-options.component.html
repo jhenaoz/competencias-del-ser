@@ -1,18 +1,18 @@
 <div class="main">
-    <p *ngIf="!selectSurvey" class="text-center title">{{ "Survey-options.title-one" | translate}}</p>
-    <p *ngIf="selectSurvey" class="text-center title">{{ "Survey-options.title-all" | translate}}</p>
+    <p *ngIf="!selectSurvey" class="text-center title">{{ "Survey_options.title_one" | translate}}</p>
+    <p *ngIf="selectSurvey" class="text-center title">{{ "Survey_options.title_all" | translate}}</p>
     <hr>
     <p class="description">
-        {{ "Survey-options.description" | translate}}
-        <br><br> {{ "Survey-options.information" | translate}}
+        {{ "Survey_options.description" | translate}}
+        <br><br> {{ "Survey_options.information" | translate}}
     </p>
 
     <div class="container">
-        <form  [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+        <form id="form" [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
             <!--Evaluated select-->
             <div class="block">
                 <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey-options.evaluated" | translate}}</label>
+                {{ "Survey_options.evaluated" | translate}}</label>
                 <app-employee id="evaluatedAppEmployee" [formControl]="evaluated" ngDefaultControl>
                 </app-employee>
                 <!--Validator label-->
@@ -22,12 +22,12 @@
             <!--Relationship select-->
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey-options.relationship" | translate}}</label>
-                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']" (change)="relationChanges()">
+                {{ "Survey_options.relationship" | translate}}</label>
+                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']" #t (change)="relationChange(t.value)">
                   <option></option>
-                  <option id="team">{{ "Survey-options.relation-teammate" | translate}}</option>
-                  <option id="client">{{ "Survey-options.relation-client" | translate}}</option>                  
-                  <option id="own">{{ "Survey-options.relation-own" | translate}}</option>
+                  <option id="team">{{ "Survey_options.relation_teammate" | translate}}</option>
+                  <option id="client">{{ "Survey_options.relation_client" | translate}}</option>                  
+                  <option id="own">{{ "Survey_options.relation_own" | translate}}</option>
                 </select>
                 <!--Validator label-->
                 <div class="alert alert-danger" *ngIf="!complexForm.controls['relationship'].valid  && complexForm.controls['relationship'].dirty">You must select a relation.</div>
@@ -36,14 +36,14 @@
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
 
             <!--Evaluator select-->
-            <div class="block" id="evaluatorBlock">
+            <div *ngIf="!isSelf" class="block" id="evaluatorBlock">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey-options.evaluator" | translate}}</label>
+                {{ "Survey_options.evaluator" | translate}}</label>
                 <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide" [formControl]="complexForm.controls['evaluator']">
                 <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl>
                 </app-employee>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="complexForm.controls['evaluator'].touched && complexForm.controls['evaluator'].dirty">You must select someone.</div>
+                <div id="alertEvaluator" class="alert alert-danger hide">You must select someone.</div>
             </div>
 
             <!--Competence select-->
@@ -52,37 +52,40 @@
                 {{ "Competences.title" | translate}}</label>
                 <select class="form-control" id="competencesSelect" [formControl]="complexForm.controls['competenceToEvaluate']">
                     <option></option>
-                    <option>{{ "Competences.competence-opening" | translate}}</option>
-                    <option>{{ "Competences.competence-communication" | translate}}</option>
-                    <option>{{ "Competences.competence-initiative" | translate}}</option>
-                    <option>{{ "Competences.competence-client-orientation" | translate}}</option>
-                    <option>{{ "Competences.competence-goals" | translate}}</option>
-                    <option>{{ "Competences.competence-teamwork" | translate}}</option>
-                    <option>{{ "Competences.competence-development" | translate}}</option>
-                    <option>{{ "Competences.competence-goal" | translate}}</option>
+                    <option>{{ "Competences.competence_opening" | translate}}</option>
+                    <option>{{ "Competences.competence_communication" | translate}}</option>
+                    <option>{{ "Competences.competence_initiative" | translate}}</option>
+                    <option>{{ "Competences.competence_client_orientation" | translate}}</option>
+                    <option>{{ "Competences.competence_goals" | translate}}</option>
+                    <option>{{ "Competences.competence_teamwork" | translate}}</option>
+                    <option>{{ "Competences.competence_development" | translate}}</option>
+                    <option>{{ "Competences.competence_goal" | translate}}</option>
                 </select>
                 <!--Validator label-->
                 <div class="alert alert-danger" *ngIf="complexForm.controls['competenceToEvaluate'].invalid && complexForm.controls['competenceToEvaluate'].dirty">You must select a competence.</div>
             </div>
-            <button type="submit" class="btn btn-default" [disabled]="!complexForm.valid">Submit</button>
+            <button type="submit" class="btn btn-default" [disabled]="!complexForm.valid && !isValid">Submit</button>
+            <div class="margin-20"> {{ complexForm.value | json }}</div>
         </form>
+
 
     </div>
 
     <!--Popover content-->
     <div class="hide" id="myPopover">
-        <h4>{{ "Survey-options.relation-teammate" | translate}}</h4>
+        <h4>{{ "Survey_options.relation_teammate" | translate}}</h4>
         <p>
-            {{ "Survey-options.relation-teammate-description" | translate}}
+            {{ "Survey_options.relation_teammate_description" | translate}}
         </p>
-        <h4>{{ "Survey-options.relation-client" | translate}}</h4>
+        <h4>{{ "Survey_options.relation_client" | translate}}</h4>
         <p>
-            {{ "Survey-options.relation-client-description" | translate}}
+            {{ "Survey_options.relation_client_description" | translate}}
         </p>
-        <h4>{{ "Survey-options.relation-own" | translate}}</h4>
+        <h4>{{ "Survey_options.relation_own" | translate}}</h4>
         <p>
-            {{ "Survey-options.relation-own-description" | translate}}
+            {{ "Survey_options.relation_own_description" | translate}}
         </p>
     </div>
 </div>
-<app-footer (startNewSurvey)="startSurvey()" ></app-footer>
+
+<app-footer (startNewSurvey)="startSurvey()"></app-footer>

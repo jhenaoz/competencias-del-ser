@@ -8,6 +8,8 @@ import { ISurvey, IAptitude, IBehavior } from '../survey/survey-model';
 import { IEmployee } from '../employee/employee.model';
 import { SurveyService } from '../survey/survey.service';
 
+import { TranslateService } from 'ng2-translate/src/translate.service';
+
 import * as jQuery from 'jquery';
 
 @Component({
@@ -15,6 +17,7 @@ import * as jQuery from 'jquery';
   templateUrl: './survey-options.component.html',
   styleUrls: ['./survey-options.component.css', '../app.component.css']
 })
+
 export class SurveyOptionsComponent implements OnInit, OnChanges {
   currentUrl: string;
   selectSurvey: boolean;
@@ -27,31 +30,30 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
   relationship: FormControl
   competenceToEvaluate: FormControl
 
+  // Relationship variables
+  isSelf: Boolean = false;
+  selfText: String
+  clientText: String
+  teammateText: String
+
+  isValid: Boolean = false;
+
   // We are creating a new object and setting its type to FormGroup
   complexForm : FormGroup;
 
   // We are passing an instance of  Router to our constructor
   // We are passing an instance of the FormBuilder to our constructor
-  constructor(private router:Router, private formBuilder: FormBuilder, private surveyService: SurveyService) { 
+  constructor(private router:Router, private formBuilder: FormBuilder, private surveyService: SurveyService, private translate: TranslateService) { 
   }
   
-  ownValidator(){
-     const validator = {
-      'evaluated': [null, Validators.required],
-      'relationship': [null, Validators.required],
-      'competenceToEvaluate': [null, Validators.required]
-    }
-    if(this.relationshipType === "own"){
-      let validator = {
-        'evaluated': [null, Validators.required],
-        'relationship': [null, Validators.required],
-        'competenceToEvaluate': [null, Validators.required]
-      }
-    }
-   return validator;
-  }
 
-  ngOnInit() { 
+  ngOnInit() {   
+    let testTrad;
+    this.translate.get('Survey_options').subscribe(res => {
+      this.selfText = res.relation_own;
+      this.clientText = res.relation_client;
+      this.teammateText = res.relation_teammate;
+    });
 
     this.currentUrl = this.router.url
     this.selectSurvey = this.isOnePath();
@@ -63,6 +65,7 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
             return clone;
         }
       });
+      
       this.evaluated = new FormControl('',  Validators.required);
       this.evaluator = new FormControl('');
       this.relationship = new FormControl('',  Validators.required);
@@ -85,26 +88,20 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
 
       // Function used if the evaluator is the Client, we change the SELECT for an INPUT TEXT
       // With that, the client will be able to put his name.
-      $("#relationshipSelect").focusout(function(){
-          this.relationshipType = $("#relationshipSelect option:selected").attr('id');
+     $("#relationshipSelect").focusout(function(){
+           this.relationshipType = $("#relationshipSelect option:selected").attr('id');
           if ( this.relationshipType === "client" ){
             $("#evaluatorAppEmployee").addClass('hide');  
-            $("#evaluatorAppEmployeeText").removeClass('hide');   
+            $("#evaluatorAppEmployeeText").removeClass('hide'); 
+            $("#evaluatorAppEmployeeText").val('')
+            $("#evaluatorAppEmployeeText").prop('required', true)  
             $("label[for='evaluatorSelect']").removeClass('hide');                       
-          }else if( this.relationshipType === "own" ){
-           // $("#evaluatorAppEmployee").addClass('hide'); 
-            $('#evaluatorAppEmployee').find('option[value="' + $("#evaluatedAppEmployee option:selected").text() + '"]').prop('selected', true);
-            $("#evaluatorAppEmployeeText").addClass('hide');  
-           // $("label[for='evaluatorSelect']").addClass('hide');
           }else{
+            $("#evaluatorAppEmployee option[value='"+ $("#evaluatedAppEmployee option:selected").text() +"']").remove();
             $("#evaluatorAppEmployee").removeClass('hide'); 
             $("label[for='evaluatorSelect']").removeClass('hide'); 
             $("#evaluatorAppEmployeeText").addClass('hide'); 
           }
-      });
-
-      $("#footerButton").click(function() {
-        alert( "Handler for .click() called." );
       });
   }
 
@@ -112,30 +109,40 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
    
   }
 
-  relationChanges(){
+  relationChange(value){
+    this.selfText === value ? this.isSelf = true : this.isSelf = false;
+   }
 
-  }
 
   isOnePath() : boolean {
     return this.currentUrl == "/survey-setup" ? true : false 
   }
 
- /* submitForm(value: any){
-    this.evaluator = new FormControl('', Validators.required);
+  submitForm(value: any){
+    if(value.evaluator === "" && !this.isSelf){
+      $("#alertEvaluator").removeClass("hide");
+    }else{
+        switch(value.relationship){
+        case this.selfText:
+            value.evaluator = value.evaluated;
+            value.relationship = "self-assessment";
+            break;
+        case this.clientText:
+            value.relationship = "client";
+            break;
+        case this.teammateText:
+            value.relationship = "teammate"
+            break;
+        }
+        console.log(value);
+    }
+    
+  }
 
-    this.complexForm = this.formBuilder.group({
-      evaluated: this.evaluated,
-      evaluator: this.evaluator,
-      relationship: this.relationship,
-    })
-    console.log(value);
-  }*/
 
   startSurvey(){
-    
-  
     //Next steps are just for testing component's communication, they are not yet the real way.
-/*    let survey: ISurvey = {
+    /*  let survey: ISurvey = {
         evaluator: "evaluator1",
         evaluated: [{employeeId: 1, name: "evaluated1"}],
         role: "teammate",
