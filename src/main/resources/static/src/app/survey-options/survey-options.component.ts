@@ -36,7 +36,15 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
   clientText: String
   teammateText: String
 
-  isValid: Boolean = false;
+  // Competence variables
+  openessText: string
+  communicationText: string
+  initiativeText: string
+  client_orientationText: string
+  goalsText: string
+  teamworkText: string
+  developmentText: string
+  goalText: string
 
   // We are creating a new object and setting its type to FormGroup
   complexForm : FormGroup;
@@ -48,11 +56,21 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
   
 
   ngOnInit() {   
-    let testTrad;
     this.translate.get('Survey_options').subscribe(res => {
       this.selfText = res.relation_own;
       this.clientText = res.relation_client;
       this.teammateText = res.relation_teammate;
+    });
+    this.translate.get('Competences').subscribe(res => {
+      // Competence variables initialization
+      this.openessText = res.competence_opening
+      this.communicationText = res.competence_communication
+      this.initiativeText = res.competence_initiative
+      this.client_orientationText = res.competence_client_orientation
+      this.goalsText = res.competence_goals
+      this.teamworkText = res.competence_teamwork
+      this.developmentText = res.competence_development
+      this.goalText = res.competence_goal
     });
 
     this.currentUrl = this.router.url
@@ -121,7 +139,7 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
 
 
   isOnePath() : boolean {
-    return this.currentUrl == "/survey-setup" ? true : false 
+    return this.currentUrl === "/survey-setup" ? true : false 
   }
 
   submitForm(value: any){
@@ -140,6 +158,37 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
             value.relationship = "teammate"
             break;
         }
+        console.log(this.teamworkText)
+        switch(value.competenceToEvaluate){
+           case this.openessText:
+              value.competenceToEvaluate = "openess"
+              break;
+           case this.communicationText:
+              value.competenceToEvaluate = "communication"
+              break;
+           case this.initiativeText:
+              value.competenceToEvaluate = "initiative"
+              break;
+           case this.client_orientationText:
+              value.competenceToEvaluate = "client_orientation"
+              break;
+           case this.goalsText:
+               value.competenceToEvaluate = "achivement_and_results"
+              break;
+           case this.teamworkText:
+              value.competenceToEvaluate = "teamwork"
+              break;
+           case this.developmentText:
+              value.competenceToEvaluate = "development_oriented_leadership"
+              break;
+           case this.goalText:
+              value.competenceToEvaluate = "achivement_oriented_leadership"
+              break;
+           default: 
+              value.competenceToEvaluate = ""
+              break;
+        }
+        
         console.log(value);
     }
   }
