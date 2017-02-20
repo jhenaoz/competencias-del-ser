@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+/*import { TestBed, async, inject } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
@@ -9,8 +9,6 @@ import {
   EmployeeComponent,
   IEmployee
  } from './index';
-
-
 
 describe('EmployeeService', () => {
   let employeeService = EmployeeService
@@ -34,22 +32,17 @@ describe('EmployeeService', () => {
 
   describe('getEmployees', () => {
 
-/*    it('should get all employees',  ()=>{
+    it('should get all employees',  ()=>{
       let result = <IEmployee[]> []
       result = this.employeeService.getEmployees()
       mockHttp.delete.and.returnValue(Observable.of(false))
       expect(true).toBe(true)
       expect(result.length).toBe(8)
       expect(mockHttp.get).toHaveBeenCalledWith('url')
-    })*/
-    
-    
-    
+    })
   })
 
-
-
-/*  it('should ...', inject([EmployeeService], (service: EmployeeService) => {
+  it('should ...', inject([EmployeeService], (service: EmployeeService) => {
     expect(service).toBeTruthy();
-  }));*/
-});
+  }));
+});*/
