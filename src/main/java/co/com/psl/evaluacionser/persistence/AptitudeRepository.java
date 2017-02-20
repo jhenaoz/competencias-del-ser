@@ -1,20 +1,25 @@
 package co.com.psl.evaluacionser.persistence;
 
-import java.util.List;
-
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
+import co.com.psl.evaluacionser.domain.BehaviorDto;
+
+import java.util.List;
 
 public interface AptitudeRepository {
+    Aptitude save(Aptitude aptitude);
 
-	public Aptitude save(Aptitude aptitude);
+    Aptitude deleteBehavior(String id, String behaviorId);
 
-	public List<Aptitude> findAll();
+    Behavior findBehaviorById(String id, String behaviorId);
 
-	public Aptitude findById(String id);
+    Behavior addBehavior(BehaviorDto behaviorDto, String id);
 
-	public List<Behavior> findAllBehaviors(String aptitudeId);
+    Aptitude findById(String id);
 
-	public Behavior findBehaviorById(String aptitudeId, String id);
+    List<Aptitude> findAll();
 
+    List<Behavior> findAllBehaviors(String aptitudeId);
+
+    Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto);
 }
