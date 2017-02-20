@@ -1,8 +1,8 @@
 package co.com.psl.evaluacionser.domain;
 
-import io.searchbox.annotations.JestId;
-
-//This class represents the person in an object
+/**
+ * Person class represents the person in an object
+ */
 public class Person {
 
 	private String id;
@@ -11,7 +11,6 @@ public class Person {
 
 	public Person() {
 	}
-
 	public Person(String id, String name) {
 		this.id = id;
 		this.name = name;

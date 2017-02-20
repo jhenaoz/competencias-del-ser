@@ -15,19 +15,28 @@ import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
 
-// The implementation of the PersonReposotiry with elasticsearch
+/**
+ * The implementation of the PersonRepository with elasticsearch
+ */
 @Component
 public class ElasticsearchPersonRepository implements PersonRepository {
 
-	// These names are congruent with the DB
+	/**
+	 * These Strings must be congruent with the elasticsearch database
+	 */
 	private String PERSON_INDEX_NAME = "person";
 	private String PERSON_TYPE_NAME = "employee";
 
-	// Ask Spring for a created bean
+	/**
+	 * Calls the JestClient defined as a bean
+	 */
 	@Autowired
 	private JestClient client;
 
-	// Returns all the people of the employee type
+	/**
+	 * This method find all indexes person with type employee
+	 * @return person list from the elastisearch
+	 */
 	@Override
 	public List<Person> findAll() {
 		SearchResult result = null;
@@ -49,7 +58,6 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
 	@Override
 	public Person save(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+		return person;
 	}
 }

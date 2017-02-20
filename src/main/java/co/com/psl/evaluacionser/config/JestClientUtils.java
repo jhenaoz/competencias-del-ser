@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 
 public class JestClientUtils {
 
+	/**
+	 * 
+	 */
     //Application var for the host and the port
     @Value("${elasticport}")
     private String port;
