@@ -1,20 +1,38 @@
 import { IEmployee } from '../employee/employee.model';
 
-export interface ISurvey {
+export class Survey {
     evaluator: string
-    evaluated: IEmployee[]
+    evaluated: string
     role: string
-    aptitudes: IAptitude[]
+    aptitudes: Aptitude[]
+
+    constructor(){
+        this.evaluator = ''
+        this.role = ''
+        this.evaluated = ''
+        this.aptitudes = new Array<Aptitude>()
+    }
 }
 
-export interface IAptitude {
+export class Aptitude {
     aptitudeId: string
     observation: string
-    behaviors: IBehavior[]
+    behaviors: Behavior[]
+
+    constructor(){
+        this.aptitudeId = ''
+        this.observation = ''
+        this.behaviors = new Array<Behavior>()
+    }
 
 }
 
-export interface IBehavior {
+export class Behavior {
     behaviorId: string
     score: number
+
+    constructor(){
+        this.behaviorId = ''
+        this.score = 0
+    }
 }

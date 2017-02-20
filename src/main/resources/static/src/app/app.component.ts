@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from 'ng2-translate/src/translate.service';
-import { ISurvey } from './survey/survey-model';
+import { Survey } from './survey/survey-model';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { ISurvey } from './survey/survey-model';
 })
 export class AppComponent {
 
-  survey: ISurvey
+  survey: Survey
 
   constructor(private translate: TranslateService) {
     //Language setup
@@ -18,7 +18,7 @@ export class AppComponent {
     translate.use('es');
   }
 
-  startSurvey(survey: ISurvey){
+  startSurvey(survey: Survey){
     this.survey.evaluator = survey.evaluator
     this.survey.role = survey.role
     this.survey.evaluated.push(survey.evaluated[0])

@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { ISurvey,IAptitude, IBehavior } from './survey-model';
+import { Survey,Aptitude, Behavior } from './survey-model';
 
 @Injectable()
 export class SurveyService {
 
-  survey: ISurvey
+  survey: Survey
 
-  constructor() { }
+  constructor() { this.survey = new Survey() }
 
   startSurvey(survey){
     this.survey.evaluator = survey.evaluator
     this.survey.role = survey.role
-    this.survey.evaluated.push(survey.evaluated[0])
-    console.log("Funciona el servicio")
-    console.log("Funciona el servicio")
-    console.log("Funciona el servicio")
+    this.survey.evaluated = survey.evaluated
+    this.testPrint()
   }
 
     testPrint(){

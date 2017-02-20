@@ -4,7 +4,7 @@ import { Component, OnInit, EventEmitter, Output, OnChanges } from '@angular/cor
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { ISurvey, IAptitude, IBehavior } from '../survey/survey-model';
+import { Survey, Aptitude, Behavior } from '../survey/survey-model';
 import { IEmployee } from '../employee/employee.model';
 import { SurveyService } from '../survey/survey.service';
 
@@ -147,13 +147,13 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
 
   startSurvey(){
     //Next steps are just for testing component's communication, they are not yet the real way.
-    /*  let survey: ISurvey = {
-        evaluator: "evaluator1",
-        evaluated: [{employeeId: 1, name: "evaluated1"}],
-        role: "teammate",
-        aptitudes: <IAptitude[]>[]
+      let survey: Survey = {
+        evaluator: this.complexForm.controls['evaluator'].value,
+        evaluated: this.complexForm.controls['evaluated'].value,
+        role: this.complexForm.controls['relationship'].value,
+        aptitudes: <Aptitude[]>[]
     }
-    this.surveyService.startSurvey(survey)*/
+    this.surveyService.startSurvey(survey)
     this.router.navigate(['/survey'])
     
     // this.startSurveyAll.emit(survey)
