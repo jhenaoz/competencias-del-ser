@@ -55,7 +55,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
         try {
             SearchResult result = client.execute(search);
-            if (result.getTotal() == null) return null;
+            if (result.getTotal() ==0) return null;
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
             e.printStackTrace();
@@ -202,7 +202,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             return null;
 
         for (Behavior behavior : behaviors)
-            if (Long.getLong(id).equals(behavior.getId()))
+            if (behavior.getId().equalsIgnoreCase(id))
                 return behavior;
 
         return null;

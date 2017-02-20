@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static co.com.psl.evaluacionser.controller.AptitudeDtoTransformer.convertToDto;
+
 
 @RestController
 @RequestMapping(value = "/aptitude")
@@ -31,7 +33,7 @@ public class AptitudeController {
         List<AptitudeDto> aptitudes = aptitudeRepository.findAll().stream().map(AptitudeDtoTransformer::convertToDto)
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(aptitudes, HttpStatus.OK);
+		return new ResponseEntity<List<AptitudeDto>>(aptitudes, HttpStatus.OK);
     }
 
     /**
@@ -42,13 +44,13 @@ public class AptitudeController {
      * @return Json schema of the specific {id} Aptitude
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    private ResponseEntity<Aptitude> getAptitudeById(@PathVariable("id") String id) {
+	private ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
         Aptitude aptitudeFound = aptitudeRepository.findById(id);
 
         if (aptitudeFound == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<AptitudeDto>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(aptitudeFound, HttpStatus.OK);
+		return new ResponseEntity<AptitudeDto>(convertToDto(aptitudeFound), HttpStatus.OK);
 
     }
 
@@ -69,7 +71,7 @@ public class AptitudeController {
     }
 
     /**
-     * gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
+	 * Gets the JSON of a specified (via Aptitude ID and BehaviorID) behavior
      *
      * @param id         URL param that specifies the aptitude you want to get the behavior from
      * @param behaviorId URL param that specifies the specific behavior from the aptitude you want
@@ -83,7 +85,7 @@ public class AptitudeController {
         } else {
             Behavior behavior = aptitudeRepository.findBehaviorById(id, behaviorId);
             if (behavior == null) {
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
+                return new ResponseEntity("behavior with ID "+behaviorId+" doesnt exist",HttpStatus.NOT_FOUND);
             }
         }
         return new ResponseEntity<>(aptitudeRepository.findBehaviorById(id, behaviorId), HttpStatus.OK);
