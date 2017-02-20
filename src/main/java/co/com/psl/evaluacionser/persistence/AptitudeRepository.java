@@ -22,5 +22,5 @@ public interface AptitudeRepository {
 
 	Behavior findBehaviorById(String aptitudeId, String id);
 
-	Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto);
+	Behavior updateBehaviorById(String id, Behavior behavior);
 }

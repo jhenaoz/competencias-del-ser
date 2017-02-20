@@ -112,8 +112,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Aptitude deleteBehavior(String id, String behaviorId) {
         if (findBehaviorById(id, behaviorId) == null) return null;
         else {
-            Aptitude aptitude;
-            aptitude = findById(id);
+            Aptitude aptitude = findById(id);
             List<Behavior> behaviors = aptitude.getBehaviors();
             for (Behavior behavior : behaviors) {
                 int i=1;
@@ -168,7 +167,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         try {
             SearchResult result = client.execute(search);
 
-            if (result == null)
+            if (!result.isSucceeded())
                 return null;
 
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
@@ -209,11 +208,10 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     @Override
-    public Behavior updateBehaviorById(String id, String behaviorId, BehaviorDto behaviorDto) {
+    public Behavior updateBehaviorById(String id, Behavior behavior) {
         Aptitude aptitude = findById(id);
-        Behavior behavior = new Behavior(behaviorId,behaviorDto.getEn(),behaviorDto.getEs());
         List<Behavior> behaviors = aptitude.getBehaviors();
-        behaviors.set(Integer.parseInt(behaviorId)-1,behavior);
+        behaviors.set(Integer.parseInt(behavior.getId())-1,behavior);
         aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
         return behavior;

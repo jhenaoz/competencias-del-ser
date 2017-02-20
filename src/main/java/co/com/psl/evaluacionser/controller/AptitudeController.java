@@ -135,8 +135,8 @@ public class AptitudeController {
 		}
 		if (aptitudeRepository.findBehaviorById(id, behaviorId) == null) {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		} else
-			return new ResponseEntity(aptitudeRepository.updateBehaviorById(id, behaviorId, behaviorDto), HttpStatus.ACCEPTED);
+		} Behavior behavior = new Behavior(behaviorId,behaviorDto.getEn(),behaviorDto.getEs());
+		return new ResponseEntity(aptitudeRepository.updateBehaviorById(id, behavior), HttpStatus.ACCEPTED);
 	}
 
 	/**
