@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import co.com.psl.evaluacionser.domain.Person;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
@@ -35,6 +36,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
 	/**
 	 * This method find all indexes person with type employee
+	 * 
 	 * @return person list from the elastisearch
 	 */
 	@Override
@@ -58,6 +60,13 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
 	@Override
 	public Person save(Person person) {
-		return person;
+		Index index = new Index.Builder(person).index(PERSON_INDEX_NAME).type(PERSON_TYPE_NAME).build();
+		try {
+			client.execute(index);
+			return person;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 }
