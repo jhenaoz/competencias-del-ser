@@ -1,5 +1,7 @@
 package co.com.psl.evaluacionser.domain;
 
+import io.searchbox.annotations.JestId;
+
 //This class represents the person in an object
 public class Person {
 
