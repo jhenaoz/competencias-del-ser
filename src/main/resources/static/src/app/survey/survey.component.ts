@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
+import { SurveyService } from './survey.service';
+
 import * as jQuery from 'jquery';
 
 @Component({
@@ -13,7 +15,7 @@ export class SurveyComponent implements OnInit {
 
   public next: string;
 
-  constructor() { }
+  constructor(private surveyService: SurveyService) { }
 
   ngOnInit() {
     this.next = 'Orient';
