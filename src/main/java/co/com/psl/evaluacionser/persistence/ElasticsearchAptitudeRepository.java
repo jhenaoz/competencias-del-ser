@@ -148,30 +148,13 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId) {
-        Aptitude aptitude;
-        aptitude = findById(aptitudeId);
+        Aptitude aptitude = findById(aptitudeId);
         List<Behavior> behaviors = aptitude.getBehaviors();
-        int nextId = -1;
-        boolean flag;
-        for (int i = 1; i <= behaviors.size() + 1; i++) {
-            flag = true;
-            for (Behavior behavior1 : behaviors) {
-                if (Integer.parseInt(behavior1.getId()) == i) {
-                    flag = false;
-                }
 
-            }
-            if (flag) {
-                nextId = i;
-                break;
-            }
-        }
-        Behavior behavior = new Behavior(String.valueOf(nextId), behaviorDto.getEn(), behaviorDto.getEs());
-        behavior.setId(String.valueOf(nextId));
+        Behavior behavior = new Behavior(String.valueOf(behaviors.size() + 1), behaviorDto.getEn(), behaviorDto.getEs());
         aptitude.addBehavior(behavior);
         updateAptitude(aptitude);
         return behavior;
-
     }
 
     /**
@@ -183,25 +166,28 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude deleteBehavior(String id, String behaviorId) {
-        if (findBehaviorById(id, behaviorId) == null) return null;
-        else {
-            Aptitude aptitude = findById(id);
-            List<Behavior> behaviors = aptitude.getBehaviors();
-            for (Behavior behavior : behaviors) {
-                int i = 1;
-                if (behavior.getId().equals(behaviorId)) {
-                    behaviors.remove(behavior);
-                    for (Behavior behavior1 : behaviors) {
-                        behavior1.setId(String.valueOf(i));
-                        i++;
-                    }
-                    aptitude.setBehaviors(behaviors);
-                    break;
+        if (findBehaviorById(id, behaviorId) == null)
+            return null;
+
+        Aptitude aptitude = findById(id);
+        List<Behavior> behaviors = aptitude.getBehaviors();
+
+        for (Behavior behavior : behaviors) {
+            if (behaviorId.equals(behavior.getId())) {
+                behaviors.remove(behavior);
+
+                for (int i = 0; i < behaviors.size(); i++) {
+                    behaviors.get(i).setId(String.valueOf(i + 1));
                 }
+
+                aptitude.setBehaviors(behaviors);
+                break;
             }
-            updateAptitude(aptitude);
-            return aptitude;
         }
+
+        updateAptitude(aptitude);
+        return aptitude;
+
 
     }
 
