@@ -18,10 +18,13 @@ export class SurveyComponent implements OnInit {
   constructor(private surveyService: SurveyService) { }
 
   ngOnInit() {
-    this.next = 'Orient';
+    this.next = 'logros';
   }
 
   nextAptitude(){
+    if(this.next !== ""){
+       $("#openess").addClass('active');
+    }else{
     // console.log(this.next);
     // $(".active").removeClass("active");
     // $(".col-md-1:contains('"+this.next+"')").addClass("active");
@@ -30,8 +33,8 @@ export class SurveyComponent implements OnInit {
     //   console.log($(this).text());
     // });
 
-    $(".active").next().addClass('active');
-    
+      $(".active").next().addClass('active');
+    }
   }
 
 }
