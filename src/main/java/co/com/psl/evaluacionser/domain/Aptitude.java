@@ -1,17 +1,17 @@
 package co.com.psl.evaluacionser.domain;
 
-import java.util.List;
-
 import io.searchbox.annotations.JestId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Aptitude {
 
 	@JestId
 	private Long id;
-
 	private String es;
 	private String en;
-	private List<Behavior> behaviors;
+	private List<Behavior> behaviors = new ArrayList<>();
 
 	public Aptitude() {
 	}
@@ -53,5 +53,10 @@ public class Aptitude {
 
 	public void setBehaviors(List<Behavior> behaviors) {
 		this.behaviors = behaviors;
+	}
+
+	public void addBehavior(Behavior behavior) {
+		this.behaviors.add(behavior);
+
 	}
 }

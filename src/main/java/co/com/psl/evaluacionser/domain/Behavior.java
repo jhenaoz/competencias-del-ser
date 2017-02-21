@@ -4,18 +4,18 @@ public class Behavior {
 
 	private String id;
 
-	private String es;
+    private String en;
 
-	private String en;
+    private String es;
 
-	public Behavior() {
-	}
+    public Behavior() {
+    }
 
-	public Behavior(String id, String es, String en) {
-		this.id = id;
-		this.es = es;
-		this.en = en;
-	}
+    public Behavior(String id, String en, String es) {
+        this.id = id;
+        this.en = en;
+        this.es = es;
+    }
 
 	public String getId() {
 		return id;

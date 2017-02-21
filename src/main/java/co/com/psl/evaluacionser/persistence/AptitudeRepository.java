@@ -4,17 +4,23 @@ import java.util.List;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
+import co.com.psl.evaluacionser.domain.BehaviorDto;
 
 public interface AptitudeRepository {
 
-	public Aptitude save(Aptitude aptitude);
+	Aptitude save(Aptitude aptitude);
 
-	public List<Aptitude> findAll();
+	List<Aptitude> findAll();
 
-	public Aptitude findById(String id);
+	Aptitude findById(String id);
 
-	public List<Behavior> findAllBehaviors(String aptitudeId);
+	List<Behavior> findAllBehaviors(String aptitudeId);
 
-	public Behavior findBehaviorById(String aptitudeId, String id);
+	Behavior findBehaviorById(String aptitudeId, String id);
 
+	Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId);
+
+	Aptitude deleteBehavior(String id, String behaviorId);
+
+	Behavior updateBehaviorById(String id, Behavior behavior);
 }
