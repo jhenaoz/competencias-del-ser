@@ -5,8 +5,8 @@ import co.com.psl.evaluacionser.domain.AptitudeDto;
 
 public class AptitudeTransformer {
 
-    public static AptitudeDto convertToDto(Aptitude aptitude) {
-        return new AptitudeDto(aptitude.getId().toString(), aptitude.getEs(), aptitude.getEn());
-    }
+	public static AptitudeDto convertToDto(Aptitude aptitude) {
+		return new AptitudeDto(aptitude.getId().toString(), aptitude.getEs(), aptitude.getEn());
+	}
 
 }

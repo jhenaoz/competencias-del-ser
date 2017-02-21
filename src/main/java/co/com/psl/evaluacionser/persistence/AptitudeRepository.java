@@ -8,10 +8,6 @@ import co.com.psl.evaluacionser.domain.BehaviorDto;
 
 public interface AptitudeRepository {
 
-	Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId);
-
-	Aptitude deleteBehavior(String id, String behaviorId);
-
 	Aptitude save(Aptitude aptitude);
 
 	List<Aptitude> findAll();
@@ -21,6 +17,10 @@ public interface AptitudeRepository {
 	List<Behavior> findAllBehaviors(String aptitudeId);
 
 	Behavior findBehaviorById(String aptitudeId, String id);
+
+	Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId);
+
+	Aptitude deleteBehavior(String id, String behaviorId);
 
 	Behavior updateBehaviorById(String id, Behavior behavior);
 }
