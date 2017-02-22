@@ -2,14 +2,16 @@
 // https://karma-runner.github.io/0.13/config/configuration-file.html
 
 module.exports = function (config) {
-  config.set({
+  var defaultConfig = {
     basePath: '',
     frameworks: ['jasmine', 'angular-cli'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-remap-istanbul'),
-      require('angular-cli/plugins/karma')
+      require('angular-cli/plugins/karma'),
+      require('karma-junit-reporter'),
+      require('karma-phantomjs-launcher')
     ],
     files: [
       { pattern: './src/test.ts', watched: false }
@@ -31,13 +33,29 @@ module.exports = function (config) {
       environment: 'dev'
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['progress', 'karma-remap-istanbul']
-              : ['progress'],
+              ? ['progress', 'dots', 'karma-remap-istanbul']
+              : ['progress', 'dots'],
+    autoWatch: true,
+    failOnEmptyTestSuite: false,
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false
-  });
+  };
+
+  console.log("ENV= ", process.env.ENV);
+  if(process.env.ENV === 'CI'){
+    defaultConfig.autoWatch = false;
+    defaultConfig.singleRun = true;
+    defaultConfig.browsers = ['PhantomJS'];
+    defaultConfig.reporters.push('junit');
+    defaultConfig.junitReporter = {
+       outputDir: 'test_results',
+       outputFile: 'test-results.xml'
+    };
+    console.log('CONFIG FOR JENKINS EXECUTION', defaultConfig);
+  }
+
+  config.set(defaultConfig);
 };
