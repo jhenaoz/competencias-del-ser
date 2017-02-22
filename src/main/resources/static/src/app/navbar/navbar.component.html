@@ -1,4 +1,8 @@
-<nav class="navbar" >
+<!--
+    * Navbar for the whole app, it contains function to change the current language to ES or EN
+-->
+
+<nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand">
@@ -8,14 +12,14 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    {{ "Navbar.language-change" | translate }} <span class="caret"></span>
+                    {{ "Navbar.language_change" | translate }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                      <a (click)="changeLang('en')">EN</a>
+                        <a (click)="changeLang('en')">EN</a>
                     </li>
                     <li>
-                      <a (click)="changeLang('es')">ES</a>
+                        <a (click)="changeLang('es')">ES</a>
                     </li>
                 </ul>
             </li>
