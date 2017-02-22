@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SurveyService } from '../survey/survey.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private surveyService: SurveyService) { }
 
   ngOnInit() {
+  }
+
+  OneData(value){
+    this.surveyService.oneSurvey = value
+    console.log(value)
   }
 
 }

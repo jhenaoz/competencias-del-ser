@@ -6,6 +6,7 @@ import { Survey,Aptitude, Behavior } from './survey-model';
 export class SurveyService {
 
   survey: Survey
+  oneSurvey: boolean
 
   constructor() { this.survey = new Survey() }
 

@@ -1,6 +1,6 @@
 <div class="main">
-    <p *ngIf="!selectSurvey" class="text-center title">{{ "Survey_options.title_one" | translate}}</p>
-    <p *ngIf="selectSurvey" class="text-center title">{{ "Survey_options.title_all" | translate}}</p>
+    <p *ngIf="!surveyService.oneSurvey" class="text-center title">{{ "Survey_options.title_one" | translate}}</p>
+    <p *ngIf="surveyService.oneSurvey" class="text-center title">{{ "Survey_options.title_all" | translate}}</p>
     <hr>
     <p class="description">
         {{ "Survey_options.description" | translate}}
@@ -46,7 +46,7 @@
             </div>
 
             <!--Competence select-->
-            <div *ngIf="!selectSurvey" class="block">
+            <div *ngIf="!surveyService.oneSurvey" class="block">
                 <label for="competencesSelect"><span style="color: #134C96">*</span> 
                 {{ "Competences.title" | translate}}</label>
                 <select class="form-control" id="competencesSelect" [formControl]="complexForm.controls['competenceToEvaluate']">

@@ -19,9 +19,9 @@ import * as jQuery from 'jquery';
 })
 
 export class SurveyOptionsComponent implements OnInit, OnChanges {
-  currentUrl: string;
-  selectSurvey: boolean;
-  @Output() startSurveyAll= new EventEmitter
+/*  currentUrl: string;
+  selectSurvey: boolean;*/
+  // @Output() startSurveyAll= new EventEmitter
 
   public relationshipType: String;
   // newSurveyForm: FormGroup
@@ -73,8 +73,8 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
       this.goalText = res.competence_goal
     });
 
-    this.currentUrl = this.router.url
-    this.selectSurvey = this.isOnePath();
+/*    this.currentUrl = this.router.url
+    this.selectSurvey = this.isOnePath();*/
   
     (<any> $('[data-toggle="popover"]')).popover({
         html: true,
@@ -88,8 +88,8 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
       this.evaluator = new FormControl('');
       this.relationship = new FormControl('',  Validators.required);
       this.competenceToEvaluate = new FormControl('',  Validators.required);
-
-      if(!this.selectSurvey){
+      console.log(this.surveyService.oneSurvey)
+      if(!this.surveyService.oneSurvey){
         this.complexForm = this.formBuilder.group({
           evaluated: this.evaluated,
           evaluator: this.evaluator,
@@ -137,10 +137,10 @@ export class SurveyOptionsComponent implements OnInit, OnChanges {
     this.selfText === value ? this.isSelf = true : this.isSelf = false;
    }
 
-
+/*
   isOnePath() : boolean {
     return this.currentUrl === "/survey-setup" ? true : false 
-  }
+  }*/
 
   submitForm(value: any){
     if(value.evaluator === "" && !this.isSelf){

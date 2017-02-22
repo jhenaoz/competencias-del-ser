@@ -33,8 +33,8 @@ export class FooterComponent implements OnInit {
     switch (this.currentUrl) {
       case '/survey-setup': this.startNewSurvey.emit()
         break; 
-      /*case '/surveyteam-setup':this.router.navigate(['/survey'])
-        break;*/
+      case '/surveyteam-setup':this.router.navigate(['/survey'])
+        break;
        
     
       default: 
