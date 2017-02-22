@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Survey,Aptitude, Behavior } from './survey-model';
 
+/*
+* Service that provides survey variables to be stored 
+*/
+
 @Injectable()
 export class SurveyService {
 

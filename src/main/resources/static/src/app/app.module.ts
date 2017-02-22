@@ -1,24 +1,30 @@
+// Angular imports
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+// Routes import
+import { appRoutes } from './routes';
+
+// Components imports
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
-import { EmployeeService } from './employee/index';
-
-import { appRoutes } from './routes';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SurveyOptionsComponent } from './survey-options/survey-options.component';
 import { SurveyComponent } from './survey/survey.component';
+
+// Service import
 import { SurveyService } from './survey/survey.service';
+import { EmployeeService } from './employee/index';
 
 //Translate imports
 import { TranslateModule } from 'ng2-translate';
 import { TranslateLoader, TranslateStaticLoader } from "ng2-translate/src/translate.service";
+
 //CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 

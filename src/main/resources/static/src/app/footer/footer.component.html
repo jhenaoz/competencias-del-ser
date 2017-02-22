@@ -1,3 +1,7 @@
+
+<!--
+    * Footer for the whole app, it contains two buttons to go back and go forward
+-->
 <footer class="footer">
     <button *ngIf="!(this.currentUrl == '/welcome')" (click)="advance()" type="button" class="btn right-button"> 
         {{ "Footer.start" | translate }} 

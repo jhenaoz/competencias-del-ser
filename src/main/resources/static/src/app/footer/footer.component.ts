@@ -14,29 +14,30 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.router.url
-    //console.log(this.currentUrl == '/welcome')
   }
 
+/*
+* Method to go back given the current url
+*/
   cancel(){
     switch (this.currentUrl) {
       case '/survey-setup': this.router.navigate(['welcome']); break;
       case '/surveyteam-setup': this.router.navigate(['welcome']); break;
       case '/survey': this.router.navigate(['welcome']); break;
-
-    
       default:
         break;
     }
   }
 
+/*
+* Method to go forward given the current url
+*/
   advance(){
     switch (this.currentUrl) {
       case '/survey-setup': this.startNewSurvey.emit()
         break; 
-      case '/surveyteam-setup':this.router.navigate(['/survey'])
+      case '/surveyteam-setup':this.startNewSurvey.emit()
         break;
-       
-    
       default: 
         break;
     }

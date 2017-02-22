@@ -21,18 +21,13 @@ export class SurveyComponent implements OnInit {
     this.next = 'logros';
   }
 
+/*
+* Hardcoded values
+*/
   nextAptitude(){
     if(this.next !== ""){
        $("#openess").addClass('active');
     }else{
-    // console.log(this.next);
-    // $(".active").removeClass("active");
-    // $(".col-md-1:contains('"+this.next+"')").addClass("active");
-
-    // $('.row > .col-md-1').each(function() {
-    //   console.log($(this).text());
-    // });
-
       $(".active").next().addClass('active');
     }
   }

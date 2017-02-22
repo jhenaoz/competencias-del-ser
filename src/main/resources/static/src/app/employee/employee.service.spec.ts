@@ -47,18 +47,10 @@ describe('EmployeeService', () => {
       var result : IEmployee[]
       var errorMessage : string
       mockHttp.get.and.returnValue(Observable.of(true))
-      // this._employeeService.getEmployees().subscribe(employees => result = employees, error => errorMessage = <any>error)
-      // expect(result).toBe(true)
-      // expect(result.length).toBe(8)
-
       
     }))
        
     
   })
 
-
-/*  it('should ...', inject([EmployeeService], (service: EmployeeService) => {
-    expect(service).toBeTruthy();
-  }));*/
 });

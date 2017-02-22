@@ -7,7 +7,7 @@
         <br><br> {{ "Survey_options.information" | translate}}
     </p>
     <div class="container">
-        <form id="form" [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+        <form id="form" [formGroup]="complexForm" >
             <!--Evaluated select-->
             <div class="block">
                 <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
@@ -63,8 +63,7 @@
                 <!--Validator label-->
                 <div class="alert alert-danger" *ngIf="complexForm.controls['competenceToEvaluate'].invalid && complexForm.controls['competenceToEvaluate'].dirty">You must select a competence.</div>
             </div>
-            <button type="submit" class="btn btn-default" [disabled]="!complexForm.valid && !isValid">Submit</button>
-            <div class="margin-20"> {{ complexForm.value | json }}</div>
+            <!--<button id="submit" type="submit" class="btn btn-default hide" [disabled]="!complexForm.valid">Submit</button>-->
         </form>
 
 
