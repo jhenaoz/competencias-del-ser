@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Bean;
  */
 public class JestClientUtils {
 
-	/**
-	 * Application property for the host and the port
-	 */
+    /**
+     * Application property for the host and the port
+     */
     @Value("${elasticport}")
     private String port;
 
@@ -21,9 +21,10 @@ public class JestClientUtils {
     private String host;
 
     /**
-	 * This method calls the properties file to define the host and the port
-	 * @return client Bean for elasticsearch who can be consumed in all the app
-	 */
+     * This method calls the properties file to define the host and the port
+     *
+     * @return client Bean for elasticsearch who can be consumed in all the app
+     */
     @Bean
     public JestClient getClient() {
         String elasticsearchUrl = host + ":" + port;
