@@ -10,7 +10,7 @@ public class Survey {
     
     private String evaluator;
     
-    private String rol;
+    private String role;
     
     private String date;
     
