@@ -11,7 +11,9 @@ import { IEmployee } from './employee.model';
 
 @Injectable()
 export class EmployeeService {
-  private _employeeUrl = 'http://ec2-52-33-244-144.us-west-2.compute.amazonaws.com:8080/person'  //'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/d4804468-6192-482e-a2eb-53dca0d66495/person';
+private _employeeUrl = 
+//'http://ec2-52-33-244-144.us-west-2.compute.amazonaws.com:8080/person'  
+'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/9626f05b-5baf-4721-8077-9a79ea6e929d/person';
 
   constructor(private _http: Http) { }
 

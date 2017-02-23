@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Survey,Aptitude, Behavior } from './survey-model';
+import { Survey } from './survey.model';
+import { Aptitude, Behavior } from '../aptitude/index';
 
 /*
 * Service that provides survey variables to be stored 
@@ -22,9 +23,10 @@ export class SurveyService {
   }
 
     testPrint(){
-    console.log(this.survey.evaluator)
-    console.log(this.survey.role)
-    console.log(this.survey.evaluated)
+      console.log(this.survey.evaluator)
+      console.log(this.survey.role)
+      console.log(this.survey.evaluated)
+      console.log("asdasd ");
 
   }
 }
