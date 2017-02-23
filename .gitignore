@@ -259,4 +259,8 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-/src/main/resources/static/src/api/employee/employee.json
+
+#Folder of elasticsearch
+/data/
+
+# End of https://www.gitignore.io/api/java,maven,windows,osx,eclipse,intellij,node,code

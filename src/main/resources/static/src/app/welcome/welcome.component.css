@@ -1,6 +1,5 @@
 /**********************************************************
 * BOX: */
-
 .box {
     height: 175px;
     background-color: #F0F0F0;
@@ -21,8 +20,9 @@
     background-color: #E5E5E5;
 }
 
-.left-picture-grid>img {
-    margin: 30px 0px 0px 30px;
+.left-picture-grid>i {
+    color: #515151;
+    margin: 50px 0px 0px 55px;
 }
 
 .box:hover {

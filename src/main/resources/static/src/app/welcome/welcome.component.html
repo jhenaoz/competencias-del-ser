@@ -1,29 +1,30 @@
+<link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
+
 <div class="main">
     <p class="text-center title">{{ "Welcome.title" | translate }}</p>
     <hr>
     <p class="description">
         {{ "Welcome.description" | translate }}
-        <br><br> 
-        {{ "Welcome.information" | translate }}
+        <br><br> {{ "Welcome.information" | translate }}
     </p>
-    <h4 class="text-center">{{ "Welcome.options-title" | translate }}</h4>
+    <h4 class="text-center">{{ "Welcome.options_title" | translate }}</h4>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div [routerLink]="['/surveyteam-setup']" class="box">
-                    <h4>{{ "Welcome.option-one" | translate }}</h4>
+                <div [routerLink]="['/surveyteam-setup']" (click)="OneData(false)" class="box">
+                    <h4>{{ "Welcome.option_one" | translate }}</h4>
 
                     <div class="left-picture-grid">
-                        <img src="/assets/images/team.png" alt="">
+                        <i class="fa fa-users fa-5x" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div [routerLink]="['/survey-setup']" class="box">
-                    <h4>{{ "Welcome.option-all" | translate }}</h4>
+                <div [routerLink]="['/survey-setup']" (click)="OneData(true)" class="box">
+                    <h4>{{ "Welcome.option_all" | translate }}</h4>
 
                     <div class="left-picture-grid">
-                        <img src="/assets/images/teammate.png" alt="">
+                        <i class="fa fa-user fa-5x" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>

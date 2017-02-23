@@ -11,10 +11,14 @@ import { IEmployee } from './employee.model';
 
 @Injectable()
 export class EmployeeService {
-  private _employeeUrl = 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/d4804468-6192-482e-a2eb-53dca0d66495/person';
+  private _employeeUrl = 'http://ec2-52-33-244-144.us-west-2.compute.amazonaws.com:8080/person'  //'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/d4804468-6192-482e-a2eb-53dca0d66495/person';
 
   constructor(private _http: Http) { }
 
+  /*
+  * Method to get all employees from REST response
+  * Return type: Observable
+  */
   getEmployees(): Observable<IEmployee[]> {
         return this._http.get(this._employeeUrl)
             .map((response: Response) => <IEmployee[]> response.json())
@@ -22,13 +26,19 @@ export class EmployeeService {
             .catch(this.handleError);
     }
 
+  /*
+  * Method to get one employee from REST response given the ID
+  * Return type: Observable
+  */
   getEmployee(id: number): Observable<IEmployee> {
         return this.getEmployees()
             .map((employee: IEmployee[]) => employee.find(p => p.employeeId === id));
     }
 
+  /*
+  * Method to handle error and log it into console
+  */
   private handleError(error: Response) {
-
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }

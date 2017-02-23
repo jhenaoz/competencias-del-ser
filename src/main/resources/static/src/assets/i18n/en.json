@@ -1,6 +1,6 @@
 {
     "Navbar": {
-        "language-change": "Change language"
+        "language_change": "Change language"
     },
     "Footer": {
         "back": "Back",
@@ -11,42 +11,44 @@
         "title": "SOFT SKILLS ASSESSMENT",
         "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.",
         "information": "Use the observations field to complete the assessment.",
-        "options-title": "What assessment do you want to do?",
-        "option-one": "One skill of the whole team",
-        "option-all": "Every skill of one person"
+        "options_title": "What assessment do you want to do?",
+        "option_one": "One skill of the whole team",
+        "option_all": "Every skill of one person"
     },
-    "Survey-options": {
-        "title-all": "EVERY SKILL OF ONE PERSON",
-        "title-one": "ONE SKILL OF THE WHOLE TEAM",
+    "Survey_options": {
+        "title_all": "EVERY SKILL OF ONE PERSON",
+        "title_one": "ONE SKILL OF THE WHOLE TEAM",
         "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.",
         "information": "Use the observations field to complete the assessment.",
         "evaluated": "Person being assessed",
         "evaluator": "Evaluator",
+        "evaluator_alert": "You must select someone",
         "relationship": "Type of relationship",
-        "relation-teammate": "Teammate",
-        "relation-teammate-description": "Choose teammate if the person you are evaluating corresponds to a person you have collaborated with, worked towards their development and growth, and supported in the improvement of their activities",
-        "relation-client": "Client",
-        "relation-client-description": "The people who have worked with the evaluated from a client perspective (that is, they've received a deliverable from the person being assessed), they've had direct interaction with the person and have the respective information, thanks to the observation of their behavior. Client can reference both internal and external clients.",
-        "relation-own": "Self-assessment",
-        "relation-own-description": "It's the assessment a person makes of themselves, according to their current and recent behavior (last 3 months). This measurement is of great importance to recognize the perception the assessed has of themselves and it's of great help in the analysis of the results to aid the creation of development plans."
+        "relationship_alert": "You must select a relation",
+        "relation_teammate": "Teammate",
+        "relation_teammate_description": "Choose teammate if the person you are evaluating corresponds to a person you have collaborated with, worked towards their development and growth, and supported in the improvement of their activities",
+        "relation_client": "Client",
+        "relation_client_description": "The people who have worked with the evaluated from a client perspective (that is, they've received a deliverable from the person being assessed), they've had direct interaction with the person and have the respective information, thanks to the observation of their behavior. Client can reference both internal and external clients.",
+        "relation_own": "Self_assessment",
+        "relation_own_description": "It's the assessment a person makes of themselves, according to their current and recent behavior (last 3 months). This measurement is of great importance to recognize the perception the assessed has of themselves and it's of great help in the analysis of the results to aid the creation of development plans."
     },
     "Survey": {
         "always": "Always",
-        "almost-always": "Almost Always",
-        "occasionally":"Occasionally",
+        "almost_always": "Almost Always",
+        "occasionally": "Occasionally",
         "never": "Never",
-        "information":"No information",
+        "information": "No information",
         "observations": "Observations"
     },
     "Competences": {
         "title": "Skill to assess",
-        "competence-opening": "Openness",
-        "competence-communication": "Communication",
-        "competence-initiative": "Initiative",
-        "competence-client-orientation": "Client orientation",
-        "competence-goals": "Achievement and results",
-        "competence-teamwork": "Teamwork",
-        "competence-development": "Development oriented leadership",
-        "competence-goal": "Achievement oriented leadership"
+        "competence_opening": "Openness",
+        "competence_communication": "Communication",
+        "competence_initiative": "Initiative",
+        "competence_client_orientation": "Client orientation",
+        "competence_goals": "Achievement and results",
+        "competence_teamwork": "Teamwork",
+        "competence_development": "Development oriented leadership",
+        "competence_goal": "Achievement oriented leadership"
     }
 }
