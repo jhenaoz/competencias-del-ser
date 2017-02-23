@@ -15,11 +15,9 @@ public class Survey {
     List<AptitudeSurvey> aptitudes;
 
     public Survey() {
-        super();
     }
 
     public Survey(String evaluator, String evaluated, String role, String timestamp, List<AptitudeSurvey> aptitudes) {
-        super();
         this.evaluator = evaluator;
         this.evaluated = evaluated;
         this.role = role;
