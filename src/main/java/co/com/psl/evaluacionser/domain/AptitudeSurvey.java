@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AptitudeSurvey {
 
-    private Long id;
+    private String id;
 
     private String observation;
     
@@ -14,18 +14,18 @@ public class AptitudeSurvey {
         super();
     }
 
-    public AptitudeSurvey(Long id, String observation, List<BehaviorSurvey> behaviorSurvey) {
+    public AptitudeSurvey(String id, String observation, List<BehaviorSurvey> behaviorSurvey) {
         super();
         this.id = id;
         this.observation = observation;
         this.behaviorSurvey = behaviorSurvey;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -44,7 +44,5 @@ public class AptitudeSurvey {
     public void setBehaviorSurvey(List<BehaviorSurvey> behaviorSurvey) {
         this.behaviorSurvey = behaviorSurvey;
     }
-    
-    
-    
+      
 }
