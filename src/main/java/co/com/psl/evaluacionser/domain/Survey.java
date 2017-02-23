@@ -24,6 +24,7 @@ public class Survey {
         this.role = role;
         this.timestamp = timestamp;
         this.aptitudes = aptitudes;
+
     }
 
     public String getEvaluated() {
@@ -65,5 +66,5 @@ public class Survey {
     public void setAptitudes(List<AptitudeSurvey> aptitudes) {
         this.aptitudes = aptitudes;
     }
-    
+
 }
