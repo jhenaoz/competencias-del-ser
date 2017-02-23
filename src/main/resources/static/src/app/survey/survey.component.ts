@@ -22,9 +22,13 @@ export class SurveyComponent implements OnInit {
   public next: string;
   errorMessage: string;
 
+  currentLanguage: string;
+
   behaviors: Behavior[];
 
-  constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService) { }
+  constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService, private translate: TranslateService) { 
+     this.currentLanguage = translate.currentLang;
+  }
 
   ngOnInit() {
     this.next = 'logros';
@@ -42,5 +46,11 @@ export class SurveyComponent implements OnInit {
       $(".active").next().addClass('active');
     }
   }
+
+  save(model: any, isValid: boolean) {
+        // check if model is valid
+        // if valid, call API to save customer
+        console.log(model, isValid);
+    }
 
 }

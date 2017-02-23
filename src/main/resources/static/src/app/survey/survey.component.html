@@ -72,9 +72,61 @@
                 </h4>
             </div>
         </div>
+        <!--/Titles-->
         <!--Data-->
+        <form #f="ngForm" (ngSubmit)="save(f.value, f.valid)" novalidate>
+        <div *ngFor="let behavior of behaviors">
+            <div class="row">
+            
+                <div class="col-md-4">
+                    <div *ngIf="currentLanguage === 'es'">
+                        <p>{{ behavior. es }}</p>
+                    </div>
+                    <div *ngIf="currentLanguage === 'en'">
+                        <p>{{ behavior. en }}</p>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio1" value="option1">
+                        <label for="{{behavior.id}}radio1">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio2" value="option2">
+                        <label for="{{behavior.id}}radio2">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio3" value="option3">
+                        <label for="{{behavior.id}}radio3">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio4" value="option4">
+                        <label for="{{behavior.id}}radio4">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="radio radio-primary">
+                        <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio5" value="option5">
+                        <label for="{{behavior.id}}radio5">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        </form>
 
-        <div class="row">
+        <!--<div class="row">
             <form>
                 <div class="col-md-4">
                     <p>Acepta sugerencias sin distinción de quien lo dé</p>
@@ -115,10 +167,9 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div>-->
 
-        <!--BORRAR-->
-        <div class="row">
+        <!--<div class="row">
             <form>
                 <div class="col-md-4">
                     <p>Reconoce sus errores</p>
@@ -158,9 +209,8 @@
                         </label>
                     </div>
                 </div>
-                <!--/BORRAR-->
             </form>
-        </div>
+        </div>-->
 
 
         <!--<button type="button" class="btn btn-large btn-block btn-default" (click)="nextAptitude()">button</button>-->
