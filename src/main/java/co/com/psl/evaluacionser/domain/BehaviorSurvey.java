@@ -7,11 +7,9 @@ public class BehaviorSurvey {
     private String score;
     
     public BehaviorSurvey() {
-        super();
     }
 
     public BehaviorSurvey(String id, String score) {
-        super();
         this.id = id;
         this.score = score;
     }

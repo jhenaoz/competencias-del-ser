@@ -1,42 +1,29 @@
 package co.com.psl.evaluacionser.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Survey {
-    
-    private String id;
-    
-    private String evaluated; 
-    
+
+    private String evaluated;
+
     private String evaluator;
-    
+
     private String role;
-    
+
     private String date;
-    
+
     List<AptitudeSurvey> aptitudeSurvey;
 
     public Survey() {
-        super();
     }
-    
-    public Survey(String id, String evaluated, String evaluator, String rol, String date,
-            List<AptitudeSurvey> aptitudeSurvey) {
-        super();
-        this.id = id;
+
+    public Survey(String evaluated, String evaluator, String role, String date, List<AptitudeSurvey> aptitudeSurvey) {
         this.evaluated = evaluated;
         this.evaluator = evaluator;
-        this.rol = rol;
+        this.role = role;
         this.date = date;
-        this.aptitudeSurvey = aptitudeSurvey;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.setAptitudeSurvey(aptitudeSurvey);
     }
 
     public String getEvaluated() {
@@ -55,12 +42,12 @@ public class Survey {
         this.evaluator = evaluator;
     }
 
-    public String getRol() {
-        return rol;
+    public String getRole() {
+        return role;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getDate() {
@@ -76,7 +63,10 @@ public class Survey {
     }
 
     public void setAptitudeSurvey(List<AptitudeSurvey> aptitudeSurvey) {
-        this.aptitudeSurvey = aptitudeSurvey;
+        if (aptitudeSurvey == null)
+            this.aptitudeSurvey = new ArrayList<AptitudeSurvey>();
+        else
+            this.aptitudeSurvey = aptitudeSurvey;
     }
-    
+
 }

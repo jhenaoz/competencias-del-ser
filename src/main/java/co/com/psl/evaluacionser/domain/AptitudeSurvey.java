@@ -1,5 +1,6 @@
 package co.com.psl.evaluacionser.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AptitudeSurvey {
@@ -7,18 +8,16 @@ public class AptitudeSurvey {
     private String id;
 
     private String observation;
-    
+
     List<BehaviorSurvey> behaviorSurvey;
-    
+
     public AptitudeSurvey() {
-        super();
     }
 
     public AptitudeSurvey(String id, String observation, List<BehaviorSurvey> behaviorSurvey) {
-        super();
         this.id = id;
         this.observation = observation;
-        this.behaviorSurvey = behaviorSurvey;
+        this.setBehaviorSurvey(behaviorSurvey);
     }
 
     public String getId() {
@@ -42,7 +41,10 @@ public class AptitudeSurvey {
     }
 
     public void setBehaviorSurvey(List<BehaviorSurvey> behaviorSurvey) {
-        this.behaviorSurvey = behaviorSurvey;
+        if (behaviorSurvey == null)
+            this.behaviorSurvey = new ArrayList<BehaviorSurvey>();
+        else
+            this.behaviorSurvey = behaviorSurvey;
     }
-      
+
 }
