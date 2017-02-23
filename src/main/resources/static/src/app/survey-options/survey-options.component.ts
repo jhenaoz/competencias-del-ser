@@ -4,7 +4,8 @@ import { Component, OnInit, EventEmitter, Output, OnChanges } from '@angular/cor
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Survey, Aptitude, Behavior } from '../survey/survey-model';
+import { Survey } from '../survey/survey.model';
+import { Aptitude, Behavior } from '../aptitude/index';
 import { IEmployee } from '../employee/employee.model';
 import { SurveyService } from '../survey/survey.service';
 

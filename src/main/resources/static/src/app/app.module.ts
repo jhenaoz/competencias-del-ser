@@ -20,6 +20,7 @@ import { SurveyComponent } from './survey/survey.component';
 // Service import
 import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
+import { AptitudeService } from './aptitude/index';
 
 //Translate imports
 import { TranslateModule } from 'ng2-translate';
@@ -53,6 +54,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [
     EmployeeService,
     SurveyService,
+    AptitudeService,
   ],
   bootstrap: [AppComponent]
 })
