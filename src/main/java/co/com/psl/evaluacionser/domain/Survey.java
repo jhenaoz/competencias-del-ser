@@ -5,25 +5,25 @@ import java.util.List;
 
 public class Survey {
 
-    private String evaluated;
-
     private String evaluator;
+    
+    private String evaluated;
 
     private String role;
 
-    private String date;
+    private String timestamp;
 
-    List<AptitudeSurvey> aptitudeSurvey;
+    List<AptitudeSurvey> aptitudes;
 
     public Survey() {
     }
 
-    public Survey(String evaluated, String evaluator, String role, String date, List<AptitudeSurvey> aptitudeSurvey) {
+    public Survey(String evaluated, String evaluator, String role, String timestamp, List<AptitudeSurvey> aptitudes) {
         this.evaluated = evaluated;
         this.evaluator = evaluator;
         this.role = role;
-        this.date = date;
-        this.setAptitudeSurvey(aptitudeSurvey);
+        this.timestamp = timestamp;
+        this.aptitudes = aptitudes;
     }
 
     public String getEvaluated() {
@@ -50,23 +50,20 @@ public class Survey {
         this.role = role;
     }
 
-    public String getDate() {
-        return date;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public List<AptitudeSurvey> getAptitudeSurvey() {
-        return aptitudeSurvey;
+    public List<AptitudeSurvey> getAptitudes() {
+        return aptitudes;
     }
 
-    public void setAptitudeSurvey(List<AptitudeSurvey> aptitudeSurvey) {
-        if (aptitudeSurvey == null)
-            this.aptitudeSurvey = new ArrayList<AptitudeSurvey>();
-        else
-            this.aptitudeSurvey = aptitudeSurvey;
+    public void setAptitudes(List<AptitudeSurvey> aptitudes) {
+        this.aptitudes = aptitudes;
     }
-
+    
 }
