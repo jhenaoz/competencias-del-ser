@@ -26,6 +26,8 @@ export class SurveyComponent implements OnInit {
 
   behaviors: Behavior[];
 
+  observation: string;
+
   constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService, private translate: TranslateService) { 
      this.currentLanguage = translate.currentLang;
   }
@@ -47,10 +49,34 @@ export class SurveyComponent implements OnInit {
     }
   }
 
-  save(model: any, isValid: boolean) {
-        // check if model is valid
-        // if valid, call API to save customer
-        console.log(model, isValid);
+  save(model: any, isValid: boolean) {   
+       if(this.validateSurvey()){
+        $("#radio-alert").addClass("hide");
+        $("input:checked").removeAttr("checked");
+       }else{
+         $("#radio-alert").removeClass("hide");
+       }
+        for(let i = 1; i <= Object.keys(this.behaviors).length; i++){
+          alert($('input[name="radio'+i+'"]:checked').val())
+        }
+        // alert($('input[name="radio1"]:checked').val());
+        // alert($('input[name="radio2"]:checked').val());
+        // alert($('input[name="radio3"]:checked').val());
+        // alert($('input[name="radio4"]:checked').val());
     }
+
+    validateSurvey(): boolean{
+      for(let i = 1; i <= Object.keys(this.behaviors).length; i++){
+          if($('input[name="radio'+i+'"]:checked').val() === undefined ){
+            return false;
+          }
+        }
+        return true;
+    }
+
+  onSelectionChange(entry) {
+        console.log(entry);
+    }
+    
 
 }
