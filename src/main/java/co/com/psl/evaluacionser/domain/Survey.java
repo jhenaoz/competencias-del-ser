@@ -6,7 +6,7 @@ import java.util.List;
 public class Survey {
 
     private String evaluator;
-    
+
     private String evaluated;
 
     private String role;
@@ -16,23 +16,16 @@ public class Survey {
     List<AptitudeSurvey> aptitudes;
 
     public Survey() {
+        super();
     }
 
-    public Survey(String evaluated, String evaluator, String role, String timestamp, List<AptitudeSurvey> aptitudes) {
-        this.evaluated = evaluated;
+    public Survey(String evaluator, String evaluated, String role, String timestamp, List<AptitudeSurvey> aptitudes) {
+        super();
         this.evaluator = evaluator;
+        this.evaluated = evaluated;
         this.role = role;
         this.timestamp = timestamp;
         this.aptitudes = aptitudes;
-
-    }
-
-    public String getEvaluated() {
-        return evaluated;
-    }
-
-    public void setEvaluated(String evaluated) {
-        this.evaluated = evaluated;
     }
 
     public String getEvaluator() {
@@ -41,6 +34,14 @@ public class Survey {
 
     public void setEvaluator(String evaluator) {
         this.evaluator = evaluator;
+    }
+
+    public String getEvaluated() {
+        return evaluated;
+    }
+
+    public void setEvaluated(String evaluated) {
+        this.evaluated = evaluated;
     }
 
     public String getRole() {

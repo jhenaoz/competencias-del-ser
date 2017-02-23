@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AptitudeSurvey {
-    
+
     private AptitudeDto aptitude;
 
     private String observation;
-    
+
     private List<BehaviorSurvey> behaviors;
-    
+
     public AptitudeSurvey() {
     }
 
-    public AptitudeSurvey(AptitudeDto aptitudeDto, String observation, List<BehaviorSurvey> behaviorSurvey) {
-        this.aptitude = aptitudeDto;
+    public AptitudeSurvey(AptitudeDto aptitude, String observation, List<BehaviorSurvey> behaviors) {
+        this.aptitude = aptitude;
         this.observation = observation;
-        this.behaviors = behaviorSurvey;
+        this.behaviors = behaviors;
     }
 
-    public AptitudeDto getAptitudeDto() {
+    public AptitudeDto getAptitude() {
         return aptitude;
     }
 
-    public void setAptitudeDto(AptitudeDto aptitudeDto) {
-        this.aptitude = aptitudeDto;
+    public void setAptitude(AptitudeDto aptitude) {
+        this.aptitude = aptitude;
     }
 
     public String getObservation() {
@@ -36,12 +36,12 @@ public class AptitudeSurvey {
         this.observation = observation;
     }
 
-    public List<BehaviorSurvey> getBehaviorSurvey() {
+    public List<BehaviorSurvey> getBehaviors() {
         return behaviors;
     }
 
-    public void setBehaviorSurvey(List<BehaviorSurvey> behaviorSurvey) {
-        this.behaviors = behaviorSurvey;
+    public void setBehaviors(List<BehaviorSurvey> behaviors) {
+        this.behaviors = behaviors;
     }
 
 }
