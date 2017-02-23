@@ -1,6 +1,5 @@
 package co.com.psl.evaluacionser.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Survey {
