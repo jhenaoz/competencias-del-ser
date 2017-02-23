@@ -1,37 +1,28 @@
 package co.com.psl.evaluacionser.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Survey {
 
-    private String evaluated;
-
     private String evaluator;
+
+    private String evaluated;
 
     private String role;
 
-    private String date;
+    private String timestamp;
 
-    List<AptitudeSurvey> aptitudeSurvey;
+    List<AptitudeSurvey> aptitudes;
 
     public Survey() {
     }
 
-    public Survey(String evaluated, String evaluator, String role, String date, List<AptitudeSurvey> aptitudeSurvey) {
-        this.evaluated = evaluated;
+    public Survey(String evaluator, String evaluated, String role, String timestamp, List<AptitudeSurvey> aptitudes) {
         this.evaluator = evaluator;
-        this.role = role;
-        this.date = date;
-        this.setAptitudeSurvey(aptitudeSurvey);
-    }
-
-    public String getEvaluated() {
-        return evaluated;
-    }
-
-    public void setEvaluated(String evaluated) {
         this.evaluated = evaluated;
+        this.role = role;
+        this.timestamp = timestamp;
+        this.aptitudes = aptitudes;
     }
 
     public String getEvaluator() {
@@ -42,6 +33,14 @@ public class Survey {
         this.evaluator = evaluator;
     }
 
+    public String getEvaluated() {
+        return evaluated;
+    }
+
+    public void setEvaluated(String evaluated) {
+        this.evaluated = evaluated;
+    }
+
     public String getRole() {
         return role;
     }
@@ -50,23 +49,20 @@ public class Survey {
         this.role = role;
     }
 
-    public String getDate() {
-        return date;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public List<AptitudeSurvey> getAptitudeSurvey() {
-        return aptitudeSurvey;
+    public List<AptitudeSurvey> getAptitudes() {
+        return aptitudes;
     }
 
-    public void setAptitudeSurvey(List<AptitudeSurvey> aptitudeSurvey) {
-        if (aptitudeSurvey == null)
-            this.aptitudeSurvey = new ArrayList<AptitudeSurvey>();
-        else
-            this.aptitudeSurvey = aptitudeSurvey;
+    public void setAptitudes(List<AptitudeSurvey> aptitudes) {
+        this.aptitudes = aptitudes;
     }
 
 }

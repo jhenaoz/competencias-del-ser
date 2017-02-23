@@ -1,31 +1,30 @@
 package co.com.psl.evaluacionser.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AptitudeSurvey {
 
-    private String id;
+    private AptitudeDto aptitude;
 
     private String observation;
 
-    List<BehaviorSurvey> behaviorSurvey;
+    private List<BehaviorSurvey> behaviors;
 
     public AptitudeSurvey() {
     }
 
-    public AptitudeSurvey(String id, String observation, List<BehaviorSurvey> behaviorSurvey) {
-        this.id = id;
+    public AptitudeSurvey(AptitudeDto aptitude, String observation, List<BehaviorSurvey> behaviors) {
+        this.aptitude = aptitude;
         this.observation = observation;
-        this.setBehaviorSurvey(behaviorSurvey);
+        this.behaviors = behaviors;
     }
 
-    public String getId() {
-        return id;
+    public AptitudeDto getAptitude() {
+        return aptitude;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAptitude(AptitudeDto aptitude) {
+        this.aptitude = aptitude;
     }
 
     public String getObservation() {
@@ -36,15 +35,12 @@ public class AptitudeSurvey {
         this.observation = observation;
     }
 
-    public List<BehaviorSurvey> getBehaviorSurvey() {
-        return behaviorSurvey;
+    public List<BehaviorSurvey> getBehaviors() {
+        return behaviors;
     }
 
-    public void setBehaviorSurvey(List<BehaviorSurvey> behaviorSurvey) {
-        if (behaviorSurvey == null)
-            this.behaviorSurvey = new ArrayList<BehaviorSurvey>();
-        else
-            this.behaviorSurvey = behaviorSurvey;
+    public void setBehaviors(List<BehaviorSurvey> behaviors) {
+        this.behaviors = behaviors;
     }
 
 }
