@@ -34,7 +34,7 @@ public class AptitudeSurveyTest {
         assertEquals("1", aptitudeSurvey.getBehaviors().get(0).getBehavior().getId());
         assertEquals("A really good friend", aptitudeSurvey.getObservation());
     }
-    
+
     @Test
     public void NullObject() {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
