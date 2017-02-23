@@ -2,7 +2,7 @@ package co.com.psl.evaluacionser.domain;
 
 import java.util.List;
 
-class AptitudeSurveyDto {
+public class AptitudeSurveyDto {
 
     private String aptitudeId;
     private String observation;

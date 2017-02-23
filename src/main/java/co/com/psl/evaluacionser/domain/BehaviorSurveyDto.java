@@ -1,6 +1,6 @@
 package co.com.psl.evaluacionser.domain;
 
-class BehaviorSurveyDto {
+public class BehaviorSurveyDto {
     private String behaviorId;
     private int score;
 
