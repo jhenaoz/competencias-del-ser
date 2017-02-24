@@ -24,11 +24,11 @@ import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
 
-//Translate imports
+// Translate imports
 import { TranslateModule } from 'ng2-translate';
 import { TranslateLoader, TranslateStaticLoader } from "ng2-translate/src/translate.service";
 
-//CSS & Javascript imports
+// CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({

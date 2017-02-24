@@ -7,13 +7,18 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
+// Enviroment variables
+import { environment } from '../../environments/environment'
+
 import { Behavior } from './behavior.model';
 
 @Injectable()
 export class AptitudeService {
-  private _aptitudeUrl = 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/9626f05b-5baf-4721-8077-9a79ea6e929d/aptitude/'
+  private _aptitudeUrl = environment.apiURL;
 
-  constructor(private _http: Http) { }
+  constructor(private _http: Http) { 
+      this._aptitudeUrl += '/aptitude/'
+  }
 
   /*
   * Method to get all behaviors from REST response
