@@ -13,17 +13,17 @@ import java.io.IOException;
 public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     @Value("${elasticSurveyIndex}")
-    private String APTITUDE_INDEX_NAME;
+    private String SURVEY_INDEX_NAME;
 
     @Value("${elasticSurveyType}")
-    private String APTITUDE_TYPE_NAME;
+    private String SURVEY_TYPE_NAME;
 
     @Autowired
     private JestClient client;
 
     @Override
     public Survey saveSurvey(Survey survey) {
-        Index index = new Index.Builder(survey).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).build();
+        Index index = new Index.Builder(survey).index(SURVEY_INDEX_NAME).type(SURVEY_TYPE_NAME).build();
         try {
             client.execute(index);
             return survey;
