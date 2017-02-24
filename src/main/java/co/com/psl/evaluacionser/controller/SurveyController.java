@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/survey")
 public class SurveyController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class SurveyController {
      *
      * @return Response entity with HttpStatus.ACCEPTED and the Survey saved
      */
-    @RequestMapping(value = "/survey", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
         return new ResponseEntity(surveyRepository.saveSurvey(surveyDto), HttpStatus.ACCEPTED);
     }
