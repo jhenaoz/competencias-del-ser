@@ -26,12 +26,12 @@ export class SurveyOptionsComponent implements OnInit {
   /*
   * Form variables
   */
-  evaluator: FormControl
-  evaluated: FormControl
-  relationship: FormControl
-  competenceToEvaluate: FormControl
+  evaluator: FormControl;
+  evaluated: FormControl;
+  relationship: FormControl;
+  competenceToEvaluate: FormControl;
   // We are creating a new object and setting its type to FormGroup
-  complexForm : FormGroup;
+  complexForm: FormGroup;
 
   /*
   * Relation variables
@@ -39,35 +39,36 @@ export class SurveyOptionsComponent implements OnInit {
   // Boolean to know if is self assessment
   isSelf: Boolean = false;
   // Variables to handle i18n relation translates --> self-assessment, client, teammate
-  selfText: String
-  clientText: String
-  teammateText: String
+  selfText: String;
+  clientText: String;
+  teammateText: String;
 
   /*
   * Competence variables
   */
    // Variables to handle i18n competences translates
-  openessText: string
-  communicationText: string
-  initiativeText: string
-  client_orientationText: string
-  goalsText: string
-  teamworkText: string
-  developmentText: string
-  goalText: string
+  openessText: string;
+  communicationText: string;
+  initiativeText: string;
+  client_orientationText: string;
+  goalsText: string;
+  teamworkText: string;
+  developmentText: string;
+  goalText: string;
 
   // We are passing an instance of  Router to our constructor
   // We are passing an instance of the FormBuilder to our constructor
-  constructor(private router:Router, private formBuilder: FormBuilder, private surveyService: SurveyService, private translate: TranslateService) {}
-  
-  ngOnInit() {   
+  constructor(private router: Router,
+      private formBuilder: FormBuilder, private surveyService: SurveyService, private translate: TranslateService) {}
+
+  ngOnInit() {
     /*
     * Popover function
     */
     (<any> $('[data-toggle="popover"]')).popover({
       html: true,
       content: function () {
-          var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+          const clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
           return clone;
       }
     });
@@ -82,14 +83,14 @@ export class SurveyOptionsComponent implements OnInit {
     });
     // Competence variables initialization
     this.translate.get('Competences').subscribe(res => {
-      this.openessText = res.competence_opening
-      this.communicationText = res.competence_communication
-      this.initiativeText = res.competence_initiative
-      this.client_orientationText = res.competence_client_orientation
-      this.goalsText = res.competence_goals
-      this.teamworkText = res.competence_teamwork
-      this.developmentText = res.competence_development
-      this.goalText = res.competence_goal
+      this.openessText = res.competence_opening;
+      this.communicationText = res.competence_communication;
+      this.initiativeText = res.competence_initiative;
+      this.client_orientationText = res.competence_client_orientation;
+      this.goalsText = res.competence_goals;
+      this.teamworkText = res.competence_teamwork;
+      this.developmentText = res.competence_development;
+      this.goalText = res.competence_goal;
     });
     /*
     * Form variables initialization
@@ -100,45 +101,45 @@ export class SurveyOptionsComponent implements OnInit {
     this.relationship = new FormControl('',  Validators.required);
     this.competenceToEvaluate = new FormControl('',  Validators.required);
     // We choose the constructor depending of the type of survey
-    if(!this.surveyService.oneSurvey){
+    if (!this.surveyService.oneSurvey) {
       this.complexForm = this.formBuilder.group({
         evaluated: this.evaluated,
         evaluator: this.evaluator,
         relationship: this.relationship,
         competenceToEvaluate: this.competenceToEvaluate
-      })
-    }else{
+      });
+    }else {
         this.complexForm = this.formBuilder.group({
         evaluated: this.evaluated,
         evaluator: this.evaluator,
         relationship: this.relationship,
-      })
+      });
     }
 
     /*
     * JQuery function used if the evaluator is the Client, we change the SELECT for an INPUT TEXT
     * With that, the client will be able to put his name.
     */
-    $("#relationshipSelect").focusout(function(){
-        this.relationshipType = $("#relationshipSelect option:selected").attr('id');
-        if ( this.relationshipType === "client" ){
-          $("#evaluatorAppEmployee").addClass('hide');  
-          $("#evaluatorAppEmployeeText").removeClass('hide'); 
-          
-          $("#evaluatorAppEmployeeText").val('')
-          $("#evaluatorAppEmployeeText").prop('required', true)  
-          
-          $("label[for='evaluatorSelect']").removeClass('hide');                       
-        }else{
+    $('#relationshipSelect').focusout(function() {
+        this.relationshipType = $('#relationshipSelect option:selected').attr('id');
+        if ( this.relationshipType === 'client' ) {
+          $('#evaluatorAppEmployee').addClass('hide');
+          $('#evaluatorAppEmployeeText').removeClass('hide');
+
+          $('#evaluatorAppEmployeeText').val('');
+          $('#evaluatorAppEmployeeText').prop('required', true);
+
+          $('label[for=\'evaluatorSelect\']').removeClass('hide');
+        }else {
           // If type = teammate, we remove the evaluated employee
           // and hide unused components
-          $("#evaluatorAppEmployee option[value='"+ $("#evaluatedAppEmployee option:selected").text() +"']").remove();
-    
-          $("#evaluatorAppEmployee").removeClass('hide'); 
-          $("label[for='evaluatorSelect']").removeClass('hide'); 
-          
-          $("#evaluatorAppEmployeeText").addClass('hide'); 
-          $("#evaluatorAppEmployeeText").prop('required', false); 
+          $('#evaluatorAppEmployee option[value=\'' + $('#evaluatedAppEmployee option:selected').text() + '\']').remove();
+
+          $('#evaluatorAppEmployee').removeClass('hide');
+          $('label[for=\'evaluatorSelect\']').removeClass('hide');
+
+          $('#evaluatorAppEmployeeText').addClass('hide');
+          $('#evaluatorAppEmployeeText').prop('required', false);
         }
     });
   }
@@ -146,81 +147,81 @@ export class SurveyOptionsComponent implements OnInit {
   /*
   * Function to handle relation type changes
   */
-  relationChange(value){
-    this.isSelf = this.selfText === value ? true : false
+  relationChange(value) {
+    this.isSelf = this.selfText === value ? true : false;
   }
 
   /*
   * Function to get from value
   */
-  submitForm(){
-    let value = this.complexForm.value
+  submitForm() {
+    const value = this.complexForm.value;
     // Evaluator validation
-    if(value.evaluator === "" && !this.isSelf){
-      $("#alertEvaluator").removeClass("hide");
-    }else{
+    if (value.evaluator === '' && !this.isSelf) {
+      $('#alertEvaluator').removeClass('hide');
+    }else {
         // Object organization for data persistence
-        switch(value.relationship){
+        switch (value.relationship) {
         case this.selfText:
             value.evaluator = value.evaluated;
-            value.relationship = "self-assessment";
+            value.relationship = 'self-assessment';
             break;
         case this.clientText:
-            value.relationship = "client";
+            value.relationship = 'client';
             break;
         case this.teammateText:
-            value.relationship = "teammate"
+            value.relationship = 'teammate';
             break;
         }
-        switch(value.competenceToEvaluate){
+        switch (value.competenceToEvaluate) {
            case this.openessText:
-              value.competenceToEvaluate = "openess"
+              value.competenceToEvaluate = 'openess';
               break;
            case this.communicationText:
-              value.competenceToEvaluate = "communication"
+              value.competenceToEvaluate = 'communication';
               break;
            case this.initiativeText:
-              value.competenceToEvaluate = "initiative"
+              value.competenceToEvaluate = 'initiative';
               break;
            case this.client_orientationText:
-              value.competenceToEvaluate = "client_orientation"
+              value.competenceToEvaluate = 'client_orientation';
               break;
            case this.goalsText:
-               value.competenceToEvaluate = "achivement_and_results"
+               value.competenceToEvaluate = 'achivement_and_results';
               break;
            case this.teamworkText:
-              value.competenceToEvaluate = "teamwork"
+              value.competenceToEvaluate = 'teamwork';
               break;
            case this.developmentText:
-              value.competenceToEvaluate = "development_oriented_leadership"
+              value.competenceToEvaluate = 'development_oriented_leadership';
               break;
            case this.goalText:
-              value.competenceToEvaluate = "achivement_oriented_leadership"
+              value.competenceToEvaluate = 'achivement_oriented_leadership';
               break;
-           default: 
-              value.competenceToEvaluate = ""
+           default:
+              value.competenceToEvaluate = '';
               break;
         }
         console.log(value);
 
-        let survey: Survey = {
+        const survey: Survey = {
           evaluator: this.complexForm.controls['evaluator'].value,
           evaluated: this.complexForm.controls['evaluated'].value,
           role: this.complexForm.controls['relationship'].value,
           aptitudes: <Aptitude[]>[]
-        }
-        this.surveyService.startSurvey(survey)
-        this.router.navigate(['/survey/1'])
+        };
+        this.surveyService.startSurvey(survey);
+        this.router.navigate(['/survey/1']);
     }
   }
 
   /*
   * Function to store the form values into the survey variable in the service
   */
-  startSurvey(){
+  startSurvey() {
     // Next steps are just for testing component's communication, they are not yet the real way.
-    if(this.complexForm.valid){
-      this.submitForm()
+    if (this.complexForm.valid) {
+      this.submitForm();
     }
   }
 

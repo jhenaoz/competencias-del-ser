@@ -8,22 +8,25 @@ import 'rxjs/add/operator/pairwise';
   styleUrls: ['./footer.component.css', '../app.component.css']
 })
 export class FooterComponent implements OnInit {
-  @Output() startNewSurvey = new EventEmitter
-  currentUrl: string
-  constructor(private router:Router) { }
+  @Output() startNewSurvey = new EventEmitter;
+  @Output() surveyAdvance = new EventEmitter;
+  currentUrl;
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.currentUrl = this.router.url
+    this.currentUrl = this.router.url;
   }
 
 /*
 * Method to go back given the current url
 */
-  cancel(){
+  cancel() {
     switch (this.currentUrl) {
       case '/survey-setup': this.router.navigate(['welcome']); break;
       case '/surveyteam-setup': this.router.navigate(['welcome']); break;
-      case '/survey/1': this.router.navigateByUrl('survey/2'); break;
+      case '/survey/1': case '/survey/2': case '/survey/3': case '/survey/4':
+      case '/survey/5': case '/survey/6': case '/survey/7': case '/survey/8':
+        this.router.navigate(['welcome']); break;
       default:
         break;
     }
@@ -32,14 +35,16 @@ export class FooterComponent implements OnInit {
 /*
 * Method to go forward given the current url
 */
-  advance(){
+  advance() {
     switch (this.currentUrl) {
-      case '/survey-setup': this.startNewSurvey.emit()
-        break; 
-      case '/surveyteam-setup':this.startNewSurvey.emit()
+      case '/survey-setup': this.startNewSurvey.emit();
         break;
-      case '/survey/1': this.router.navigateByUrl('survey/2'); break;
-      default: 
+      case '/surveyteam-setup': this.startNewSurvey.emit();
+        break;
+      case '/survey/1': case '/survey/2': case '/survey/3': case '/survey/4':
+      case '/survey/5': case '/survey/6': case '/survey/7': case '/survey/8':
+        this.surveyAdvance.emit(); break;
+      default:
         break;
     }
   }

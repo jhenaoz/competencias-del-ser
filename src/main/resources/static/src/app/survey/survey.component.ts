@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { SurveyService } from './survey.service';
 
-import{
+import {
  Aptitude,
  AptitudeService,
  Behavior
-} from '../aptitude/index'
+} from '../aptitude/index';
 
 import * as jQuery from 'jquery';
 
@@ -30,15 +30,20 @@ export class SurveyComponent implements OnInit {
 
   observation: string;
 
-  id: string
+  id: string;
 
-  constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService, private translate: TranslateService, private route: ActivatedRoute) {
-     this.currentLanguage = translate.currentLang;
-     route.params.subscribe(param => {
-       this.id = param['id']
-       this._aptitudeService.getBehaviors(this.id).subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error)
+  constructor(private surveyService: SurveyService,
+      private _aptitudeService: AptitudeService,
+      private translate: TranslateService,
+      private route: ActivatedRoute,
+      private router:  Router) {
+        this.currentLanguage = translate.currentLang;
+        route.params.subscribe(param => {
+          this.id = param['id'];
+          this._aptitudeService.getBehaviors(this.id)
+            .subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error);
 
-     })
+     });
   }
 
   ngOnInit() {
@@ -48,23 +53,24 @@ export class SurveyComponent implements OnInit {
 /*
 * Hardcoded values
 */
-  nextAptitude(){
-    if(this.next !== ""){
-       $("#openess").addClass('active');
-    }else{
-      $(".active").next().addClass('active');
+  nextAptitude() {
+    if  (this.next !== '') {
+       $('#openess').addClass('active');
+    }else {
+      $('.active').next().addClass('active');
     }
   }
 
-  save(model: any, isValid: boolean) {   
-       if(this.validateSurvey()){
-        $("#radio-alert").addClass("hide");
-        $("input:checked").removeAttr("checked");
-       }else{
-         $("#radio-alert").removeClass("hide");
+
+  save(model: any, isValid: boolean) {
+       if  (this.validateSurvey()) {
+        $('#radio-alert').addClass('hide');
+        $('input:checked').removeAttr('checked');
+       }else {
+         $('#radio-alert').removeClass('hide');
        }
-        for(let i = 1; i <= Object.keys(this.behaviors).length; i++){
-          alert($('input[name="radio'+i+'"]:checked').val())
+        for  (let i = 1; i <= Object.keys(this.behaviors).length; i++) {
+          alert($('input[name="radio' + i + '"]:checked').val()); ;
         }
         // alert($('input[name="radio1"]:checked').val());
         // alert($('input[name="radio2"]:checked').val());
@@ -72,27 +78,31 @@ export class SurveyComponent implements OnInit {
         // alert($('input[name="radio4"]:checked').val());
     }
 
-    validateSurvey(): boolean{
-      for(let i = 1; i <= Object.keys(this.behaviors).length; i++){
-          if($('input[name="radio'+i+'"]:checked').val() === undefined ){
+    validateSurvey(): boolean {
+      for  (let i = 1; i <= Object.keys(this.behaviors).length; i++) {
+          if  ($('input[name="radio' + i + '"]:checked').val() === undefined ) {
             return false;
           }
         }
         return true;
     }
-  
-  saveSurvey(survey){
+
+  saveSurvey(survey) {
     if (!survey) { return; }
     this.surveyService.saveSurvey(survey)
                      .subscribe(
-                       survey  => this.surveyService.survey = survey,
+                       res  => this.surveyService.survey = res,
                        error =>  this.errorMessage = <any>error);
   }
-  
+
 
   onSelectionChange(entry) {
         console.log(entry);
     }
-    
+
+  surveyAdvance() {
+    this.router.navigate(['survey'], this.id + 1); ;
+  }
+
 
 }

@@ -13,9 +13,9 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  OneData(value){
-    this.surveyService.oneSurvey = value
-    console.log(value)
+  OneData(value) {
+    this.surveyService.oneSurvey = value;
+    console.log(value);
   }
 
 }
