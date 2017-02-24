@@ -72,10 +72,6 @@ export class SurveyComponent implements OnInit {
         for  (let i = 1; i <= Object.keys(this.behaviors).length; i++) {
           alert($('input[name="radio' + i + '"]:checked').val()); ;
         }
-        // alert($('input[name="radio1"]:checked').val());
-        // alert($('input[name="radio2"]:checked').val());
-        // alert($('input[name="radio3"]:checked').val());
-        // alert($('input[name="radio4"]:checked').val());
     }
 
     validateSurvey(): boolean {
@@ -101,7 +97,13 @@ export class SurveyComponent implements OnInit {
     }
 
   surveyAdvance() {
-    this.router.navigate(['survey'], this.id + 1); ;
+    if (+this.id + 1 >= 9) {
+      this.router.navigate(['404']);
+    }else {
+      const next = (+this.id + 1).toString();
+      this.router.navigate(['survey/' + next]);
+    }
+
   }
 
 
