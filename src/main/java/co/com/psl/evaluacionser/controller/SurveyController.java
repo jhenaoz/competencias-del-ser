@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 public class SurveyController {
 
@@ -27,8 +25,8 @@ public class SurveyController {
     @RequestMapping(value = "/survey", method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
         Survey survey = new Survey();
-        //Todo transformar de Dto a Survey normal
-        return new ResponseEntity(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
+        //TODO transformar de Dto a Survey normal
+        return new ResponseEntity<Survey>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
 
     }
 }
