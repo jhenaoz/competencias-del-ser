@@ -1,7 +1,7 @@
-package co.com.psl.evaluacionser.controller;
+package co.com.psl.evaluacionser.service.transformer;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 
 public class AptitudeDtoTransformer {
 
