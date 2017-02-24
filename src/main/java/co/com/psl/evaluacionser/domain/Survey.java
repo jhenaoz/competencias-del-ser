@@ -2,6 +2,10 @@ package co.com.psl.evaluacionser.domain;
 
 import java.util.List;
 
+/**
+ * This class is used to save the data in the required format implementing the classes AptitudeSurvey and Behavior Survey
+ *
+ */
 public class Survey {
 
     private String evaluator;
@@ -10,6 +14,9 @@ public class Survey {
 
     private String role;
 
+    /**
+     * This date is formated in elasticsearch 
+     */
     private String timestamp;
 
     List<AptitudeSurvey> aptitudes;

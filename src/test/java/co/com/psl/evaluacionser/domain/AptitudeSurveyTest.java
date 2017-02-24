@@ -14,7 +14,7 @@ public class AptitudeSurveyTest {
         AptitudeDto aptitudeDto = new AptitudeDto("1", "Openness", "Apertura");
         List<BehaviorSurvey> behaviors = new ArrayList<BehaviorSurvey>();
         Behavior behavior = new Behavior("1", "Accepts review", "Acepta retroalimentacion");
-        behaviors.add(new BehaviorSurvey(behavior, "5"));
+        behaviors.add(new BehaviorSurvey(behavior, 5));
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey(aptitudeDto, "A really good friend", behaviors);
         assertEquals("1", aptitudeSurvey.getAptitude().getId());
         assertEquals("1", aptitudeSurvey.getBehaviors().get(0).getBehavior().getId());
@@ -27,7 +27,7 @@ public class AptitudeSurveyTest {
         aptitudeSurvey.setAptitude(new AptitudeDto("1", "Openness", "Apertura"));
         List<BehaviorSurvey> behaviors = new ArrayList<BehaviorSurvey>();
         Behavior behavior = new Behavior("1", "Accepts review", "Acepta retroalimentacion");
-        behaviors.add(new BehaviorSurvey(behavior, "5"));
+        behaviors.add(new BehaviorSurvey(behavior, 5));
         aptitudeSurvey.setBehaviors(behaviors);
         aptitudeSurvey.setObservation("A really good friend");
         assertEquals("1", aptitudeSurvey.getAptitude().getId());

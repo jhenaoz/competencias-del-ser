@@ -2,6 +2,10 @@ package co.com.psl.evaluacionser.domain;
 
 import java.util.List;
 
+/**
+ * This class is used to save the data in the required format 
+ *
+ */
 public class AptitudeSurvey {
 
     private AptitudeDto aptitude;

@@ -1,15 +1,19 @@
 package co.com.psl.evaluacionser.domain;
 
+/**
+ * This class is used to save the data in the required format 
+ *
+ */
 public class BehaviorSurvey {
 
     private Behavior behavior;
 
-    private String score;
+    private int score;
 
     public BehaviorSurvey() {
     }
 
-    public BehaviorSurvey(Behavior behavior, String score) {
+    public BehaviorSurvey(Behavior behavior, int score) {
         this.behavior = behavior;
         this.score = score;
     }
@@ -22,11 +26,11 @@ public class BehaviorSurvey {
         this.behavior = behavior;
     }
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
