@@ -19,14 +19,15 @@ public class SurveyController {
     private SurveyRepository surveyRepository;
 
     /**
-     * This method saves a Survey to the DB, receives a JSON containing the Survey basic data (DTO)
+     * This method saves a Survey to the DB, receives a JSON containing the
+     * Survey basic data (DTO)
      *
      * @return Response entity with HttpStatus.ACCEPTED and the Survey saved
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
         Survey survey = new Survey();
-        //Todo transformar de Dto a Survey normal
+        // Todo transformar de Dto a Survey normal
         return new ResponseEntity(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
     }
 

@@ -9,7 +9,6 @@ public class BehaviorReportDto {
     }
 
     public BehaviorReportDto(String name, int score) {
-        super();
         this.name = name;
         this.score = score;
     }
