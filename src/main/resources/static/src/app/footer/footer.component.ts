@@ -9,7 +9,7 @@ import 'rxjs/add/operator/pairwise';
 })
 export class FooterComponent implements OnInit {
   @Output() startNewSurvey = new EventEmitter
-  currentUrl
+  currentUrl: string
   constructor(private router:Router) { }
 
   ngOnInit() {
@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit {
     switch (this.currentUrl) {
       case '/survey-setup': this.router.navigate(['welcome']); break;
       case '/surveyteam-setup': this.router.navigate(['welcome']); break;
-      case '/survey/1': this.router.navigate(['welcome']); break;
+      case '/survey/1': this.router.navigateByUrl('survey/2'); break;
       default:
         break;
     }
@@ -38,6 +38,7 @@ export class FooterComponent implements OnInit {
         break; 
       case '/surveyteam-setup':this.startNewSurvey.emit()
         break;
+      case '/survey/1': this.router.navigateByUrl('survey/2'); break;
       default: 
         break;
     }

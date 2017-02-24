@@ -30,16 +30,19 @@ export class SurveyComponent implements OnInit {
 
   observation: string;
 
+  id: string
+
   constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService, private translate: TranslateService, private route: ActivatedRoute) {
      this.currentLanguage = translate.currentLang;
+     route.params.subscribe(param => {
+       this.id = param['id']
+       this._aptitudeService.getBehaviors(this.id).subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error)
+
+     })
   }
 
   ngOnInit() {
     this.next = 'logros';
-    
-    console.log("Aptitude Id to get Behaviors ", this.route.snapshot.params['id']);
-    
-    this._aptitudeService.getBehaviors(this.route.snapshot.params['id']).subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error)
   }
 
 /*
