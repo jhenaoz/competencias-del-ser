@@ -26,7 +26,9 @@ public class SurveyController {
      */
     @RequestMapping(value = "/survey", method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
-        return new ResponseEntity(surveyRepository.saveSurvey(surveyDto), HttpStatus.ACCEPTED);
+        Survey survey = new Survey();
+        //Todo transformar de Dto a Survey normal
+        return new ResponseEntity(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
 
     }
 }
