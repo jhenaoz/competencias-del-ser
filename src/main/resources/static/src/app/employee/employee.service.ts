@@ -7,16 +7,18 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
+// Enviroment variables
+import { environment } from '../../environments/environment'
+
 import { IEmployee } from './employee.model';
 
 @Injectable()
 export class EmployeeService {
-private _employeeUrl = 
-//'http://ec2-52-33-244-144.us-west-2.compute.amazonaws.com:8080/person'  
-'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/9626f05b-5baf-4721-8077-9a79ea6e929d/person';
+private _employeeUrl = environment.apiURL;
 
-  constructor(private _http: Http) { }
-
+  constructor(private _http: Http) { 
+      this._employeeUrl += '/person';
+  }
   /*
   * Method to get all employees from REST response
   * Return type: Observable
