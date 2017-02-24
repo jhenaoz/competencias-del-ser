@@ -1,4 +1,4 @@
 export interface IEmployee {
-    employeeId: number
-    name: string
+    employeeId: number;
+    name: string;
 }

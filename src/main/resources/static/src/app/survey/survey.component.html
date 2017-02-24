@@ -72,103 +72,66 @@
                 </h4>
             </div>
         </div>
+        <!--/Titles-->
         <!--Data-->
-        <div class="row">
-            <form>
-                <div class="col-md-4">
-                    <p>Acepta sugerencias sin distinción de quien lo dé</p>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio1" id="radio1" value="option1">
-                        <label for="radio1">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio1" id="radio2" value="option2">
-                        <label for="radio2">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio1" id="radio3" value="option3">
-                        <label for="radio3">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio1" id="radio4" value="option4">
-                        <label for="radio4">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio1" id="radio5" value="option5">
-                        <label for="radio5">
-                        </label>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <form #f="ngForm" (ngSubmit)="save(f.value, f.valid)" novalidate>
+            <div *ngFor="let behavior of behaviors">
+                <div class="row">
 
-        <!--BORRAR-->
-        <div class="row">
-            <form>
-                <div class="col-md-4">
-                    <p>Reconoce sus errores</p>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio2" id="1radio1" value="option1">
-                        <label for="1radio1">
+                    <div class="col-md-4">
+                        <div *ngIf="currentLanguage === 'es'">
+                            <p>{{ behavior. es }}</p>
+                        </div>
+                        <div *ngIf="currentLanguage === 'en'">
+                            <p>{{ behavior. en }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="radio radio-primary">
+                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio1" value="4" required>
+                            <label for="{{behavior.id}}radio1">
                         </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="radio radio-primary">
+                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio2" value="3" required>
+                            <label for="{{behavior.id}}radio2">
+                        </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="radio radio-primary">
+                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio3" value="2" required>
+                            <label for="{{behavior.id}}radio3">
+                        </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="radio radio-primary">
+                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio4" value="1" required>
+                            <label for="{{behavior.id}}radio4">
+                        </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="radio radio-primary">
+                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio5" value="0" required>
+                            <label for="{{behavior.id}}radio5">
+                        </label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio2" id="1radio2" value="option2">
-                        <label for="1radio2">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio2" id="1radio3" value="option3">
-                        <label for="1radio3">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio2" id="1radio4" value="option4">
-                        <label for="1radio4">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="radio radio-primary">
-                        <input type="radio" name="radio2" id="1radio5" value="option5">
-                        <label for="1radio5">
-                        </label>
-                    </div>
-                </div>
-                <!--/BORRAR-->
-            </form>
-        </div>
+            </div>
+            <div class="alert alert-danger hide" id="radio-alert">{{ "Survey_options.relationship_alert" | translate }}.</div>
+            <h4>
+                {{ "Survey.observations" | translate }}
+            </h4>
+            <textarea class="form-control" rows="3" required></textarea>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
 
-
-        <!--<button type="button" class="btn btn-large btn-block btn-default" (click)="nextAptitude()">button</button>-->
-
-        <h4>
-            {{ "Survey.observations" | translate }}
-        </h4>
-        <textarea class="form-control" rows="3"></textarea>
     </div>
 </div>
 
-<app-footer></app-footer>
+<app-footer (surveyAdvance)="surveyAdvance()"></app-footer>
