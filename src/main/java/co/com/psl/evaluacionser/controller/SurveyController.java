@@ -4,6 +4,7 @@ import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.domain.SurveyDto;
 import co.com.psl.evaluacionser.persistence.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +20,13 @@ public class SurveyController {
     private SurveyRepository surveyRepository;
 
     /**
-     * This method returns the list of all employees in the elasticsearch
+     * This method saves a Survey to the DB, receives a JSON containing the Survey basic data (DTO)
      *
-     * @return Response entity with the status of the request, ok if it exists or not_found if it is null, and if it exists returns the list
+     * @return Response entity with HttpStatus.ACCEPTED and the Survey saved
      */
     @RequestMapping(value = "/survey", method = RequestMethod.POST)
     public ResponseEntity<List<Survey>> saveSurvey(@RequestBody SurveyDto surveyDto) {
-        return new ResponseEntity<List<Survey>>(surveyRepository.saveSurvey(surveyDto));
+        return new ResponseEntity(surveyRepository.saveSurvey(surveyDto), HttpStatus.ACCEPTED);
 
     }
 }
