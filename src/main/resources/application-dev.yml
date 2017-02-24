@@ -3,3 +3,5 @@ server:
 
 elasticport: 9200
 elastichost: http://localhost
+elasticSurveyIndex: survey
+elasticSurveyType: survey

@@ -4,6 +4,7 @@ import co.com.psl.evaluacionser.domain.Survey;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Index;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,8 +12,11 @@ import java.io.IOException;
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
 
-    private static final String APTITUDE_INDEX_NAME = "survey";
-    private static final String APTITUDE_TYPE_NAME = "survey";
+    @Value("${elasticSurveyIndex}")
+    private String APTITUDE_INDEX_NAME;
+
+    @Value("${elasticSurveyType}")
+    private String APTITUDE_TYPE_NAME;
 
     @Autowired
     private JestClient client;
