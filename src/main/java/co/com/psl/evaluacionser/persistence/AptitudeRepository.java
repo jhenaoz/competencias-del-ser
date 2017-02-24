@@ -2,7 +2,7 @@ package co.com.psl.evaluacionser.persistence;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 
 import java.util.List;
 

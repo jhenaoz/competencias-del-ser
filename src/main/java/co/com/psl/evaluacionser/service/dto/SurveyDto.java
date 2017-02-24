@@ -1,4 +1,4 @@
-package co.com.psl.evaluacionser.domain;
+package co.com.psl.evaluacionser.service.dto;
 
 import java.util.List;
 

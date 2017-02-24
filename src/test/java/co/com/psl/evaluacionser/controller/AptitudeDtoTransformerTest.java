@@ -1,8 +1,9 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
+import co.com.psl.evaluacionser.service.transformer.AptitudeDtoTransformer;
 import org.junit.Test;
 
 import java.util.ArrayList;
