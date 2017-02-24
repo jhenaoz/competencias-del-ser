@@ -14,7 +14,7 @@ public class SurveyTest {
         AptitudeDto aptitudeDto = new AptitudeDto("1", "Openness", "Apertura");
         List<BehaviorSurvey> behaviors = new ArrayList<BehaviorSurvey>();
         Behavior behavior = new Behavior("1", "Accepts review", "Acepta retroalimentacion");
-        behaviors.add(new BehaviorSurvey(behavior, "5"));
+        behaviors.add(new BehaviorSurvey(behavior, 5));
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey(aptitudeDto, "A really good friend", behaviors);
         ArrayList<AptitudeSurvey> aptitudeSurveys = new ArrayList<>();
         aptitudeSurveys.add(aptitudeSurvey);
