@@ -210,7 +210,7 @@ export class SurveyOptionsComponent implements OnInit {
           aptitudes: <Aptitude[]>[]
         }
         this.surveyService.startSurvey(survey)
-        this.router.navigate(['/survey'])
+        this.router.navigate(['/survey/1'])
     }
   }
 

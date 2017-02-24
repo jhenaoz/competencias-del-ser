@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ActivatedRoute } from '@angular/router';
+
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { SurveyService } from './survey.service';
@@ -26,14 +28,16 @@ export class SurveyComponent implements OnInit {
 
   behaviors: Behavior[];
 
-  constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService, private translate: TranslateService) { 
+  constructor(private surveyService: SurveyService, private _aptitudeService: AptitudeService, private translate: TranslateService, private route: ActivatedRoute) { 
      this.currentLanguage = translate.currentLang;
   }
 
   ngOnInit() {
     this.next = 'logros';
     
-    this._aptitudeService.getBehaviors('1').subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error)
+    console.log("Aptitude Id to get Behaviors ", this.route.snapshot.params['id']);
+    
+    this._aptitudeService.getBehaviors(this.route.snapshot.params['id']).subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error)
   }
 
 /*
@@ -52,5 +56,14 @@ export class SurveyComponent implements OnInit {
         // if valid, call API to save customer
         console.log(model, isValid);
     }
+  
+  saveSurvey(survey){
+    if (!survey) { return; }
+    this.surveyService.saveSurvey(survey)
+                     .subscribe(
+                       survey  => this.surveyService.survey = survey,
+                       error =>  this.errorMessage = <any>error);
+  }
+  
 
 }

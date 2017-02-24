@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit {
     switch (this.currentUrl) {
       case '/survey-setup': this.router.navigate(['welcome']); break;
       case '/surveyteam-setup': this.router.navigate(['welcome']); break;
-      case '/survey': this.router.navigate(['welcome']); break;
+      case '/survey/1': this.router.navigate(['welcome']); break;
       default:
         break;
     }
