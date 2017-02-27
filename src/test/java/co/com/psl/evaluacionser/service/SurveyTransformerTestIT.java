@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SurveyTransformerTestIT {
 
     @Autowired
-    private SurveyTransformer surveyTransformer = new SurveyTransformer();
+    private SurveyTransformer surveyTransformer;
 
     @Test
     public void aptitudeSurveyTransformerTest() {

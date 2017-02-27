@@ -14,7 +14,6 @@ import static org.junit.Assert.assertEquals;
 
 public class BehaviorSurveyTransformerTest {
 
-    @Autowired
     private SurveyTransformer surveyTransformer = new SurveyTransformer();
 
     @Test
