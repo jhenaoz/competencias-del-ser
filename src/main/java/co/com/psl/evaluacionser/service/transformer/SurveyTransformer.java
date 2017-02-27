@@ -24,7 +24,6 @@ import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 /**
  * This class is in charge of transform the json from the front end to the form
  * required in the db
- *
  */
 
 @Service
@@ -35,7 +34,7 @@ public class SurveyTransformer {
 
     /**
      * This method calls the other methods required for the transformation
-     * 
+     *
      * @param surveyDto
      * @return Survey
      */
@@ -44,27 +43,13 @@ public class SurveyTransformer {
         survey.setEvaluator(surveyDto.getEvaluator());
         survey.setEvaluated(surveyDto.getEvaluated());
         survey.setRole(surveyDto.getRole());
-        /**
-         * Calls the current date and give it the correct format
-         */
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         survey.setTimestamp(dateFormat.format(date));
-
-        //survey.setAptitudes(this.AptitudesSurveyTransformer(surveyDto.getAptitudes()));
-
         survey.setAptitudes(surveyDto.getAptitudes().stream().map(this::AptitudeSurveyTransformer)
                 .collect(Collectors.toList()));
+
         return survey;
-    }
-
-    // TODO validaciones null
-    public List<AptitudeSurvey> AptitudesSurveyTransformer(List<AptitudeSurveyDto> aptitudes) {
-
-        List<AptitudeSurvey> aptitudesSurvey = aptitudes.stream().map(this::AptitudeSurveyTransformer)
-                .collect(Collectors.toList());
-
-        return aptitudesSurvey;
     }
 
     public AptitudeSurvey AptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
@@ -81,7 +66,7 @@ public class SurveyTransformer {
     }
 
     public List<BehaviorSurvey> BehaviorsSurveyTransformer(List<Behavior> behaviors,
-            List<BehaviorSurveyDto> behaviorsSurveyDto) {
+                                                           List<BehaviorSurveyDto> behaviorsSurveyDto) {
         List<BehaviorSurvey> behaviorsSurvey = new ArrayList<BehaviorSurvey>();
         for (int i = 0; i < behaviorsSurveyDto.size(); i++) {
             BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
