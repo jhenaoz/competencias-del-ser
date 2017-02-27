@@ -1,10 +1,11 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
+import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static co.com.psl.evaluacionser.controller.AptitudeDtoTransformer.convertToDto;
+import static co.com.psl.evaluacionser.service.transformer.AptitudeTransformer.convertToDto;
 
 
 @RestController
@@ -35,7 +36,7 @@ public class AptitudeController {
         if (aptitudes == null)
             return new ResponseEntity<List<AptitudeDto>>(HttpStatus.NOT_FOUND);
 
-        List<AptitudeDto> aptitudesDto = aptitudes.stream().map(AptitudeDtoTransformer::convertToDto)
+        List<AptitudeDto> aptitudesDto = aptitudes.stream().map(AptitudeTransformer::convertToDto)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<List<AptitudeDto>>(aptitudesDto, HttpStatus.OK);
