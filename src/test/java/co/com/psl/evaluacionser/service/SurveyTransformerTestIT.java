@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import co.com.psl.evaluacionser.domain.AptitudeSurvey;
 import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
-import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorSurvey;
 import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
