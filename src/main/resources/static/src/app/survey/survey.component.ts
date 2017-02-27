@@ -42,8 +42,11 @@ export class SurveyComponent implements OnInit {
           this.id = param['id'];
           this._aptitudeService.getBehaviors(this.id)
             .subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error);
+            // , () => this.asdf =  this.behaviors.length
+          // this._aptitudeService.getBehaviorLength(this.id).subscribe(asdf => this.asdf = asdf, error => this.errorMessage = <any>error);
 
      });
+
   }
 
   ngOnInit() {
@@ -97,14 +100,19 @@ export class SurveyComponent implements OnInit {
     }
 
   surveyAdvance() {
-    if (+this.id + 1 >= 9) {
+    if (!this.surveyService.oneSurvey) {
       this.router.navigate(['404']);
     }else {
-      const next = (+this.id + 1).toString();
-      this.router.navigate(['survey/' + next]);
+        if (+this.id + 1 >= 9) {
+        this.router.navigate(['404']);
+      }else {
+        const next = (+this.id + 1).toString();
+        this.router.navigate(['survey/' + next]);
+      }
     }
-
   }
+
+
 
 
 }

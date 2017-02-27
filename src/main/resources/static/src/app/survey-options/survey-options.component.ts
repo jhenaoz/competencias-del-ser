@@ -167,6 +167,7 @@ export class SurveyOptionsComponent implements OnInit {
             value.relationship = 'teammate';
             break;
         }
+        this.surveyService.competence = value.competenceToEvaluate;
         switch (value.competenceToEvaluate) {
            case this.openessText:
               value.competenceToEvaluate = 'openess';
@@ -206,6 +207,7 @@ export class SurveyOptionsComponent implements OnInit {
           aptitudes: <Aptitude[]>[]
         };
         this.surveyService.startSurvey(survey);
+
         this.router.navigate(['/survey/1']);
     }
   }

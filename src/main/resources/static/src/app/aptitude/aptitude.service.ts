@@ -32,6 +32,13 @@ export class AptitudeService {
             .catch(this.handleError);
     }
 
+      /*getBehaviorLength(aptitudeId: string): Observable<number> {
+         return this._http.get(this._aptitudeUrl + aptitudeId + '/behavior')
+            .map((response: Response) => <number> response.json().length)
+            .do(data => console.log('Length: ' +  JSON.stringify(data)))
+            .catch(this.handleError);
+    }*/
+
 
   /*
   * Method to handle error and log it into console
