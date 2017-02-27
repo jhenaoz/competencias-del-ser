@@ -3,7 +3,10 @@ package co.com.psl.evaluacionser.controller;
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.service.transformer.AptitudeDtoTransformer;
+<<<<<<< HEAD:src/test/java/co/com/psl/evaluacionser/controller/AptitudeDtoTransformerTest.java
+=======
+import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
+>>>>>>> remotes/origin/master:src/test/java/co/com/psl/evaluacionser/controller/AptitudeTransformerTest.java
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class AptitudeDtoTransformerTest {
+public class AptitudeTransformerTest {
 
     @Test
     public void aptitudeTransformedToDto() {
@@ -22,7 +25,7 @@ public class AptitudeDtoTransformerTest {
         behaviors.add(behavior2);
         Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviors);
 
-        AptitudeDto aptitudeDto = AptitudeDtoTransformer.convertToDto(aptitude);
+        AptitudeDto aptitudeDto = AptitudeTransformer.convertToDto(aptitude);
 
         assertEquals(aptitude.getId().toString(), aptitudeDto.getId());
         assertEquals(aptitude.getEs(), aptitudeDto.getEs());
