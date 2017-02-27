@@ -38,7 +38,7 @@ public class SurveyTransformer {
      * @param surveyDto
      * @return Survey
      */
-    public Survey Transformer(SurveyDto surveyDto) {
+    public Survey transformer(SurveyDto surveyDto) {
         Survey survey = new Survey();
         survey.setEvaluator(surveyDto.getEvaluator());
         survey.setEvaluated(surveyDto.getEvaluated());
@@ -46,26 +46,29 @@ public class SurveyTransformer {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         survey.setTimestamp(dateFormat.format(date));
-        survey.setAptitudes(surveyDto.getAptitudes().stream().map(this::AptitudeSurveyTransformer)
+        survey.setAptitudes(surveyDto.getAptitudes().stream().map(this::aptitudeSurveyTransformer)
                 .collect(Collectors.toList()));
 
         return survey;
     }
 
-    public AptitudeSurvey AptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
+    public AptitudeSurvey aptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
         AptitudeSurvey aptutideSurvey = new AptitudeSurvey();
-        Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
-        AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
-        AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
-        aptutideSurvey.setAptitude(aptitudeDto);
-        aptutideSurvey.setObservation(aptitudeSurveyDto.getObservation());
-        aptutideSurvey.setBehaviors(
-                this.BehaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
+        try {
+            Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
+            AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
+            AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
+            aptutideSurvey.setAptitude(aptitudeDto);
+            aptutideSurvey.setObservation(aptitudeSurveyDto.getObservation());
+            aptutideSurvey.setBehaviors(
+                    this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
+        } catch (Exception e) {
 
+        }
         return aptutideSurvey;
     }
 
-    public List<BehaviorSurvey> BehaviorsSurveyTransformer(List<Behavior> behaviors,
+    public List<BehaviorSurvey> behaviorsSurveyTransformer(List<Behavior> behaviors,
                                                            List<BehaviorSurveyDto> behaviorsSurveyDto) {
         List<BehaviorSurvey> behaviorsSurvey = new ArrayList<BehaviorSurvey>();
         for (int i = 0; i < behaviorsSurveyDto.size(); i++) {
