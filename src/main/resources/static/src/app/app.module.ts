@@ -16,16 +16,19 @@ import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SurveyOptionsComponent } from './survey-options/survey-options.component';
 import { SurveyComponent } from './survey/survey.component';
+import { Error404Component } from './errors/404.component';
 
 // Service import
 import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
+import { AptitudeService } from './aptitude/index';
+import { SurveyRouteActivator } from './survey/survey.route.activator.service';
 
-//Translate imports
+// Translate imports
 import { TranslateModule } from 'ng2-translate';
-import { TranslateLoader, TranslateStaticLoader } from "ng2-translate/src/translate.service";
+import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/translate.service';
 
-//CSS & Javascript imports
+// CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -33,7 +36,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    ReactiveFormsModule,   
+    ReactiveFormsModule,
     HttpModule,
     TranslateModule.forRoot({
             provide: TranslateLoader,
@@ -48,11 +51,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     WelcomeComponent,
     SurveyOptionsComponent,
-    SurveyComponent
-  ],  
+    SurveyComponent,
+    Error404Component
+  ],
   providers: [
     EmployeeService,
     SurveyService,
+    AptitudeService,
+    SurveyRouteActivator,
   ],
   bootstrap: [AppComponent]
 })
