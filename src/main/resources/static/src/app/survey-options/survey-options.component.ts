@@ -33,6 +33,8 @@ export class SurveyOptionsComponent implements OnInit {
   // We are creating a new object and setting its type to FormGroup
   complexForm : FormGroup;
 
+  survey: Survey = new Survey();
+
   /*
   * Relation variables
   */
