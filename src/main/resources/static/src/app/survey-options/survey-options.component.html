@@ -7,11 +7,11 @@
         <br><br> {{ "Survey_options.information" | translate}}
     </p>
     <div class="container">
-        <form id="form" [formGroup]="complexForm" >
+        <form id="form" [formGroup]="complexForm">
             <!--Evaluated select-->
             <div class="block">
                 <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey_options.evaluated" | translate}}</label>
+                {{ "Survey_options.evaluated" | translate}}:</label>
                 <app-employee id="evaluatedAppEmployee" [formControl]="evaluated" ngDefaultControl>
                 </app-employee>
                 <!--Validator label-->
@@ -21,7 +21,7 @@
             <!--Relationship select-->
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey_options.relationship" | translate}}</label>
+                {{ "Survey_options.relationship" | translate}}:</label>
                 <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']" #t (change)="relationChange(t.value)">
                   <option></option>
                   <option id="team">{{ "Survey_options.relation_teammate" | translate}}</option>
@@ -29,7 +29,7 @@
                   <option id="own">{{ "Survey_options.relation_own" | translate}}</option>
                 </select>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="!complexForm.controls['relationship'].valid  && complexForm.controls['relationship'].dirty"></div>
+                <div class="alert alert-danger" *ngIf="!complexForm.controls['relationship'].valid  && complexForm.controls['relationship'].dirty">{{ "Survey_options.relationship_alert" | translate }}</div>
             </div>
             <!--Popover-->
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
@@ -37,18 +37,17 @@
             <!--Evaluator select-->
             <div *ngIf="!isSelf" class="block" id="evaluatorBlock">
                 <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
-                {{ "Survey_options.evaluator" | translate}}</label>
-                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control hide" [formControl]="complexForm.controls['evaluator']">
-                <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl>
-                </app-employee>
+                {{ "Survey_options.evaluator" | translate}}:</label>
+                <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl [class.hidden]="isClient"></app-employee>
+                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control" [formControl]="complexForm.controls['evaluator']" [class.hidden]="!isClient">
                 <!--Validator label-->
-                <div id="alertEvaluator" class="alert alert-danger hide">{{ "Survey_options.evaluator_alert" | translate }}</div>
+                <div id="alertEvaluator" class="alert alert-danger" *ngIf="complexForm.controls['evaluator'].hasError('valid')  && complexForm.controls['evaluator'].dirty">{{ "Survey_options.evaluator_alert" | translate }}</div>
             </div>
 
             <!--Competence select-->
             <div *ngIf="!surveyService.oneSurvey" class="block">
                 <label for="competencesSelect"><span style="color: #134C96">*</span> 
-                {{ "Competences.title" | translate}}</label>
+                {{ "Competences.title" | translate}}:</label>
                 <select class="form-control" id="competencesSelect" [formControl]="complexForm.controls['competenceToEvaluate']">
                     <option></option>
                     <option>{{ "Competences.competence_opening" | translate}}</option>
@@ -63,10 +62,7 @@
                 <!--Validator label-->
                 <div class="alert alert-danger" *ngIf="complexForm.controls['competenceToEvaluate'].invalid && complexForm.controls['competenceToEvaluate'].dirty">You must select a competence.</div>
             </div>
-            <!--<button id="submit" type="submit" class="btn btn-default hide" [disabled]="!complexForm.valid">Submit</button>-->
         </form>
-
-
     </div>
 
     <!--Popover content-->

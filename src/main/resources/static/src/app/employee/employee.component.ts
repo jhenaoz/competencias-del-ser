@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { 
+import {
   IEmployee,
-  EmployeeService 
+  EmployeeService
 } from './index';
 
 @Component({
@@ -11,16 +11,16 @@ import {
   styleUrls: ['../survey-options/survey-options.component.css']
 })
 export class EmployeeComponent implements OnInit {
-  pageTitle: string = 'Product List';
+  pageTitle = 'Product List';
 
   errorMessage: string;
-  employees: IEmployee[]
+  employees: IEmployee[];
 
   constructor(private _employeeService: EmployeeService) { }
 
   ngOnInit() {
     // Get all employees from service
-    this._employeeService.getEmployees().subscribe(employees => this.employees = employees, error => this.errorMessage = <any>error)
+    this._employeeService.getEmployees().subscribe(employees => this.employees = employees, error => this.errorMessage = <any>error);
   }
 
 }

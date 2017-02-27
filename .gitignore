@@ -151,6 +151,7 @@ build/Release
 node/
 node_modules
 jspm_packages
+coverage/
 
 # Optional npm cache directory
 .npm

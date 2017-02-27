@@ -10,34 +10,28 @@ import 'rxjs/add/observable/throw';
 // Enviroment variables
 import { environment } from '../../environments/environment';
 
-import { IEmployee } from './employee.model';
+import { Behavior } from './behavior.model';
 
 @Injectable()
-export class EmployeeService {
-private _employeeUrl = environment.apiURL;
+export class AptitudeService {
+  private _aptitudeUrl = environment.apiURL;
 
   constructor(private _http: Http) {
-      this._employeeUrl += '/person';
+      this._aptitudeUrl += '/aptitude/';
   }
+
   /*
-  * Method to get all employees from REST response
+  * Method to get all behaviors from REST response
   * Return type: Observable
   */
-  getEmployees(): Observable<IEmployee[]> {
-        return this._http.get(this._employeeUrl)
-            .map((response: Response) => <IEmployee[]> response.json())
+  getBehaviors(aptitudeId: string): Observable<Behavior[]> {
+
+        return this._http.get(this._aptitudeUrl + aptitudeId + '/behavior')
+            .map((response: Response) => <Behavior[]> response.json())
             .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-  /*
-  * Method to get one employee from REST response given the ID
-  * Return type: Observable
-  */
-  getEmployee(id: number): Observable<IEmployee> {
-        return this.getEmployees()
-            .map((employee: IEmployee[]) => employee.find(p => p.employeeId === id));
-    }
 
   /*
   * Method to handle error and log it into console
