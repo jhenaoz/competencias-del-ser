@@ -2,7 +2,7 @@
 import { Component, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
 
 import { Survey } from '../survey/survey.model';
 import { Aptitude, Behavior } from '../aptitude/index';
@@ -13,6 +13,17 @@ import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import * as jQuery from 'jquery';
 
+/*
+* Custom evaluator validator
+*/
+function evaluatorValidator(self: boolean): ValidatorFn {
+   return  (c: AbstractControl): {[key: string]: boolean} | null => {
+        if(self){
+          return { 'valid': true };
+        }
+        return null;
+    };
+}
 @Component({
   selector: 'app-survey-options',
   templateUrl: './survey-options.component.html',
@@ -39,7 +50,8 @@ export class SurveyOptionsComponent implements OnInit {
   * Relation variables
   */
   // Boolean to know if is self assessment
-  isSelf: Boolean = false;
+  isSelf: boolean = false;
+  isClient: boolean = false;
   // Variables to handle i18n relation translates --> self-assessment, client, teammate
   selfText: String;
   clientText: String;
@@ -98,8 +110,9 @@ export class SurveyOptionsComponent implements OnInit {
     * Form variables initialization
     * FormControl('value', validator)
     */
+    this.isSelf = false;
     this.evaluated = new FormControl('',  Validators.required);
-    this.evaluator = new FormControl('');
+    this.evaluator = new FormControl('', evaluatorValidator(this.isSelf));
     this.relationship = new FormControl('',  Validators.required);
     this.competenceToEvaluate = new FormControl('',  Validators.required);
     // We choose the constructor depending of the type of survey
@@ -117,40 +130,19 @@ export class SurveyOptionsComponent implements OnInit {
         relationship: this.relationship,
       });
     }
-
-    /*
-    * JQuery function used if the evaluator is the Client, we change the SELECT for an INPUT TEXT
-    * With that, the client will be able to put his name.
-    */
-    $('#relationshipSelect').focusout(function() {
-        this.relationshipType = $('#relationshipSelect option:selected').attr('id');
-        if ( this.relationshipType === 'client' ) {
-          $('#evaluatorAppEmployee').addClass('hide');
-          $('#evaluatorAppEmployeeText').removeClass('hide');
-
-          $('#evaluatorAppEmployeeText').val('');
-          $('#evaluatorAppEmployeeText').prop('required', true);
-
-          $('label[for=\'evaluatorSelect\']').removeClass('hide');
-        }else {
-          // If type = teammate, we remove the evaluated employee
-          // and hide unused components
-          $('#evaluatorAppEmployee option[value=\'' + $('#evaluatedAppEmployee option:selected').text() + '\']').remove();
-
-          $('#evaluatorAppEmployee').removeClass('hide');
-          $('label[for=\'evaluatorSelect\']').removeClass('hide');
-
-          $('#evaluatorAppEmployeeText').addClass('hide');
-          $('#evaluatorAppEmployeeText').prop('required', false);
-        }
-    });
   }
-
+ 
+  divisibleByTen(control:AbstractControl) {
+      return parseInt(control.value) % 10 == 0 ? null : {
+        divisibleByTen: true
+      }
+  }
   /*
   * Function to handle relation type changes
   */
   relationChange(value) {
     this.isSelf = this.selfText === value ? true : false;
+    this.isClient = value === this.clientText ? true : false;
   }
 
   /*
@@ -204,6 +196,7 @@ export class SurveyOptionsComponent implements OnInit {
               value.competenceToEvaluate = '';
               break;
         }
+
         console.log(value);
 
         const survey: Survey = {
