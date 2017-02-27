@@ -21,6 +21,7 @@ import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 
+import org.apache.log4j.Logger;
 /**
  * This class is in charge of transform the json from the front end to the form
  * required in the db
@@ -32,6 +33,7 @@ public class SurveyTransformer {
     @Autowired
     private AptitudeRepository aptitudeRepository;
 
+    static Logger logger = Logger.getLogger(SurveyTransformer.class);
     /**
      * This method calls the other methods required for the transformation
      *
@@ -63,7 +65,7 @@ public class SurveyTransformer {
             aptitudeSurvey.setBehaviors(
                     this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
         } catch (Exception e) {
-
+            logger.error("The aptitude's id is not found in the data base. \n" + e.getMessage());
         }
         return aptitudeSurvey;
     }
