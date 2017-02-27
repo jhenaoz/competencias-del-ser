@@ -3,6 +3,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
+import { environment } from '../../environments/environment';
 
 import {
   EmployeeService,
@@ -14,11 +15,13 @@ import {
 
 describe('EmployeeService', () => {
   let employeeService: EmployeeService;
+  let _employeeUrl = environment.apiURL += '/person';;
   let mockHttp;
 
   beforeEach(() => {
     mockHttp = jasmine.createSpyObj('mockHttp', ['get']);
     this.employeeService = new EmployeeService(mockHttp);
+    
     TestBed.configureTestingModule({
       imports: [
         CommonModule
@@ -39,7 +42,7 @@ describe('EmployeeService', () => {
       mockHttp.get.and.returnValue(Observable.of(true));
       result = this.employeeService.getEmployees();
       expect(mockHttp.get).toHaveBeenCalledWith
-      ('https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/d4804468-6192-482e-a2eb-53dca0d66495/person');
+      (_employeeUrl);
     });
 
     it('should get all employees', async(() => {
