@@ -43,7 +43,6 @@
         </div>
     </div>
     <hr>
-
     <div class="container">
         <!--Titles-->
         <div class="row">
@@ -77,61 +76,40 @@
         </div>
         <!--/Titles-->
         <!--Data-->
-        <form #f="ngForm" (ngSubmit)="save(f.value, f.valid)" novalidate>
-            <div *ngFor="let behavior of behaviors">
-                <div class="row">
+        <form [formGroup]="surveyForm" (ngSubmit)="save()" novalidate>
+            <div *ngFor="let behavior of behaviors; let i=index">
 
+                <div class="row">
                     <div class="col-md-4">
                         <div *ngIf="currentLanguage === 'es'">
                             <p>{{ behavior. es }}</p>
                         </div>
                         <div *ngIf="currentLanguage === 'en'">
                             <p>{{ behavior. en }}</p>
+
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio1" value="4" required>
-                            <label for="{{behavior.id}}radio1">
-                        </label>
+                    <div formArrayName="answers" *ngFor="let answer of answers.controls, let y=index">
+                        <div [formGroupName]="i">
+                            <div class="col-md-1">
+                                <div class="radio radio-primary">
+                                    <input class="validateRadio{{i}}" formControlName="option" type="radio" id="{{behavior.id}}radio{{y}}" value="{{4-y}}" required>
+                                    <label for="{{behavior.id}}radio{{y}}">
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio2" value="3" required>
-                            <label for="{{behavior.id}}radio2">
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio3" value="2" required>
-                            <label for="{{behavior.id}}radio3">
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio4" value="1" required>
-                            <label for="{{behavior.id}}radio4">
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio5" value="0" required>
-                            <label for="{{behavior.id}}radio5">
-                        </label>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div class="alert alert-danger hide" id="radio-alert">{{ "Survey_options.relationship_alert" | translate }}.</div>
+            {{ click() }}
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
-            <textarea class="form-control" rows="3" required></textarea>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <textarea formControlName="observation" class="form-control" rows="3"></textarea> {{ surveyForm.value | json }}
+            <button type="submit" class="btn btn-success" [disabled]="!surveyForm.valid">Submit</button>
         </form>
 
     </div>
