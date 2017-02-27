@@ -52,8 +52,10 @@ public class SurveyTransformer {
         Date date = new Date();
         survey.setTimestamp(dateFormat.format(date));
 
-        survey.setAptitudes(this.AptitudesSurveyTransformer(surveyDto.getAptitudes()));
+        //survey.setAptitudes(this.AptitudesSurveyTransformer(surveyDto.getAptitudes()));
 
+        survey.setAptitudes(surveyDto.getAptitudes().stream().map(this::AptitudeSurveyTransformer)
+                .collect(Collectors.toList()));
         return survey;
     }
 

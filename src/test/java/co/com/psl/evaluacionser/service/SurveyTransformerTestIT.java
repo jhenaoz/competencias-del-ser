@@ -17,9 +17,9 @@ import co.com.psl.evaluacionser.domain.BehaviorSurveyDto;
 import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.domain.SurveyDto;
 
-public class SurveyTransformerTest {
+public class SurveyTransformerTestIT {
 
-//    @Autowired
+    @Autowired
     private SurveyTransformer surveyTransformer = new SurveyTransformer();
 
     @Test
@@ -45,7 +45,7 @@ public class SurveyTransformerTest {
         assertEquals(1, behaviorSurvey.get(2).getScore());
     }
     
-    /*@Test
+    @Test
     public void AptitudeSurveyTransformerTest() {
         List<BehaviorSurveyDto> behaviorsSurveyDto = new ArrayList<>();
         behaviorsSurveyDto.add(new BehaviorSurveyDto("1", 5));
@@ -54,6 +54,6 @@ public class SurveyTransformerTest {
         AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
         AptitudeSurvey aptitudeSurvey = surveyTransformer.AptitudeSurveyTransformer(aptitudeSurveyDto);
         assertEquals("Apertura", aptitudeSurvey.getAptitude().getEs());
-    }*/
+    }
 
 }
