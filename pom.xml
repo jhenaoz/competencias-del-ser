@@ -63,6 +63,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.2</version>
+            </plugin>
             <!-- Frontend plugin -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -106,7 +111,7 @@
                     </execution>
 
                     <execution>
-                        <id>npm test</id>
+                        <id>npm-test</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
