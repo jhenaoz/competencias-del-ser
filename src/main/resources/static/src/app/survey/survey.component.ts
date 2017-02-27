@@ -32,18 +32,17 @@ export class SurveyComponent implements OnInit {
   currentLanguage: string;
 
   behaviors: Behavior[];
-  behaviorLenght: number = 0;
+  behaviorLenght =  {};
 
   observation: string;
 
   id: string;
 
-  observableLegth: number = 0
+  observableLegth: number[] = [];
 
   surveyForm: FormGroup;
   survey: Survey = new Survey();
   
-
   constructor(private surveyService: SurveyService,
       private _aptitudeService: AptitudeService,
       private translate: TranslateService,
@@ -52,10 +51,6 @@ export class SurveyComponent implements OnInit {
       private fb: FormBuilder) {
         this.currentLanguage = translate.currentLang;
         
-  }
-
-  ngOnInit() {
-    
     this.route.params.subscribe(param => {
           this.id = param['id'];
           this._aptitudeService.getBehaviors(this.id)
@@ -64,16 +59,24 @@ export class SurveyComponent implements OnInit {
                 this.behaviors = behaviors,  error => this.errorMessage = <any>error;
                 console.log(" this.behaviors ",  this.behaviors.length);
              });
+             
      });
- 
-    this.surveyForm = this.fb.group({
+
+     this.surveyForm = this.fb.group({
       answers: this.fb.array([this.buildAnswer()]),
       observation: '',
     });
+  }
 
-    for(let i = 1; i < 5; i++){
-      this.answers.push(this.buildAnswer());
-    } 
+  async ngOnInit() {
+   const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
+      console.log(behaviors.length);
+      this.observableLegth.push(behaviors.length)
+      
+      for(let i = 1; i < 5; i++){
+        console.log(i)
+        this.answers.push(this.buildAnswer());
+      } 
   }
 
   buildAnswer(): FormGroup {
