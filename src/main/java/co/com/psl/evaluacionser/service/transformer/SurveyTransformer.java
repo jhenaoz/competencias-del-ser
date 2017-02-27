@@ -53,19 +53,19 @@ public class SurveyTransformer {
     }
 
     public AptitudeSurvey aptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
-        AptitudeSurvey aptutideSurvey = new AptitudeSurvey();
+        AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
         try {
             Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
             AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
             AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
-            aptutideSurvey.setAptitude(aptitudeDto);
-            aptutideSurvey.setObservation(aptitudeSurveyDto.getObservation());
-            aptutideSurvey.setBehaviors(
+            aptitudeSurvey.setAptitude(aptitudeDto);
+            aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
+            aptitudeSurvey.setBehaviors(
                     this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
         } catch (Exception e) {
 
         }
-        return aptutideSurvey;
+        return aptitudeSurvey;
     }
 
     public List<BehaviorSurvey> behaviorsSurveyTransformer(List<Behavior> behaviors,
