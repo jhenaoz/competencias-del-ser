@@ -8,7 +8,7 @@ import { TranslateService } from 'ng2-translate';
   styleUrls: ['./navbar.component.css', '../app.component.css']
 })
 export class NavbarComponent implements OnInit  {
-  
+
 
   constructor(private translate: TranslateService) {}
 
@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit  {
   }
 
 /*
-* Method to change current language 
+* Method to change current language
 */
   changeLang(lang: string) {
     this.translate.use(lang);

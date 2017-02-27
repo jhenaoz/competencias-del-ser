@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
 // Enviroment variables
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment';
 
 import { Behavior } from './behavior.model';
 
@@ -16,8 +16,8 @@ import { Behavior } from './behavior.model';
 export class AptitudeService {
   private _aptitudeUrl = environment.apiURL;
 
-  constructor(private _http: Http) { 
-      this._aptitudeUrl += '/aptitude/'
+  constructor(private _http: Http) {
+      this._aptitudeUrl += '/aptitude/';
   }
 
   /*
@@ -25,7 +25,6 @@ export class AptitudeService {
   * Return type: Observable
   */
   getBehaviors(aptitudeId: string): Observable<Behavior[]> {
- console.log("aptitudeId ", aptitudeId);
 
         return this._http.get(this._aptitudeUrl + aptitudeId + '/behavior')
             .map((response: Response) => <Behavior[]> response.json())
@@ -33,7 +32,7 @@ export class AptitudeService {
             .catch(this.handleError);
     }
 
-  
+
   /*
   * Method to handle error and log it into console
   */

@@ -4,15 +4,15 @@ import { AptitudeService } from '../aptitude/aptitude.service';
 
 @Injectable()
 export class SurveyRouteActivator implements CanActivate {
-    
-    constructor(private _aptitudeService: AptitudeService, private router:Router){
+
+    constructor(private _aptitudeService: AptitudeService, private router: Router) {
 
     }
 
-    canActivate(route: ActivatedRouteSnapshot){
-        const behaviorsExist = !!this._aptitudeService.getBehaviors(route.params['id'])
-        if (!behaviorsExist)
-            this.router.navigate(['404'])
-        return behaviorsExist
+    canActivate(route: ActivatedRouteSnapshot) {
+        const behaviorsExist = !!this._aptitudeService.getBehaviors(route.params['id']);
+        if (!behaviorsExist) {
+            this.router.navigate(['404']); }
+        return behaviorsExist;
     }
 }

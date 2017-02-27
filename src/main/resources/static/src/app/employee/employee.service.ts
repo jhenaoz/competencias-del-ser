@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
 // Enviroment variables
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment';
 
 import { IEmployee } from './employee.model';
 
@@ -16,7 +16,7 @@ import { IEmployee } from './employee.model';
 export class EmployeeService {
 private _employeeUrl = environment.apiURL;
 
-  constructor(private _http: Http) { 
+  constructor(private _http: Http) {
       this._employeeUrl += '/person';
   }
   /*

@@ -26,7 +26,7 @@ import { SurveyRouteActivator } from './survey/survey.route.activator.service';
 
 // Translate imports
 import { TranslateModule } from 'ng2-translate';
-import { TranslateLoader, TranslateStaticLoader } from "ng2-translate/src/translate.service";
+import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/translate.service';
 
 // CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,7 +36,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    ReactiveFormsModule,   
+    ReactiveFormsModule,
     HttpModule,
     TranslateModule.forRoot({
             provide: TranslateLoader,
@@ -53,7 +53,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SurveyOptionsComponent,
     SurveyComponent,
     Error404Component
-  ],  
+  ],
   providers: [
     EmployeeService,
     SurveyService,
