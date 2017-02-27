@@ -30,9 +30,8 @@ public class SurveyController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
-        Survey survey = new Survey();
-        // Todo transformar de Dto a Survey normal
-        return new ResponseEntity(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
+        Survey survey = surveyTransformer.transformer(surveyDto);
+        return new ResponseEntity<Survey>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(method = RequestMethod.GET)

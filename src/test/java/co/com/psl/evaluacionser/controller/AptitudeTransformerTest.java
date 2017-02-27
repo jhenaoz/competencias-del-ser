@@ -3,10 +3,7 @@ package co.com.psl.evaluacionser.controller;
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
-<<<<<<< HEAD:src/test/java/co/com/psl/evaluacionser/controller/AptitudeDtoTransformerTest.java
-=======
 import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
->>>>>>> remotes/origin/master:src/test/java/co/com/psl/evaluacionser/controller/AptitudeTransformerTest.java
 import org.junit.Test;
 
 import java.util.ArrayList;
