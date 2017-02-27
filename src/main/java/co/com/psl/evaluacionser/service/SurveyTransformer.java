@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.com.psl.evaluacionser.controller.AptitudeDtoTransformer;
 import co.com.psl.evaluacionser.domain.Aptitude;
@@ -26,6 +27,8 @@ import co.com.psl.evaluacionser.persistence.AptitudeRepository;
  * required in the db
  *
  */
+
+@Service
 public class SurveyTransformer {
 
     @Autowired
@@ -54,7 +57,7 @@ public class SurveyTransformer {
         return survey;
     }
 
-    //TODO validaciones null
+    // TODO validaciones null
     public List<AptitudeSurvey> AptitudesSurveyTransformer(List<AptitudeSurveyDto> aptitudes) {
 
         List<AptitudeSurvey> aptitudesSurvey = aptitudes.stream().map(this::AptitudeSurveyTransformer)
@@ -72,22 +75,23 @@ public class SurveyTransformer {
         aptutideSurvey.setObservation(aptitudeSurveyDto.getObservation());
         aptutideSurvey.setBehaviors(
                 this.BehaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
-        
+
         return aptutideSurvey;
     }
 
-    public List<BehaviorSurvey> BehaviorsSurveyTransformer(List<Behavior> behaviors, List<BehaviorSurveyDto> behaviorsSurveyDto) {
+    public List<BehaviorSurvey> BehaviorsSurveyTransformer(List<Behavior> behaviors,
+            List<BehaviorSurveyDto> behaviorsSurveyDto) {
         List<BehaviorSurvey> behaviorsSurvey = new ArrayList<BehaviorSurvey>();
-        for (int i=0; i<behaviorsSurveyDto.size(); i++){
+        for (int i = 0; i < behaviorsSurveyDto.size(); i++) {
             BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
-            for (int j=0; i<behaviors.size(); i++){
+            for (int j = 0; j < behaviors.size(); j++) {
                 if (behaviors.get(j).getId().equals(behaviorsSurveyDto.get(i).getBehaviorId())) {
                     behaviorSurvey.setBehavior(behaviors.get(j));
                     behaviorSurvey.setScore(behaviorsSurveyDto.get(i).getScore());
                     behaviorsSurvey.add(behaviorSurvey);
+                    j = behaviors.size();
                 }
             }
-            
         }
         return behaviorsSurvey;
     }
