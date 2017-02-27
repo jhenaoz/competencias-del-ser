@@ -35,7 +35,6 @@ export class SurveyService {
       console.log(this.survey.evaluator);
       console.log(this.survey.role);
       console.log(this.survey.evaluated);
-      console.log('asdasd ');
   }
 
   saveSurvey(surveyToSave: Survey): Observable<Survey> {

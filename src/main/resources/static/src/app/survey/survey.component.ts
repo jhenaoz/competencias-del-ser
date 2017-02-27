@@ -2,15 +2,20 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { SurveyService } from './survey.service';
+import { Survey } from './survey.model';
 
 import {
  Aptitude,
  AptitudeService,
  Behavior
 } from '../aptitude/index';
+
+import 'rxjs/add/operator/toPromise';
 
 import * as jQuery from 'jquery';
 
@@ -27,51 +32,74 @@ export class SurveyComponent implements OnInit {
   currentLanguage: string;
 
   behaviors: Behavior[];
+  behaviorLenght: number = 0;
 
   observation: string;
 
   id: string;
 
+  observableLegth: number = 0
+
+  surveyForm: FormGroup;
+  survey: Survey = new Survey();
+  
+
   constructor(private surveyService: SurveyService,
       private _aptitudeService: AptitudeService,
       private translate: TranslateService,
       private route: ActivatedRoute,
-      private router:  Router) {
+      private router:  Router,
+      private fb: FormBuilder) {
         this.currentLanguage = translate.currentLang;
-        route.params.subscribe(param => {
-          this.id = param['id'];
-          this._aptitudeService.getBehaviors(this.id)
-            .subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error);
-
-     });
+        
   }
 
   ngOnInit() {
-    this.next = 'logros';
+    
+    this.route.params.subscribe(param => {
+          this.id = param['id'];
+          this._aptitudeService.getBehaviors(this.id)
+            .toPromise()
+            .then(behaviors => {
+                this.behaviors = behaviors,  error => this.errorMessage = <any>error;
+                console.log(" this.behaviors ",  this.behaviors.length);
+             });
+     });
+ 
+    this.surveyForm = this.fb.group({
+      answers: this.fb.array([this.buildAnswer()]),
+      observation: '',
+    });
+
+    for(let i = 1; i < 5; i++){
+      this.answers.push(this.buildAnswer());
+    } 
   }
 
-/*
-* Hardcoded values
-*/
-  nextAptitude() {
-    if  (this.next !== '') {
-       $('#openess').addClass('active');
-    }else {
-      $('.active').next().addClass('active');
+  buildAnswer(): FormGroup {
+    return this.fb.group({
+      option: ''
+    });
+  }
+  click(){
+    for(let i = 0; i < 5; i++){
+       $(".validateRadio"+i+"").click(function() {
+        $(".validateRadio"+i+"").not(this).prop('checked', false);
+      });
     }
   }
+   get answers(): FormArray{
+        return <FormArray>this.surveyForm.get('answers');
+    }
 
+    addAnswers(): void {
+      for(let i = 1; i < 5; i++){
+        this.answers.push(this.buildAnswer());
+      }
+    }
 
-  save(model: any, isValid: boolean) {
-       if  (this.validateSurvey()) {
-        $('#radio-alert').addClass('hide');
-        $('input:checked').removeAttr('checked');
-       }else {
-         $('#radio-alert').removeClass('hide');
-       }
-        for  (let i = 1; i <= Object.keys(this.behaviors).length; i++) {
-          alert($('input[name="radio' + i + '"]:checked').val()); ;
-        }
+    save(model: any, isValid: boolean) {
+
     }
 
     validateSurvey(): boolean {
@@ -102,6 +130,7 @@ export class SurveyComponent implements OnInit {
     }else {
       const next = (+this.id + 1).toString();
       this.router.navigate(['survey/' + next]);
+      $('.active').next().addClass('active');
     }
 
   }
