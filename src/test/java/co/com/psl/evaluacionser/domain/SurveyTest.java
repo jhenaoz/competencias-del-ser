@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import org.junit.Test;
 
 public class SurveyTest {

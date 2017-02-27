@@ -5,18 +5,21 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import co.com.psl.evaluacionser.domain.AptitudeDto;
 import co.com.psl.evaluacionser.domain.AptitudeSurvey;
-import co.com.psl.evaluacionser.domain.AptitudeSurveyDto;
+import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.domain.BehaviorSurvey;
-import co.com.psl.evaluacionser.domain.BehaviorSurveyDto;
-import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.domain.SurveyDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class SurveyTransformerTestIT {
 
     @Autowired

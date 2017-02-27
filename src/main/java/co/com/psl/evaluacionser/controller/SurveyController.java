@@ -1,9 +1,9 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.domain.SurveyDto;
+import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.persistence.SurveyRepository;
-import co.com.psl.evaluacionser.service.SurveyTransformer;
+import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

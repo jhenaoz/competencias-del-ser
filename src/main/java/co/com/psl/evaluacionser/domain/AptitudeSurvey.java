@@ -1,5 +1,7 @@
 package co.com.psl.evaluacionser.domain;
 
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+
 import java.util.List;
 
 /**

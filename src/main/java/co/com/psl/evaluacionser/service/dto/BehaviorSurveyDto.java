@@ -1,4 +1,4 @@
-package co.com.psl.evaluacionser.domain;
+package co.com.psl.evaluacionser.service.dto;
 
 public class BehaviorSurveyDto {
     private String behaviorId;
