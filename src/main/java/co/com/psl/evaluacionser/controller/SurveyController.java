@@ -35,9 +35,9 @@ public class SurveyController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user", required = false) String user,
-                                                   @RequestParam(value = "startdate", required = false) String startDate,
-                                                   @RequestParam(value = "enddate", required = false) String endDate) {
+    public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user", required = true) String user,
+                                                   @RequestParam(value = "startdate") String startDate,
+                                                   @RequestParam(value = "enddate") String endDate) {
 
         return null;
     }
