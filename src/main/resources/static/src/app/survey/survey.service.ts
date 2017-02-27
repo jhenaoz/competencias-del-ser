@@ -21,7 +21,9 @@ export class SurveyService {
 
   survey: Survey;
   oneSurvey: boolean;
-  competence= 'Aquí irá la que va';
+  competence= 'TESTING';
+  evaluator: string;
+  role: string;
 
   constructor(private _http: Http) { this.survey = new Survey(); }
 
@@ -29,6 +31,7 @@ export class SurveyService {
     this.survey.evaluator = survey.evaluator;
     this.survey.role = survey.role;
     this.survey.evaluated = survey.evaluated;
+    this.survey.aptitudes = survey.aptitudes;
     this.testPrint();
   }
 

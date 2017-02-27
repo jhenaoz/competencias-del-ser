@@ -25,7 +25,7 @@ export class AptitudeService {
   * Return type: Observable
   */
   getBehaviors(aptitudeId: string): Observable<Behavior[]> {
-      console.log(this._aptitudeUrl)
+    //   console.log(this._aptitudeUrl);
 
         return this._http.get(this._aptitudeUrl + aptitudeId + '/behavior')
             .map((response: Response) => <Behavior[]> response.json())

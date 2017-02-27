@@ -31,6 +31,8 @@ export class SurveyComponent implements OnInit {
 
   currentLanguage: string;
 
+  aptitude: Aptitude;
+
   behaviors: Behavior[];
   behaviorLenght = 0;
 
@@ -53,24 +55,24 @@ export class SurveyComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.aptitude = new Aptitude();
     this.route.params.subscribe(param => {
           this.id = param['id'];
           this._aptitudeService.getBehaviors(this.id)
-
-            .toPromise()
+            // .subscribe(behaviors => this.behaviors = behaviors, error => this.errorMessage = <any>error);
+             .toPromise()
             .then(behaviors => {
                 this.behaviors = behaviors,  error => this.errorMessage = <any>error;
-                console.log(" this.behaviors ",  this.behaviors.length);
+                console.log('this.behaviors',  this.behaviors.length);
              });
      });
- 
+
     this.surveyForm = this.fb.group({
       answers: this.fb.array([this.buildAnswer()]),
       observation: '',
     });
 
-    for (let i = 1; i < 5; i++){
+    for (let i = 1; i < 5; i++) {
       this.answers.push(this.buildAnswer());
     }
   }
@@ -92,7 +94,7 @@ export class SurveyComponent implements OnInit {
     }
 
     addAnswers(): void {
-      for(let i = 1; i < 5; i++) {
+      for (let i = 1; i < 5; i++) {
         this.answers.push(this.buildAnswer());
       }
     }
@@ -124,11 +126,17 @@ export class SurveyComponent implements OnInit {
     }
 
   surveyAdvance() {
+    this.aptitude.aptitudeId = this.id;
+    this.aptitude.observation = this.surveyForm.controls['observation'].value;
+    // this will be filled with the radio buttons selections from the user
+    this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = 1;
+    this.aptitude.behaviors = this.behaviors;
+    this.surveyService.survey.aptitudes.push(this.aptitude);
+    // console.log(this.surveyService.survey);
     if (!this.surveyService.oneSurvey) {
       this.router.navigate(['404']);
     }else {
-
-        if (+this.id + 1 >= 9) {
+      if (+this.id + 1 >= 9) {
         this.router.navigate(['404']);
       }else {
         const next = (+this.id + 1).toString();
