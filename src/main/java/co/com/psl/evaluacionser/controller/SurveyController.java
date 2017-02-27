@@ -11,14 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@RequestMapping(value = "/survey")
 public class SurveyController {
 
     @Autowired
     private SurveyRepository surveyRepository;
-    
+
     @Autowired
     SurveyTransformer surveyTransformer;
 
@@ -28,9 +32,17 @@ public class SurveyController {
      *
      * @return Response entity with HttpStatus.ACCEPTED and the Survey saved
      */
-    @RequestMapping(value = "/survey", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
         return new ResponseEntity<Survey>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user", required = true) String user,
+                                                   @RequestParam(value = "startdate") String startDate,
+                                                   @RequestParam(value = "enddate") String endDate) {
+
+        return null;
     }
 }
