@@ -167,6 +167,7 @@ export class SurveyOptionsComponent implements OnInit {
             value.relationship = 'teammate';
             break;
         }
+        this.surveyService.competence = value.competenceToEvaluate;
         switch (value.competenceToEvaluate) {
            case this.openessText:
               value.competenceToEvaluate = 'openess';
@@ -206,6 +207,11 @@ export class SurveyOptionsComponent implements OnInit {
           aptitudes: <Aptitude[]>[]
         };
         this.surveyService.startSurvey(survey);
+        if (!this.surveyService.oneSurvey) {
+          this.surveyService.evaluator = this.complexForm.controls['evaluator'].value;
+          this.surveyService.role = this.complexForm.controls['relationship'].value;
+        }
+
         this.router.navigate(['/survey/1']);
     }
   }

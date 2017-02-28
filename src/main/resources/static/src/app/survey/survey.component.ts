@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormA
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { SurveyService } from './survey.service';
+
 import { Survey } from './survey.model';
 
 import {
@@ -31,6 +32,8 @@ export class SurveyComponent implements OnInit {
 
   currentLanguage: string;
 
+  aptitude: Aptitude;
+
   behaviors: Behavior[];
   behaviorLenght =  {};
 
@@ -41,68 +44,60 @@ export class SurveyComponent implements OnInit {
   observableLegth: number[] = [];
 
   surveyForm: FormGroup;
-  survey: Survey = new Survey();
+  survey: Survey;
   
+  showForm: boolean = true;
+
   constructor(private surveyService: SurveyService,
       private _aptitudeService: AptitudeService,
       private translate: TranslateService,
       private route: ActivatedRoute,
       private router:  Router,
       private fb: FormBuilder) {
+        this.survey = this.surveyService.survey;
+        console.log(this.survey)
         this.currentLanguage = translate.currentLang;
-        
-    this.route.params.subscribe(param => {
-          this.id = param['id'];
-          this._aptitudeService.getBehaviors(this.id)
-            .toPromise()
-            .then(behaviors => {
-                this.behaviors = behaviors,  error => this.errorMessage = <any>error;
-                console.log(" this.behaviors ",  this.behaviors.length);
-             });
-             
-     });
-
-     this.surveyForm = this.fb.group({
-      answers: this.fb.array([this.buildAnswer()]),
-      observation: '',
-    });
+        this.createForm();
   }
 
   async ngOnInit() {
-   const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
-      console.log(behaviors.length);
+      this.aptitude = new Aptitude();
+      await this.route.params.subscribe(param => {
+        this.id = param['id'];
+      });
+      const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
+      this.behaviors = behaviors;
       this.observableLegth.push(behaviors.length)
-      
-      for(let i = 1; i < 5; i++){
-        console.log(i)
-        this.answers.push(this.buildAnswer());
+      for(let i = 1; i < behaviors.length; i++){
+        this.behaviorSurvey.push(this.buildBehaviorSurvey(behaviors[i].id));
       } 
+      this.showForm = true;
+      
   }
 
-  buildAnswer(): FormGroup {
+  createForm(){
+      this.surveyForm = this.fb.group({
+          behaviorSurvey: this.fb.array([this.buildBehaviorSurvey('1')]),
+          observation: '',
+        });
+  }
+
+  buildBehaviorSurvey(id): FormGroup {
     return this.fb.group({
-      option: ''
+      behaviorId: id,
+      score: ''
     });
   }
-  click(){
-    for(let i = 0; i < 5; i++){
-       $(".validateRadio"+i+"").click(function() {
-        $(".validateRadio"+i+"").not(this).prop('checked', false);
+
+  bindRadioButtons() {
+    for (let i = 0; i < 5; i++) {
+       $('.validateRadio' + i + '').click(function() {
+        $('.validateRadio' + i + '').not(this).prop('checked', false);
       });
     }
   }
-   get answers(): FormArray{
-        return <FormArray>this.surveyForm.get('answers');
-    }
-
-    addAnswers(): void {
-      for(let i = 1; i < 5; i++){
-        this.answers.push(this.buildAnswer());
-      }
-    }
-
-    save(model: any, isValid: boolean) {
-
+   get behaviorSurvey(): FormArray{
+        return <FormArray>this.surveyForm.get('behaviorSurvey');
     }
 
     validateSurvey(): boolean {
@@ -113,6 +108,7 @@ export class SurveyComponent implements OnInit {
         }
         return true;
     }
+
 
   saveSurvey(survey) {
     if (!survey) { return; }
@@ -128,15 +124,53 @@ export class SurveyComponent implements OnInit {
     }
 
   surveyAdvance() {
-    if (+this.id + 1 >= 9) {
-      this.router.navigate(['404']);
-    }else {
-      const next = (+this.id + 1).toString();
-      this.router.navigate(['survey/' + next]);
-      $('.active').next().addClass('active');
+    
+    // this.aptitude.aptitudeId = this.id;
+    // this.aptitude.observation = this.surveyForm.controls['observation'].value;
+    // // this will be filled with the radio buttons selections from the user
+    // this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = 1;
+    // this.aptitude.behaviors = this.behaviors;
+    // this.surveyService.survey.aptitudes.push(this.aptitude);
+    // // console.log(this.surveyService.survey);
+    // if (!this.surveyService.oneSurvey) {
+    //   this.router.navigate(['404']);
+    // }else {
+    //   if (+this.id + 1 >= 9) {
+    //     this.router.navigate(['404']);
+    //   }else {
+    //     const next = (+this.id + 1).toString();
+    //     this.router.navigate(['survey/' + next]);
+    //   }
+    //   const next = (+this.id + 1).toString();
+    //   this.router.navigate(['survey/' + next]);
+    //   $('.active').next().addClass('active');
+    // }
+      if(this.surveyForm.valid){
+        this.aptitude.aptitudeId = this.id;
+        this.aptitude.observation = this.surveyForm.controls['observation'].value;
+        this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value
+        console.log(this.aptitude)
+        this.survey.aptitudes.push(this.aptitude)
+        console.log(this.survey)
+        if (!this.surveyService.oneSurvey) {
+          this.router.navigate(['404']);
+        } else  {
+          if (+this.id + 1 >= 9) {
+            this.router.navigate(['404']);		       
+          } else {		     
+            const next = (+this.id + 1).toString();		       
+            this.router.navigate(['survey/' + next]);		      
+            $('.active').next().addClass('active');
+            this.showForm = false;
+            setTimeout(() => {
+              this.createForm();
+              this.ngOnInit();
+            });
+          }
+        }
+
+      }	
+
     }
-
-  }
-
 
 }
