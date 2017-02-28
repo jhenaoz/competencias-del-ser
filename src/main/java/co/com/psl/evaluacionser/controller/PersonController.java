@@ -29,7 +29,7 @@ public class PersonController {
     @RequestMapping(value = "/person", method = RequestMethod.GET)
     public ResponseEntity<List<Person>> getAllPeople() {
         List<Person> people = personRepository.findAll();
-        if (people == null) {
+        if (people.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(people, HttpStatus.OK);
