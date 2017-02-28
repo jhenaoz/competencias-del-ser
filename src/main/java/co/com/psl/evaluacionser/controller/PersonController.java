@@ -29,9 +29,9 @@ public class PersonController {
     @RequestMapping(value = "/person", method = RequestMethod.GET)
     public ResponseEntity<List<Person>> getAllPeople() {
         List<Person> people = personRepository.findAll();
-        if (people == null) {
-            return new ResponseEntity<List<Person>>(HttpStatus.NOT_FOUND);
+        if (people.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<Person>>(people, HttpStatus.OK);
+        return new ResponseEntity<>(people, HttpStatus.OK);
     }
 }

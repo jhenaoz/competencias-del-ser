@@ -1,31 +1,28 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.persistence.SurveyRepository;
+import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value = "/survey")
 public class SurveyController {
 
+    private static Logger logger = Logger.getLogger(SurveyController.class);
     @Autowired
     private SurveyRepository surveyRepository;
-
     @Autowired
     private SurveyTransformer surveyTransformer;
 
@@ -38,18 +35,15 @@ public class SurveyController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
-        return new ResponseEntity<Survey>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
     }
 
     /**
      * Get all surveys made to a person within a time period.
      *
-     * @param user
-     *            the person to search
-     * @param startDate
-     *            starting date
-     * @param endDate
-     *            ending date
+     * @param user      the person to search
+     * @param startDate starting date
+     * @param endDate   ending date
      * @return Response entity with HttpStatus.OK and the Surveys retrieved
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -58,19 +52,17 @@ public class SurveyController {
                                                    @RequestParam(value = "enddate", required = false) String endDate) {
 
         if (!isDateRangeValid(startDate, endDate))
-            return new ResponseEntity<List<Survey>>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         List<Survey> userSurveys = surveyRepository.findUserSurveys(user, startDate, endDate);
-        return new ResponseEntity<List<Survey>>(userSurveys, HttpStatus.OK);
+        return new ResponseEntity<>(userSurveys, HttpStatus.OK);
     }
 
     /**
      * Checks if the dates provided form a valid range of dates.
      *
-     * @param startDate
-     *            starting date
-     * @param endDate
-     *            ending date
+     * @param startDate starting date
+     * @param endDate   ending date
      * @return whether the starting date is smaller than the ending date
      */
     private boolean isDateRangeValid(String startDate, String endDate) {
@@ -85,7 +77,7 @@ public class SurveyController {
 
             return start.compareTo(end) <= 0;
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("Date range is Invalid");
             return false;
         }
     }

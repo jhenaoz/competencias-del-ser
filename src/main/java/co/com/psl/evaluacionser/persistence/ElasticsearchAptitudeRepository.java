@@ -8,6 +8,7 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -16,38 +17,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
+    private static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
     @Value("${elasticAptitudeIndex}")
     private String aptitudeIndexName;
-
     @Value("${elasticAptitudeType}")
     private String aptitudeTypeName;
-
     @Autowired
     private JestClient client;
 
-    /**
-     * Receives one aptitude and saves it in the DB
-     *
-     * @param aptitude the aptitude you want to save
-     * @return the aptitude you just saved, now with its ID included
-     */
-    @Override
-    public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).build();
-        try {
-            client.execute(index);
-            return aptitude;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
+
 
     /**
      * Searches the DB for all the different Aptitudes
@@ -66,13 +51,13 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             SearchResult result = client.execute(search);
 
             if (!result.isSucceeded())
-                return null;
+                return Collections.emptyList();
 
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            logger.error("There was a problem finding all the Aptitudes ", e);
+            return Collections.emptyList();
         }
     }
 
@@ -94,10 +79,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
             if (!result.isSucceeded())
                 return null;
+
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            logger.error("The search could not be completed ", e);
+            return null;
         }
     }
 
@@ -124,7 +110,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude = findById(aptitudeId);
 
         if (aptitude == null)
-            return null;
+            return Collections.emptyList();
 
         return aptitude.getBehaviors();
     }
@@ -133,7 +119,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Behavior findBehaviorById(String aptitudeId, String id) {
         List<Behavior> behaviors = findAllBehaviors(aptitudeId);
 
-        if (behaviors == null)
+        if (behaviors.isEmpty())
             return null;
 
         for (Behavior behavior : behaviors)
@@ -212,8 +198,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            logger.error("the aptitude could not be updated ", e);
+            return null;
         }
     }
 

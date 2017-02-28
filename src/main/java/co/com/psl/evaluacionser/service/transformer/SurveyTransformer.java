@@ -1,25 +1,20 @@
 package co.com.psl.evaluacionser.service.transformer;
 
+import co.com.psl.evaluacionser.domain.*;
+import co.com.psl.evaluacionser.persistence.AptitudeRepository;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
+import co.com.psl.evaluacionser.service.dto.SurveyDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.service.dto.AptitudeDto;
-import co.com.psl.evaluacionser.domain.AptitudeSurvey;
-import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
-import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorSurvey;
-import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
-import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.service.dto.SurveyDto;
-import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 
 /**
  * This class is in charge of transform the json from the front end to the form
@@ -35,7 +30,7 @@ public class SurveyTransformer {
     /**
      * This method calls the other methods required for the transformation
      *
-     * @param surveyDto
+     * @param surveyDto the Json of the Survey to save in the DB
      * @return Survey
      */
     public Survey transformer(SurveyDto surveyDto) {
@@ -54,23 +49,19 @@ public class SurveyTransformer {
 
     public AptitudeSurvey aptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
-        try {
-            Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
-            AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
-            AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
-            aptitudeSurvey.setAptitude(aptitudeDto);
-            aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
-            aptitudeSurvey.setBehaviors(
-                    this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
-        } catch (Exception e) {
 
-        }
+        Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
+        AptitudeDto aptitudeDto = AptitudeTransformer.convertToDto(aptitude);
+        aptitudeSurvey.setAptitude(aptitudeDto);
+        aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
+        aptitudeSurvey.setBehaviors(
+                this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
         return aptitudeSurvey;
     }
 
     public List<BehaviorSurvey> behaviorsSurveyTransformer(List<Behavior> behaviors,
                                                            List<BehaviorSurveyDto> behaviorsSurveyDto) {
-        List<BehaviorSurvey> behaviorsSurvey = new ArrayList<BehaviorSurvey>();
+        List<BehaviorSurvey> behaviorsSurvey = new ArrayList<>();
         for (int i = 0; i < behaviorsSurveyDto.size(); i++) {
             BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
             for (int j = 0; j < behaviors.size(); j++) {
@@ -78,7 +69,7 @@ public class SurveyTransformer {
                     behaviorSurvey.setBehavior(behaviors.get(j));
                     behaviorSurvey.setScore(behaviorsSurveyDto.get(i).getScore());
                     behaviorsSurvey.add(behaviorSurvey);
-                    j = behaviors.size();
+                    break;
                 }
             }
         }
