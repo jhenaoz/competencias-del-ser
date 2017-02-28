@@ -139,6 +139,7 @@ export class SurveyOptionsComponent implements OnInit {
       divisibleByTen: true
     }
   }
+
   /*
   * Function to handle relation type changes
   */
@@ -195,18 +196,14 @@ export class SurveyOptionsComponent implements OnInit {
         value.competenceToEvaluate = '';
         break;
     }
-
     console.log(value);
-
+    // We fill all data into survey and pass it to the service
     this.survey.evaluator = value.evaluator;
     this.survey.evaluated = value.evaluated;
     this.survey.role = value.role;
     this.survey.aptitudes = new Array();
-    // if (!this.surveyService.oneSurvey) {
-    //   this.surveyService.evaluator = this.complexForm.controls['evaluator'].value;
-    //   this.surveyService.role = this.complexForm.controls['role'].value;
-    // }
     this.surveyService.startSurvey(this.survey);
+    // XXX: hardcoded
     this.router.navigate(['/survey/1']);
 
   }

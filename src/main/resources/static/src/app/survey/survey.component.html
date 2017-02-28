@@ -79,8 +79,8 @@
         <!--/Titles-->
         <!--Data-->
         <form [formGroup]="surveyForm" (ngSubmit)="save()" *ngIf="showForm" novalidate>
+            <!--Looping behaviors-->
             <div *ngFor="let behavior of behaviors; let i=index">
-
                 <div class="row">
                     <div class="col-md-4">
                         <div *ngIf="currentLanguage === 'es'">
@@ -91,7 +91,7 @@
 
                         </div>
                     </div>
-
+                    <!--Looping to create radio buttons-->
                     <div formArrayName="behaviorSurvey" *ngFor="let answer of behaviorSurvey.controls, let y=index">
                         <div [formGroupName]="i">
                             <div class="col-md-1">
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!--Validate and create the remaining radio button-->
                         <div *ngIf="behaviorSurvey.controls?.length < 5 && y === behaviorSurvey.controls?.length-1">
                             <div [formGroupName]="i">
                                 <div class="col-md-1">
@@ -119,14 +119,13 @@
                 </div>
             </div>
             <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
+            <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
             {{ bindRadioButtons() }}
-
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
             <textarea formControlName="observation" class="form-control" rows="3"></textarea>
         </form>
-
     </div>
 </div>
 

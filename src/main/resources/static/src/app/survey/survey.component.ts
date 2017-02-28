@@ -11,9 +11,9 @@ import { SurveyService } from './survey.service';
 import { Survey } from './survey.model';
 
 import {
- Aptitude,
- AptitudeService,
- Behavior
+  Aptitude,
+  AptitudeService,
+  Behavior
 } from '../aptitude/index';
 
 import 'rxjs/add/operator/toPromise';
@@ -25,63 +25,91 @@ import * as jQuery from 'jquery';
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css', '../app.component.css']
 })
-export class SurveyComponent implements OnInit {
 
+export class SurveyComponent implements OnInit {
+  /*
+  * Route variables
+  */
   public next: string;
   errorMessage: string;
 
+  /*
+  * i18n variables
+  */
   currentLanguage: string;
 
+  /*
+  * Survey variables
+  */
   aptitude: Aptitude;
-
   behaviors: Behavior[];
-  behaviorLenght =  {};
-
-  observation: string;
-
+  /*
+  * Survey form components and variables
+  */
   id: string;
-
-  observableLegth: number[] = [];
-
+  observation: string;
   surveyForm: FormGroup;
   survey: Survey;
-  
-  showForm: boolean = true;
+  showForm: boolean;
 
+  /**
+   * Creates an instance of SurveyComponent.
+   * @param {SurveyService} surveyService 
+   * @param {AptitudeService} _aptitudeService 
+   * @param {TranslateService} translate 
+   * @param {ActivatedRoute} route 
+   * @param {Router} router 
+   * @param {FormBuilder} fb 
+   * 
+   */
   constructor(private surveyService: SurveyService,
-      private _aptitudeService: AptitudeService,
-      private translate: TranslateService,
-      private route: ActivatedRoute,
-      private router:  Router,
-      private fb: FormBuilder) {
-        this.survey = this.surveyService.survey;
-        console.log(this.survey)
-        this.currentLanguage = translate.currentLang;
-        this.createForm();
+    private _aptitudeService: AptitudeService,
+    private translate: TranslateService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder) {
+    this.survey = this.surveyService.survey;
+    console.log(this.survey)
+    this.currentLanguage = translate.currentLang;
+    this.createForm();
   }
 
+  /*
+  * Async method to initializate survey variables
+  */
   async ngOnInit() {
-      this.aptitude = new Aptitude();
-      await this.route.params.subscribe(param => {
-        this.id = param['id'];
-      });
-      const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
-      this.behaviors = behaviors;
-      this.observableLegth.push(behaviors.length)
-      for(let i = 1; i < behaviors.length; i++){
-        this.behaviorSurvey.push(this.buildBehaviorSurvey(behaviors[i].id));
-      } 
-      this.showForm = true;
-      
+    // Aptitude instance
+    this.aptitude = new Aptitude();
+    // We wait to get the route id param
+    await this.route.params.subscribe(param => {
+      this.id = param['id'];
+    });
+    // We wait to get the behaviors from aptitudeService
+    const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
+    this.behaviors = behaviors;
+    // We initializate the form pushing new form-groups to the root group
+    for (let i = 1; i < behaviors.length; i++) {
+      this.behaviorSurvey.push(this.buildBehaviorSurvey(behaviors[i].id));
+    }
+    // Show the form
+    this.showForm = true;
+
   }
 
-  createForm(){
-      this.surveyForm = this.fb.group({
-          behaviorSurvey: this.fb.array([this.buildBehaviorSurvey('1')]),
-          observation: '',
-        });
+  /*
+  * Method to create the survey form
+  */
+  createForm() {
+    this.surveyForm = this.fb.group({
+      // We manually add the first element
+      behaviorSurvey: this.fb.array([this.buildBehaviorSurvey('1')]),
+      observation: '',
+    });
   }
 
+  /*
+  * Method to create form group for behaviors array
+  */
   buildBehaviorSurvey(id): FormGroup {
     return this.fb.group({
       behaviorId: id,
@@ -89,88 +117,68 @@ export class SurveyComponent implements OnInit {
     });
   }
 
+  /*
+  * Method to bind radio buttons
+  * XXX: Search how to do that with angular o typescript
+  */
   bindRadioButtons() {
     for (let i = 0; i < 5; i++) {
-       $('.validateRadio' + i + '').click(function() {
+      $('.validateRadio' + i + '').click(function () {
         $('.validateRadio' + i + '').not(this).prop('checked', false);
       });
     }
   }
-   get behaviorSurvey(): FormArray{
-        return <FormArray>this.surveyForm.get('behaviorSurvey');
-    }
 
-    validateSurvey(): boolean {
-      for  (let i = 1; i <= Object.keys(this.behaviors).length; i++) {
-          if  ($('input[name="radio' + i + '"]:checked').val() === undefined ) {
-            return false;
-          }
-        }
-        return true;
-    }
-
-
-  saveSurvey(survey) {
-    if (!survey) { return; }
-    this.surveyService.saveSurvey(survey)
-                     .subscribe(
-                       res  => this.surveyService.survey = res,
-                       error =>  this.errorMessage = <any>error);
+  /*
+  * Method to get behaviors form array
+  */
+  get behaviorSurvey(): FormArray {
+    return <FormArray>this.surveyForm.get('behaviorSurvey');
   }
 
-
-  onSelectionChange(entry) {
-        console.log(entry);
-    }
-
+  /*
+  * Method to advance in the survey 
+  * XXX: Search a better way to handle routing
+  */
   surveyAdvance() {
-    
-    // this.aptitude.aptitudeId = this.id;
-    // this.aptitude.observation = this.surveyForm.controls['observation'].value;
-    // // this will be filled with the radio buttons selections from the user
-    // this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = this.behaviors[0].score = 1;
-    // this.aptitude.behaviors = this.behaviors;
-    // this.surveyService.survey.aptitudes.push(this.aptitude);
-    // // console.log(this.surveyService.survey);
-    // if (!this.surveyService.oneSurvey) {
-    //   this.router.navigate(['404']);
-    // }else {
-    //   if (+this.id + 1 >= 9) {
-    //     this.router.navigate(['404']);
-    //   }else {
-    //     const next = (+this.id + 1).toString();
-    //     this.router.navigate(['survey/' + next]);
-    //   }
-    //   const next = (+this.id + 1).toString();
-    //   this.router.navigate(['survey/' + next]);
-    //   $('.active').next().addClass('active');
-    // }
-      if(this.surveyForm.valid){
-        this.aptitude.aptitudeId = this.id;
-        this.aptitude.observation = this.surveyForm.controls['observation'].value;
-        this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value
-        console.log(this.aptitude)
-        this.survey.aptitudes.push(this.aptitude)
-        console.log(this.survey)
-        if (!this.surveyService.oneSurvey) {
+    if (this.surveyForm.valid) {
+      // Filling aptitud properties 
+      this.aptitude.aptitudeId = this.id;
+      this.aptitude.observation = this.surveyForm.controls['observation'].value;
+      this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
+      // Pushing aptitud into survey
+      this.survey.aptitudes.push(this.aptitude)
+      // Checks if is only one survey (one competence to evaluate)
+      if (!this.surveyService.oneSurvey) {
+        this.router.navigate(['404']);
+        // Saves survey
+        this.surveyService.saveSurvey(this.survey)
+      } else {
+        // Change route to advance
+        // XXX: Kind of hardcoding to me... (?)
+        if (+this.id + 1 >= 9) {
           this.router.navigate(['404']);
-        } else  {
-          if (+this.id + 1 >= 9) {
-            this.router.navigate(['404']);		       
-          } else {		     
-            const next = (+this.id + 1).toString();		       
-            this.router.navigate(['survey/' + next]);		      
-            $('.active').next().addClass('active');
-            this.showForm = false;
-            setTimeout(() => {
-              this.createForm();
-              this.ngOnInit();
-            });
-          }
+          // Saves survey
+          this.surveyService.saveSurvey(this.survey)
+        } else {
+          const next = (+this.id + 1).toString();
+          this.router.navigate(['survey/' + next]);
+          // Change CSS class to change color to the aptitudes buttons
+          $('.active').next().addClass('active');
+          // Hide survey form until data is ok
+          this.showForm = false;
+          // Set time to wait functions to complete
+          setTimeout(() => {
+            // Clear form
+            this.createForm();
+            // Init all variables again
+            this.ngOnInit();
+          });
         }
-
-      }	
+      }
 
     }
+
+  }
 
 }
