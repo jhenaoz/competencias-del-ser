@@ -98,7 +98,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 return null;
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
-            logger.error("The aptitude with the given id couldn't be find " + e.getMessage());
+            logger.error("The aptitude with the given id couldn't be found " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
