@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 import static co.com.psl.evaluacionser.controller.AptitudeDtoTransformer.convertToDto;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "/aptitude")
 public class AptitudeController {

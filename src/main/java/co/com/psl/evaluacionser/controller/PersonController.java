@@ -17,7 +17,6 @@ import java.util.List;
  */
 //Controller for the person requests
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class PersonController {
 
