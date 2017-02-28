@@ -77,7 +77,7 @@ public class SurveyController {
 
             return start.compareTo(end) <= 0;
         } catch (ParseException e) {
-            logger.error("Date range is Invalid ");
+            logger.error("Date range is Invalid");
             return false;
         }
     }

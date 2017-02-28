@@ -64,8 +64,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             return hits.stream().map(this::getPerson).collect(Collectors.toList());
 
         } catch (IOException e) {
-            logger.error("The search could not be completed " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("The search could not be completed ", e);
+            return Collections.emptyList();
         }
     }
 
@@ -80,8 +80,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             client.execute(index);
             return person;
         } catch (IOException e) {
-            logger.error("The search could not be completed " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("The search could not be completed ", e);
+            return null;
         }
     }
 }

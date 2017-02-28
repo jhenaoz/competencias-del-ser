@@ -45,8 +45,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            logger.error("The aptitude couldn't be saved " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("The aptitude couldn't be saved ", e);
+            return null;
         }
     }
 
@@ -72,8 +72,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
-            logger.error("The search could not be completed " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("The aptitude couldn't be saved ", e);
+            return Collections.emptyList();
         }
     }
 
@@ -95,10 +95,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
             if (!result.isSucceeded())
                 return null;
+
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
-            logger.error("The search could not be completed " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("The search could not be completed ", e);
+            return null;
         }
     }
 
@@ -213,8 +214,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            logger.error("the aptitude could not be updated " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("the aptitude could not be updated ", e);
+            return null;
         }
     }
 

@@ -39,8 +39,8 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             client.execute(index);
             return survey;
         } catch (IOException e) {
-            logger.error("The Survey could not be saved " + e.getMessage());
-            throw new IllegalStateException(e);
+            logger.error("The Survey could not be saved ", e);
+            return null;
         }
     }
 
@@ -70,8 +70,8 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             List<Hit<Survey, Void>> aptitudes = result.getHits(Survey.class);
             return aptitudes.stream().map(this::getSurvey).collect(Collectors.toList());
         } catch (IOException e) {
-            logger.error("The survey search could not be completed");
-            throw new IllegalStateException(e);
+            logger.error("The survey search could not be completed", e);
+            return Collections.emptyList();
         }
     }
 

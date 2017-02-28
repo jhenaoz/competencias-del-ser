@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class AptitudeController {
         List<Aptitude> aptitudes = aptitudeRepository.findAll();
 
         if (aptitudes.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
 
         List<AptitudeDto> aptitudesDto = aptitudes.stream().map(AptitudeTransformer::convertToDto)
                 .collect(Collectors.toList());
@@ -71,7 +72,7 @@ public class AptitudeController {
         List<Behavior> behaviorsFound = aptitudeRepository.findAllBehaviors(id);
 
         if (behaviorsFound.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(behaviorsFound, HttpStatus.OK);
     }
