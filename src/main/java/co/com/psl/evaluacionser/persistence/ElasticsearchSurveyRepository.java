@@ -13,7 +13,8 @@ import java.io.IOException;
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
 
-    private static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
+    private static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository
+            .class);
     @Value("${elasticSurveyIndex}")
     private String surveyIndexName;
     @Value("${elasticSurveyType}")
@@ -28,7 +29,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             client.execute(index);
             return survey;
         } catch (IOException e) {
-            logger.error("The Survey could not be saved "+ e.getMessage());
+            logger.error("The Survey could not be saved " + e.getMessage());
             throw new IllegalStateException(e);
         }
     }
