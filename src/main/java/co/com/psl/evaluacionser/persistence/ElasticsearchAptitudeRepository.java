@@ -32,23 +32,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Autowired
     private JestClient client;
 
-    /**
-     * Receives one aptitude and saves it in the DB
-     *
-     * @param aptitude the aptitude you want to save
-     * @return the aptitude you just saved, now with its ID included
-     */
-    @Override
-    public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).build();
-        try {
-            client.execute(index);
-            return aptitude;
-        } catch (IOException e) {
-            logger.error("The aptitude couldn't be saved ", e);
-            return null;
-        }
-    }
+
 
     /**
      * Searches the DB for all the different Aptitudes
@@ -72,7 +56,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
-            logger.error("The aptitude couldn't be saved ", e);
+            logger.error("There was a problem finding all the Aptitudes ", e);
             return Collections.emptyList();
         }
     }

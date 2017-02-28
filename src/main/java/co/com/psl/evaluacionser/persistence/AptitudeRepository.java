@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface AptitudeRepository {
 
-    Aptitude save(Aptitude aptitude);
-
     List<Aptitude> findAll();
 
     Aptitude findById(String id);
