@@ -14,6 +14,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +32,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Autowired
     private JestClient client;
 
+    static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
     /**
      * Receives one aptitude and saves it in the DB
      *
@@ -44,7 +46,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The aptitude couldn't be saved in the data base " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -71,7 +73,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The search couldn't be executed" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +98,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 return null;
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The aptitude with the given id couldn't be find " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -212,7 +214,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The aptitude couldn't be updated" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
