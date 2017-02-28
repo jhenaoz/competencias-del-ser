@@ -1,8 +1,10 @@
 <div class="main">
     <div class="steps">
         <div class="container">
-            <div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">
-                <h2 >{{surveyService.competence}}</h2>
+
+            <!--<div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">-->
+            <div class="row" style="text-align: center">
+                <h2>{{surveyService.competence}}</h2>
             </div>
             <div *ngIf="surveyService.oneSurvey" class="row">
                 <div id="openess" class="col-md-1 step active">
@@ -76,7 +78,7 @@
         </div>
         <!--/Titles-->
         <!--Data-->
-        <form [formGroup]="surveyForm" (ngSubmit)="save()" novalidate>
+        <form [formGroup]="surveyForm" (ngSubmit)="save()" *ngIf="showForm" novalidate>
             <div *ngFor="let behavior of behaviors; let i=index">
 
                 <div class="row">
@@ -89,13 +91,26 @@
 
                         </div>
                     </div>
-                    <div formArrayName="answers" *ngFor="let answer of answers.controls, let y=index">
+
+                    <div formArrayName="behaviorSurvey" *ngFor="let answer of behaviorSurvey.controls, let y=index">
                         <div [formGroupName]="i">
                             <div class="col-md-1">
                                 <div class="radio radio-primary">
-                                    <input class="validateRadio{{i}}" formControlName="option" type="radio" id="{{behavior.id}}radio{{y}}" value="{{4-y}}" required>
+                                    <input class="validateRadio{{i}}" formControlName="score" type="radio" id="{{behavior.id}}radio{{y}}" value="{{4-y}}" required>
                                     <label for="{{behavior.id}}radio{{y}}">
                                     </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="behaviorSurvey.controls?.length < 5 && y === behaviorSurvey.controls?.length-1">
+                            <div [formGroupName]="i">
+                                <div class="col-md-1">
+                                    <div class="radio radio-primary">
+                                        <input class="validateRadio{{i}}" formControlName="score" type="radio" id="{{behavior.id}}radio{{y+1}}" value="{{4-y-1}}" required>
+                                        <label for="{{behavior.id}}radio{{y+1}}">
+                                    </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -103,13 +118,13 @@
 
                 </div>
             </div>
-            <div class="alert alert-danger hide" id="radio-alert">{{ "Survey_options.relationship_alert" | translate }}.</div>
-            {{ click() }}
+            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
+            {{ bindRadioButtons() }}
+
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
-            <textarea formControlName="observation" class="form-control" rows="3"></textarea> {{ surveyForm.value | json }}
-            <button type="submit" class="btn btn-success" [disabled]="!surveyForm.valid">Submit</button>
+            <textarea formControlName="observation" class="form-control" rows="3"></textarea>
         </form>
 
     </div>

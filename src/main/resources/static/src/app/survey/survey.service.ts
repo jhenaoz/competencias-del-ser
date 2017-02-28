@@ -31,15 +31,10 @@ export class SurveyService {
     this.survey.evaluator = survey.evaluator;
     this.survey.role = survey.role;
     this.survey.evaluated = survey.evaluated;
-    this.survey.aptitudes = survey.aptitudes;
-    this.testPrint();
+    this.survey.aptitudes = new Array<Aptitude>();
+    console.log(this.survey)
   }
 
-  testPrint() {
-      console.log(this.survey.evaluator);
-      console.log(this.survey.role);
-      console.log(this.survey.evaluated);
-  }
 
   saveSurvey(surveyToSave: Survey): Observable<Survey> {
     const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -63,7 +58,7 @@ export class SurveyService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
+    //console.error(errMsg);
     return Observable.throw(errMsg);
   }
 

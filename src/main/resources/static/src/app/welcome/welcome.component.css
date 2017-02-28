@@ -30,14 +30,20 @@
     background-color: #7C9AAE;
 }
 
-.left-picture-grid:hover {
+.left-picture-grid:hover,
+.left-picture-grid>div>i:hover {
     background-color: #08446D;
+    color: #FFF;
 }
 
 .box:hover+.left-picture-grid {}
 
 .box:hover>.left-picture-grid {
     background-color: #08446D;
+}
+
+.box:hover>.left-picture-grid>div>i {
+    color: #FFF;
 }
 
 .box:hover>h4 {

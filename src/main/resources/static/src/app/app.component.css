@@ -38,6 +38,8 @@ h6 {
 
 /* /GLOBAL: *
 **********************************************************/
+
+
 /**********************************************************
 * MAIN: */
 
@@ -45,8 +47,9 @@ h6 {
     margin: -20px 50px 0 0;
     height: 100%;
     width: 100%;
-    position: fixed;
+    position: absolute;
     background-color: #F9F9F9;
+    overflow-x: hidden;
 }
 
 .title {

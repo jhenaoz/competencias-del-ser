@@ -1,11 +1,11 @@
 export class Behavior {
-    behaviorId: string;
+    id: string;
     en?: string;
     es?: string;
     score?: number;
 
     constructor() {
-        this.behaviorId = '';
+        this.id = '';
         this.score = 0;
     }
 }
