@@ -18,9 +18,9 @@ public class SurveyController {
 
     @Autowired
     private SurveyRepository surveyRepository;
-    
+
     @Autowired
-    SurveyTransformer surveyTransformer;
+    private SurveyTransformer surveyTransformer;
 
     /**
      * This method saves a Survey to the DB, receives a JSON containing the
@@ -30,10 +30,7 @@ public class SurveyController {
      */
     @RequestMapping(value = "/survey", method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
-        if(!(surveyDto == null)){
-            Survey survey = surveyTransformer.transformer(surveyDto);
-            return new ResponseEntity<Survey>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<Survey>(HttpStatus.BAD_REQUEST);
+        Survey survey = surveyTransformer.transformer(surveyDto);
+        return new ResponseEntity<>(surveyRepository.saveSurvey(survey), HttpStatus.ACCEPTED);
     }
 }
