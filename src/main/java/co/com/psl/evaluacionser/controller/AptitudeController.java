@@ -1,10 +1,10 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,13 +33,13 @@ public class AptitudeController {
     private ResponseEntity<List<AptitudeDto>> getAptitudes() {
         List<Aptitude> aptitudes = aptitudeRepository.findAll();
 
-        if (aptitudes == null)
-            return new ResponseEntity<List<AptitudeDto>>(HttpStatus.NOT_FOUND);
+        if (aptitudes.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         List<AptitudeDto> aptitudesDto = aptitudes.stream().map(AptitudeTransformer::convertToDto)
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<List<AptitudeDto>>(aptitudesDto, HttpStatus.OK);
+        return new ResponseEntity<>(aptitudesDto, HttpStatus.OK);
     }
 
     /**
@@ -54,9 +54,9 @@ public class AptitudeController {
         Aptitude aptitudeFound = aptitudeRepository.findById(id);
 
         if (aptitudeFound == null)
-            return new ResponseEntity<AptitudeDto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<AptitudeDto>(convertToDto(aptitudeFound), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(aptitudeFound), HttpStatus.OK);
 
     }
 
@@ -70,10 +70,10 @@ public class AptitudeController {
     private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
         List<Behavior> behaviorsFound = aptitudeRepository.findAllBehaviors(id);
 
-        if (behaviorsFound == null)
-            return new ResponseEntity<List<Behavior>>(HttpStatus.NOT_FOUND);
+        if (behaviorsFound.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<List<Behavior>>(behaviorsFound, HttpStatus.OK);
+        return new ResponseEntity<>(behaviorsFound, HttpStatus.OK);
     }
 
     /**
@@ -89,9 +89,9 @@ public class AptitudeController {
         Behavior behaviorFound = aptitudeRepository.findBehaviorById(id, behaviorId);
 
         if (behaviorFound == null)
-            return new ResponseEntity<Behavior>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<Behavior>(behaviorFound, HttpStatus.OK);
+        return new ResponseEntity<>(behaviorFound, HttpStatus.OK);
     }
 
     /**
@@ -110,7 +110,7 @@ public class AptitudeController {
     @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
     private ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
         if (aptitudeRepository.findById(id) == null)
-            return new ResponseEntity<Behavior>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(aptitudeRepository.addBehavior(behaviorDto, id), HttpStatus.CREATED);
 
