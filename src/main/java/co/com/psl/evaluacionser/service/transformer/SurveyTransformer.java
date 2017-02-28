@@ -32,6 +32,9 @@ public class SurveyTransformer {
     @Autowired
     private AptitudeRepository aptitudeRepository;
 
+    @Autowired
+    private AptitudeTransformer aptitudeTransformer;
+
     /**
      * This method calls the other methods required for the transformation
      *
@@ -56,7 +59,6 @@ public class SurveyTransformer {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
         try {
             Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
-            AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
             AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
             aptitudeSurvey.setAptitude(aptitudeDto);
             aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
