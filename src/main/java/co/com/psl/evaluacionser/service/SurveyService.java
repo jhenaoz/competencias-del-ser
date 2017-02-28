@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class SurveyService {
 
     @Autowired
     private SurveyTransformer surveyTransformer;
+
+    static Logger logger = Logger.getLogger(SurveyService.class);
 
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
@@ -56,7 +59,7 @@ public class SurveyService {
 
             return start.compareTo(end) <= 0;
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("The Date couldn't be properly formatted " + e.getMessage());
             return false;
         }
     }
