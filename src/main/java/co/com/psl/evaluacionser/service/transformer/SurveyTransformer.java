@@ -59,14 +59,13 @@ public class SurveyTransformer {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
         try {
             Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
-            AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
-            AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
+            AptitudeDto aptitudeDto = AptitudeTransformer.convertToDto(aptitude);
             aptitudeSurvey.setAptitude(aptitudeDto);
             aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
             aptitudeSurvey.setBehaviors(
                     this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
         } catch (Exception e) {
-            logger.error("The aptitude's id is not found in the data base. " + e.getMessage());
+            logger.error("The aptitude's id is not found in the data base. " + e);
         }
         return aptitudeSurvey;
     }
