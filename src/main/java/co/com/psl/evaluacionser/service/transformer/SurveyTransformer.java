@@ -34,6 +34,7 @@ public class SurveyTransformer {
     private AptitudeRepository aptitudeRepository;
 
     static Logger logger = Logger.getLogger(SurveyTransformer.class);
+
     /**
      * This method calls the other methods required for the transformation
      *
