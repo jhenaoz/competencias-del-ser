@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 /**
  * The implementation of the PersonRepository with elasticsearch
  */
@@ -37,6 +39,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     @Autowired
     private JestClient client;
 
+    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
+
     /**
      * This method find all indexes person with type employee
      *
@@ -52,6 +56,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         try {
             result = client.execute(search);
         } catch (IOException e) {
+            logger.error("The search can't be completed \n" + e.getMessage());
         }
         List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);
         return hits.stream().map(this::getPerson).collect(Collectors.toList());
@@ -68,7 +73,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             client.execute(index);
             return person;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The person can't be saved \n" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
