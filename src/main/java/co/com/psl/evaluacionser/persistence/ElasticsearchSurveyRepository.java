@@ -1,22 +1,22 @@
 package co.com.psl.evaluacionser.persistence;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import co.com.psl.evaluacionser.domain.Survey;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import org.apache.log4j.Logger;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
@@ -46,6 +46,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     /**
      * Searches all surveys made to a person within a time period.
+     *
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
@@ -64,13 +65,13 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             SearchResult result = client.execute(search);
 
             if (!result.isSucceeded())
-                return null;
+                return Collections.emptyList();
 
             List<Hit<Survey, Void>> aptitudes = result.getHits(Survey.class);
             return aptitudes.stream().map(this::getSurvey).collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            logger.error("The survey search could not be completed");
+            throw new IllegalStateException(e);
         }
     }
 
