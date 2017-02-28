@@ -63,7 +63,13 @@ public class AptitudeControllerIT {
     }
 
     @Test
-    public void getInvalidBehaviorShouldReturn404() throws Exception {
+    public void getBehaviorFromInvalidAptitudeShouldReturn404() throws Exception {
+        mockMvc.perform(get("/aptitude/99/behavior"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getInvalidBehaviorIdShouldReturn404() throws Exception {
         mockMvc.perform(get("/aptitude/1/behavior/99"))
                 .andExpect(status().isNotFound());
     }
