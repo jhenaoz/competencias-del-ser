@@ -9,6 +9,7 @@ import io.searchbox.core.SearchResult.Hit;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -26,8 +27,11 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     /**
      * These Strings must be congruent with the elasticsearch database
      */
-    private String PERSON_INDEX_NAME = "person";
-    private String PERSON_TYPE_NAME = "employee";
+    @Value("${elasticPersonIndex}")
+    private String personIndexName;
+
+    @Value("${elasticPersonType}")
+    private String personTypeName;
 
     /**
      * Calls the JestClient defined as a bean
@@ -47,8 +51,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         SearchResult result = null;
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(PERSON_INDEX_NAME)
-                .addType(PERSON_TYPE_NAME).build();
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(personIndexName)
+                .addType(personTypeName).build();
         try {
             result = client.execute(search);
         } catch (IOException e) {
@@ -64,7 +68,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
     @Override
     public Person save(Person person) {
-        Index index = new Index.Builder(person).index(PERSON_INDEX_NAME).type(PERSON_TYPE_NAME).build();
+        Index index = new Index.Builder(person).index(personIndexName).type(personTypeName).build();
         try {
             client.execute(index);
             return person;

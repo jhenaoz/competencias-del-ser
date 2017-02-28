@@ -29,7 +29,7 @@ public class AptitudeController {
      *
      * @return a JSON with all the data according to ElasticSearch
      */
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     private ResponseEntity<List<AptitudeDto>> getAptitudes() {
         List<Aptitude> aptitudes = aptitudeRepository.findAll();
 

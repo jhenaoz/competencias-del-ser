@@ -12,6 +12,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,8 +22,11 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
-    private static final String APTITUDE_INDEX_NAME = "aptitude";
-    private static final String APTITUDE_TYPE_NAME = "aptitude";
+    @Value("${elasticAptitudeIndex}")
+    private String aptitudeIndexName;
+
+    @Value("${elasticAptitudeType}")
+    private String aptitudeTypeName;
 
     @Autowired
     private JestClient client;
@@ -35,7 +39,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).build();
         try {
             client.execute(index);
             return aptitude;
@@ -56,7 +60,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchSourceBuilder.sort("id", SortOrder.ASC);
 
-        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(APTITUDE_INDEX_NAME).build();
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(aptitudeIndexName).build();
 
         try {
             SearchResult result = client.execute(search);
@@ -83,7 +87,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery("_id", id));
 
-        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(APTITUDE_INDEX_NAME).build();
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(aptitudeIndexName).build();
 
         try {
             SearchResult result = client.execute(search);
@@ -203,7 +207,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     private Aptitude updateAptitude(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).id(String.valueOf(aptitude.getId())).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).id(String.valueOf(aptitude.getId())).build();
         try {
             client.execute(index);
             return aptitude;
