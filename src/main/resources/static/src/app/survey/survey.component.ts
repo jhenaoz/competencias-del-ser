@@ -8,6 +8,8 @@ import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { SurveyService } from './survey.service';
 
+import { LocalStorageService } from 'angular-2-local-storage';
+
 import { Survey } from './survey.model';
 
 import {
@@ -54,12 +56,12 @@ export class SurveyComponent implements OnInit {
 
   /**
    * Creates an instance of SurveyComponent.
-   * @param {SurveyService} surveyService 
-   * @param {AptitudeService} _aptitudeService 
-   * @param {TranslateService} translate 
-   * @param {ActivatedRoute} route 
-   * @param {Router} router 
-   * @param {FormBuilder} fb 
+   * @param {SurveyService} surveyService
+   * @param {AptitudeService} _aptitudeService
+   * @param {TranslateService} translate
+   * @param {ActivatedRoute} route
+   * @param {Router} router
+   * @param {FormBuilder} fb
    * 
    */
   constructor(private surveyService: SurveyService,
@@ -67,7 +69,8 @@ export class SurveyComponent implements OnInit {
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private localStorageService: LocalStorageService) {
     this.survey = this.surveyService.survey;
     console.log(this.survey)
     this.currentLanguage = translate.currentLang;
@@ -94,6 +97,8 @@ export class SurveyComponent implements OnInit {
     // Show the form
     this.showForm = true;
 
+    // Test for localstorage
+    localStorage.setItem('test', 'probandooo');
   }
 
   /*

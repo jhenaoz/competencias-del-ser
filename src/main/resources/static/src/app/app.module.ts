@@ -23,6 +23,7 @@ import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
+import { LocalStorageModule } from 'angular-2-local-storage';
 
 // Translate imports
 import { TranslateModule } from 'ng2-translate';
@@ -38,6 +39,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    LocalStorageModule.withConfig({
+            prefix: 'comp-del-ser',
+            storageType: 'localStorage'
+            // storageType: 'sessionStorage'
+        }),
     TranslateModule.forRoot({
             provide: TranslateLoader,
             useFactory: translateLoaderFactory,
