@@ -87,7 +87,7 @@ export class SurveyComponent implements OnInit {
       this.id = param['id'];
     });
 
-    await this.verifyStoredSurvey();
+    this.verifyStoredSurvey();
     // Aptitude instance
     this.aptitude = new Aptitude();
     // We wait to get the behaviors from aptitudeService
@@ -160,6 +160,7 @@ export class SurveyComponent implements OnInit {
       if (!this.surveyService.oneSurvey) {
         this.router.navigate(['404']);
         // Saves survey
+        localStorage.clear();
         this.surveyService.saveSurvey(this.surveyService.survey);
       } else {
         // Change route to advance
@@ -197,6 +198,7 @@ export class SurveyComponent implements OnInit {
       const evaluatedAptitudes = storedSurvey.aptitudes.length;
       const next = evaluatedAptitudes + 1;
       if (+this.id !== next) {
+        this.id = next.toString();
         this.router.navigate(['survey/' + next.toString()]);
       }
     }

@@ -3,7 +3,7 @@
         <div class="container">
 
             <!--<div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">-->
-            <div class="row" style="text-align: center">
+            <div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">
                 <h2>{{surveyService.competence}}</h2>
             </div>
             <div *ngIf="surveyService.oneSurvey" class="row">
