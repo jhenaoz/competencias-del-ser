@@ -1,8 +1,8 @@
 
-import { Component, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { Survey } from '../survey/survey.model';
 import { Aptitude, Behavior } from '../aptitude/index';
@@ -17,12 +17,12 @@ import * as jQuery from 'jquery';
 * Custom evaluator validator
 */
 function evaluatorValidator(self: boolean): ValidatorFn {
-   return  (c: AbstractControl): {[key: string]: boolean} | null => {
-        if(self){
-          return { 'valid': true };
-        }
-        return null;
-    };
+  return (c: AbstractControl): { [key: string]: boolean } | null => {
+    if (self) {
+      return { 'valid': true };
+    }
+    return null;
+  };
 }
 @Component({
   selector: 'app-survey-options',
@@ -32,14 +32,14 @@ function evaluatorValidator(self: boolean): ValidatorFn {
 
 export class SurveyOptionsComponent implements OnInit {
 
-  public relationshipType: String;
+  public roleType: String;
 
   /*
   * Form variables
   */
   evaluator: FormControl;
   evaluated: FormControl;
-  relationship: FormControl;
+  role: FormControl;
   competenceToEvaluate: FormControl;
   // We are creating a new object and setting its type to FormGroup
   complexForm: FormGroup;
@@ -60,7 +60,7 @@ export class SurveyOptionsComponent implements OnInit {
   /*
   * Competence variables
   */
-   // Variables to handle i18n competences translates
+  // Variables to handle i18n competences translates
   openessText: string;
   communicationText: string;
   initiativeText: string;
@@ -73,17 +73,19 @@ export class SurveyOptionsComponent implements OnInit {
   // We are passing an instance of  Router to our constructor
   // We are passing an instance of the FormBuilder to our constructor
   constructor(private router: Router,
-      private formBuilder: FormBuilder, private surveyService: SurveyService, private translate: TranslateService) {}
+    private formBuilder: FormBuilder,
+    private surveyService: SurveyService,
+    private translate: TranslateService) { }
 
   ngOnInit() {
     /*
     * Popover function
     */
-    (<any> $('[data-toggle="popover"]')).popover({
+    (<any>$('[data-toggle="popover"]')).popover({
       html: true,
       content: function () {
-          const clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
-          return clone;
+        const clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+        return clone;
       }
     });
     /*
@@ -111,32 +113,33 @@ export class SurveyOptionsComponent implements OnInit {
     * FormControl('value', validator)
     */
     this.isSelf = false;
-    this.evaluated = new FormControl('',  Validators.required);
+    this.evaluated = new FormControl('', Validators.required);
     this.evaluator = new FormControl('', evaluatorValidator(this.isSelf));
-    this.relationship = new FormControl('',  Validators.required);
-    this.competenceToEvaluate = new FormControl('',  Validators.required);
+    this.role = new FormControl('', Validators.required);
+    this.competenceToEvaluate = new FormControl('', Validators.required);
     // We choose the constructor depending of the type of survey
     if (!this.surveyService.oneSurvey) {
       this.complexForm = this.formBuilder.group({
         evaluated: this.evaluated,
         evaluator: this.evaluator,
-        relationship: this.relationship,
+        role: this.role,
         competenceToEvaluate: this.competenceToEvaluate
       });
-    }else {
-        this.complexForm = this.formBuilder.group({
+    } else {
+      this.complexForm = this.formBuilder.group({
         evaluated: this.evaluated,
         evaluator: this.evaluator,
-        relationship: this.relationship,
+        role: this.role,
       });
     }
   }
- 
-  divisibleByTen(control:AbstractControl) {
-      return parseInt(control.value) % 10 == 0 ? null : {
-        divisibleByTen: true
-      }
+
+  divisibleByTen(control: AbstractControl) {
+    return parseInt(control.value) % 10 == 0 ? null : {
+      divisibleByTen: true
+    }
   }
+
   /*
   * Function to handle relation type changes
   */
@@ -150,64 +153,59 @@ export class SurveyOptionsComponent implements OnInit {
   */
   submitForm() {
     const value = this.complexForm.value;
-    // Evaluator validation
-    if (value.evaluator === '' && !this.isSelf) {
-      $('#alertEvaluator').removeClass('hide');
-    }else {
-        // Object organization for data persistence
-        switch (value.relationship) {
-        case this.selfText:
-            value.evaluator = value.evaluated;
-            value.relationship = 'self-assessment';
-            break;
-        case this.clientText:
-            value.relationship = 'client';
-            break;
-        case this.teammateText:
-            value.relationship = 'teammate';
-            break;
-        }
-        switch (value.competenceToEvaluate) {
-           case this.openessText:
-              value.competenceToEvaluate = 'openess';
-              break;
-           case this.communicationText:
-              value.competenceToEvaluate = 'communication';
-              break;
-           case this.initiativeText:
-              value.competenceToEvaluate = 'initiative';
-              break;
-           case this.client_orientationText:
-              value.competenceToEvaluate = 'client_orientation';
-              break;
-           case this.goalsText:
-               value.competenceToEvaluate = 'achivement_and_results';
-              break;
-           case this.teamworkText:
-              value.competenceToEvaluate = 'teamwork';
-              break;
-           case this.developmentText:
-              value.competenceToEvaluate = 'development_oriented_leadership';
-              break;
-           case this.goalText:
-              value.competenceToEvaluate = 'achivement_oriented_leadership';
-              break;
-           default:
-              value.competenceToEvaluate = '';
-              break;
-        }
-
-        console.log(value);
-
-        const survey: Survey = {
-          evaluator: this.complexForm.controls['evaluator'].value,
-          evaluated: this.complexForm.controls['evaluated'].value,
-          role: this.complexForm.controls['relationship'].value,
-          aptitudes: <Aptitude[]>[]
-        };
-        this.surveyService.startSurvey(survey);
-        this.router.navigate(['/survey/1']);
+    // Object organization for data persistence
+    switch (value.role) {
+      case this.selfText:
+        value.evaluator = value.evaluated;
+        value.role = 'self-assessment';
+        break;
+      case this.clientText:
+        value.role = 'client';
+        break;
+      case this.teammateText:
+        value.role = 'teammate';
+        break;
     }
+    this.surveyService.competence = value.competenceToEvaluate;
+    switch (value.competenceToEvaluate) {
+      case this.openessText:
+        value.competenceToEvaluate = 'openess';
+        break;
+      case this.communicationText:
+        value.competenceToEvaluate = 'communication';
+        break;
+      case this.initiativeText:
+        value.competenceToEvaluate = 'initiative';
+        break;
+      case this.client_orientationText:
+        value.competenceToEvaluate = 'client_orientation';
+        break;
+      case this.goalsText:
+        value.competenceToEvaluate = 'achivement_and_results';
+        break;
+      case this.teamworkText:
+        value.competenceToEvaluate = 'teamwork';
+        break;
+      case this.developmentText:
+        value.competenceToEvaluate = 'development_oriented_leadership';
+        break;
+      case this.goalText:
+        value.competenceToEvaluate = 'achivement_oriented_leadership';
+        break;
+      default:
+        value.competenceToEvaluate = '';
+        break;
+    }
+    console.log(value);
+    // We fill all data into survey and pass it to the service
+    this.survey.evaluator = value.evaluator;
+    this.survey.evaluated = value.evaluated;
+    this.survey.role = value.role;
+    this.survey.aptitudes = new Array();
+    this.surveyService.startSurvey(this.survey);
+    // XXX: hardcoded
+    this.router.navigate(['/survey/1']);
+
   }
 
   /*
@@ -219,6 +217,7 @@ export class SurveyOptionsComponent implements OnInit {
       this.submitForm();
     }
   }
+
 
 
 }

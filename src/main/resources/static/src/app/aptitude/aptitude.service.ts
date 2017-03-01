@@ -25,19 +25,27 @@ export class AptitudeService {
   * Return type: Observable
   */
   getBehaviors(aptitudeId: string): Observable<Behavior[]> {
+      //console.log(this._aptitudeUrl);
 
         return this._http.get(this._aptitudeUrl + aptitudeId + '/behavior')
             .map((response: Response) => <Behavior[]> response.json())
-            .do(data => console.log('All: ' +  JSON.stringify(data)))
+  //          .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
+
+      /*getBehaviorLength(aptitudeId: string): Observable<number> {
+         return this._http.get(this._aptitudeUrl + aptitudeId + '/behavior')
+            .map((response: Response) => <number> response.json().length)
+            .do(data => console.log('Length: ' +  JSON.stringify(data)))
+            .catch(this.handleError);
+    }*/
 
 
   /*
   * Method to handle error and log it into console
   */
   private handleError(error: Response) {
-        console.error(error);
+        //console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
 

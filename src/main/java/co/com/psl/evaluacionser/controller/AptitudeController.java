@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static co.com.psl.evaluacionser.service.transformer.AptitudeTransformer.convertToDto;
 
-
 @RestController
 @RequestMapping(value = "/aptitude")
 public class AptitudeController {

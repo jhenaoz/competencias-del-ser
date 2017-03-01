@@ -38,7 +38,8 @@
         "occasionally": "A veces",
         "never": "Nunca",
         "information": "Sin información",
-        "observations": "Observaciones"
+        "observations": "Observaciones",
+        "survey_alert": "¡Debes seleccionar todos los campos!"
     },
     "Competences": {
         "title": "Competencia a valorar",
