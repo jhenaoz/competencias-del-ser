@@ -30,7 +30,7 @@ export class SurveyService {
 
   constructor(private _http: Http) {
     this.survey = new Survey();
-    this._surveyUrl += '/survey'
+    this._surveyUrl += '/survey';
   }
 
   startSurvey(survey) {
@@ -38,16 +38,15 @@ export class SurveyService {
     this.survey.role = survey.role;
     this.survey.evaluated = survey.evaluated;
     this.survey.aptitudes = new Array<Aptitude>();
-    console.log(this.survey)
   }
 
-  saveSurvey(surveyToSave: Survey): Observable<Survey> {
-    console.log(this._surveyUrl);
+  saveSurvey(surveyToSave: Survey) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
-    return this._http.post(this._surveyUrl, { surveyToSave }, options)
-      .map(this.extractData)
-      .catch(this.handleError);
+    const body = JSON.stringify(surveyToSave);
+    return this._http.post(this._surveyUrl, body, options)
+           .toPromise()
+	         .then(response => { return response.json() }, this.handleError);
   }
 
   private extractData(res: Response) {
