@@ -38,7 +38,8 @@
         "occasionally": "Occasionally",
         "never": "Never",
         "information": "No information",
-        "observations": "Observations"
+        "observations": "Observations",
+        "survey_alert": "¡You must select all fields!"
     },
     "Competences": {
         "title": "Skill to assess",

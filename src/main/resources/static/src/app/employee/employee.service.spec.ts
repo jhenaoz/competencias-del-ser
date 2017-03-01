@@ -15,7 +15,7 @@ import {
 
 describe('EmployeeService', () => {
   let employeeService: EmployeeService;
-  let _employeeUrl = environment.apiURL += '/person';;
+  let _employeeUrl = environment.apiURL += '/person';
   let mockHttp;
 
   beforeEach(() => {
@@ -36,13 +36,11 @@ describe('EmployeeService', () => {
   });
 
   describe('getEmployees', () => {
-
     it('should call http.get with the right URL',  () => {
       let result = <IEmployee[]> [];
       mockHttp.get.and.returnValue(Observable.of(true));
       result = this.employeeService.getEmployees();
-      expect(mockHttp.get).toHaveBeenCalledWith
-      (_employeeUrl);
+      expect(mockHttp.get).toHaveBeenCalledWith(_employeeUrl);
     });
 
     it('should get all employees', async(() => {

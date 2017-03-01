@@ -1,7 +1,12 @@
 <div class="main">
     <div class="steps">
         <div class="container">
-            <div class="row">
+
+            <!--<div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">-->
+            <div class="row" style="text-align: center">
+                <h2>{{surveyService.competence}}</h2>
+            </div>
+            <div *ngIf="surveyService.oneSurvey" class="row">
                 <div id="openess" class="col-md-1 step active">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">1</button>
                     <p>{{ "Competences.competence_opening" | translate}}</p>
@@ -40,7 +45,6 @@
         </div>
     </div>
     <hr>
-
     <div class="container">
         <!--Titles-->
         <div class="row">
@@ -74,63 +78,54 @@
         </div>
         <!--/Titles-->
         <!--Data-->
-        <form #f="ngForm" (ngSubmit)="save(f.value, f.valid)" novalidate>
-            <div *ngFor="let behavior of behaviors">
+        <form [formGroup]="surveyForm" (ngSubmit)="save()" *ngIf="showForm" novalidate>
+            <!--Looping behaviors-->
+            <div *ngFor="let behavior of behaviors; let i=index">
                 <div class="row">
-
                     <div class="col-md-4">
                         <div *ngIf="currentLanguage === 'es'">
                             <p>{{ behavior. es }}</p>
                         </div>
                         <div *ngIf="currentLanguage === 'en'">
                             <p>{{ behavior. en }}</p>
+
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio1" value="4" required>
-                            <label for="{{behavior.id}}radio1">
-                        </label>
+                    <!--Looping to create radio buttons-->
+                    <div formArrayName="behaviorSurvey" *ngFor="let answer of behaviorSurvey.controls, let y=index">
+                        <div [formGroupName]="i">
+                            <div class="col-md-1">
+                                <div class="radio radio-primary">
+                                    <input class="validateRadio{{i}}" formControlName="score" type="radio" id="{{behavior.id}}radio{{y}}" value="{{4-y}}" required>
+                                    <label for="{{behavior.id}}radio{{y}}">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Validate and create the remaining radio button-->
+                        <div *ngIf="behaviorSurvey.controls?.length < 5 && y === behaviorSurvey.controls?.length-1">
+                            <div [formGroupName]="i">
+                                <div class="col-md-1">
+                                    <div class="radio radio-primary">
+                                        <input class="validateRadio{{i}}" formControlName="score" type="radio" id="{{behavior.id}}radio{{y+1}}" value="{{4-y-1}}" required>
+                                        <label for="{{behavior.id}}radio{{y+1}}">
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio2" value="3" required>
-                            <label for="{{behavior.id}}radio2">
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio3" value="2" required>
-                            <label for="{{behavior.id}}radio3">
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio4" value="1" required>
-                            <label for="{{behavior.id}}radio4">
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-primary">
-                            <input type="radio" name="radio{{behavior.id}}" id="{{behavior.id}}radio5" value="0" required>
-                            <label for="{{behavior.id}}radio5">
-                        </label>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-            <div class="alert alert-danger hide" id="radio-alert">{{ "Survey_options.relationship_alert" | translate }}.</div>
+            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
+            <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
+            {{ bindRadioButtons() }}
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
-            <textarea class="form-control" rows="3" required></textarea>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <textarea formControlName="observation" class="form-control" rows="3"></textarea>
         </form>
-
     </div>
 </div>
 
