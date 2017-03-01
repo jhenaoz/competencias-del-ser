@@ -88,6 +88,11 @@ export class SurveyComponent implements OnInit {
     });
 
     this.verifyStoredSurvey();
+
+    for (let i = 1; i < +this.id; i++) {
+      $('#' + i).next().addClass('active');
+    }
+
     // Aptitude instance
     this.aptitude = new Aptitude();
     // We wait to get the behaviors from aptitudeService
@@ -174,7 +179,7 @@ export class SurveyComponent implements OnInit {
           const next = (+this.id + 1).toString();
           this.router.navigate(['survey/' + next]);
           // Change CSS class to change color to the aptitudes buttons
-          $('.active').next().addClass('active');
+          // $('.active').next().addClass('active');
           // Hide survey form until data is ok
           this.showForm = false;
           // Set time to wait functions to complete
