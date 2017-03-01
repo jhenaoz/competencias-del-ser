@@ -62,7 +62,7 @@ export class SurveyComponent implements OnInit {
    * @param {ActivatedRoute} route
    * @param {Router} router
    * @param {FormBuilder} fb
-   *
+   * @param {LocalStorageService} localStorage
    */
   constructor(private surveyService: SurveyService,
     private _aptitudeService: AptitudeService,
@@ -86,9 +86,9 @@ export class SurveyComponent implements OnInit {
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
-
+    // Veryfy if there is a survey stored in localstorage to bring it and continue the survey
     this.verifyStoredSurvey();
-
+    // Add visual effect on buttons
     for (let i = 1; i < +this.id; i++) {
       $('#' + i).next().addClass('active');
     }
@@ -191,11 +191,12 @@ export class SurveyComponent implements OnInit {
           });
         }
       }
-
     }
-
   }
 
+  /*
+  * Method to look for stored survey on localstorage
+  */
   verifyStoredSurvey() {
     const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
     if (storedSurvey) {

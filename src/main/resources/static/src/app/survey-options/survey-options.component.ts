@@ -138,9 +138,9 @@ export class SurveyOptionsComponent implements OnInit {
   }
 
   divisibleByTen(control: AbstractControl) {
-    return parseInt(control.value) % 10 == 0 ? null : {
+    return parseInt(control.value) % 10 === 0 ? null : {
       divisibleByTen: true
-    }
+    };
   }
 
   /*
