@@ -16,6 +16,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <sonar.sources>pom.xml,src/main/java,src/main/resources/static/src</sonar.sources>
+        <sonar.ts.tslintpath>src/main/resources/static/node_modules/tslint/bin</sonar.ts.tslintpath>
         <sonar.ts.tslint.configPath>src/main/resources/static/tslint.json</sonar.ts.tslint.configPath>
     </properties>
     <dependencies>
