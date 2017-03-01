@@ -1,5 +1,16 @@
 package co.com.psl.evaluacionser.persistence;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.log4j.Logger;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import co.com.psl.evaluacionser.domain.Survey;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.DeleteByQuery;
@@ -31,6 +42,8 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     @Autowired
     private JestClient client;
 
+    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
+
     @Override
     public Survey saveSurvey(Survey survey) {
         Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).setParameter(Parameters.REFRESH,true).build();
@@ -38,14 +51,13 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             client.execute(index);
             return survey;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The survey couldn't be saved " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     /**
      * Searches all surveys made to a person within a time period.
-     *
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
@@ -69,7 +81,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             List<Hit<Survey, Void>> aptitudes = result.getHits(Survey.class);
             return aptitudes.stream().map(this::getSurvey).collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The surveys of the given user couldn't be found " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -129,4 +141,3 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
 
 }
-

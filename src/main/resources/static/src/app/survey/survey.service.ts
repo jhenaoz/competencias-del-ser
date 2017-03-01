@@ -10,6 +10,9 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
+// Enviroment variables
+import { environment } from '../../environments/environment';
+
 /*
 * Service that provides survey variables to be stored
 */
@@ -17,41 +20,41 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class SurveyService {
 
-  private _surveyUrl = '';
+  private _surveyUrl = environment.apiURL;
 
   survey: Survey;
   oneSurvey: boolean;
+  competence = 'TESTING';
+  evaluator: string;
+  role: string;
 
-  constructor(private _http: Http) { this.survey = new Survey(); }
+  constructor(private _http: Http) {
+    this.survey = new Survey();
+    this._surveyUrl += '/survey';
+  }
 
   startSurvey(survey) {
     this.survey.evaluator = survey.evaluator;
     this.survey.role = survey.role;
     this.survey.evaluated = survey.evaluated;
-    this.testPrint();
+    this.survey.aptitudes = new Array<Aptitude>();
   }
 
-  testPrint() {
-      console.log(this.survey.evaluator);
-      console.log(this.survey.role);
-      console.log(this.survey.evaluated);
-      console.log('asdasd ');
-  }
-
-  saveSurvey(surveyToSave: Survey): Observable<Survey> {
+  saveSurvey(surveyToSave: Survey) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
-    return this._http.post(this._surveyUrl, { surveyToSave }, options)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+    const body = JSON.stringify(surveyToSave);
+    return this._http.post(this._surveyUrl, body, options)
+           .toPromise()
+	         .then(response => { return response.json() }, this.handleError);
   }
 
   private extractData(res: Response) {
     const body = res.json();
-    return body.data || { };
+    return body.data || {};
   }
 
-  private handleError (error: Response | any) {
+  private handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -60,7 +63,6 @@ export class SurveyService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
     return Observable.throw(errMsg);
   }
 

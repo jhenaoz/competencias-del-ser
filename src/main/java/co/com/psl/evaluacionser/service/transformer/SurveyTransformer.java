@@ -20,6 +20,7 @@ import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
 import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
+import org.apache.log4j.Logger;
 
 /**
  * This class is in charge of transform the json from the front end to the form
@@ -31,6 +32,11 @@ public class SurveyTransformer {
 
     @Autowired
     private AptitudeRepository aptitudeRepository;
+
+    @Autowired
+    private AptitudeTransformer aptitudeTransformer;
+
+    static Logger logger = Logger.getLogger(SurveyTransformer.class);
 
     /**
      * This method calls the other methods required for the transformation
@@ -56,29 +62,28 @@ public class SurveyTransformer {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
         try {
             Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
-            AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
             AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
             aptitudeSurvey.setAptitude(aptitudeDto);
             aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
             aptitudeSurvey.setBehaviors(
                     this.behaviorsSurveyTransformer(aptitude.getBehaviors(), aptitudeSurveyDto.getBehaviors()));
         } catch (Exception e) {
-
+            logger.error("The aptitude's id is not found in the data base. " + e);
         }
         return aptitudeSurvey;
     }
 
     public List<BehaviorSurvey> behaviorsSurveyTransformer(List<Behavior> behaviors,
                                                            List<BehaviorSurveyDto> behaviorsSurveyDto) {
-        List<BehaviorSurvey> behaviorsSurvey = new ArrayList<BehaviorSurvey>();
-        for (int i = 0; i < behaviorsSurveyDto.size(); i++) {
+        List<BehaviorSurvey> behaviorsSurvey = new ArrayList<>();
+        for (BehaviorSurveyDto behaviorSurveyDto : behaviorsSurveyDto) {
             BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
-            for (int j = 0; j < behaviors.size(); j++) {
-                if (behaviors.get(j).getId().equals(behaviorsSurveyDto.get(i).getBehaviorId())) {
-                    behaviorSurvey.setBehavior(behaviors.get(j));
-                    behaviorSurvey.setScore(behaviorsSurveyDto.get(i).getScore());
+            for (Behavior behavior : behaviors) {
+                if (behavior.getId().equals(behaviorSurveyDto.getBehaviorId())) {
+                    behaviorSurvey.setBehavior(behavior);
+                    behaviorSurvey.setScore(behaviorSurveyDto.getScore());
                     behaviorsSurvey.add(behaviorSurvey);
-                    j = behaviors.size();
+                    break;
                 }
             }
         }

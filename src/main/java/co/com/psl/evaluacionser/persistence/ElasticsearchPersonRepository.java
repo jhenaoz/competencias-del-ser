@@ -11,6 +11,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +38,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     @Autowired
     private JestClient client;
 
+    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
+
     /**
      * This method find all indexes person with type employee
      *
@@ -52,6 +55,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         try {
             result = client.execute(search);
         } catch (IOException e) {
+            logger.error("The search can't be completed " + e.getMessage());
         }
         List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);
         return hits.stream().map(this::getPerson).collect(Collectors.toList());
@@ -68,7 +72,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             client.execute(index);
             return person;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The person can't be saved " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

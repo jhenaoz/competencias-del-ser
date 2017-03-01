@@ -1,28 +1,23 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
+import co.com.psl.evaluacionser.service.AptitudeService;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.service.dto.BehaviorDto;
-import co.com.psl.evaluacionser.persistence.AptitudeRepository;
-import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static co.com.psl.evaluacionser.service.transformer.AptitudeTransformer.convertToDto;
-
 
 @RestController
 @RequestMapping(value = "/aptitude")
 public class AptitudeController {
 
     @Autowired
-    private AptitudeRepository aptitudeRepository;
+    private AptitudeService aptitudeService;
 
     /**
      * Mapping for getting all the aptitudes (with their respective behaviors)
@@ -31,15 +26,12 @@ public class AptitudeController {
      */
     @RequestMapping(method = RequestMethod.GET)
     private ResponseEntity<List<AptitudeDto>> getAptitudes() {
-        List<Aptitude> aptitudes = aptitudeRepository.findAll();
+        List<AptitudeDto> aptitudes = aptitudeService.findAllAptitudes();
 
         if (aptitudes == null)
             return new ResponseEntity<List<AptitudeDto>>(HttpStatus.NOT_FOUND);
 
-        List<AptitudeDto> aptitudesDto = aptitudes.stream().map(AptitudeTransformer::convertToDto)
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<List<AptitudeDto>>(aptitudesDto, HttpStatus.OK);
+        return new ResponseEntity<List<AptitudeDto>>(aptitudes, HttpStatus.OK);
     }
 
     /**
@@ -51,13 +43,12 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     private ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
-        Aptitude aptitudeFound = aptitudeRepository.findById(id);
+        AptitudeDto aptitudeFound = aptitudeService.findAptitudeById(id);
 
         if (aptitudeFound == null)
             return new ResponseEntity<AptitudeDto>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<AptitudeDto>(convertToDto(aptitudeFound), HttpStatus.OK);
-
+        return new ResponseEntity<AptitudeDto>(aptitudeFound, HttpStatus.OK);
     }
 
     /**
@@ -68,7 +59,7 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
     private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
-        List<Behavior> behaviorsFound = aptitudeRepository.findAllBehaviors(id);
+        List<Behavior> behaviorsFound = aptitudeService.findAptitudeBehaviors(id);
 
         if (behaviorsFound == null)
             return new ResponseEntity<List<Behavior>>(HttpStatus.NOT_FOUND);
@@ -86,7 +77,7 @@ public class AptitudeController {
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
     private ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
                                                      @PathVariable("behaviorId") String behaviorId) {
-        Behavior behaviorFound = aptitudeRepository.findBehaviorById(id, behaviorId);
+        Behavior behaviorFound = aptitudeService.findAptitudeBehaviorById(id, behaviorId);
 
         if (behaviorFound == null)
             return new ResponseEntity<Behavior>(HttpStatus.NOT_FOUND);
@@ -109,12 +100,12 @@ public class AptitudeController {
 
     @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
     private ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
-        if (aptitudeRepository.findById(id) == null)
-            return new ResponseEntity<Behavior>(HttpStatus.BAD_REQUEST);
+        Behavior behaviorSaved = aptitudeService.createAptitudeBehavior(id, behaviorDto);
 
-        return new ResponseEntity<>(aptitudeRepository.addBehavior(behaviorDto, id), HttpStatus.CREATED);
+        if (behaviorSaved == null)
+            return new ResponseEntity<Behavior>(HttpStatus.NOT_FOUND);
 
-
+        return new ResponseEntity<>(behaviorSaved, HttpStatus.CREATED);
     }
 
     /**
@@ -128,14 +119,12 @@ public class AptitudeController {
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
     private ResponseEntity modifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
 
-        if (aptitudeRepository.findById(id) == null)
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        Behavior behavior = aptitudeService.updateAptitudeBehavior(id, behaviorId, behaviorDto);
 
-        if (aptitudeRepository.findBehaviorById(id, behaviorId) == null)
+        if (behavior == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-        Behavior behavior = new Behavior(behaviorId, behaviorDto.getEn(), behaviorDto.getEs());
-        return new ResponseEntity(aptitudeRepository.updateBehaviorById(id, behavior), HttpStatus.ACCEPTED);
+        return new ResponseEntity(behavior, HttpStatus.ACCEPTED);
     }
 
     /**
@@ -147,13 +136,12 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     private ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
-        if (aptitudeRepository.findById(id) == null)
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        Aptitude aptitudeDeleted = aptitudeService.deleteAptitudeBehavior(id, behaviorId);
 
-        if (aptitudeRepository.findBehaviorById(id, behaviorId) == null)
+        if (aptitudeDeleted == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity(aptitudeRepository.deleteBehavior(id, behaviorId), HttpStatus.ACCEPTED);
+        return new ResponseEntity(aptitudeDeleted, HttpStatus.ACCEPTED);
     }
 }
 
