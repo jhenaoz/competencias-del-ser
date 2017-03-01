@@ -69,7 +69,6 @@ export class SurveyComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder) {
     this.survey = this.surveyService.survey;
-    console.log(this.survey)
     this.currentLanguage = translate.currentLang;
     this.createForm();
   }
