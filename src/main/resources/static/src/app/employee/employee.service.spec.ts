@@ -41,8 +41,7 @@ describe('EmployeeService', () => {
       let result = <IEmployee[]> [];
       mockHttp.get.and.returnValue(Observable.of(true));
       result = this.employeeService.getEmployees();
-      expect(mockHttp.get).toHaveBeenCalledWith
-      (_employeeUrl);
+      expect(mockHttp.get).toHaveBeenCalledWith(_employeeUrl);
     });
 
     it('should get all employees', async(() => {

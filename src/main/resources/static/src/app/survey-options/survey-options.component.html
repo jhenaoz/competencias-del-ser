@@ -22,7 +22,7 @@
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey_options.relationship" | translate}}:</label>
-                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['role']" #t (change)="relationChange(t.value)">
+                <select class="form-control" id="relationshipSelect" [formControl]="complexForm.controls['role']" #t (change)="relationChange(t.value)">
                   <option></option>
                   <option id="team">{{ "Survey_options.relation_teammate" | translate}}</option>
                   <option id="client">{{ "Survey_options.relation_client" | translate}}</option>                  
