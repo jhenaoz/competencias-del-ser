@@ -10,8 +10,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { LocalStorageService } from 'angular-2-local-storage';
-
 // Enviroment variables
 import { environment } from '../../environments/environment';
 
@@ -32,8 +30,6 @@ export class SurveyService {
   constructor(private _http: Http) {
     this.survey = new Survey();
     this._surveyUrl += '/survey';
-    this.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
-    this.competence = localStorage.getItem('competence');
   }
 
   startSurvey(survey) {

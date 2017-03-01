@@ -199,6 +199,8 @@ export class SurveyComponent implements OnInit {
   */
   verifyStoredSurvey() {
     const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
+    this.surveyService.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
+    this.surveyService.competence = localStorage.getItem('competence');
     if (storedSurvey) {
       this.surveyService.survey = storedSurvey;
       const evaluatedAptitudes = storedSurvey.aptitudes.length;
