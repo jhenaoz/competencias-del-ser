@@ -7,6 +7,8 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import io.searchbox.params.Parameters;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     @Override
     public Survey saveSurvey(Survey survey) {
-        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).build();
+        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).setParameter(Parameters.REFRESH,true).build();
         try {
             client.execute(index);
             return survey;
@@ -80,17 +82,17 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     }
 
     public boolean deleteSurvey(String evaluator, String evaluated, String timestamp) {
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(
-                QueryBuilders.boolQuery()
-                        .must(QueryBuilders.matchQuery("evaluated", evaluated))
-                        .must(QueryBuilders.matchQuery("evaluator", evaluator))
-                        .must(QueryBuilders.matchQuery("timestamp", timestamp))
-        );
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("evaluator", evaluator))
+                .must(QueryBuilders.termQuery("evaluated", evaluated))
+                .must(QueryBuilders.termQuery("timestamp", timestamp));
 
-        DeleteByQuery deleteSpecificSurvey = new DeleteByQuery.Builder(searchSourceBuilder.toString())
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(boolQueryBuilder);
+
+        DeleteByQueryFercho deleteSpecificSurvey = new DeleteByQueryFercho.Builder(searchSourceBuilder.toString())
                 .addIndex(surveyIndexName)
-                .addType(surveyTypeName)
+                .refresh(true)
                 .build();
 
         try {
