@@ -22,14 +22,14 @@
             <div class="block">
                 <label for="relationshipSelect"><span style="color: #134C96">*</span> 
                 {{ "Survey_options.relationship" | translate}}:</label>
-                <select class="form-control" id="relationshipSelect" title="relationshipSelect" [formControl]="complexForm.controls['relationship']" #t (change)="relationChange(t.value)">
+                <select class="form-control" id="relationshipSelect" [formControl]="complexForm.controls['role']" #t (change)="relationChange(t.value)">
                   <option></option>
                   <option id="team">{{ "Survey_options.relation_teammate" | translate}}</option>
                   <option id="client">{{ "Survey_options.relation_client" | translate}}</option>                  
                   <option id="own">{{ "Survey_options.relation_own" | translate}}</option>
                 </select>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="!complexForm.controls['relationship'].valid  && complexForm.controls['relationship'].dirty">{{ "Survey_options.relationship_alert" | translate }}</div>
+                <div class="alert alert-danger" *ngIf="!complexForm.controls['role'].valid  && complexForm.controls['role'].dirty">{{ "Survey_options.role_alert" | translate }}</div>
             </div>
             <!--Popover-->
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
