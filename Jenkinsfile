@@ -13,11 +13,13 @@ node() {
         }
     }
 
-    stage('SonarQube analysis') {
-        withSonarQubeEnv('SonarQube Test') {
-            sh 'mvn sonar:sonar'
+    /* stage('SonarQube analysis') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            withSonarQubeEnv('SonarQube Test') {
+                sh 'mvn sonar:sonar'
+            }
         }
-    }
+    } */
 
     stage('Test') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
