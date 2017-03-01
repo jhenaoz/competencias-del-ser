@@ -65,7 +65,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SurveyService,
     AptitudeService,
     SurveyRouteActivator,
-    LocalStorageService
+    LocalStorageService,
   ],
   bootstrap: [AppComponent]
 })
