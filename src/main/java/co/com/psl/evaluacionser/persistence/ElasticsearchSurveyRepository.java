@@ -1,24 +1,13 @@
 package co.com.psl.evaluacionser.persistence;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.log4j.Logger;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import co.com.psl.evaluacionser.domain.Survey;
 import io.searchbox.client.JestClient;
-import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
 import io.searchbox.params.Parameters;
+import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -33,20 +22,17 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
 
+    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
     @Value("${elasticSurveyIndex}")
     private String surveyIndexName;
-
     @Value("${elasticSurveyType}")
     private String surveyTypeName;
-
     @Autowired
     private JestClient client;
 
-    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
-
     @Override
     public Survey saveSurvey(Survey survey) {
-        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).setParameter(Parameters.REFRESH,true).build();
+        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).setParameter(Parameters.REFRESH, true).build();
         try {
             client.execute(index);
             return survey;
@@ -58,6 +44,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     /**
      * Searches all surveys made to a person within a time period.
+     *
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
@@ -102,7 +89,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
 
-        DeleteByQueryFercho deleteSpecificSurvey = new DeleteByQueryFercho.Builder(searchSourceBuilder.toString())
+        DeleteByQueryOW deleteSpecificSurvey = new DeleteByQueryOW.Builder(searchSourceBuilder.toString())
                 .addIndex(surveyIndexName)
                 .refresh(true)
                 .build();

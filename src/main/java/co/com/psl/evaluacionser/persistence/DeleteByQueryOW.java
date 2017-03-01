@@ -5,9 +5,9 @@ import io.searchbox.action.GenericResultAbstractAction;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class DeleteByQueryFercho extends GenericResultAbstractAction {
+public class DeleteByQueryOW extends GenericResultAbstractAction {
 
-    protected DeleteByQueryFercho(DeleteByQueryFercho.Builder builder) {
+    protected DeleteByQueryOW(DeleteByQueryOW.Builder builder) {
         super(builder);
 
         this.payload = builder.query;
@@ -53,7 +53,7 @@ public class DeleteByQueryFercho extends GenericResultAbstractAction {
                 .isEquals();
     }
 
-    public static class Builder extends AbstractMultiTypeActionBuilder<DeleteByQueryFercho, Builder> {
+    public static class Builder extends AbstractMultiTypeActionBuilder<DeleteByQueryOW, Builder> {
 
         private String query;
 
@@ -62,8 +62,8 @@ public class DeleteByQueryFercho extends GenericResultAbstractAction {
         }
 
         @Override
-        public DeleteByQueryFercho build() {
-            return new DeleteByQueryFercho(this);
+        public DeleteByQueryOW build() {
+            return new DeleteByQueryOW(this);
         }
     }
 
