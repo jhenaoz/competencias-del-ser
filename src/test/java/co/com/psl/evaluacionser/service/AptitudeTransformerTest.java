@@ -13,6 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 public class AptitudeTransformerTest {
 
+    private AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
+
     @Test
     public void aptitudeTransformedToDtoUsingFullConstructor() {
         Behavior behavior1 = new Behavior("1", "Reconoce sus errores", "Recognize his mistakes");
@@ -22,7 +24,7 @@ public class AptitudeTransformerTest {
         behaviors.add(behavior2);
         Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviors);
 
-        AptitudeDto aptitudeDto = AptitudeTransformer.convertToDto(aptitude);
+        AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
 
         assertEquals(aptitude.getId().toString(), aptitudeDto.getId());
         assertEquals(aptitude.getEs(), aptitudeDto.getEs());
@@ -37,7 +39,7 @@ public class AptitudeTransformerTest {
         aptitude.setEn("Openness");
         aptitude.setBehaviors(null);
 
-        AptitudeDto aptitudeDto = AptitudeTransformer.convertToDto(aptitude);
+        AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
 
         assertEquals(aptitude.getId().toString(), aptitudeDto.getId());
         assertEquals(aptitude.getEs(), aptitudeDto.getEs());
