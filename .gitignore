@@ -81,23 +81,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-### Java ###
-*.class
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
 ### Maven ###
 target/
 dist/
@@ -110,6 +93,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+tslint_results.json
+checkstyle_results.xml
 
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
@@ -151,7 +136,6 @@ build/Release
 node/
 node_modules
 jspm_packages
-coverage/
 
 # Optional npm cache directory
 .npm
@@ -230,12 +214,7 @@ test-results.xml
 /node_modules
 
 # IDEs and editors
-/.idea
-.project
-.classpath
 .c9/
-*.launch
-.settings/
 
 # IDE - VSCode
 .vscode/*
@@ -249,7 +228,6 @@ test-results.xml
 /connect.lock
 /coverage/*
 /libpeerconnection.log
-npm-debug.log
 testem.log
 /typings
 
@@ -259,7 +237,6 @@ testem.log
 
 #System Files
 .DS_Store
-Thumbs.db
 
 #Folder of elasticsearch
 /data/
