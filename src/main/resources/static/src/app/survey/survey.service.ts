@@ -30,7 +30,7 @@ export class SurveyService {
 
   constructor(private _http: Http) {
     this.survey = new Survey();
-    this._surveyUrl += '/survey'
+    this._surveyUrl += '/survey';
   }
 
   startSurvey(survey) {
@@ -38,7 +38,7 @@ export class SurveyService {
     this.survey.role = survey.role;
     this.survey.evaluated = survey.evaluated;
     this.survey.aptitudes = new Array<Aptitude>();
-    console.log(this.survey)
+    console.log(this.survey);
   }
 
   saveSurvey(surveyToSave: Survey): Observable<Survey> {

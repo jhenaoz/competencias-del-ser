@@ -62,7 +62,7 @@ export class SurveyComponent implements OnInit {
    * @param {ActivatedRoute} route
    * @param {Router} router
    * @param {FormBuilder} fb
-   * 
+   *
    */
   constructor(private surveyService: SurveyService,
     private _aptitudeService: AptitudeService,
@@ -72,7 +72,7 @@ export class SurveyComponent implements OnInit {
     private fb: FormBuilder,
     private localStorageService: LocalStorageService) {
     this.survey = this.surveyService.survey;
-    console.log(this.survey)
+    console.log(this.survey);
     this.currentLanguage = translate.currentLang;
     this.createForm();
   }
@@ -81,12 +81,15 @@ export class SurveyComponent implements OnInit {
   * Async method to initializate survey variables
   */
   async ngOnInit() {
-    // Aptitude instance
-    this.aptitude = new Aptitude();
+
     // We wait to get the route id param
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
+
+    await this.verifyStoredSurvey();
+    // Aptitude instance
+    this.aptitude = new Aptitude();
     // We wait to get the behaviors from aptitudeService
     const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
     this.behaviors = behaviors;
@@ -97,8 +100,6 @@ export class SurveyComponent implements OnInit {
     // Show the form
     this.showForm = true;
 
-    // Test for localstorage
-    localStorage.setItem('test', 'probandooo');
   }
 
   /*
@@ -142,29 +143,32 @@ export class SurveyComponent implements OnInit {
   }
 
   /*
-  * Method to advance in the survey 
+  * Method to advance in the survey
   * XXX: Search a better way to handle routing
   */
   surveyAdvance() {
     if (this.surveyForm.valid) {
-      // Filling aptitud properties 
+      // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value;
       this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
       // Pushing aptitud into survey
-      this.survey.aptitudes.push(this.aptitude)
+      this.surveyService.survey.aptitudes.push(this.aptitude);
+      // Stored actual survey to localstorage
+      localStorage.setItem('storedSurvey', JSON.stringify(this.surveyService.survey));
       // Checks if is only one survey (one competence to evaluate)
       if (!this.surveyService.oneSurvey) {
         this.router.navigate(['404']);
         // Saves survey
-        this.surveyService.saveSurvey(this.survey)
+        this.surveyService.saveSurvey(this.surveyService.survey);
       } else {
         // Change route to advance
         // XXX: Kind of hardcoding to me... (?)
         if (+this.id + 1 >= 9) {
           this.router.navigate(['404']);
+          localStorage.clear();
           // Saves survey
-          this.surveyService.saveSurvey(this.survey)
+          this.surveyService.saveSurvey(this.surveyService.survey);
         } else {
           const next = (+this.id + 1).toString();
           this.router.navigate(['survey/' + next]);
@@ -184,6 +188,18 @@ export class SurveyComponent implements OnInit {
 
     }
 
+  }
+
+  verifyStoredSurvey() {
+    const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
+    if (storedSurvey) {
+      this.surveyService.survey = storedSurvey;
+      const evaluatedAptitudes = storedSurvey.aptitudes.length;
+      const next = evaluatedAptitudes + 1;
+      if (+this.id !== next) {
+        this.router.navigate(['survey/' + next.toString()]);
+      }
+    }
   }
 
 }
