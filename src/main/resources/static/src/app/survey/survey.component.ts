@@ -69,7 +69,6 @@ export class SurveyComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder) {
     this.survey = this.surveyService.survey;
-    console.log(this.survey)
     this.currentLanguage = translate.currentLang;
     this.createForm();
   }
@@ -150,14 +149,16 @@ export class SurveyComponent implements OnInit {
       this.survey.aptitudes.push(this.aptitude)
       // Checks if is only one survey (one competence to evaluate)
       if (!this.surveyService.oneSurvey) {
-        this.router.navigate(['404']);
+        // Redirect to welcome
+        this.router.navigate(['']);
         // Saves survey
         this.surveyService.saveSurvey(this.survey)
       } else {
         // Change route to advance
         // XXX: Kind of hardcoding to me... (?)
         if (+this.id + 1 >= 9) {
-          this.router.navigate(['404']);
+          // Redirect to welcome
+          this.router.navigate(['']);
           // Saves survey
           this.surveyService.saveSurvey(this.survey)
         } else {

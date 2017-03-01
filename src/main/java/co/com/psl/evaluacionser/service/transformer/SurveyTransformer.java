@@ -33,6 +33,9 @@ public class SurveyTransformer {
     @Autowired
     private AptitudeRepository aptitudeRepository;
 
+    @Autowired
+    private AptitudeTransformer aptitudeTransformer;
+
     static Logger logger = Logger.getLogger(SurveyTransformer.class);
 
     /**
@@ -59,7 +62,7 @@ public class SurveyTransformer {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
         try {
             Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
-            AptitudeDto aptitudeDto = AptitudeTransformer.convertToDto(aptitude);
+            AptitudeDto aptitudeDto = aptitudeTransformer.convertToDto(aptitude);
             aptitudeSurvey.setAptitude(aptitudeDto);
             aptitudeSurvey.setObservation(aptitudeSurveyDto.getObservation());
             aptitudeSurvey.setBehaviors(

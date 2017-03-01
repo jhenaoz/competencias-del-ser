@@ -196,7 +196,6 @@ export class SurveyOptionsComponent implements OnInit {
         value.competenceToEvaluate = '';
         break;
     }
-    console.log(value);
     // We fill all data into survey and pass it to the service
     this.survey.evaluator = value.evaluator;
     this.survey.evaluated = value.evaluated;

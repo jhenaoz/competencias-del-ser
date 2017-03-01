@@ -15,7 +15,6 @@ export class WelcomeComponent implements OnInit {
 
   OneData(value) {
     this.surveyService.oneSurvey = value;
-    console.log(value);
   }
 
 }
