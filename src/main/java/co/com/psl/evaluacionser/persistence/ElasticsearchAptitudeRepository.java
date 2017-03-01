@@ -2,7 +2,7 @@ package co.com.psl.evaluacionser.persistence;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -12,7 +12,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,12 +23,16 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
-    private static final String APTITUDE_INDEX_NAME = "aptitude";
-    private static final String APTITUDE_TYPE_NAME = "aptitude";
+    @Value("${elasticAptitudeIndex}")
+    private String aptitudeIndexName;
+
+    @Value("${elasticAptitudeType}")
+    private String aptitudeTypeName;
 
     @Autowired
     private JestClient client;
 
+    static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
     /**
      * Receives one aptitude and saves it in the DB
      *
@@ -35,12 +41,12 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).build();
         try {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The aptitude couldn't be saved in the data base " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -56,7 +62,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchSourceBuilder.sort("id", SortOrder.ASC);
 
-        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(APTITUDE_INDEX_NAME).build();
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(aptitudeIndexName).build();
 
         try {
             SearchResult result = client.execute(search);
@@ -67,7 +73,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The search couldn't be executed" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -83,7 +89,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery("_id", id));
 
-        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(APTITUDE_INDEX_NAME).build();
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(aptitudeIndexName).build();
 
         try {
             SearchResult result = client.execute(search);
@@ -92,7 +98,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 return null;
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The aptitude with the given id couldn't be found " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -203,12 +209,12 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     private Aptitude updateAptitude(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(APTITUDE_INDEX_NAME).type(APTITUDE_TYPE_NAME).id(String.valueOf(aptitude.getId())).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).id(String.valueOf(aptitude.getId())).build();
         try {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The aptitude couldn't be updated" + e.getMessage());
             throw new RuntimeException(e);
         }
     }

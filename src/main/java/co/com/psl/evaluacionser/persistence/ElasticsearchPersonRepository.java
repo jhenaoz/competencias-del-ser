@@ -9,7 +9,9 @@ import io.searchbox.core.SearchResult.Hit;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,14 +26,19 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     /**
      * These Strings must be congruent with the elasticsearch database
      */
-    private String PERSON_INDEX_NAME = "person";
-    private String PERSON_TYPE_NAME = "employee";
+    @Value("${elasticPersonIndex}")
+    private String personIndexName;
+
+    @Value("${elasticPersonType}")
+    private String personTypeName;
 
     /**
      * Calls the JestClient defined as a bean
      */
     @Autowired
     private JestClient client;
+
+    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
 
     /**
      * This method find all indexes person with type employee
@@ -43,11 +50,12 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         SearchResult result = null;
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(PERSON_INDEX_NAME)
-                .addType(PERSON_TYPE_NAME).build();
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(personIndexName)
+                .addType(personTypeName).build();
         try {
             result = client.execute(search);
         } catch (IOException e) {
+            logger.error("The search can't be completed " + e.getMessage());
         }
         List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);
         return hits.stream().map(this::getPerson).collect(Collectors.toList());
@@ -59,12 +67,12 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
     @Override
     public Person save(Person person) {
-        Index index = new Index.Builder(person).index(PERSON_INDEX_NAME).type(PERSON_TYPE_NAME).build();
+        Index index = new Index.Builder(person).index(personIndexName).type(personTypeName).build();
         try {
             client.execute(index);
             return person;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("The person can't be saved " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
