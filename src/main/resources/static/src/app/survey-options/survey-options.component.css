@@ -25,7 +25,7 @@ select {
     vertical-align: middle;
     -webkit-appearance: none;
     border-radius: 0px;
-    background: url("assets/images/down-arrow.svg");
+    background: url("/assets/images/down-arrow.svg");
     background-position: 100% 50%;
     background-repeat: no-repeat;
     background-color: #FFF;

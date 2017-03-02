@@ -35,7 +35,7 @@ describe('EmployeeService', () => {
         });
   });
 
-  describe('getEmployees', () => {
+  xdescribe('getEmployees', () => {
     it('should call http.get with the right URL',  () => {
       let result = <IEmployee[]> [];
       mockHttp.get.and.returnValue(Observable.of(true));
