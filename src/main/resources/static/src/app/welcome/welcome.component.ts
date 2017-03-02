@@ -10,7 +10,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 export class WelcomeComponent implements OnInit {
 
   constructor(private surveyService: SurveyService,
-              private localStorage: LocalStorageService) { }
+              private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
   }

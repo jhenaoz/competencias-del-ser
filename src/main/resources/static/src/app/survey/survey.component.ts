@@ -8,6 +8,8 @@ import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { SurveyService } from './survey.service';
 
+import { LocalStorageService } from 'angular-2-local-storage';
+
 import { Survey } from './survey.model';
 
 import {
@@ -60,14 +62,15 @@ export class SurveyComponent implements OnInit {
    * @param {ActivatedRoute} route 
    * @param {Router} router 
    * @param {FormBuilder} fb 
-   * 
+   * @param {LocalStorageService} localStorage
    */
   constructor(private surveyService: SurveyService,
     private _aptitudeService: AptitudeService,
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private localStorageService: LocalStorageService) {
     this.survey = this.surveyService.survey;
     this.currentLanguage = translate.currentLang;
     this.createForm();
@@ -77,12 +80,20 @@ export class SurveyComponent implements OnInit {
   * Async method to initializate survey variables
   */
   async ngOnInit() {
-    // Aptitude instance
-    this.aptitude = new Aptitude();
+    
     // We wait to get the route id param
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
+    // Veryfy if there is a survey stored in localstorage to bring it and continue the survey
+    this.verifyStoredSurvey();
+    // Add visual effect on buttons
+    for (let i = 1; i < +this.id; i++) {
+      $('#' + i).next().addClass('active');
+    }    
+
+    // Aptitude instance
+    this.aptitude = new Aptitude();
     // We wait to get the behaviors from aptitudeService
     const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
     this.behaviors = behaviors;
@@ -146,26 +157,30 @@ export class SurveyComponent implements OnInit {
       this.aptitude.observation = this.surveyForm.controls['observation'].value;
       this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
       // Pushing aptitud into survey
-      this.survey.aptitudes.push(this.aptitude)
+      this.surveyService.survey.aptitudes.push(this.aptitude);
+      // Stored actual survey to localstorage
+      localStorage.setItem('storedSurvey', JSON.stringify(this.surveyService.survey));
       // Checks if is only one survey (one competence to evaluate)
       if (!this.surveyService.oneSurvey) {
         // Redirect to welcome
         this.router.navigate(['']);
         // Saves survey
-        this.surveyService.saveSurvey(this.survey)
+        localStorage.clear();
+        this.surveyService.saveSurvey(this.surveyService.survey);
       } else {
         // Change route to advance
         // XXX: Kind of hardcoding to me... (?)
         if (+this.id + 1 >= 9) {
           // Redirect to welcome
           this.router.navigate(['']);
+          localStorage.clear();
           // Saves survey
-          this.surveyService.saveSurvey(this.survey)
+          this.surveyService.saveSurvey(this.surveyService.survey);
         } else {
           const next = (+this.id + 1).toString();
           this.router.navigate(['survey/' + next]);
           // Change CSS class to change color to the aptitudes buttons
-          $('.active').next().addClass('active');
+          // $('.active').next().addClass('active');
           // Hide survey form until data is ok
           this.showForm = false;
           // Set time to wait functions to complete
@@ -177,9 +192,30 @@ export class SurveyComponent implements OnInit {
           });
         }
       }
-
     }
+  }
+
+  /*
+  * Method to look for stored survey on localstorage
+  */
+  verifyStoredSurvey() {
+    const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
+    this.surveyService.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
+    this.surveyService.competence = localStorage.getItem('competence');
+    if (storedSurvey) {
+      this.surveyService.survey = storedSurvey;
+      const evaluatedAptitudes = storedSurvey.aptitudes.length;
+      const next = evaluatedAptitudes + 1;
+      if (+this.id !== next) {
+        this.id = next.toString();
+        this.router.navigate(['survey/' + next.toString()]);
+      }
+    }
+    // Show the form
+    // this.showForm = true;
 
   }
+
+
 
 }
