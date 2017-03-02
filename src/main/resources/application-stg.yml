@@ -3,3 +3,9 @@ server:
 
 elasticport: 9200
 elastichost: http://localhost
+elasticPersonIndex: person
+elasticPersonType: employee
+elasticAptitudeIndex: aptitude
+elasticAptitudeType: aptitude
+elasticSurveyIndex: survey
+elasticSurveyType: survey
