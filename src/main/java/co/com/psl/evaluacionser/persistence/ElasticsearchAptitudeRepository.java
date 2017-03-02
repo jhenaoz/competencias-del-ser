@@ -40,7 +40,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).refresh(true).build();
         try {
             client.execute(index);
             return aptitude;
@@ -219,12 +219,12 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     public boolean deleteAptitudeById(String aptitudeId) {
-
-
+            if (findById(aptitudeId)==null)return false;
         try {
             client.execute(new Delete.Builder(aptitudeId)
                     .index(aptitudeIndexName)
                     .type(aptitudeTypeName)
+                    .refresh(true)
                     .build());
             return true;
         } catch (IOException e) {

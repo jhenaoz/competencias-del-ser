@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,4 +40,19 @@ public class ElasticsearchAptitudeRepositoryIT {
         assertEquals(true, wasDeleted);
     }
 
+    @Test
+    public void aptitudeWithId1993NotFound() {
+
+        Aptitude aptitudeFoundById = elasticsearchAptitudeRepository.findById(String.valueOf(1993));
+
+        assertNull(aptitudeFoundById);
+
+    }
+
+    @Test
+    public void deleteAptitudeWithId1994isFalse() {
+        boolean wasDeleted = true;
+        wasDeleted = elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(1994));
+        assertEquals(false, wasDeleted);
+    }
 }
