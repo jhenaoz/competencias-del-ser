@@ -87,7 +87,7 @@ public class ElasticsearchPersonRepositoryIT {
     }
 
     @Test
-    public void personWithId789654123NotFound(){
+    public void personWithId789654123NotFound() {
         Person personById = elasticsearchPersonRepository.findPersonById("789654123");
         assertNull(personById);
     }
