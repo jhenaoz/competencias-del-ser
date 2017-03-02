@@ -25,7 +25,8 @@
         "environments": {
             "dev": "environments/environment.ts",
             "prod": "environments/environment.prod.ts",
-            "stg": "environments/environment.stg.ts"
+            "stg": "environments/environment.stg.ts",
+            "ci": "environments/environment.ci.ts"
         }
     }],
     "addons": [
