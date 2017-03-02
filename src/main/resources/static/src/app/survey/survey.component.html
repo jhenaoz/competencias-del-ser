@@ -2,40 +2,40 @@
     <div class="steps">
         <div class="container">
 
-            <!--<div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">-->
-            <div class="row" style="text-align: center">
+            <div *ngIf="!surveyService.oneSurvey" class="row" style="text-align: center">
+            <!--<div class="row" style="text-align: center">-->
                 <h2>{{surveyService.competence}}</h2>
             </div>
             <div *ngIf="surveyService.oneSurvey" class="row">
-                <div id="openess" class="col-md-1 step active">
+                <div id="1" class="col-md-1 step active">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">1</button>
                     <p>{{ "Competences.competence_opening" | translate}}</p>
                 </div>
-                <div id="communication" class="col-md-1 step">
+                <div id="2" class="col-md-1 step">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">2</button>
                     <p>{{ "Competences.competence_communication" | translate}}</p>
                 </div>
-                <div id="initiative" class="col-md-1 step">
+                <div id="3" class="col-md-1 step">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">3</button>
                     <p>{{ "Competences.competence_initiative" | translate}}</p>
                 </div>
-                <div id="client_orientation" class="col-md-1 step">
+                <div id="4" class="col-md-1 step">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">4</button>
                     <p>{{ "Competences.competence_client_orientation" | translate}}</p>
                 </div>
-                <div id="achivement_and_results" class="col-md-1 step">
+                <div id="5" class="col-md-1 step">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">5</button>
                     <p>{{ "Competences.competence_goals" | translate}}</p>
                 </div>
-                <div id="teamwork" class="col-md-1 step">
+                <div id="6" class="col-md-1 step">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">6</button>
                     <p>{{ "Competences.competence_teamwork" | translate}}</p>
                 </div>
-                <div id="development_oriented_leadership" class="col-md-1 step">
+                <div id="7" class="col-md-1 step">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">7</button>
                     <p>{{ "Competences.competence_development" | translate}}</p>
                 </div>
-                <div id="achivement_oriented_leadership" class="col-md-1">
+                <div id="8" class="col-md-1">
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">8</button>
                     <p class="text-center">{{ "Competences.competence_goal" | translate}}</p>
                 </div>
