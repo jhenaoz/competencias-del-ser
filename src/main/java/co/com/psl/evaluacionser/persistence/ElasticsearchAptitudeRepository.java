@@ -208,7 +208,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     private Aptitude updateAptitude(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).id(String.valueOf(aptitude.getId())).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).id(String.valueOf(aptitude.getId())).refresh(true).build();
         try {
             client.execute(index);
             return aptitude;
