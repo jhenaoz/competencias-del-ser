@@ -146,7 +146,7 @@ public class ElasticsearchAptitudeRepositoryIT {
         behavior.setEs("nuevo ES para behavior 1");
         Behavior updatedBehavior = elasticsearchAptitudeRepository.updateBehaviorById(String.valueOf(aptitude.getId()), behavior);
 
-        assertEquals(behavior.getEs(),updatedBehavior.getEs());
+        assertEquals(behavior.getEs(), updatedBehavior.getEs());
 
         Aptitude aptitude1 = elasticsearchAptitudeRepository.deleteBehavior(String.valueOf(aptitude.getId()), behavior.getId());
 
