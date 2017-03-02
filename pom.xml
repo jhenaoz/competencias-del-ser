@@ -60,6 +60,22 @@
     <build>
         <plugins>
             <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>src/main/resources/static/node_modules</directory>
+                        <followSymlinks>false</followSymlinks>
+                    </fileset>
+                    <fileset>
+                        <directory>src/main/resources/static/dist</directory>
+                        <followSymlinks>false</followSymlinks>
+                    </fileset>
+                </filesets>
+            </configuration>
+        </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
@@ -73,7 +89,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>install node and npm</id>
+                        <id>install-node-and-npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
@@ -84,7 +100,7 @@
                     </execution>
 
                     <execution>
-                        <id>npm install</id>
+                        <id>npm-install</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
@@ -95,7 +111,7 @@
                     </execution>
 
                     <execution>
-                        <id>npm run build</id>
+                        <id>npm-run-build</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
@@ -106,7 +122,7 @@
                     </execution>
 
                     <execution>
-                        <id>npm test</id>
+                        <id>npm-test</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
