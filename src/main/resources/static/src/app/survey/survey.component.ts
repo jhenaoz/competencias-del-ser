@@ -88,9 +88,7 @@ export class SurveyComponent implements OnInit {
     // Veryfy if there is a survey stored in localstorage to bring it and continue the survey
     this.verifyStoredSurvey();
     // Add visual effect on buttons
-    for (let i = 1; i < +this.id; i++) {
-      $('#' + i).next().addClass('active');
-    }    
+    this.paintButtons(this.id); 
 
     // Aptitude instance
     this.aptitude = new Aptitude();
@@ -208,6 +206,7 @@ export class SurveyComponent implements OnInit {
       const next = evaluatedAptitudes + 1;
       if (+this.id !== next) {
         this.id = next.toString();
+        // this.paintButtons(this.id);
         this.router.navigate(['survey/' + next.toString()]);
       }
     }
@@ -216,6 +215,10 @@ export class SurveyComponent implements OnInit {
 
   }
 
-
+  paintButtons(value){
+    for (let i = 1; i < value; i++) {
+      $('#' + i).next().addClass('active');
+    }   
+  }
 
 }
