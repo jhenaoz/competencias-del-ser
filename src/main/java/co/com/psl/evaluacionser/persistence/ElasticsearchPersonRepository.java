@@ -63,6 +63,9 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     }
 
     private Person getPerson(Hit<Person, Void> hit) {
+        if (hit == null)
+            return null;
+
         return hit.source;
     }
 
