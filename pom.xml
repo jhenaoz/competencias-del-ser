@@ -116,7 +116,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run build -- --environment=ci</arguments>
                         </configuration>
                         <phase>compile</phase>
                     </execution>
