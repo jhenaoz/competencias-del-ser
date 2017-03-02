@@ -171,10 +171,7 @@ export class SurveyComponent implements OnInit {
         if (+this.id + 1 >= 9) {
           // Redirect to welcome
           this.router.navigate(['']);
-<<<<<<< HEAD
           localStorage.clear();
-=======
->>>>>>> refs/remotes/origin/master
           // Saves survey
           this.surveyService.saveSurvey(this.surveyService.survey);
         } else {
