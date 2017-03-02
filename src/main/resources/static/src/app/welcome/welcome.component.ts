@@ -17,10 +17,7 @@ export class WelcomeComponent implements OnInit {
 
   OneData(value) {
     this.surveyService.oneSurvey = value;
-<<<<<<< HEAD
     localStorage.setItem('typeOfSurvey', value);
-=======
->>>>>>> refs/remotes/origin/master
   }
 
 }
