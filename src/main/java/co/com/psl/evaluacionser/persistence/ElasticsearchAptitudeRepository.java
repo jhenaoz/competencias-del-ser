@@ -4,17 +4,18 @@ import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,16 +24,14 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
+    static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
     @Value("${elasticAptitudeIndex}")
     private String aptitudeIndexName;
-
     @Value("${elasticAptitudeType}")
     private String aptitudeTypeName;
-
     @Autowired
     private JestClient client;
 
-    static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
     /**
      * Receives one aptitude and saves it in the DB
      *
@@ -219,4 +218,18 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         }
     }
 
+    public boolean deleteAptitudeById(String aptitudeId) {
+
+
+        try {
+            client.execute(new Delete.Builder(aptitudeId)
+                    .index(aptitudeIndexName)
+                    .type(aptitudeTypeName)
+                    .build());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
