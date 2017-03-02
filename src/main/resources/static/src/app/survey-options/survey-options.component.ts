@@ -11,6 +11,8 @@ import { SurveyService } from '../survey/survey.service';
 
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
+import { LocalStorageService } from 'angular-2-local-storage';
+
 import * as jQuery from 'jquery';
 
 /*
@@ -24,6 +26,7 @@ function evaluatorValidator(self: boolean): ValidatorFn {
     return null;
   };
 }
+
 @Component({
   selector: 'app-survey-options',
   templateUrl: './survey-options.component.html',
@@ -50,8 +53,8 @@ export class SurveyOptionsComponent implements OnInit {
   * Relation variables
   */
   // Boolean to know if is self assessment
-  isSelf: boolean = false;
-  isClient: boolean = false;
+  isSelf = false;
+  isClient = false;
   // Variables to handle i18n relation translates --> self-assessment, client, teammate
   selfText: String;
   clientText: String;
@@ -75,7 +78,8 @@ export class SurveyOptionsComponent implements OnInit {
   constructor(private router: Router,
     private formBuilder: FormBuilder,
     private surveyService: SurveyService,
-    private translate: TranslateService) { }
+    private translate: TranslateService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
     /*
@@ -167,6 +171,7 @@ export class SurveyOptionsComponent implements OnInit {
         break;
     }
     this.surveyService.competence = value.competenceToEvaluate;
+    localStorage.setItem('competence',value.competenceToEvaluate);
     switch (value.competenceToEvaluate) {
       case this.openessText:
         value.competenceToEvaluate = 'openess';
