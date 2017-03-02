@@ -60,6 +60,22 @@
     <build>
         <plugins>
             <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>src/main/resources/static/node_modules</directory>
+                        <followSymlinks>false</followSymlinks>
+                    </fileset>
+                    <fileset>
+                        <directory>src/main/resources/static/dist</directory>
+                        <followSymlinks>false</followSymlinks>
+                    </fileset>
+                </filesets>
+            </configuration>
+        </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
@@ -140,7 +156,7 @@
                         <configuration>
                             <arguments>test -- --single-run</arguments>
                         </configuration>
-                        <phase>integration-test</phase>
+                        <phase>test</phase>
                     </execution>
                 </executions>
             </plugin>
