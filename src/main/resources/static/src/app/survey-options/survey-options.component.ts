@@ -11,6 +11,8 @@ import { SurveyService } from '../survey/survey.service';
 
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
+import { LocalStorageService } from 'angular-2-local-storage';
+
 import * as jQuery from 'jquery';
 
 /*
@@ -24,6 +26,7 @@ function evaluatorValidator(self: boolean): ValidatorFn {
     return null;
   };
 }
+
 @Component({
   selector: 'app-survey-options',
   templateUrl: './survey-options.component.html',

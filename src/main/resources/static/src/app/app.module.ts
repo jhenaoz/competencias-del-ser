@@ -24,6 +24,9 @@ import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
 
+// Local Storage import
+import { LocalStorageModule } from 'angular-2-local-storage';
+
 // Translate imports
 import { TranslateModule } from 'ng2-translate';
 import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/translate.service';
@@ -38,6 +41,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    LocalStorageModule.withConfig({
+            prefix: 'comp-del-ser',
+            storageType: 'localStorage'
+        }),
     TranslateModule.forRoot({
             provide: TranslateLoader,
             useFactory: translateLoaderFactory,

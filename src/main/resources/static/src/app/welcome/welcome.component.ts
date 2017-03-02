@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SurveyService } from '../survey/survey.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-welcome',
@@ -8,13 +9,15 @@ import { SurveyService } from '../survey/survey.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private surveyService: SurveyService) { }
+  constructor(private surveyService: SurveyService,
+              private localStorage: LocalStorageService) { }
 
   ngOnInit() {
   }
 
   OneData(value) {
     this.surveyService.oneSurvey = value;
+    localStorage.setItem('typeOfSurvey', value);
   }
 
 }
