@@ -8,16 +8,13 @@
         "start": "Iniciar Valoración"
     },
     "Welcome": {
-        "title": "VALORACIÓN COMPETENCIAS DEL SER",
-        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
-        "information": "Utilice el campo observaciones para completar la valoración.",
+        "title": "Valoración competencias del ser",
+        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas de la compañía. Es muy importante la sinceridad que cada uno tenga en este proceso de valoración, entre más sincero y transparente sea el proceso, mayor será el proceso de mejoramiento de la persona.<br><br>Seleccione: Siempre, Casi siempre, A veces, Nunca, o Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.<br><br>Utilice el campo observaciones para completar la valoración.",
         "options_title": "¿Qué valoración deseas hacer?",
         "option_one": "Una competencia para todo el equipo",
         "option_all": "Todas las competencias a una persona"
     },
     "Survey_options": {
-        "title_all": "TODAS LAS COMPETENCIAS A UNA PERSONA",
-        "title_one": "UNA COMPETENCIA PARA EL EQUIPO",
         "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
         "information": "Utilice el campo observaciones para completar la valoración.",
         "evaluated": "Persona a quien se le hará la valoración",
@@ -39,7 +36,7 @@
         "never": "Nunca",
         "information": "Sin información",
         "observations": "Observaciones",
-        "survey_alert": "¡Debes seleccionar todos los campos!"
+        "survey_alert": "¡Debes responder en todos los campos!"
     },
     "Competences": {
         "title": "Competencia a valorar",
