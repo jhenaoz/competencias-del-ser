@@ -21,7 +21,7 @@ public class SurveyControllerIT {
 
     @Test
     public void getUserSurveys() throws Exception {
-        mockMvc.perform(get("/survey")
+        mockMvc.perform(get("/api/survey/report")
                 .param("user", "A user name")
                 .param("startdate", "2017-1-30")
                 .param("enddate", "2017-2-28"))
@@ -30,7 +30,7 @@ public class SurveyControllerIT {
 
     @Test
     public void getSurveysWithStartDateNull() throws Exception {
-        mockMvc.perform(get("/survey")
+        mockMvc.perform(get("/api/survey/report")
                 .param("user", "A user name")
                 .param("enddate", "2017-2-28"))
                 .andExpect(status().isOk());
@@ -38,7 +38,7 @@ public class SurveyControllerIT {
 
     @Test
     public void getSurveysWithEndDateNull() throws Exception {
-        mockMvc.perform(get("/survey")
+        mockMvc.perform(get("/api/survey/report")
                 .param("user", "A user name")
                 .param("startdate", "2017-1-30"))
                 .andExpect(status().isOk());
@@ -46,14 +46,14 @@ public class SurveyControllerIT {
 
     @Test
     public void getSurveysWithBothDatesNull() throws Exception {
-        mockMvc.perform(get("/survey")
+        mockMvc.perform(get("/api/survey/report")
                 .param("user", "A user name"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void invalidDateRangeShouldReturn400() throws Exception {
-        mockMvc.perform(get("/survey")
+        mockMvc.perform(get("/api/survey/report")
                 .param("user", "A user name")
                 .param("startdate", "2017-3-30")
                 .param("enddate", "2017-2-28"))
@@ -62,7 +62,7 @@ public class SurveyControllerIT {
 
     @Test
     public void badDateFormatShouldReturn400() throws Exception {
-        mockMvc.perform(get("/survey")
+        mockMvc.perform(get("/api/survey/report")
                 .param("user", "A user name")
                 .param("startdate", "2017/1/30")
                 .param("enddate", "2017-2-28"))
