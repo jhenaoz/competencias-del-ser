@@ -1,12 +1,9 @@
 <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
 
 <div class="main">
-    <p class="text-center title">{{ "Welcome.title" | translate }}</p>
+    <p class="text-center title uppercase">{{ "Welcome.title" | translate }}</p>
     <hr>
-    <p class="description">
-        {{ "Welcome.description" | translate }}
-        <br><br> {{ "Welcome.information" | translate }}
-    </p>
+    <p class="description" [innerHTML]="'Welcome.description' | translate"></p>
     <h4 class="text-center">{{ "Welcome.options_title" | translate }}</h4>
     <div class="container">
         <div class="row">
