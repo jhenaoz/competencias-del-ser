@@ -31,7 +31,7 @@ export class SurveyService {
 
   constructor(private _http: Http) {
     this.survey = new Survey();
-    this._surveyUrl += '/survey';
+    this._surveyUrl += '/api/survey';
   }
 
   startSurvey(survey) {
