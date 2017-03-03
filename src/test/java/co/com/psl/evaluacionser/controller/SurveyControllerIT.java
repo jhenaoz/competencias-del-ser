@@ -72,7 +72,7 @@ public class SurveyControllerIT {
 
     @Test
     public void recentSurveysShouldReturnBoolean() throws Exception {
-        mockMvc.perform(get("/api/survey/recentSurvey")
+        mockMvc.perform(get("/api/survey/recentsurvey")
                 .param("evaluated", "A person")
                 .param("evaluator", "A person"))
                 .andExpect(status().isOk())

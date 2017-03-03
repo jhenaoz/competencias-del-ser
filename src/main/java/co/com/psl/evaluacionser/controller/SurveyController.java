@@ -55,7 +55,7 @@ public class SurveyController {
      * @param evaluator the person who made the survey
      * @return Response entity with HttpStatus.OK and if the survey exists
      */
-    @RequestMapping(value = "/recentSurvey", method = RequestMethod.GET)
+    @RequestMapping(value = "/recentsurvey", method = RequestMethod.GET)
     public ResponseEntity<Boolean> existsRecentSurvey(@RequestParam(value = "evaluated") String evaluated,
                                                       @RequestParam(value = "evaluator") String evaluator) {
         boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator);
