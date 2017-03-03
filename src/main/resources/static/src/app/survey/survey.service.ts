@@ -25,6 +25,7 @@ export class SurveyService {
   survey: Survey;
   oneSurvey: boolean;
   competence = 'TESTING';
+  competenceId: string;
   evaluator: string;
   role: string;
 

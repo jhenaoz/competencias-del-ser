@@ -90,6 +90,10 @@ export class SurveyComponent implements OnInit {
     // Add visual effect on buttons
     this.paintButtons(this.id);
 
+    if (!this.surveyService.oneSurvey) {
+      this.id = this.surveyService.competenceId;
+    }
+
     // Aptitude instance
     this.aptitude = new Aptitude();
     // We wait to get the behaviors from aptitudeService
