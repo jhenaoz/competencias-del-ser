@@ -158,7 +158,7 @@ export class SurveyComponent implements OnInit {
       this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
       // Check if some selected score is under 1
       for(let i = 0; i < Object.keys(this.aptitude.behaviors).length; i++) {
-        if ((this.aptitude.behaviors[i].score <= 1)) {
+        if ((this.aptitude.behaviors[i].score <= 2)) {
           this.textAreaIsRequired = true;
             // Check if textarea is filled
             if(this.surveyForm.get('observation').value === '') {
