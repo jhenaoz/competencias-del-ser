@@ -115,7 +115,7 @@
 
                 </div>
             </div>
-            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid && submitted) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
+            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid && submitted && !textAreaIsRequired) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
             <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
             {{ bindRadioButtons() }}
             <h4>
