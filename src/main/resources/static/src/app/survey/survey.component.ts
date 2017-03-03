@@ -165,7 +165,7 @@ export class SurveyComponent implements OnInit {
         if ((this.aptitude.behaviors[i].score <= 2)) {
           this.textAreaIsRequired = true;
             // Check if textarea is filled
-            if(this.surveyForm.get('observation').value === '') {
+            if(this.surveyForm.get('observation').value.trim() === '') {
               return;
             }
         }
