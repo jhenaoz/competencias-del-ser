@@ -138,12 +138,6 @@ export class SurveyOptionsComponent implements OnInit {
     }
   }
 
-  divisibleByTen(control: AbstractControl) {
-    return parseInt(control.value) % 10 == 0 ? null : {
-      divisibleByTen: true
-    }
-  }
-
   /*
   * Function to handle relation type changes
   */
@@ -171,7 +165,7 @@ export class SurveyOptionsComponent implements OnInit {
         break;
     }
     this.surveyService.competence = value.competenceToEvaluate;
-    localStorage.setItem('competence',value.competenceToEvaluate);
+    localStorage.setItem('competence', value.competenceToEvaluate);
     switch (value.competenceToEvaluate) {
       case this.openessText:
         value.competenceToEvaluate = 'openess';

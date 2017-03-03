@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
-import { 
+import {
   EmployeeService,
   EmployeeComponent,
   IEmployee
@@ -14,7 +14,7 @@ import {
 describe('EmployeeComponent', () => {
   let component: EmployeeComponent;
   let fixture: ComponentFixture<EmployeeComponent>;
-  let mockHttp
+  // let mockHttp;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

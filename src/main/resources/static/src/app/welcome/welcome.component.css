@@ -36,7 +36,7 @@
     color: #FFF;
 }
 
-.box:hover+.left-picture-grid {}
+/*.box:hover+.left-picture-grid {}*/
 
 .box:hover>.left-picture-grid {
     background-color: #08446D;
