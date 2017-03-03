@@ -12,13 +12,17 @@
 }
 
 .button {
-    background-color: #5CB85C; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    position: relative;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #5CB85C;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 23px;
+  padding: 15px 32px;
+  width: 300px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  
 }
