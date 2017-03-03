@@ -13,9 +13,9 @@ import {
 
 
 
-describe('EmployeeService', () => {
-  // let employeeService: EmployeeService;
-  // let _employeeUrl = environment.apiURL += '/person';
+xdescribe('EmployeeService', () => {
+  let employeeService: EmployeeService;
+  let _employeeUrl = environment.apiURL += '/person';
   let mockHttp;
 
   beforeEach(() => {

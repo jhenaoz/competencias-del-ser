@@ -11,10 +11,10 @@ import {
   IEmployee
  } from './index';
 
-describe('EmployeeComponent', () => {
+xdescribe('EmployeeComponent', () => {
   let component: EmployeeComponent;
   let fixture: ComponentFixture<EmployeeComponent>;
-  // let mockHttp;
+  let mockHttp;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
