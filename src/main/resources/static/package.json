@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "test": "ng test && ng lint",
+    "test": "ng test",
     "lint-json": "tslint --format json --out tslint_results.json 'src/**/*.ts'",
     "lint-checkstyle": "tslint --format checkstyle --out checkstyle_results.xml 'src/**/*.ts'",
     "lint": "npm run lint-json && npm run lint-checkstyle",
@@ -27,6 +27,7 @@
     "@angular/router": "^3.3.1",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.20",
     "@types/jquery": "^2.0.40",
+    "angular-2-local-storage": "^1.0.1",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",

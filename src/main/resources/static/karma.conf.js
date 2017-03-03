@@ -26,7 +26,7 @@ module.exports = function (config) {
       reports: {
         html: 'coverage',
         lcovonly: './coverage/coverage.lcov',
-        cobertura: './coverage/angular-cobertura.xml'
+        cobertura: './coverage/karma-cobertura.xml'
       }
     },
     angularCli: {
