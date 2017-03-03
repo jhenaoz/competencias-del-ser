@@ -53,6 +53,8 @@ export class SurveyComponent implements OnInit {
   surveyForm: FormGroup;
   survey: Survey;
   showForm: boolean;
+  submitted : boolean;
+  textAreaIsRequired: boolean;
 
   /**
    * Creates an instance of SurveyComponent.
@@ -80,7 +82,8 @@ export class SurveyComponent implements OnInit {
   * Async method to initializate survey variables
   */
   async ngOnInit() {
-
+    this.submitted = false;
+    this.textAreaIsRequired = false;
     // We wait to get the route id param
     await this.route.params.subscribe(param => {
       this.id = param['id'];
@@ -153,11 +156,23 @@ export class SurveyComponent implements OnInit {
   * XXX: Search a better way to handle routing
   */
   surveyAdvance() {
-    if (this.surveyForm.valid) {
-      // Filling aptitud properties
+    this.submitted = true;
+      if (this.surveyForm.valid) {
+      // Filling behaviors
+      this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
+      // Check if some selected score is under 2
+      for(let i = 0; i < Object.keys(this.aptitude.behaviors).length; i++) {
+        if ((this.aptitude.behaviors[i].score <= 2)) {
+          this.textAreaIsRequired = true;
+            // Check if textarea is filled
+            if(this.surveyForm.get('observation').value.trim() === '') {
+              return;
+            }
+        }
+      }
+      // Filling aptitud properties 
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value;
-      this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
       // Pushing aptitud into survey
       this.surveyService.survey.aptitudes.push(this.aptitude);
       // Stored actual survey to localstorage

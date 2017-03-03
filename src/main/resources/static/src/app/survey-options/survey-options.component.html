@@ -9,7 +9,7 @@
             <div class="block">
                 <label for="evaluatedSelect"><span class="blue">*</span> 
                 {{ "Survey_options.evaluated" | translate}}:</label>
-                <app-employee id="evaluatedAppEmployee" [formControl]="evaluated" ngDefaultControl>
+                <app-employee id="evaluatedAppEmployee" [formControl]="evaluated" (change)="evaluatedChange()" ngDefaultControl>
                 </app-employee>
                 <!--Validator label-->
                 <div class="alert alert-danger" *ngIf="(complexForm.controls.evaluated.invalid && complexForm.controls.evaluated.dirty)">{{ "Survey_options.relationship_alert" | translate }}.</div>

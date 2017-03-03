@@ -34,6 +34,7 @@
         "never": "Never",
         "information": "No information",
         "observations": "Observations",
+        "survey_observations_alert": "Observations are required!",
         "survey_alert": "You must answer in all fields!"
     },
     "Competences": {
