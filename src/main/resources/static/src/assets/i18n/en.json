@@ -39,7 +39,8 @@
         "never": "Never",
         "information": "No information",
         "observations": "Observations",
-        "survey_alert": "¡You must select all fields!"
+        "survey_alert": "¡You must select all fields!",
+        "survey_observations_alert": "¡Observations are required!"
     },
     "Competences": {
         "title": "Skill to assess",

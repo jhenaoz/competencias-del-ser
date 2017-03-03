@@ -39,7 +39,8 @@
         "never": "Nunca",
         "information": "Sin información",
         "observations": "Observaciones",
-        "survey_alert": "¡Debes seleccionar todos los campos!"
+        "survey_alert": "¡Debes seleccionar todos los campos!",
+        "survey_observations_alert": "¡Las observaciones son requeridas!"
     },
     "Competences": {
         "title": "Competencia a valorar",
