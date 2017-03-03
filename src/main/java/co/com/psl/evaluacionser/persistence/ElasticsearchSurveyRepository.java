@@ -46,6 +46,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     /**
      * Searches all surveys made to a person within a time period.
+     *
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
@@ -60,6 +61,13 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         return findSurveys(boolQueryBuilder);
     }
 
+    /**
+     * Checks whether a survey was made in the last week.
+     *
+     * @param evaluated the person who was evaluated in the survey
+     * @param evaluator the person who made the survey
+     * @return if the survey was made in the last week
+     */
     @Override
     public boolean existsRecentSurvey(String evaluated, String evaluator) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
@@ -71,10 +79,15 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         return (surveysFound != null) && !surveysFound.isEmpty();
     }
 
+    /**
+     * Utility method for retrieving a list of surveys
+     *
+     * @param boolQueryBuilder the elasticsearch query to be used
+     * @return a list with the surveys retrieved
+     */
     private List<Survey> findSurveys(BoolQueryBuilder boolQueryBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
-        searchSourceBuilder.sort("timestamp");
 
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(surveyIndexName).build();
 

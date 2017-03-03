@@ -49,6 +49,12 @@ public class SurveyController {
         return new ResponseEntity<List<Survey>>(userSurveys, HttpStatus.OK);
     }
 
+    /**
+     * Checks whether a survey was made in the last week.
+     * @param evaluated the person who was evaluated in the survey
+     * @param evaluator the person who made the survey
+     * @return Response entity with HttpStatus.OK and if the survey exists
+     */
     @RequestMapping(value = "/recentSurvey", method = RequestMethod.GET)
     public ResponseEntity<Boolean> existsRecentSurvey(@RequestParam(value = "evaluated") String evaluated,
                                                       @RequestParam(value = "evaluator") String evaluator) {
