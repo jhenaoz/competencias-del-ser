@@ -10,8 +10,8 @@ export class AppComponent {
 
   /**
    * Creates an instance of AppComponent.
-   * @param {TranslateService} translate 
-   * 
+   * @param {TranslateService} translate
+   *
    * @memberOf AppComponent
    */
   constructor(private translate: TranslateService) {

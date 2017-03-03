@@ -56,12 +56,12 @@ export class SurveyComponent implements OnInit {
 
   /**
    * Creates an instance of SurveyComponent.
-   * @param {SurveyService} surveyService 
-   * @param {AptitudeService} _aptitudeService 
-   * @param {TranslateService} translate 
-   * @param {ActivatedRoute} route 
-   * @param {Router} router 
-   * @param {FormBuilder} fb 
+   * @param {SurveyService} surveyService
+   * @param {AptitudeService} _aptitudeService
+   * @param {TranslateService} translate
+   * @param {ActivatedRoute} route
+   * @param {Router} router
+   * @param {FormBuilder} fb
    * @param {LocalStorageService} localStorage
    */
   constructor(private surveyService: SurveyService,
@@ -80,7 +80,7 @@ export class SurveyComponent implements OnInit {
   * Async method to initializate survey variables
   */
   async ngOnInit() {
-    
+
     // We wait to get the route id param
     await this.route.params.subscribe(param => {
       this.id = param['id'];
@@ -88,7 +88,7 @@ export class SurveyComponent implements OnInit {
     // Veryfy if there is a survey stored in localstorage to bring it and continue the survey
     this.verifyStoredSurvey();
     // Add visual effect on buttons
-    this.paintButtons(this.id); 
+    this.paintButtons(this.id);
 
     // Aptitude instance
     this.aptitude = new Aptitude();
@@ -145,12 +145,12 @@ export class SurveyComponent implements OnInit {
   }
 
   /*
-  * Method to advance in the survey 
+  * Method to advance in the survey
   * XXX: Search a better way to handle routing
   */
   surveyAdvance() {
     if (this.surveyForm.valid) {
-      // Filling aptitud properties 
+      // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value;
       this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
@@ -215,10 +215,10 @@ export class SurveyComponent implements OnInit {
 
   }
 
-  paintButtons(value){
+  paintButtons(value) {
     for (let i = 1; i < value; i++) {
       $('#' + i).next().addClass('active');
-    }   
+    }
   }
 
 }
