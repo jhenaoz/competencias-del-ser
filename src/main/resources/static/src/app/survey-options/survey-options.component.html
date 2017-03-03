@@ -1,16 +1,13 @@
 <div class="main">
-    <p *ngIf="!surveyService.oneSurvey" class="text-center title">{{ "Survey_options.title_one" | translate}}</p>
-    <p *ngIf="surveyService.oneSurvey" class="text-center title">{{ "Survey_options.title_all" | translate}}</p>
+    <p *ngIf="!surveyService.oneSurvey" class="text-center title uppercase">{{ "Welcome.option_one" | translate}}</p>
+    <p *ngIf="surveyService.oneSurvey" class="text-center title uppercase">{{ "Welcome.option_all" | translate}}</p>
     <hr>
-    <p class="description">
-        {{ "Survey_options.description" | translate}}
-        <br><br> {{ "Survey_options.information" | translate}}
-    </p>
+    <p class="description" [innerHTML]="'Welcome.description' | translate"></p>
     <div class="container">
         <form id="form" [formGroup]="complexForm">
             <!--Evaluated select-->
             <div class="block">
-                <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
+                <label for="evaluatedSelect"><span class="blue">*</span> 
                 {{ "Survey_options.evaluated" | translate}}:</label>
                 <app-employee id="evaluatedAppEmployee" [formControl]="evaluated" ngDefaultControl>
                 </app-employee>
@@ -20,7 +17,7 @@
 
             <!--Relationship select-->
             <div class="block">
-                <label for="relationshipSelect"><span style="color: #134C96">*</span> 
+                <label for="relationshipSelect"><span class="blue">*</span> 
                 {{ "Survey_options.relationship" | translate}}:</label>
                 <select class="form-control" id="relationshipSelect" [formControl]="complexForm.controls['role']" #t (change)="relationChange(t.value)">
                   <option></option>
@@ -36,7 +33,7 @@
 
             <!--Evaluator select-->
             <div *ngIf="!isSelf" class="block" id="evaluatorBlock">
-                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+                <label for="evaluatorSelect"><span class="blue">*</span> 
                 {{ "Survey_options.evaluator" | translate}}:</label>
                 <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl [class.hidden]="isClient"></app-employee>
                 <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control" [formControl]="complexForm.controls['evaluator']" [class.hidden]="!isClient">
@@ -46,7 +43,7 @@
 
             <!--Competence select-->
             <div *ngIf="!surveyService.oneSurvey" class="block">
-                <label for="competencesSelect"><span style="color: #134C96">*</span> 
+                <label for="competencesSelect"><span class="blue">*</span> 
                 {{ "Competences.title" | translate}}:</label>
                 <select class="form-control" id="competencesSelect" [formControl]="complexForm.controls['competenceToEvaluate']">
                     <option></option>
