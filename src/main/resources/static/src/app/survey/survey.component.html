@@ -1,9 +1,8 @@
 <div class="main">
     <div class="steps">
         <div class="container">
-
             <div *ngIf="!surveyService.oneSurvey" class="row" class="text-center">
-            <!--<div class="row" style="text-align: center">-->
+                <!--<div class="row" style="text-align: center">-->
                 <h2>{{surveyService.competence}}</h2>
             </div>
             <div *ngIf="surveyService.oneSurvey" class="row">
@@ -39,9 +38,7 @@
                     <button type="button" class="btn bg-faded btn-circle btn-lg disabled">8</button>
                     <p class="text-center">{{ "Competences.competence_goal" | translate}}</p>
                 </div>
-
             </div>
-
         </div>
     </div>
     <hr>
@@ -118,13 +115,14 @@
 
                 </div>
             </div>
-            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
+            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid && submitted && !textAreaIsRequired) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
             <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
             {{ bindRadioButtons() }}
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
-            <textarea formControlName="observation" class="form-control" rows="3"></textarea>
+            <textarea formControlName="observation" class="form-control" rows="3" minlength="10"></textarea><br>
+            <div class="alert alert-danger" id="radio-alert" [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">{{ "Survey.survey_observations_alert" | translate }}.</div>
         </form>
     </div>
 </div>

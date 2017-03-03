@@ -145,6 +145,18 @@ export class SurveyOptionsComponent implements OnInit {
     this.isSelf = this.selfText === value ? true : false;
     this.isClient = value === this.clientText ? true : false;
   }
+  
+  /*
+  * Function to handle evaluated employee changes
+  */
+  evaluatedChange(){
+    // Show hidden options
+    $('#evaluatorAppEmployee option:hidden').each(function(){
+      $(this).show();
+    })
+    // Hide current evaluated option
+    $("#evaluatorAppEmployee option[value='"+ $("#evaluatedAppEmployee option:selected").text() +"']").hide();
+  }
 
   /*
   * Function to get from value
