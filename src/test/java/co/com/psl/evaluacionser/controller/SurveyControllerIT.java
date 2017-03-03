@@ -1,6 +1,7 @@
 package co.com.psl.evaluacionser.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -67,6 +68,15 @@ public class SurveyControllerIT {
                 .param("startdate", "2017/1/30")
                 .param("enddate", "2017-2-28"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void recentSurveysShouldReturnBoolean() throws Exception {
+        mockMvc.perform(get("/api/survey/recentSurvey")
+                .param("evaluated", "A person")
+                .param("evaluator", "A person"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean());
     }
 
 }
