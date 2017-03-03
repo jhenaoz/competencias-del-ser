@@ -17,8 +17,12 @@ import java.util.List;
 @RequestMapping(value = "/api/aptitude")
 public class AptitudeController {
 
-    @Autowired
     private AptitudeService aptitudeService;
+
+    @Autowired
+    public AptitudeController(final AptitudeService aptitudeService) {
+        this.aptitudeService = aptitudeService;
+    }
 
     /**
      * Mapping for getting all the aptitudes (with their respective behaviors)

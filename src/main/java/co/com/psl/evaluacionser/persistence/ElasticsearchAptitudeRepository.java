@@ -29,10 +29,15 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Value("${elasticAptitudeType}")
     private String aptitudeTypeName;
 
-    @Autowired
     private JestClient client;
 
     static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
+
+    @Autowired
+    public ElasticsearchAptitudeRepository(final JestClient client) {
+        this.client = client;
+    }
+
     /**
      * Receives one aptitude and saves it in the DB
      *

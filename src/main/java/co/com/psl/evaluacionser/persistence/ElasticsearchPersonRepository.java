@@ -32,13 +32,14 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     @Value("${elasticPersonType}")
     private String personTypeName;
 
-    /**
-     * Calls the JestClient defined as a bean
-     */
-    @Autowired
     private JestClient client;
 
     static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
+
+    @Autowired
+    public ElasticsearchPersonRepository(final JestClient client) {
+        this.client = client;
+    }
 
     /**
      * This method find all indexes person with type employee

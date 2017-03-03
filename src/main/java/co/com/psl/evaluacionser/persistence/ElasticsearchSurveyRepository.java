@@ -27,10 +27,14 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     @Value("${elasticSurveyType}")
     private String surveyTypeName;
 
-    @Autowired
     private JestClient client;
 
     static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
+
+    @Autowired
+    public ElasticsearchSurveyRepository(final JestClient client) {
+        this.client = client;
+    }
 
     @Override
     public Survey saveSurvey(Survey survey) {

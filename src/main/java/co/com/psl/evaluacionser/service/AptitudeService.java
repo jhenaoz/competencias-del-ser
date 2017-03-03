@@ -16,11 +16,15 @@ import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
 @Service
 public class AptitudeService {
 
-    @Autowired
     private AptitudeRepository aptitudeRepository;
 
-    @Autowired
     private AptitudeTransformer aptitudeTransformer;
+
+    @Autowired
+    public AptitudeService(final AptitudeRepository aptitudeRepository, final AptitudeTransformer aptitudeTransformer) {
+        this.aptitudeRepository = aptitudeRepository;
+        this.aptitudeTransformer = aptitudeTransformer;
+    }
 
     public List<AptitudeDto> findAllAptitudes() {
         List<Aptitude> aptitudes = aptitudeRepository.findAll();
