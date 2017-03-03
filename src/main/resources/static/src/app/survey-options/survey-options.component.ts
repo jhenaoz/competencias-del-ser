@@ -168,7 +168,7 @@ export class SurveyOptionsComponent implements OnInit {
     localStorage.setItem('competence', value.competenceToEvaluate);
     switch (value.competenceToEvaluate) {
       case this.openessText:
-        value.competenceToEvaluate = 'openess';
+        value.competenceToEvaluate = 'openness';
         break;
       case this.communicationText:
         value.competenceToEvaluate = 'communication';

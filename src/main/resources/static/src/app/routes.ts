@@ -4,6 +4,7 @@ import { SurveyOptionsComponent } from './survey-options/survey-options.componen
 import { SurveyComponent } from './survey/survey.component';
 import { Error404Component } from './errors/404.component';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
+import { SurveyEndComponent } from './survey-end/survey-end.component';
 
 export const appRoutes: Routes = [
     // {path: 'path/to/somewhere', component: ComponentForSomeWhere}
@@ -12,6 +13,7 @@ export const appRoutes: Routes = [
     { path: 'survey-setup', component: SurveyOptionsComponent },
     { path: 'surveyteam-setup', component: SurveyOptionsComponent},
     { path: 'survey/:id', component: SurveyComponent, canActivate: [SurveyRouteActivator] },
+    { path: 'final', component: SurveyEndComponent },
     { path: '404', component: Error404Component },
 
 ];

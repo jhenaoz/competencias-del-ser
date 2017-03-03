@@ -51,5 +51,10 @@
         "competence_teamwork": "Teamwork",
         "competence_development": "Development oriented leadership",
         "competence_goal": "Achievement oriented leadership"
+    },
+    "Final":{
+        "thanks": "Thank you for completing the survey",
+        "again": "Fill another survey",
+        "finish": "Finish"
     }
 }
