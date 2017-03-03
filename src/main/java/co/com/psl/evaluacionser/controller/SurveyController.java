@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/survey")
+@RequestMapping(value = "/api/survey")
 public class SurveyController {
 
     @Autowired
@@ -32,24 +32,28 @@ public class SurveyController {
     /**
      * Get all surveys made to a person within a time period.
      *
-     * @param user
-     *            the person to search
-     * @param startDate
-     *            starting date
-     * @param endDate
-     *            ending date
+     * @param user      the person to search
+     * @param startDate starting date
+     * @param endDate   ending date
      * @return Response entity with HttpStatus.OK and the Surveys retrieved
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user") String user,
                                                    @RequestParam(value = "startdate", required = false) String startDate,
                                                    @RequestParam(value = "enddate", required = false) String endDate) {
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
 
-        if (userSurveys == null)
+        if (user.isEmpty() || userSurveys == null)
             return new ResponseEntity<List<Survey>>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<List<Survey>>(userSurveys, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/recentSurvey", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> existsRecentSurvey(@RequestParam(value = "evaluated") String evaluated,
+                                                      @RequestParam(value = "evaluator") String evaluator) {
+        boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator);
+        return new ResponseEntity<Boolean>(surveyExists, HttpStatus.OK);
     }
 
 }

@@ -9,4 +9,6 @@ public interface SurveyRepository {
     Survey saveSurvey(Survey survey);
 
     List<Survey> findUserSurveys(String user, String startDate, String endDate);
+
+    boolean existsRecentSurvey(String evaluated, String evaluator);
 }
