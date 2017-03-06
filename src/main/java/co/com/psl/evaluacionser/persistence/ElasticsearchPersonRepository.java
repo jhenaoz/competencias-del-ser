@@ -96,7 +96,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
             return getPerson(result.getFirstHit(Person.class));
         } catch (IOException e) {
-            logger.error("The person with the given id couldn't be found " + e.getMessage());
+            logger.error("There was an error executing the search " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -119,7 +119,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             client.execute(deleteSpecificPerson);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("There was an error while trying to delete "+name+" ",e);
             return false;
         }
     }

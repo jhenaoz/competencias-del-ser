@@ -33,7 +33,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     @Override
     public Survey saveSurvey(Survey survey) {
-        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).setParameter(Parameters.REFRESH, true).build();
+        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).refresh(true).build();
         try {
             client.execute(index);
             return survey;
@@ -129,7 +129,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             client.execute(deleteSpecificSurvey);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("there was an error while trying to delete the survey ",e);
             return false;
         }
     }
