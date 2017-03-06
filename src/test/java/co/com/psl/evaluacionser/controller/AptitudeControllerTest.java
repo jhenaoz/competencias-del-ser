@@ -1,8 +1,10 @@
 package co.com.psl.evaluacionser.controller;
 
+import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.service.AptitudeService;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,14 +26,16 @@ public class AptitudeControllerTest {
     private AptitudeService mockAptitudeService;
     private AptitudeController aptitudeController;
 
+    private BehaviorDto behaviorDto;
+
     @Before
     public void setup() {
         // Setup aptitude mock for getAptitude methods
         List<AptitudeDto> aptitudeList = new ArrayList<>();
-        AptitudeDto aptitude = new AptitudeDto("1", "Apertura", "Openness");
-        aptitudeList.add(aptitude);
+        AptitudeDto aptitudeDto = new AptitudeDto("1", "Apertura", "Openness");
+        aptitudeList.add(aptitudeDto);
         when(mockAptitudeService.findAllAptitudes()).thenReturn(aptitudeList);
-        when(mockAptitudeService.findAptitudeById("1")).thenReturn(aptitude);
+        when(mockAptitudeService.findAptitudeById("1")).thenReturn(aptitudeDto);
 
         // Setup aptitude mock for getBehavior methods
         List<Behavior> behaviorList = new ArrayList<>();
@@ -39,6 +43,13 @@ public class AptitudeControllerTest {
         behaviorList.add(behavior);
         when(mockAptitudeService.findAptitudeBehaviors("1")).thenReturn(behaviorList);
         when(mockAptitudeService.findAptitudeBehaviorById("1", "1")).thenReturn(behavior);
+
+        // Setup aptitude mock for save/delete methods
+        Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviorList);
+        behaviorDto = new BehaviorDto("acepta sugerencias", "accept suggestions");
+        when(mockAptitudeService.createAptitudeBehavior("1", behaviorDto)).thenReturn(behavior);
+        when(mockAptitudeService.updateAptitudeBehavior("1", "1", behaviorDto)).thenReturn(behavior);
+        when(mockAptitudeService.deleteAptitudeBehavior("1", "1")).thenReturn(aptitude);
 
         aptitudeController = new AptitudeController(mockAptitudeService);
     }
@@ -156,6 +167,60 @@ public class AptitudeControllerTest {
         when(mockAptitudeService.findAptitudeBehaviorById("-1", "-1")).thenReturn(null);
 
         ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("-1", "-1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("NOT_FOUND", responseStatus.name());
+    }
+
+    @Test
+    public void saveBehaviorShouldReturnHttpStatusCreated() {
+        ResponseEntity<Behavior> responseEntity = aptitudeController.saveBehavior("1", behaviorDto);
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("CREATED", responseStatus.name());
+    }
+
+    @Test
+    public void saveBehaviorWithInvalidAptitudeReturnsNotFound() {
+        when(mockAptitudeService.createAptitudeBehavior("-1", behaviorDto)).thenReturn(null);
+
+        ResponseEntity<Behavior> responseEntity = aptitudeController.saveBehavior("-1", behaviorDto);
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("NOT_FOUND", responseStatus.name());
+    }
+
+    @Test
+    public void modifyBehaviorShouldReturnHttpStatusAccepted() {
+        ResponseEntity responseEntity = aptitudeController.modifyBehavior("1", "1", behaviorDto);
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("ACCEPTED", responseStatus.name());
+    }
+
+    @Test
+    public void modifyBehaviorWithInvalidAptitudeReturnsNotFound() {
+        when(mockAptitudeService.updateAptitudeBehavior("-1", "-1", behaviorDto)).thenReturn(null);
+
+        ResponseEntity responseEntity = aptitudeController.saveBehavior("-1", behaviorDto);
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("NOT_FOUND", responseStatus.name());
+    }
+
+    @Test
+    public void deleteBehaviorShouldReturnHttpStatusAccepted() {
+        ResponseEntity<Behavior> responseEntity = aptitudeController.deleteBehavior("1", "1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("ACCEPTED", responseStatus.name());
+    }
+
+    @Test
+    public void deleteBehaviorWithInvalidAptitudeReturnsNotFound() {
+        when(mockAptitudeService.deleteAptitudeBehavior("-1", "-1")).thenReturn(null);
+
+        ResponseEntity<Behavior> responseEntity = aptitudeController.deleteBehavior("-1", "-1");
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
