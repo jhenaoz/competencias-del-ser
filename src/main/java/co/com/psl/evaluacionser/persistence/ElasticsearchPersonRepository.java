@@ -29,10 +29,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
      */
     @Value("${elasticPersonIndex}")
     private String personIndexName;
-
     @Value("${elasticPersonType}")
     private String personTypeName;
-
     private JestClient client;
 
     static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
@@ -104,7 +102,6 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         }
     }
 
-
     public boolean deletePersonByIdAndName(String id, String name) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
                 .must(QueryBuilders.termQuery("id", id))
@@ -122,7 +119,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             client.execute(deleteSpecificPerson);
             return true;
         } catch (IOException e) {
-            logger.error("There was an error while trying to delete "+name+" ",e);
+            logger.error("There was an error while trying to delete " + name + " ", e);
             return false;
         }
     }
