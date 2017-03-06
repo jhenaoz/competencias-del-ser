@@ -15,8 +15,13 @@ import java.util.List;
 @RequestMapping(value = "/api/survey")
 public class SurveyController {
 
+
+    SurveyService surveyService;
+
     @Autowired
-    private SurveyService surveyService;
+    public SurveyController(final SurveyService surveyService) {
+        this.surveyService = surveyService;
+    }
 
     /**
      * This method saves a Survey to the DB, receives a JSON containing the
@@ -51,6 +56,7 @@ public class SurveyController {
 
     /**
      * Checks whether a survey was made in the last week.
+     *
      * @param evaluated the person who was evaluated in the survey
      * @param evaluator the person who made the survey
      * @return Response entity with HttpStatus.OK and if the survey exists
