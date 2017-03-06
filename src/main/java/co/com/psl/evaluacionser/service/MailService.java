@@ -3,7 +3,6 @@ package co.com.psl.evaluacionser.service;
 import co.com.psl.evaluacionser.domain.AptitudeSurvey;
 import co.com.psl.evaluacionser.domain.Survey;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,6 +12,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * This class allows the "send mail" service implementing a javax.mail dependency through Spring
@@ -21,14 +21,14 @@ import java.util.List;
 public class MailService {
 
     //TODO define the address who receive the mail to arodas@psl.com.co in the application properties files
-    @Value("${mailReceiver}")
-    private String mailReceiver;
+    //@Value("${mailReceiver}")
+    private String mailReceiver = "lusago19@gmail.com";
 
-    @Value("${mailUsername}")
-    private String mailUsername;
+    //@Value("${mailUsername}")
+    private String mailUsername = "competencias.del.ser@gmail.com";
 
-    @Value("${mailPassword}")
-    private String password;
+    //@Value("${mailPassword}")
+    private String pass = "competenciasdelser";
 
     static Logger logger = Logger.getLogger(MailService.class);
 
@@ -43,7 +43,7 @@ public class MailService {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("username", "password");
+                        return new PasswordAuthentication("username", "pass");
                     }
                 });
 
@@ -75,11 +75,11 @@ public class MailService {
         sender.setHost("smtp.gmail.com");
         sender.setPort(465);
         sender.setUsername(mailUsername);
-        sender.setPassword(password);
-        //Properties properties = new Properties();
-        //properties.setProperty("mail.smtp.auth","true");
-        //properties.setProperty("mail.smtp.starttls.enable","true");
-        //sender.setJavaMailProperties(properties);
+        sender.setPassword(pass);
+        Properties properties = new Properties();
+        properties.setProperty("mail.smtp.auth","true");
+        properties.setProperty("mail.smtp.starttls.enable","true");
+        sender.setJavaMailProperties(properties);
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         try {

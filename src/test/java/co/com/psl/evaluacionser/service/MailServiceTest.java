@@ -27,6 +27,11 @@ public class MailServiceTest {
     }
 
     @Test
+    public void sendEmail() {
+        mailService.newSurveyMail(survey);
+    }
+
+    @Test
     public void constructMessageTextWithOneAptitude() {
         String result = mailService.constructMessageText(survey);
         String expected = "Cordial saludo, se acaba de realizar una valoración del ser \n"
