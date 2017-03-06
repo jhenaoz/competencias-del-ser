@@ -88,7 +88,7 @@ export class SurveyComponent implements OnInit {
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
-    // Veryfy if there is a survey stored in localstorage to bring it and continue the survey
+    // Verify if there is a survey stored in localstorage to bring it and continue the survey
     this.verifyStoredSurvey();
     // Add visual effect on buttons
     this.paintButtons(this.id);
@@ -218,14 +218,17 @@ export class SurveyComponent implements OnInit {
   verifyStoredSurvey() {
     const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
     this.surveyService.competence = localStorage.getItem('competence');
+    // If there is a stored survey
     if (storedSurvey) {
+      // Call method to verify if the stored survey is the same the user wants to complete
       if (this.verifySameSurvey(storedSurvey)) {
+        // Save into the service the stored survey
         this.surveyService.survey = storedSurvey;
         const evaluatedAptitudes = storedSurvey.aptitudes.length;
         const next = evaluatedAptitudes + 1;
+        // Verify if the actual aptitudeId is different to the one loaded from localstorage to navigate to the next aptitude
         if (+this.id !== next) {
           this.id = next.toString();
-          // this.paintButtons(this.id);
           this.router.navigate(['survey/' + next.toString()]);
         }
       }
@@ -238,6 +241,9 @@ export class SurveyComponent implements OnInit {
     }
   }
 
+  /*
+  * Method to verify if the survey stored in LocalStorage is the same type of Survey and has the same evaluated and evaluator
+  */
   verifySameSurvey(value: Survey) {
     const typeOfSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
     return this.surveyService.survey.evaluated === value.evaluated && this.surveyService.survey.evaluator === value.evaluator
