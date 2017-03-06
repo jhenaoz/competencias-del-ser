@@ -110,7 +110,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
 
-        DeleteByQueryOW deleteSpecificPerson = new DeleteByQueryOW.Builder(searchSourceBuilder.toString())
+        DeleteByQuery deleteSpecificPerson = new DeleteByQuery.Builder(searchSourceBuilder.toString())
                 .addIndex(personIndexName)
                 .refresh(true)
                 .build();

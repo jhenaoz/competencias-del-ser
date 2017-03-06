@@ -120,7 +120,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
 
-        DeleteByQueryOW deleteSpecificSurvey = new DeleteByQueryOW.Builder(searchSourceBuilder.toString())
+        DeleteByQuery deleteSpecificSurvey = new DeleteByQuery.Builder(searchSourceBuilder.toString())
                 .addIndex(surveyIndexName)
                 .refresh(true)
                 .build();
