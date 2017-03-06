@@ -8,18 +8,13 @@
         "start": "Start Assessment"
     },
     "Welcome": {
-        "title": "SOFT SKILLS ASSESSMENT",
-        "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.",
-        "information": "Use the observations field to complete the assessment.",
+        "title": "Soft skills assessment",
+        "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. The sincerity in this evaluation process is very important, the more honest and transparent the process, the better will the person's improvement process be.<br><br>Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.<br><br>Use the observations field to complete the assessment.",
         "options_title": "What assessment do you want to do?",
         "option_one": "One skill of the whole team",
         "option_all": "Every skill of one person"
     },
     "Survey_options": {
-        "title_all": "EVERY SKILL OF ONE PERSON",
-        "title_one": "ONE SKILL OF THE WHOLE TEAM",
-        "description": "Remember, in this assessment there are no right or wrong answers, this is a means to support the improvement of every individual being assessed. Choose: Always, Almost always, Sometimes, Never, and No information, according to the frequency in which you see the behavior being put in practice by the person you are evaluating.",
-        "information": "Use the observations field to complete the assessment.",
         "evaluated": "Person being assessed",
         "evaluator": "Evaluator",
         "evaluator_alert": "You must select someone",
@@ -39,7 +34,8 @@
         "never": "Never",
         "information": "No information",
         "observations": "Observations",
-        "survey_alert": "¡You must select all fields!"
+        "survey_observations_alert": "Observations are required!",
+        "survey_alert": "You must answer in all fields!"
     },
     "Competences": {
         "title": "Skill to assess",

@@ -19,6 +19,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequestMapping(value = "/api/person")
 public class PersonController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class PersonController {
      *
      * @return Response entity with the status of the request, ok if it exists or not_found if it is null, and if it exists returns the list
      */
-    @RequestMapping(value = "/person", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Person>> getAllPeople() {
         List<Person> people = personService.findAllPeople();
 

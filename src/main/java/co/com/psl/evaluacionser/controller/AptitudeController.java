@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/aptitude")
+@RequestMapping(value = "/api/aptitude")
 public class AptitudeController {
 
     @Autowired

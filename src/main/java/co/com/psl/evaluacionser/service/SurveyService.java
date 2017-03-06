@@ -38,13 +38,15 @@ public class SurveyService {
         return surveyRepository.findUserSurveys(user, startDate, endDate);
     }
 
+    public boolean existsRecentSurvey(String evaluated, String evaluator) {
+        return surveyRepository.existsRecentSurvey(evaluated, evaluator);
+    }
+
     /**
      * Checks if the dates provided form a valid range of dates.
      *
-     * @param startDate
-     *            starting date
-     * @param endDate
-     *            ending date
+     * @param startDate starting date
+     * @param endDate   ending date
      * @return whether the starting date is smaller than the ending date
      */
     private boolean isDateRangeValid(String startDate, String endDate) {

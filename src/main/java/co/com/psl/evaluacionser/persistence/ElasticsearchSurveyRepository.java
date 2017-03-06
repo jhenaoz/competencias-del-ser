@@ -18,17 +18,29 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.log4j.Logger;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
 
-    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
     @Value("${elasticSurveyIndex}")
     private String surveyIndexName;
     @Value("${elasticSurveyType}")
     private String surveyTypeName;
     @Autowired
     private JestClient client;
+
+    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
 
     @Override
     public Survey saveSurvey(Survey survey) {
@@ -44,7 +56,6 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     /**
      * Searches all surveys made to a person within a time period.
-     *
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
@@ -56,9 +67,36 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
                 .must(QueryBuilders.rangeQuery("timestamp").from(startDate).to(endDate))
                 .must(QueryBuilders.matchQuery("evaluated", user));
 
+        return findSurveys(boolQueryBuilder);
+    }
+
+    /**
+     * Checks whether a survey was made in the last week.
+     *
+     * @param evaluated the person who was evaluated in the survey
+     * @param evaluator the person who made the survey
+     * @return if the survey was made in the last week
+     */
+    @Override
+    public boolean existsRecentSurvey(String evaluated, String evaluator) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.rangeQuery("timestamp").from("now-1w").to("now"))
+                .must(QueryBuilders.matchQuery("evaluated", evaluated))
+                .must(QueryBuilders.matchQuery("evaluator", evaluator));
+
+        List<Survey> surveysFound = findSurveys(boolQueryBuilder);
+        return (surveysFound != null) && !surveysFound.isEmpty();
+    }
+
+    /**
+     * Utility method for retrieving a list of surveys
+     *
+     * @param boolQueryBuilder the elasticsearch query to be used
+     * @return a list with the surveys retrieved
+     */
+    private List<Survey> findSurveys(BoolQueryBuilder boolQueryBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
-        searchSourceBuilder.sort("timestamp");
 
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(surveyIndexName).build();
 
@@ -71,7 +109,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             List<Hit<Survey, Void>> aptitudes = result.getHits(Survey.class);
             return aptitudes.stream().map(this::getSurvey).collect(Collectors.toList());
         } catch (IOException e) {
-            logger.error("The surveys of the given user couldn't be found " + e.getMessage());
+            logger.error("The surveys couldn't be found " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
