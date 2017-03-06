@@ -22,8 +22,12 @@ import java.util.List;
 @RequestMapping(value = "/api/person")
 public class PersonController {
 
-    @Autowired
     private PersonService personService;
+
+    @Autowired
+    public PersonController(final PersonService personService) {
+        this.personService = personService;
+    }
 
     /**
      * This method returns the list of all employees in the elasticsearch

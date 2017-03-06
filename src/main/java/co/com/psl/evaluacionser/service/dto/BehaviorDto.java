@@ -7,6 +7,11 @@ public class BehaviorDto {
     public BehaviorDto() {
     }
 
+    public BehaviorDto(String es, String en) {
+        this.es = es;
+        this.en = en;
+    }
+
     public String getEs() {
         return es;
     }
