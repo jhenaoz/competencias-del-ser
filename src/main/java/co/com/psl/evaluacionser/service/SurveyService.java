@@ -1,24 +1,27 @@
 package co.com.psl.evaluacionser.service;
 
-import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.persistence.SurveyRepository;
-import co.com.psl.evaluacionser.service.dto.SurveyDto;
-import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.persistence.SurveyRepository;
+import co.com.psl.evaluacionser.service.dto.SurveyDto;
+import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
+
 @Service
 public class SurveyService {
 
+    private SurveyRepository surveyRepository;
+
+    private SurveyTransformer surveyTransformer;
+
     static Logger logger = Logger.getLogger(SurveyService.class);
-    SurveyRepository surveyRepository;
-    SurveyTransformer surveyTransformer;
 
     @Autowired
     public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer) {

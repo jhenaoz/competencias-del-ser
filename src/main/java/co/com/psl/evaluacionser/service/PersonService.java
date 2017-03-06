@@ -11,8 +11,12 @@ import co.com.psl.evaluacionser.persistence.PersonRepository;
 @Service
 public class PersonService {
 
-    @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    public PersonService(final PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public List<Person> findAllPeople() {
         List<Person> people = personRepository.findAll();

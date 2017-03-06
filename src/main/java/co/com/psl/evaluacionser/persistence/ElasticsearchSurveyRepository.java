@@ -6,7 +6,6 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
-import io.searchbox.params.Parameters;
 import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -24,12 +23,18 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     @Value("${elasticSurveyIndex}")
     private String surveyIndexName;
+
     @Value("${elasticSurveyType}")
     private String surveyTypeName;
-    @Autowired
+
     private JestClient client;
 
     static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
+
+    @Autowired
+    public ElasticsearchSurveyRepository(final JestClient client) {
+        this.client = client;
+    }
 
     @Override
     public Survey saveSurvey(Survey survey) {

@@ -26,12 +26,19 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     @Value("${elasticAptitudeIndex}")
     private String aptitudeIndexName;
+
     @Value("${elasticAptitudeType}")
     private String aptitudeTypeName;
-    @Autowired
+
     private JestClient client;
 
     static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
+
+    @Autowired
+    public ElasticsearchAptitudeRepository(final JestClient client) {
+        this.client = client;
+    }
+
     /**
      * Receives one aptitude and saves it in the DB
      *
@@ -156,7 +163,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude = findById(aptitudeId);
         List<Behavior> behaviors = aptitude.getBehaviors();
 
-        Behavior behavior = new Behavior(String.valueOf(behaviors.size() + 1), behaviorDto.getEn(), behaviorDto.getEs());
+        Behavior behavior = new Behavior(String.valueOf(behaviors.size() + 1), behaviorDto.getEs(), behaviorDto.getEn());
         aptitude.addBehavior(behavior);
         updateAptitude(aptitude);
         return behavior;

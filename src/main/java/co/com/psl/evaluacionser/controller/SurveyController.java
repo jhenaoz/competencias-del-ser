@@ -15,8 +15,7 @@ import java.util.List;
 @RequestMapping(value = "/api/survey")
 public class SurveyController {
 
-
-    SurveyService surveyService;
+    private SurveyService surveyService;
 
     @Autowired
     public SurveyController(final SurveyService surveyService) {
@@ -56,7 +55,6 @@ public class SurveyController {
 
     /**
      * Checks whether a survey was made in the last week.
-     *
      * @param evaluated the person who was evaluated in the survey
      * @param evaluator the person who made the survey
      * @return Response entity with HttpStatus.OK and if the survey exists
