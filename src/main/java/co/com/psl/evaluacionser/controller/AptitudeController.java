@@ -30,7 +30,7 @@ public class AptitudeController {
      * @return a JSON with all the data according to ElasticSearch
      */
     @RequestMapping(method = RequestMethod.GET)
-    private ResponseEntity<List<AptitudeDto>> getAptitudes() {
+    public ResponseEntity<List<AptitudeDto>> getAptitudes() {
         List<AptitudeDto> aptitudes = aptitudeService.findAllAptitudes();
 
         if (aptitudes == null)
@@ -47,7 +47,7 @@ public class AptitudeController {
      * @return Json schema of the specific {id} Aptitude
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    private ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
+    public ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
         AptitudeDto aptitudeFound = aptitudeService.findAptitudeById(id);
 
         if (aptitudeFound == null)
@@ -63,7 +63,7 @@ public class AptitudeController {
      * @return the JSON corresponding to the Behaviors from the {id} specified Aptitude
      */
     @RequestMapping(value = "/{id}/behavior", method = RequestMethod.GET)
-    private ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
+    public ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
         List<Behavior> behaviorsFound = aptitudeService.findAptitudeBehaviors(id);
 
         if (behaviorsFound == null)
@@ -80,7 +80,7 @@ public class AptitudeController {
      * @return returns a Response Entity with the HttpStatus of the operation, HttpStatus.OK if Successful
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
-    private ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
+    public ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
                                                      @PathVariable("behaviorId") String behaviorId) {
         Behavior behaviorFound = aptitudeService.findAptitudeBehaviorById(id, behaviorId);
 
@@ -104,7 +104,7 @@ public class AptitudeController {
      */
 
     @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
-    private ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
+    public ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
         Behavior behaviorSaved = aptitudeService.createAptitudeBehavior(id, behaviorDto);
 
         if (behaviorSaved == null)
@@ -122,7 +122,7 @@ public class AptitudeController {
      * @return ResponseEntity according
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
-    private ResponseEntity modifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
+    public ResponseEntity modifyBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId, @RequestBody BehaviorDto behaviorDto) {
 
         Behavior behavior = aptitudeService.updateAptitudeBehavior(id, behaviorId, behaviorDto);
 
@@ -140,7 +140,7 @@ public class AptitudeController {
      * @return should return the Aptitude without the Behaviors
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
-    private ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
+    public ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
         Aptitude aptitudeDeleted = aptitudeService.deleteAptitudeBehavior(id, behaviorId);
 
         if (aptitudeDeleted == null)

@@ -1,11 +1,7 @@
 package co.com.psl.evaluacionser.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import co.com.psl.evaluacionser.domain.Person;
+import co.com.psl.evaluacionser.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,33 +10,27 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import co.com.psl.evaluacionser.domain.Person;
-import co.com.psl.evaluacionser.persistence.PersonRepository;
-import co.com.psl.evaluacionser.service.PersonService;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonControllerTest {
 
     @Mock
-    private PersonRepository mockPersonRepository;
+    private PersonService mockPersonService;
     private PersonController personController;
 
     @Before
     public void setup() {
-        List<Person> personList = setupPerson();
-
-        when(mockPersonRepository.findAll()).thenReturn(personList);
-        PersonService personService = new PersonService(mockPersonRepository);
-        personController = new PersonController(personService);
-    }
-
-    private List<Person> setupPerson() {
         List<Person> personList = new ArrayList<>();
-
         personList.add(new Person("1", "Primero"));
         personList.add(new Person("2", "Segundo"));
 
-        return personList;
+        when(mockPersonService.findAllPeople()).thenReturn(personList);
+        personController = new PersonController(mockPersonService);
     }
 
     @Test
@@ -53,7 +43,7 @@ public class PersonControllerTest {
 
     @Test
     public void controllerWithNullParameterReturnNotFound() {
-        when(mockPersonRepository.findAll()).thenReturn(null);
+        when(mockPersonService.findAllPeople()).thenReturn(null);
 
         ResponseEntity<List<Person>> peopleResponseEntity = personController.getAllPeople();
         HttpStatus responseStatus = peopleResponseEntity.getStatusCode();
