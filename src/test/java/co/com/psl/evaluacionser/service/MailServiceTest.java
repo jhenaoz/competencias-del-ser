@@ -23,7 +23,7 @@ public class MailServiceTest {
         List<AptitudeSurvey> aptitudeSurveyList = new ArrayList<>();
         aptitudeSurveyList.add(aptitudeSurvey);
         survey = new Survey("Juan Evaluator", "Juana Evaluated", "Team",
-                "06-02-2017", aptitudeSurveyList);
+                "2017-06-06", aptitudeSurveyList);
     }
 
     @Test
