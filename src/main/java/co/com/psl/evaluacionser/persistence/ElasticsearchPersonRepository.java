@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchPersonRepository implements PersonRepository {
 
-    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
     /**
      * These Strings must be congruent with the elasticsearch database
      */
@@ -37,6 +36,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
      */
     @Autowired
     private JestClient client;
+
+    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
 
     /**
      * This method find all indexes person with type employee
