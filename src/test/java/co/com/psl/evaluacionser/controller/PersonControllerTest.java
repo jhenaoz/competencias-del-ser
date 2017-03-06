@@ -26,8 +26,8 @@ public class PersonControllerTest {
     @Before
     public void setup() {
         List<Person> personList = new ArrayList<>();
-        personList.add(new Person("1", "Primero"));
-        personList.add(new Person("2", "Segundo"));
+        personList.add(new Person("1", "Juan"));
+        personList.add(new Person("2", "Pedro"));
 
         when(mockPersonService.findAllPeople()).thenReturn(personList);
         personController = new PersonController(mockPersonService);
@@ -60,7 +60,7 @@ public class PersonControllerTest {
 
         Person person2 = allPersons.get(1);
         assertEquals("2", person2.getId());
-        assertEquals("Segundo", person2.getName());
+        assertEquals("Pedro", person2.getName());
     }
 
 }
