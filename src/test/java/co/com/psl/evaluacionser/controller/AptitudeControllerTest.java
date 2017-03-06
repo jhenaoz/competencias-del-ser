@@ -25,13 +25,18 @@ public class AptitudeControllerTest {
 
     @Before
     public void setup() {
+        // Setup aptitude mock for getAptitude methods
+        List<AptitudeDto> aptitudeListExample = new ArrayList<>();
+        AptitudeDto aptitudeExample = new AptitudeDto("1", "Apertura", "Openness");
+        aptitudeListExample.add(aptitudeExample);
+        when(mockAptitudeService.findAllAptitudes()).thenReturn(aptitudeListExample);
+        when(mockAptitudeService.findAptitudeById("1")).thenReturn(aptitudeExample);
+
         aptitudeController = new AptitudeController(mockAptitudeService);
     }
 
     @Test
     public void getAptitudesReturnHttpStatusOK() {
-        when(mockAptitudeService.findAllAptitudes()).thenReturn(new ArrayList<AptitudeDto>());
-
         ResponseEntity<List<AptitudeDto>> responseEntity = aptitudeController.getAptitudes();
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
@@ -40,20 +45,15 @@ public class AptitudeControllerTest {
 
     @Test
     public void getAptitudesShouldReturnAptitudeArraySize1() {
-        List<AptitudeDto> aptitudeListExample = new ArrayList<>();
-        AptitudeDto aptitudeExample = new AptitudeDto("2", "Comunicacion", "Comunication");
-        aptitudeListExample.add(aptitudeExample);
-        when(mockAptitudeService.findAllAptitudes()).thenReturn(aptitudeListExample);
-
         ResponseEntity<List<AptitudeDto>> responseEntity = aptitudeController.getAptitudes();
 
         List<AptitudeDto> allAptitudes = responseEntity.getBody();
         assertEquals(1, allAptitudes.size());
 
         AptitudeDto aptitudeReturned = allAptitudes.get(0);
-        assertEquals("2", aptitudeReturned.getId());
-        assertEquals("Comunicacion", aptitudeReturned.getEs());
-        assertEquals("Comunication", aptitudeReturned.getEn());
+        assertEquals("1", aptitudeReturned.getId());
+        assertEquals("Apertura", aptitudeReturned.getEs());
+        assertEquals("Openness", aptitudeReturned.getEn());
     }
 
     @Test
@@ -63,6 +63,34 @@ public class AptitudeControllerTest {
         ResponseEntity<List<AptitudeDto>> responseEntity = aptitudeController.getAptitudes();
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
+        assertEquals("NOT_FOUND", responseStatus.name());
+    }
+
+    @Test
+    public void getAptitudeByIdReturnHttpStatusOk() {
+        ResponseEntity<AptitudeDto> responseEntity = aptitudeController.getAptitudeById("1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("OK", responseStatus.name());
+    }
+
+    @Test
+    public void getAptitudeByIdShouldReturnAptitudeDto() {
+        ResponseEntity<AptitudeDto> responseEntity = aptitudeController.getAptitudeById("1");
+
+        AptitudeDto aptitudeReturned = responseEntity.getBody();
+        assertEquals("1", aptitudeReturned.getId());
+        assertEquals("Apertura", aptitudeReturned.getEs());
+        assertEquals("Openness", aptitudeReturned.getEn());
+    }
+
+    @Test
+    public void getAptitudeByIdWithAptitudeNullReturnsNotFound() {
+        when(mockAptitudeService.findAptitudeById("1")).thenReturn(null);
+
+        ResponseEntity<AptitudeDto> responseEntity = aptitudeController.getAptitudeById("1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
     }
 
