@@ -1,5 +1,6 @@
 package co.com.psl.evaluacionser.controller;
 
+import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.service.AptitudeService;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import org.junit.Before;
@@ -31,6 +32,13 @@ public class AptitudeControllerTest {
         aptitudeListExample.add(aptitudeExample);
         when(mockAptitudeService.findAllAptitudes()).thenReturn(aptitudeListExample);
         when(mockAptitudeService.findAptitudeById("1")).thenReturn(aptitudeExample);
+
+        // Setup aptitude mock for getBehavior methods
+        List<Behavior> behaviorList = new ArrayList<>();
+        Behavior behavior = new Behavior("1", "acepta sugerencias", "accept suggestions");
+        behaviorList.add(behavior);
+        when(mockAptitudeService.findAptitudeBehaviors("1")).thenReturn(behaviorList);
+        when(mockAptitudeService.findAptitudeBehaviorById("1", "1")).thenReturn(behavior);
 
         aptitudeController = new AptitudeController(mockAptitudeService);
     }
@@ -86,11 +94,42 @@ public class AptitudeControllerTest {
 
     @Test
     public void getAptitudeByIdWithAptitudeNullReturnsNotFound() {
-        when(mockAptitudeService.findAptitudeById("1")).thenReturn(null);
+        when(mockAptitudeService.findAptitudeById("-1")).thenReturn(null);
 
-        ResponseEntity<AptitudeDto> responseEntity = aptitudeController.getAptitudeById("1");
+        ResponseEntity<AptitudeDto> responseEntity = aptitudeController.getAptitudeById("-1");
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("NOT_FOUND", responseStatus.name());
+    }
+
+    @Test
+    public void getBehaviorsReturnHttpStatusOK() {
+        ResponseEntity<List<Behavior>> responseEntity = aptitudeController.getBehaviors("1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("OK", responseStatus.name());
+    }
+
+    @Test
+    public void getBehaviorsShouldReturnAptitudeArraySize1() {
+        ResponseEntity<List<Behavior>> responseEntity = aptitudeController.getBehaviors("1");
+
+        List<Behavior> allBehaviors = responseEntity.getBody();
+        assertEquals(1, allBehaviors.size());
+
+        Behavior behaviorReturned = allBehaviors.get(0);
+        assertEquals("1", behaviorReturned.getId());
+        assertEquals("acepta sugerencias", behaviorReturned.getEs());
+        assertEquals("accept suggestions", behaviorReturned.getEn());
+    }
+
+    @Test
+    public void getBehaviorsWithInvalidAptitudeReturnsNotFound() {
+        when(mockAptitudeService.findAptitudeBehaviors("-1")).thenReturn(null);
+
+        ResponseEntity<List<Behavior>> responseEntity = aptitudeController.getBehaviors("-1");
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+
         assertEquals("NOT_FOUND", responseStatus.name());
     }
 
