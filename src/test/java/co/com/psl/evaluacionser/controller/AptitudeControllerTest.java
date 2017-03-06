@@ -27,11 +27,11 @@ public class AptitudeControllerTest {
     @Before
     public void setup() {
         // Setup aptitude mock for getAptitude methods
-        List<AptitudeDto> aptitudeListExample = new ArrayList<>();
-        AptitudeDto aptitudeExample = new AptitudeDto("1", "Apertura", "Openness");
-        aptitudeListExample.add(aptitudeExample);
-        when(mockAptitudeService.findAllAptitudes()).thenReturn(aptitudeListExample);
-        when(mockAptitudeService.findAptitudeById("1")).thenReturn(aptitudeExample);
+        List<AptitudeDto> aptitudeList = new ArrayList<>();
+        AptitudeDto aptitude = new AptitudeDto("1", "Apertura", "Openness");
+        aptitudeList.add(aptitude);
+        when(mockAptitudeService.findAllAptitudes()).thenReturn(aptitudeList);
+        when(mockAptitudeService.findAptitudeById("1")).thenReturn(aptitude);
 
         // Setup aptitude mock for getBehavior methods
         List<Behavior> behaviorList = new ArrayList<>();
@@ -83,7 +83,7 @@ public class AptitudeControllerTest {
     }
 
     @Test
-    public void getAptitudeByIdShouldReturnAptitudeDto() {
+    public void getAptitudeByIdShouldReturnOpennessAptitudeDto() {
         ResponseEntity<AptitudeDto> responseEntity = aptitudeController.getAptitudeById("1");
 
         AptitudeDto aptitudeReturned = responseEntity.getBody();
@@ -111,7 +111,7 @@ public class AptitudeControllerTest {
     }
 
     @Test
-    public void getBehaviorsShouldReturnAptitudeArraySize1() {
+    public void getBehaviorsShouldReturnBehaviorArraySize1() {
         ResponseEntity<List<Behavior>> responseEntity = aptitudeController.getBehaviors("1");
 
         List<Behavior> allBehaviors = responseEntity.getBody();
@@ -130,6 +130,34 @@ public class AptitudeControllerTest {
         ResponseEntity<List<Behavior>> responseEntity = aptitudeController.getBehaviors("-1");
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
+        assertEquals("NOT_FOUND", responseStatus.name());
+    }
+
+    @Test
+    public void getbehaviorByIdReturnHttpStatusOk() {
+        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", "1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        assertEquals("OK", responseStatus.name());
+    }
+
+    @Test
+    public void getBehaviorByIdShouldReturnOpennessBehavior() {
+        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", "1");
+
+        Behavior behaviorReturned = responseEntity.getBody();
+        assertEquals("1", behaviorReturned.getId());
+        assertEquals("acepta sugerencias", behaviorReturned.getEs());
+        assertEquals("accept suggestions", behaviorReturned.getEn());
+    }
+
+    @Test
+    public void getBehaviorByIdWithInvalidAptitudeReturnsNotFound() {
+        when(mockAptitudeService.findAptitudeBehaviorById("-1", "-1")).thenReturn(null);
+
+        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("-1", "-1");
+
+        HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
     }
 
