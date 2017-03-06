@@ -145,7 +145,7 @@ public class AptitudeControllerTest {
     }
 
     @Test
-    public void getbehaviorByIdReturnHttpStatusOk() {
+    public void getBehaviorByIdReturnHttpStatusOk() {
         ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", "1");
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
