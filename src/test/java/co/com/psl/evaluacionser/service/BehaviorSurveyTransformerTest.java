@@ -19,9 +19,9 @@ public class BehaviorSurveyTransformerTest {
     @Test
     public void behaviorsSurveyTransformerTest() {
         List<Behavior> behaviors = new ArrayList<>();
-        behaviors.add(new Behavior("1", "Accepts review", "Acepta retroalimentacion"));
-        behaviors.add(new Behavior("2", "Play in team", "Juega en equipo"));
-        behaviors.add(new Behavior("3", "Good person", "Buena persona"));
+        behaviors.add(new Behavior("1", "Acepta retroalimentacion", "Accepts review"));
+        behaviors.add(new Behavior("2", "Juega en equipo", "Play in team"));
+        behaviors.add(new Behavior("3", "Buena persona", "Good person"));
         List<BehaviorSurveyDto> behaviorsSurveyDto = new ArrayList<>();
         behaviorsSurveyDto.add(new BehaviorSurveyDto("1", 5));
         behaviorsSurveyDto.add(new BehaviorSurveyDto("2", 4));

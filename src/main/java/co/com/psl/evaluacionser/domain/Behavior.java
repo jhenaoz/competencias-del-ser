@@ -11,10 +11,10 @@ public class Behavior {
     public Behavior() {
     }
 
-    public Behavior(String id, String en, String es) {
+    public Behavior(String id, String es, String en) {
         this.id = id;
-        this.en = en;
         this.es = es;
+        this.en = en;
     }
 
     public String getId() {
