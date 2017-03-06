@@ -152,7 +152,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
                 return null;
             return getSurvey(result.getFirstHit(Survey.class));
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.error("There was an error while searching for the survey ",e);
             return null;
         }
     }

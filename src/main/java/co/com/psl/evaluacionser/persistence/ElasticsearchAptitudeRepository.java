@@ -213,7 +213,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            logger.error("The aptitude couldn't be updated" + e.getMessage());
+            logger.error("The aptitude couldn't be updated " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
