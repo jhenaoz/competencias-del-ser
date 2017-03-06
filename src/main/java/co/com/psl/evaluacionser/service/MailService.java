@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 /**
- * This class allows the "send mails" service implementing a javax.mail dependency through Spring
+ * This class allows the "send mail" service implementing a javax.mail dependency through Spring
  */
 @Service
 public class MailService {
@@ -32,7 +32,7 @@ public class MailService {
 
     static Logger logger = Logger.getLogger(MailService.class);
 
-    /*public void placeOrder(SurveyDto surveyDto) {
+    /*public void newSurveyMail(SurveyDto surveyDto) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -66,7 +66,11 @@ public class MailService {
         }
     }*/
 
-    public void placeOrder(Survey survey) {
+    /**
+     * This Method create a new mail when a new survey is done
+     * @param survey to extract the necessary information to make the new email
+     */
+    public void newSurveyMail(Survey survey) {
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
         sender.setHost("smtp.gmail.com");
         sender.setPort(465);
@@ -92,6 +96,11 @@ public class MailService {
         }
     }
 
+    /**
+     * This method create the text for the new email with the survey information
+     * @param survey
+     * @return the new message
+     */
     public String constructMessageText(Survey survey) {
         return "Cordial saludo, se acaba de realizar una valoración del ser \n"
                 + "Persona valorada: " + survey.getEvaluated() + "\n"
@@ -100,6 +109,11 @@ public class MailService {
                 + evaluationType(survey.getAptitudes());
     }
 
+    /**
+     * This method control the type of the survey, one aptitude or all of them
+     * @param aptitudeSurveyList
+     * @return the part of the message with the type
+     */
     public String evaluationType(List<AptitudeSurvey> aptitudeSurveyList) {
         if (aptitudeSurveyList.size() == 1) {
             return "una competencia de una persona \n" + "Competencia evaluada: "
