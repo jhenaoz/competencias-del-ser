@@ -29,6 +29,7 @@ public class ElasticsearchSurveyRepositoryIT {
         Survey survey = new Survey();
         survey.setEvaluated("evaluated");
         survey.setEvaluator("evaluator");
+        survey.setRole("teanmmate");
         survey.setTimestamp(formatted);
 
         Survey survey2 = new Survey();
@@ -60,6 +61,7 @@ public class ElasticsearchSurveyRepositoryIT {
 
         assertEquals("evaluated", foundSurvey.getEvaluated());
         assertEquals("evaluator", foundSurvey.getEvaluator());
+        assertEquals("teanmmate",foundSurvey.getRole());
         assertEquals(formatted, foundSurvey.getTimestamp());
 
         assertEquals("evaluated", returnedSaveSurvey.getEvaluated());

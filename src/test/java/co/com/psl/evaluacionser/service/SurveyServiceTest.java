@@ -62,6 +62,7 @@ public class SurveyServiceTest {
         surveyDto.setAptitudes(aptitudes);
         surveyDto.setEvaluated("evaluated");
         surveyDto.setEvaluator("evaluator");
+        surveyDto.setRole("teanmmate");
 
 
         Behavior behavior = new Behavior();
