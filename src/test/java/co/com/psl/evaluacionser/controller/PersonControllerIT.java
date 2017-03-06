@@ -22,13 +22,13 @@ public class PersonControllerIT {
 
     @Test
     public void getPeopleIsNotNull() throws Exception {
-        mockMvc.perform(get("/person"))
+        mockMvc.perform(get("/api/person"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getPeopleIsNotEmpty() throws Exception {
-        mockMvc.perform(get("/person"))
+        mockMvc.perform(get("/api/person"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").exists());
     }

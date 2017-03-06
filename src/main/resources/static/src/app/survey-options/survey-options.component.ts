@@ -138,18 +138,24 @@ export class SurveyOptionsComponent implements OnInit {
     }
   }
 
-  divisibleByTen(control: AbstractControl) {
-    return parseInt(control.value) % 10 == 0 ? null : {
-      divisibleByTen: true
-    }
-  }
-
   /*
   * Function to handle relation type changes
   */
   relationChange(value) {
     this.isSelf = this.selfText === value ? true : false;
     this.isClient = value === this.clientText ? true : false;
+  }
+  
+  /*
+  * Function to handle evaluated employee changes
+  */
+  evaluatedChange(){
+    // Show hidden options
+    $('#evaluatorAppEmployee option:hidden').each(function(){
+      $(this).show();
+    })
+    // Hide current evaluated option
+    $("#evaluatorAppEmployee option[value='"+ $("#evaluatedAppEmployee option:selected").text() +"']").hide();
   }
 
   /*
@@ -171,31 +177,39 @@ export class SurveyOptionsComponent implements OnInit {
         break;
     }
     this.surveyService.competence = value.competenceToEvaluate;
-    localStorage.setItem('competence',value.competenceToEvaluate);
+    localStorage.setItem('competence', value.competenceToEvaluate);
     switch (value.competenceToEvaluate) {
       case this.openessText:
         value.competenceToEvaluate = 'openess';
+        this.surveyService.competenceId = '1';
         break;
       case this.communicationText:
         value.competenceToEvaluate = 'communication';
+        this.surveyService.competenceId = '2';
         break;
       case this.initiativeText:
         value.competenceToEvaluate = 'initiative';
+        this.surveyService.competenceId = '3';
         break;
       case this.client_orientationText:
         value.competenceToEvaluate = 'client_orientation';
+        this.surveyService.competenceId = '4';
         break;
       case this.goalsText:
         value.competenceToEvaluate = 'achivement_and_results';
+        this.surveyService.competenceId = '5';
         break;
       case this.teamworkText:
         value.competenceToEvaluate = 'teamwork';
+        this.surveyService.competenceId = '6';
         break;
       case this.developmentText:
         value.competenceToEvaluate = 'development_oriented_leadership';
+        this.surveyService.competenceId = '7';
         break;
       case this.goalText:
         value.competenceToEvaluate = 'achivement_oriented_leadership';
+        this.surveyService.competenceId = '8';
         break;
       default:
         value.competenceToEvaluate = '';

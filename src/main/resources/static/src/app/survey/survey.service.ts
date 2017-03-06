@@ -25,12 +25,13 @@ export class SurveyService {
   survey: Survey;
   oneSurvey: boolean;
   competence = 'TESTING';
+  competenceId: string;
   evaluator: string;
   role: string;
 
   constructor(private _http: Http) {
     this.survey = new Survey();
-    this._surveyUrl += '/survey';
+    this._surveyUrl += '/api/survey';
   }
 
   startSurvey(survey) {
@@ -46,7 +47,7 @@ export class SurveyService {
     const body = JSON.stringify(surveyToSave);
     return this._http.post(this._surveyUrl, body, options)
            .toPromise()
-	         .then(response => { return response.json() }, this.handleError);
+           .then(response => { return response.json(); }, this.handleError);
   }
 
   private extractData(res: Response) {

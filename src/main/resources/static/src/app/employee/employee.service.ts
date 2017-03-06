@@ -17,7 +17,7 @@ export class EmployeeService {
     private _employeeUrl = environment.apiURL;
 
     constructor(private _http: Http) {
-        this._employeeUrl += '/person';
+        this._employeeUrl += '/api/person';
     }
     /*
     * Method to get all employees from REST response
