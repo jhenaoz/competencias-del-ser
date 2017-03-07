@@ -241,7 +241,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     public boolean deleteAptitudeById(String aptitudeId) {
-        if (findById(aptitudeId) == null) return false;
+        if (findById(aptitudeId) == null) {
+            return false;
+        }
         try {
             client.execute(new Delete.Builder(aptitudeId)
                     .index(aptitudeIndexName)

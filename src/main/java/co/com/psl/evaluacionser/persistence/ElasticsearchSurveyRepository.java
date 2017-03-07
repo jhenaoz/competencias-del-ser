@@ -155,8 +155,9 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         try {
             SearchResult result = client.execute(search);
 
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
             return getSurvey(result.getFirstHit(Survey.class));
         } catch (IOException e) {
             logger.error("There was an error while searching for the survey ", e);

@@ -56,8 +56,9 @@ public class ElasticsearchPersonRepository implements PersonRepository {
                 .addType(personTypeName).build();
         try {
             result = client.execute(search);
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
 
         } catch (IOException e) {
             logger.error("The search can't be completed " + e.getMessage());
@@ -67,8 +68,9 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     }
 
     private Person getPerson(Hit<Person, Void> hit) {
-        if (hit == null)
+        if (hit == null) {
             return null;
+        }
 
         return hit.source;
     }
