@@ -221,25 +221,23 @@ export class SurveyOptionsComponent implements OnInit {
     this.survey.evaluated = value.evaluated;
     this.survey.role = value.role;
     this.survey.aptitudes = new Array();
-    this.isRecent = await this.surveyService.checkSurveyDate(this.survey).toPromise();
+    this.isRecent = await this.surveyService.checkSurveyDate(this.survey, this.surveyService.competenceId, !this.surveyService.oneSurvey).toPromise();
     this.surveyService.startSurvey(this.survey);
     // XXX: hardcoded
     if(!this.isRecent) {
       this.router.navigate(['/survey/1']);
     }
   }
-
+  
+  startRecentSurvey(){
+    this.router.navigate(['/survey/1']);
+  }
   /*
   * Function to store the form values into the survey variable in the service
   */
   startSurvey() {
-    if(this.isRecent){
-      // XXX: hardcoded
-      this.router.navigate(['/survey/1']);
-      return;
-    }
     // Next steps are just for testing component's communication, they are not yet the real way.
-    if (this.complexForm.valid && !this.submitted) {
+    if (this.complexForm.valid) {
       this.submitted = true;
       this.submitForm();
     }
