@@ -121,7 +121,8 @@
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
-            <textarea formControlName="observation" class="form-control" rows="3" minlength="10"></textarea><br>
+            <textarea formControlName="observation" class="form-control" rows="3" minlength="10"></textarea>
+            <div class="text-right">*min: 10 {{ "Survey.characters" | translate }}</div><br>
             <div class="alert alert-danger" id="radio-alert" [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">{{ "Survey.survey_observations_alert" | translate }}.</div>
         </form>
     </div>

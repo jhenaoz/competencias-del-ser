@@ -48,7 +48,8 @@ export class SurveyOptionsComponent implements OnInit {
   complexForm: FormGroup;
 
   survey: Survey = new Survey();
-
+  isRecent: Boolean = false;
+  submitted = false;
   /*
   * Relation variables
   */
@@ -161,7 +162,7 @@ export class SurveyOptionsComponent implements OnInit {
   /*
   * Function to get from value
   */
-  submitForm() {
+  async submitForm() {
     const value = this.complexForm.value;
     // Object organization for data persistence
     switch (value.role) {
@@ -220,18 +221,26 @@ export class SurveyOptionsComponent implements OnInit {
     this.survey.evaluated = value.evaluated;
     this.survey.role = value.role;
     this.survey.aptitudes = new Array();
+    this.isRecent = await this.surveyService.checkSurveyDate(this.survey).toPromise();
     this.surveyService.startSurvey(this.survey);
     // XXX: hardcoded
-    this.router.navigate(['/survey/1']);
-
+    if(!this.isRecent) {
+      this.router.navigate(['/survey/1']);
+    }
   }
 
   /*
   * Function to store the form values into the survey variable in the service
   */
   startSurvey() {
+    if(this.isRecent){
+      // XXX: hardcoded
+      this.router.navigate(['/survey/1']);
+      return;
+    }
     // Next steps are just for testing component's communication, they are not yet the real way.
-    if (this.complexForm.valid) {
+    if (this.complexForm.valid && !this.submitted) {
+      this.submitted = true;
       this.submitForm();
     }
   }

@@ -50,6 +50,14 @@ export class SurveyService {
            .then(response => { return response.json(); }, this.handleError);
   }
 
+  checkSurveyDate(survey: Survey): Observable<Boolean> {
+    console.log(this._surveyUrl + '/recentsurvey?evaluator='+survey.evaluator+'&evaluated='+survey.evaluated)
+    return this._http.get(this._surveyUrl + '/recentsurvey?evaluator='+survey.evaluator+'&evaluated='+survey.evaluated)
+              .map((response: Response) => <Boolean> response.json())
+              .do(console.log)
+              .catch(this.handleError)
+  }
+
   private extractData(res: Response) {
     const body = res.json();
     return body.data || {};

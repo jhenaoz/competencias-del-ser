@@ -22,14 +22,17 @@
         "evaluator_alert": "Debes seleccionar a alguien",
         "relationship": "Tipo de relación",
         "relationship_alert": "Debes seleccionar una relación",
+        "competence_alert": "Debes seleccionar una competencia",
         "relation_teammate": "Equipo de trabajo",
         "relation_teammate_description": "Seleccione equipo de trabajo si a quien va a valorar, corresponde a aquellas personas a quienes ha colaborado, trabajado en su desarrollo y crecimiento, y apoyado en el direccionamiento de sus actividades",
         "relation_client": "Cliente",
         "relation_client_description": "Son las personas que han podido trabajar con el valorado desde la vista de cliente (es decir, han recibido algún entregable por parte de la persona valorada), han tenido interacción directa con la persona y cuentan con la información, gracias a la observación de sus comportamientos. El cliente puede hacer referencia tanto a clientes internos, como externos.",
         "relation_own": "Auto-Valoración",
-        "relation_own_description": " Es la valoración que la persona hace de sí mismo, de acuerdo con sus comportamientos actuales y recientes (últimos 3 meses). Esta medición es de gran importancia para conocer la percepción que el valorado tiene de sí mismo y es de gran ayuda en el análisis de los resultados para la generación de los planes de desarrollo."
+        "relation_own_description": " Es la valoración que la persona hace de sí mismo, de acuerdo con sus comportamientos actuales y recientes (últimos 3 meses). Esta medición es de gran importancia para conocer la percepción que el valorado tiene de sí mismo y es de gran ayuda en el análisis de los resultados para la generación de los planes de desarrollo.",
+        "survey_check_alert": "Encontramos que en la última semana ya valoraste a esta persona. ¿Deseas iniciar nuevamente una valoración?"
     },
     "Survey": {
+        "characters": "Caracteres",
         "always": "Siempre",
         "almost_always": "Casi Siempre",
         "occasionally": "A veces",
