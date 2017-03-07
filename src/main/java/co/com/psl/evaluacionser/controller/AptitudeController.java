@@ -90,7 +90,7 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
     public ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
-                                                     @PathVariable("behaviorId") String behaviorId) {
+                                                    @PathVariable("behaviorId") String behaviorId) {
         Behavior behaviorFound = aptitudeService.findAptitudeBehaviorById(id, behaviorId);
 
         if (behaviorFound == null) {
@@ -115,7 +115,7 @@ public class AptitudeController {
 
     @RequestMapping(value = "/{id}/behavior", headers = "Accept=application/json", method = RequestMethod.POST)
     public ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id,
-                                                  @RequestBody BehaviorDto behaviorDto) {
+                                                 @RequestBody BehaviorDto behaviorDto) {
         Behavior behaviorSaved = aptitudeService.createAptitudeBehavior(id, behaviorDto);
 
         if (behaviorSaved == null) {
@@ -135,8 +135,8 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
     public ResponseEntity<Behavior> modifyBehavior(@PathVariable("id") String id,
-                                          @PathVariable("behaviorId") String behaviorId,
-                                          @RequestBody BehaviorDto behaviorDto) {
+                                                   @PathVariable("behaviorId") String behaviorId,
+                                                   @RequestBody BehaviorDto behaviorDto) {
         Behavior behavior = aptitudeService.updateAptitudeBehavior(id, behaviorId, behaviorDto);
 
         if (behavior == null) {
@@ -155,7 +155,7 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     public ResponseEntity<Aptitude> deleteBehavior(@PathVariable("id") String id,
-                                          @PathVariable("behaviorId") String behaviorId) {
+                                                   @PathVariable("behaviorId") String behaviorId) {
         Aptitude aptitudeDeleted = aptitudeService.deleteAptitudeBehavior(id, behaviorId);
 
         if (aptitudeDeleted == null) {
