@@ -16,6 +16,12 @@ node() {
         }
     }
 
+    stage('Checkstyle') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            sh 'mvn checkstyle:check'
+        }
+    }
+
     /* stage('SonarQube analysis') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withSonarQubeEnv('SonarQube Test') {
