@@ -8,7 +8,12 @@ import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -33,8 +38,9 @@ public class AptitudeController {
     public ResponseEntity<List<AptitudeDto>> getAptitudes() {
         List<AptitudeDto> aptitudes = aptitudeService.findAllAptitudes();
 
-        if (aptitudes == null)
+        if (aptitudes == null) {
             return new ResponseEntity<List<AptitudeDto>>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<List<AptitudeDto>>(aptitudes, HttpStatus.OK);
     }
@@ -50,8 +56,9 @@ public class AptitudeController {
     public ResponseEntity<AptitudeDto> getAptitudeById(@PathVariable("id") String id) {
         AptitudeDto aptitudeFound = aptitudeService.findAptitudeById(id);
 
-        if (aptitudeFound == null)
+        if (aptitudeFound == null) {
             return new ResponseEntity<AptitudeDto>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<AptitudeDto>(aptitudeFound, HttpStatus.OK);
     }
@@ -66,8 +73,9 @@ public class AptitudeController {
     public ResponseEntity<List<Behavior>> getBehaviors(@PathVariable("id") String id) {
         List<Behavior> behaviorsFound = aptitudeService.findAptitudeBehaviors(id);
 
-        if (behaviorsFound == null)
+        if (behaviorsFound == null) {
             return new ResponseEntity<List<Behavior>>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<List<Behavior>>(behaviorsFound, HttpStatus.OK);
     }
@@ -84,8 +92,9 @@ public class AptitudeController {
                                                      @PathVariable("behaviorId") String behaviorId) {
         Behavior behaviorFound = aptitudeService.findAptitudeBehaviorById(id, behaviorId);
 
-        if (behaviorFound == null)
+        if (behaviorFound == null) {
             return new ResponseEntity<Behavior>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<Behavior>(behaviorFound, HttpStatus.OK);
     }
@@ -107,8 +116,9 @@ public class AptitudeController {
     public ResponseEntity<Behavior> saveBehavior(@PathVariable("id") String id, @RequestBody BehaviorDto behaviorDto) {
         Behavior behaviorSaved = aptitudeService.createAptitudeBehavior(id, behaviorDto);
 
-        if (behaviorSaved == null)
+        if (behaviorSaved == null) {
             return new ResponseEntity<Behavior>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(behaviorSaved, HttpStatus.CREATED);
     }
@@ -126,8 +136,9 @@ public class AptitudeController {
 
         Behavior behavior = aptitudeService.updateAptitudeBehavior(id, behaviorId, behaviorDto);
 
-        if (behavior == null)
+        if (behavior == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity(behavior, HttpStatus.ACCEPTED);
     }
@@ -143,8 +154,9 @@ public class AptitudeController {
     public ResponseEntity deleteBehavior(@PathVariable("id") String id, @PathVariable("behaviorId") String behaviorId) {
         Aptitude aptitudeDeleted = aptitudeService.deleteAptitudeBehavior(id, behaviorId);
 
-        if (aptitudeDeleted == null)
+        if (aptitudeDeleted == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity(aptitudeDeleted, HttpStatus.ACCEPTED);
     }

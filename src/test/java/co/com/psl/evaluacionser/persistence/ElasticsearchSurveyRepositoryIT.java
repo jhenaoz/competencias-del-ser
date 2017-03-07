@@ -47,13 +47,17 @@ public class ElasticsearchSurveyRepositoryIT {
 
         boolean evaluator2Found = false;
         for (Survey survey1 : surveys) {
-            if (survey1.getEvaluator().equals("evaluator2")) evaluator2Found = true;
+            if (survey1.getEvaluator().equals("evaluator2")) {
+                evaluator2Found = true;
+            }
 
         }
 
         boolean evaluator1984NotFound = false;
         for (Survey survey1 : surveys) {
-            if (survey1.getEvaluator().equals("evaluator1984")) evaluator1984NotFound = true;
+            if (survey1.getEvaluator().equals("evaluator1984")) {
+                evaluator1984NotFound = true;
+            }
 
         }
         assertEquals(false, evaluator1984NotFound);
@@ -61,7 +65,7 @@ public class ElasticsearchSurveyRepositoryIT {
 
         assertEquals("evaluated", foundSurvey.getEvaluated());
         assertEquals("evaluator", foundSurvey.getEvaluator());
-        assertEquals("teanmmate",foundSurvey.getRole());
+        assertEquals("teanmmate", foundSurvey.getRole());
         assertEquals(formatted, foundSurvey.getTimestamp());
 
         assertEquals("evaluated", returnedSaveSurvey.getEvaluated());

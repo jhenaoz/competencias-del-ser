@@ -56,14 +56,18 @@ public class ElasticsearchPersonRepositoryIT {
         boolean contains1 = false;
         for (Person personInList : personList) {
 
-            if (personInList.getId().equals(person.getId())) contains1 = true;
+            if (personInList.getId().equals(person.getId())) {
+                contains1 = true;
+            }
 
         }
 
         boolean contains2 = false;
         for (Person personInList : personList) {
 
-            if (personInList.getId().equals(person2.getId())) contains2 = true;
+            if (personInList.getId().equals(person2.getId())) {
+                contains2 = true;
+            }
 
         }
 

@@ -21,15 +21,12 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
 
+    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
     @Value("${elasticSurveyIndex}")
     private String surveyIndexName;
-
     @Value("${elasticSurveyType}")
     private String surveyTypeName;
-
     private JestClient client;
-
-    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
 
     @Autowired
     public ElasticsearchSurveyRepository(final JestClient client) {
@@ -134,7 +131,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
             client.execute(deleteSpecificSurvey);
             return true;
         } catch (IOException e) {
-            logger.error("there was an error while trying to delete the survey ",e);
+            logger.error("there was an error while trying to delete the survey ", e);
             return false;
         }
     }
@@ -157,7 +154,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
                 return null;
             return getSurvey(result.getFirstHit(Survey.class));
         } catch (IOException e) {
-           logger.error("There was an error while searching for the survey ",e);
+            logger.error("There was an error while searching for the survey ", e);
             return null;
         }
     }

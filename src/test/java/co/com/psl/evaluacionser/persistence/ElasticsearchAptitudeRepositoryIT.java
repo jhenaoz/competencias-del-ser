@@ -79,14 +79,18 @@ public class ElasticsearchAptitudeRepositoryIT {
         boolean contains1 = false;
         for (Aptitude aptitudeInList : aptitudeList) {
 
-            if (aptitudeInList.getId().equals(aptitude.getId())) contains1 = true;
+            if (aptitudeInList.getId().equals(aptitude.getId())) {
+                contains1 = true;
+            }
 
         }
 
         boolean contains2 = false;
         for (Aptitude aptitudeInList : aptitudeList) {
 
-            if (aptitudeInList.getId().equals(aptitude2.getId())) contains2 = true;
+            if (aptitudeInList.getId().equals(aptitude2.getId())) {
+                contains2 = true;
+            }
 
         }
         assertEquals(true, contains1);

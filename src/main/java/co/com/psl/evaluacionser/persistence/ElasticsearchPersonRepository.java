@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchPersonRepository implements PersonRepository {
 
+    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
     /**
      * These Strings must be congruent with the elasticsearch database
      */
@@ -32,8 +33,6 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     @Value("${elasticPersonType}")
     private String personTypeName;
     private JestClient client;
-
-    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
 
     @Autowired
     public ElasticsearchPersonRepository(final JestClient client) {
@@ -92,8 +91,9 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         try {
             SearchResult result = client.execute(search);
 
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
 
             return getPerson(result.getFirstHit(Person.class));
         } catch (IOException e) {
