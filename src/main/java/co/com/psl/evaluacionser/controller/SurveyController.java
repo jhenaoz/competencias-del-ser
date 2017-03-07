@@ -6,7 +6,12 @@ import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -26,7 +31,7 @@ public class SurveyController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Survey> saveSurvey(@RequestBody SurveyDto surveyDto) {
-        return new ResponseEntity<Survey>(surveyService.saveSurvey(surveyDto), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(surveyService.saveSurvey(surveyDto), HttpStatus.ACCEPTED);
     }
 
     /**
@@ -39,14 +44,15 @@ public class SurveyController {
      */
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user") String user,
-                                                   @RequestParam(value = "startdate", required = false) String startDate,
-                                                   @RequestParam(value = "enddate", required = false) String endDate) {
+                                                  @RequestParam(value = "startdate", required = false) String startDate,
+                                                  @RequestParam(value = "enddate", required = false) String endDate) {
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
 
-        if (user.isEmpty() || userSurveys == null)
-            return new ResponseEntity<List<Survey>>(HttpStatus.BAD_REQUEST);
+        if (user.isEmpty() || userSurveys == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<List<Survey>>(userSurveys, HttpStatus.OK);
+        return new ResponseEntity<>(userSurveys, HttpStatus.OK);
     }
 
     /**
@@ -59,7 +65,7 @@ public class SurveyController {
     public ResponseEntity<Boolean> existsRecentSurvey(@RequestParam(value = "evaluated") String evaluated,
                                                       @RequestParam(value = "evaluator") String evaluator) {
         boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator);
-        return new ResponseEntity<Boolean>(surveyExists, HttpStatus.OK);
+        return new ResponseEntity<>(surveyExists, HttpStatus.OK);
     }
 
 }

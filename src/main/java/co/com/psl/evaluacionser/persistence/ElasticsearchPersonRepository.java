@@ -6,12 +6,12 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     @Autowired
     private JestClient client;
 
-    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
+    private static final Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
 
     /**
      * This method find all indexes person with type employee
