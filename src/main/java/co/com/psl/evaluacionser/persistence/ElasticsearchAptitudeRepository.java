@@ -8,13 +8,13 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     private JestClient client;
 
-    static Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
+    private static final Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
 
     @Autowired
     public ElasticsearchAptitudeRepository(final JestClient client) {
@@ -72,8 +72,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         try {
             SearchResult result = client.execute(search);
 
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
 
             List<Hit<Aptitude, Void>> aptitudes = result.getHits(Aptitude.class);
             return aptitudes.stream().map(this::getAptitude).collect(Collectors.toList());
@@ -99,8 +100,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         try {
             SearchResult result = client.execute(search);
 
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
             return getAptitude(result.getFirstHit(Aptitude.class));
         } catch (IOException e) {
             logger.error("The aptitude with the given id couldn't be found " + e.getMessage());
@@ -115,8 +117,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      * @return an Aptitude with the data corresponding to the Source of the hit
      */
     private Aptitude getAptitude(Hit<Aptitude, Void> hit) {
-        if (hit == null)
+        if (hit == null) {
             return null;
+        }
 
         return hit.source;
     }
@@ -130,8 +133,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public List<Behavior> findAllBehaviors(String aptitudeId) {
         Aptitude aptitude = findById(aptitudeId);
 
-        if (aptitude == null)
+        if (aptitude == null) {
             return null;
+        }
 
         return aptitude.getBehaviors();
     }
@@ -140,12 +144,15 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Behavior findBehaviorById(String aptitudeId, String id) {
         List<Behavior> behaviors = findAllBehaviors(aptitudeId);
 
-        if (behaviors == null)
+        if (behaviors == null) {
             return null;
+        }
 
-        for (Behavior behavior : behaviors)
-            if (id.equals(behavior.getId()))
+        for (Behavior behavior : behaviors) {
+            if (id.equals(behavior.getId())) {
                 return behavior;
+            }
+        }
 
         return null;
     }
@@ -162,7 +169,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude = findById(aptitudeId);
         List<Behavior> behaviors = aptitude.getBehaviors();
 
-        Behavior behavior = new Behavior(String.valueOf(behaviors.size() + 1), behaviorDto.getEs(), behaviorDto.getEn());
+        Behavior behavior = new Behavior(String.valueOf(behaviors.size() + 1),
+                                         behaviorDto.getEs(),
+                                         behaviorDto.getEn());
         aptitude.addBehavior(behavior);
         updateAptitude(aptitude);
         return behavior;
@@ -177,8 +186,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude deleteBehavior(String id, String behaviorId) {
-        if (findBehaviorById(id, behaviorId) == null)
+        if (findBehaviorById(id, behaviorId) == null) {
             return null;
+        }
 
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = aptitude.getBehaviors();
@@ -214,7 +224,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     private Aptitude updateAptitude(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).id(String.valueOf(aptitude.getId())).build();
+        Index index = new Index.Builder(aptitude)
+                               .index(aptitudeIndexName)
+                               .type(aptitudeTypeName)
+                               .id(String.valueOf(aptitude.getId()))
+                               .build();
         try {
             client.execute(index);
             return aptitude;

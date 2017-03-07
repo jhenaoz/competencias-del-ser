@@ -1,7 +1,7 @@
 package co.com.psl.evaluacionser.domain;
 
 /**
- * This class is used to save the data in the required format 
+ * This class is used to save the data in the required format
  *
  */
 public class BehaviorSurvey {
