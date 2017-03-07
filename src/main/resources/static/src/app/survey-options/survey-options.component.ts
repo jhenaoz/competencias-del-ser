@@ -225,11 +225,11 @@ export class SurveyOptionsComponent implements OnInit {
     this.surveyService.startSurvey(this.survey);
     // XXX: hardcoded
     if(!this.isRecent) {
-      this.router.navigate(['/survey/1']);
+      this.goToSurvey();
     }
   }
   
-  startRecentSurvey(){
+  goToSurvey(){
     this.router.navigate(['/survey/1']);
   }
   /*
@@ -242,7 +242,4 @@ export class SurveyOptionsComponent implements OnInit {
       this.submitForm();
     }
   }
-
-
-
 }
