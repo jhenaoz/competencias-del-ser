@@ -16,6 +16,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <sonar.sources>pom.xml,src/main/java,src/main/resources/static/src</sonar.sources>
+        <sonar.ts.tslintpath>src/main/resources/static/node_modules/tslint/bin</sonar.ts.tslintpath>
+        <sonar.ts.tslint.configPath>src/main/resources/static/tslint.json</sonar.ts.tslint.configPath>
     </properties>
     <dependencies>
         <dependency>
@@ -84,6 +87,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.2</version>
+            </plugin>
             <!-- Frontend plugin -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -103,7 +111,6 @@
                             <npmVersion>4.1.2</npmVersion>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>npm-install</id>
                         <goals>
@@ -114,7 +121,6 @@
                         </configuration>
                         <phase>generate-resources</phase>
                     </execution>
-
                     <execution>
                         <id>npm-run-build</id>
                         <goals>
@@ -125,7 +131,6 @@
                         </configuration>
                         <phase>compile</phase>
                     </execution>
-
                     <execution>
                         <id>npm-test</id>
                         <goals>
@@ -137,6 +142,43 @@
                         <phase>test</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Code Analysis Plugins -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <configLocation>
+                        src/main/resources/checkstyle/checkstyle.xml
+                    </configLocation>
+                    <suppressionsLocation>
+                        src/main/resources/checkstyle/checkstyle-suppressions.xml
+                    </suppressionsLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>7.6</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

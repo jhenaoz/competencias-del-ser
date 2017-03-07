@@ -29,7 +29,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     private JestClient client;
 
-    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
+    private static final Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
 
     @Autowired
     public ElasticsearchSurveyRepository(final JestClient client) {
@@ -98,8 +98,9 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         try {
             SearchResult result = client.execute(search);
 
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
 
             List<Hit<Survey, Void>> aptitudes = result.getHits(Survey.class);
             return aptitudes.stream().map(this::getSurvey).collect(Collectors.toList());
@@ -110,8 +111,9 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     }
 
     private Survey getSurvey(Hit<Survey, Void> hit) {
-        if (hit == null)
+        if (hit == null) {
             return null;
+        }
 
         return hit.source;
     }
