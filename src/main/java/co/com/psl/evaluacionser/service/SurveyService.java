@@ -1,18 +1,17 @@
 package co.com.psl.evaluacionser.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.persistence.SurveyRepository;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class SurveyService {
@@ -21,7 +20,7 @@ public class SurveyService {
 
     private SurveyTransformer surveyTransformer;
 
-    static Logger logger = Logger.getLogger(SurveyService.class);
+    private static final Logger logger = Logger.getLogger(SurveyService.class);
 
     @Autowired
     public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer) {
@@ -36,9 +35,9 @@ public class SurveyService {
 
     public List<Survey> findUserSurveys(String user, String startDate, String endDate) {
 
-        if (!isDateRangeValid(startDate, endDate))
+        if (!isDateRangeValid(startDate, endDate)) {
             return null;
-
+        }
         return surveyRepository.findUserSurveys(user, startDate, endDate);
     }
 
@@ -54,8 +53,9 @@ public class SurveyService {
      * @return whether the starting date is smaller than the ending date
      */
     private boolean isDateRangeValid(String startDate, String endDate) {
-        if (startDate == null || endDate == null)
+        if (startDate == null || endDate == null) {
             return true;
+        }
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 

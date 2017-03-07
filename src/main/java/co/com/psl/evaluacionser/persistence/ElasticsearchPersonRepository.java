@@ -24,15 +24,18 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchPersonRepository implements PersonRepository {
 
-    static Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
     /**
      * These Strings must be congruent with the elasticsearch database
      */
     @Value("${elasticPersonIndex}")
     private String personIndexName;
+
     @Value("${elasticPersonType}")
     private String personTypeName;
+
     private JestClient client;
+
+    private static final Logger logger = Logger.getLogger(ElasticsearchPersonRepository.class);
 
     @Autowired
     public ElasticsearchPersonRepository(final JestClient client) {

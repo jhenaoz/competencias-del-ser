@@ -5,7 +5,7 @@ import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import java.util.List;
 
 /**
- * This class is used to save the data in the required format 
+ * This class is used to save the data in the required format
  *
  */
 public class AptitudeSurvey {
