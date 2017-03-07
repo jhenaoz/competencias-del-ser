@@ -14,6 +14,9 @@ import co.com.psl.evaluacionser.persistence.SurveyRepository;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 @Service
 public class SurveyService {
 
@@ -21,16 +24,27 @@ public class SurveyService {
 
     private SurveyTransformer surveyTransformer;
 
+    private MailService mailService;
+
     static Logger logger = Logger.getLogger(SurveyService.class);
 
     @Autowired
-    public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer) {
+    public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer,
+                         final MailService mailService) {
         this.surveyRepository = surveyRepository;
         this.surveyTransformer = surveyTransformer;
+        this.mailService = mailService;
     }
 
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
+        try {
+            mailService.newSurveyMail(survey);
+        } catch (AddressException ae) {
+            logger.error("Can't construct the internet address with the given String " + ae);
+        } catch (MessagingException me) {
+            logger.error("Can't send the email " + me);
+        }
         return surveyRepository.saveSurvey(survey);
     }
 
