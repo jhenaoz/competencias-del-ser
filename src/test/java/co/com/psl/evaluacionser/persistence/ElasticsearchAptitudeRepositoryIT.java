@@ -3,175 +3,161 @@ package co.com.psl.evaluacionser.persistence;
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.service.dto.BehaviorDto;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class ElasticsearchAptitudeRepositoryIT {
 
+    private Aptitude aptitude = new Aptitude();
+    private Behavior behavior = new Behavior();
+    private Behavior behavior1 = new Behavior();
+    private Aptitude save = new Aptitude();
+    private BehaviorDto behaviorDto = new BehaviorDto();
+    private Behavior behaviorFromDto = new Behavior();
+    private Aptitude aptitudeWithDeletedBehavior = new Aptitude();
+    private Behavior behaviorO = new Behavior();
+
     @Autowired
-    private ElasticsearchAptitudeRepository elasticsearchAptitudeRepository;
+    ElasticsearchAptitudeRepository elasticsearchAptitudeRepository;
 
-    @Test
-    public void aptitudeSaveDelete() {
-        Aptitude aptitude = new Aptitude();
+    @Before
+    public void setUp() throws Exception {
+
+        behaviorDto.setEn("nuevo texto en ingles");
+        behaviorDto.setEs("nuevo texto en español");
+
+
+        behavior.setId("1");
+        behavior.setEn("They accept suggestions regardless of who gives them");
+        behavior.setEs("Acepta sugerencias sin distincion de quien las de");
+
+        behavior1.setId("2");
+        behavior1.setEn("They recognize their mistakes");
+        behavior1.setEs("Reconoce sus errores");
+
+        behaviorO.setId("2");
+        behaviorO.setEn("Tor mistakes");
+        behaviorO.setEs("Ros errores");
+
+        List<Behavior> behaviors = new ArrayList<>();
+        behaviors.add(behavior);
+        behaviors.add(behavior1);
+
+        aptitude.setBehaviors(behaviors);
+        aptitude.setEs("Apertura");
+        aptitude.setEn("Openness");
         aptitude.setId(1993L);
-        aptitude.setEn("ENaptitudeEN");
-        aptitude.setEs("ESaptitudeES");
-        Aptitude aptitudeSaved = elasticsearchAptitudeRepository.save(aptitude);
+        save = elasticsearchAptitudeRepository.save(aptitude);
+        behaviorFromDto = elasticsearchAptitudeRepository.addBehavior(behaviorDto, String.valueOf(aptitude.getId()));
+        aptitudeWithDeletedBehavior = elasticsearchAptitudeRepository.deleteBehavior(String.valueOf(this.aptitude.getId()), behaviorFromDto.getId());
 
-        assertEquals(aptitude.getEs(), aptitudeSaved.getEs());
-        assertEquals(aptitude.getEn(), aptitudeSaved.getEn());
-        assertEquals(aptitude.getId(), aptitudeSaved.getId());
+    }
 
-        Aptitude aptitudeFoundById = elasticsearchAptitudeRepository.findById(String.valueOf(aptitude.getId()));
-
-        assertEquals(aptitude.getId(), aptitudeFoundById.getId());
-        assertEquals(aptitude.getEn(), aptitudeFoundById.getEn());
-        assertEquals(aptitude.getEs(), aptitudeFoundById.getEs());
-
-        boolean wasDeleted;
-        wasDeleted = elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(aptitude.getId()));
-        assertEquals(true, wasDeleted);
+    @After
+    public void tearDown() throws Exception {
+        elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(aptitude.getId()));
     }
 
     @Test
-    public void aptitudeWithId1993NotFound() {
+    public void save() throws Exception {
 
-        Aptitude aptitudeFoundById = elasticsearchAptitudeRepository.findById(String.valueOf(1993));
-
-        assertNull(aptitudeFoundById);
+        assertEquals(aptitude.getId(), save.getId());
+        assertEquals(aptitude.getEn(), save.getEn());
+        assertEquals(aptitude.getEs(), save.getEs());
 
     }
 
     @Test
-    public void deleteAptitudeWithId1994isFalse() {
-        boolean wasDeleted = true;
-        wasDeleted = elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(1994));
-        assertEquals(false, wasDeleted);
-    }
+    public void findAll() throws Exception {
+        List<Aptitude> all = elasticsearchAptitudeRepository.findAll();
 
-    @Test
-    public void foundAllAptitudes() {
-        Aptitude aptitude = new Aptitude();
-        aptitude.setId(1993L);
-        aptitude.setEn("ENaptitudeEN");
-        aptitude.setEs("ESaptitudeES");
-
-        Aptitude aptitude2 = new Aptitude();
-        aptitude2.setId(2000L);
-        aptitude2.setEn("ENEN");
-        aptitude2.setEs("ESES");
-
-        elasticsearchAptitudeRepository.save(aptitude);
-        elasticsearchAptitudeRepository.save(aptitude2);
-        List<Aptitude> aptitudeList = elasticsearchAptitudeRepository.findAll();
-
-        boolean contains1 = false;
-        for (Aptitude aptitudeInList : aptitudeList) {
-
+        boolean wasFound = false;
+        for (Aptitude aptitudeInList : all) {
             if (aptitudeInList.getId().equals(aptitude.getId())) {
-                contains1 = true;
+                wasFound = true;
+                break;
             }
 
         }
-
-        boolean contains2 = false;
-        for (Aptitude aptitudeInList : aptitudeList) {
-
-            if (aptitudeInList.getId().equals(aptitude2.getId())) {
-                contains2 = true;
-            }
-
-        }
-        assertEquals(true, contains1);
-        assertEquals(true, contains2);
-
-        elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(aptitude.getId()));
-        elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(aptitude2.getId()));
+        assertEquals(true, wasFound);
     }
 
     @Test
-    public void allBehaviorsSaveAndDelete() {
-        BehaviorDto behaviorDto = new BehaviorDto();
-        behaviorDto.setEn("behavior 1 EN text");
-        behaviorDto.setEs("behavior 1 ES text");
+    public void findById() throws Exception {
 
-        BehaviorDto behaviorDto2 = new BehaviorDto();
-        behaviorDto2.setEs("behavior 2 ES text");
-        behaviorDto2.setEn("Behavior 2 EN text");
+        Aptitude byId = elasticsearchAptitudeRepository.findById(String.valueOf(aptitude.getId()));
+        assertEquals(aptitude.getId(), byId.getId());
+        assertEquals(aptitude.getEn(), byId.getEn());
+        assertEquals(aptitude.getEs(), byId.getEs());
 
-        Aptitude aptitude = new Aptitude();
-        aptitude.setId(1993L);
-        aptitude.setEn("ENaptitudeEN");
-        aptitude.setEs("ESaptitudeES");
+    }
 
+    @Test
+    public void findAllBehaviors() throws Exception {
 
-        elasticsearchAptitudeRepository.save(aptitude);
-        Behavior behavior = elasticsearchAptitudeRepository.addBehavior(behaviorDto, String.valueOf(aptitude.getId()));
-        Behavior behavior2 = elasticsearchAptitudeRepository.addBehavior(behaviorDto2, String.valueOf(aptitude.getId()));
-        aptitude.addBehavior(behavior);
-        aptitude.addBehavior(behavior2);
         List<Behavior> allBehaviors = elasticsearchAptitudeRepository.findAllBehaviors(String.valueOf(aptitude.getId()));
+        assertEquals(aptitude.getBehaviors().get(0).getEn(), allBehaviors.get(0).getEn());
+        assertEquals(aptitude.getBehaviors().get(1).getEn(), allBehaviors.get(1).getEn());
 
+    }
 
-        boolean containsFirstBehavior = false;
-        for (Behavior behaviorInList : allBehaviors) {
+    @Test
+    public void findBehaviorById() throws Exception {
 
-            if (behaviorInList.getId().equals(behavior.getId())) {
-                containsFirstBehavior = true;
-                break;
-            }
+        Behavior behaviorById = elasticsearchAptitudeRepository.findBehaviorById(String.valueOf(aptitude.getId()), behavior.getId());
 
-        }
+        assertEquals(behavior.getEs(), behaviorById.getEs());
+        assertEquals(behavior.getEn(), behaviorById.getEn());
+        assertEquals(behavior.getId(), behaviorById.getId());
 
-        boolean containsSecondBehavior = false;
-        for (Behavior behaviorInList : allBehaviors) {
+    }
 
-            if (behaviorInList.getId().equals(behavior2.getId())) {
-                containsSecondBehavior = true;
-                break;
-            }
+    @Test
+    public void addBehavior() throws Exception {
 
-        }
+        assertEquals(behaviorDto.getEn(), behaviorFromDto.getEn());
+        assertEquals(behaviorDto.getEs(), behaviorFromDto.getEs());
 
-        assertEquals(true, containsFirstBehavior);
-        assertEquals(true, containsSecondBehavior);
+    }
 
-        behavior.setEs("nuevo ES para behavior 1");
-        Behavior updatedBehavior = elasticsearchAptitudeRepository.updateBehaviorById(String.valueOf(aptitude.getId()), behavior);
+    @Test
+    public void deleteBehavior() throws Exception {
 
-        assertEquals(behavior.getEs(), updatedBehavior.getEs());
+        assertEquals(aptitude.getEn(),aptitudeWithDeletedBehavior.getEn());
+        assertEquals(aptitude.getEs(),aptitudeWithDeletedBehavior.getEs());
+        assertEquals(aptitude.getId(),aptitudeWithDeletedBehavior.getId());
+        assertEquals(aptitude.getBehaviors().size(),aptitudeWithDeletedBehavior.getBehaviors().size());
 
-        Aptitude aptitude1 = elasticsearchAptitudeRepository.deleteBehavior(String.valueOf(aptitude.getId()), behavior.getId());
+    }
 
-        List<Behavior> behaviors = aptitude.getBehaviors();
-        for (Behavior behaviorInList : behaviors) {
-            if (behaviorInList.getId().equals(behavior.getId())) {
-                behaviors.remove(behavior);
+    @Test
+    public void updateBehaviorById() throws Exception {
 
-                for (int i = 0; i < behaviors.size(); i++) {
-                    behaviors.get(i).setId(String.valueOf(i + 1));
-                }
+        Behavior behavior = elasticsearchAptitudeRepository.updateBehaviorById(String.valueOf(aptitude.getId()), behaviorO);
+        assertEquals(behaviorO.getId(),behavior.getId());
+        assertEquals(behaviorO.getEs(),behavior.getEs());
+        assertEquals(behaviorO.getEn(),behavior.getEn());
 
-                aptitude.setBehaviors(behaviors);
-                break;
-            }
-        }
-        assertEquals(aptitude.getEn(), aptitude1.getEn());
-        assertEquals(aptitude.getId(), aptitude1.getId());
-        assertEquals(aptitude.getBehaviors().get(0).getId(), aptitude1.getBehaviors().get(0).getId());
+    }
 
-        elasticsearchAptitudeRepository.deleteAptitudeById(String.valueOf(aptitude.getId()));
+    @Test
+    public void deleteAptitudeById() throws Exception {
+
+        boolean b = elasticsearchAptitudeRepository.deleteAptitudeById("1993");
+        assertTrue(b);
     }
 
 }
