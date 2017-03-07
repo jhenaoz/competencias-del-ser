@@ -1,4 +1,4 @@
-package co.com.psl.evaluacionser.service;
+package co.com.psl.evaluacionser.service.transformer;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;

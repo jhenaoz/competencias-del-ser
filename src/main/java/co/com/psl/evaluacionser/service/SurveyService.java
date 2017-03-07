@@ -16,13 +16,17 @@ import java.util.List;
 @Service
 public class SurveyService {
 
-    @Autowired
     private SurveyRepository surveyRepository;
 
-    @Autowired
     private SurveyTransformer surveyTransformer;
 
     private static final Logger logger = Logger.getLogger(SurveyService.class);
+
+    @Autowired
+    public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer) {
+        this.surveyRepository = surveyRepository;
+        this.surveyTransformer = surveyTransformer;
+    }
 
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);

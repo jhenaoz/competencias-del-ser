@@ -20,8 +20,12 @@ import java.util.List;
 @RequestMapping(value = "/api/survey")
 public class SurveyController {
 
-    @Autowired
     private SurveyService surveyService;
+
+    @Autowired
+    public SurveyController(final SurveyService surveyService) {
+        this.surveyService = surveyService;
+    }
 
     /**
      * This method saves a Survey to the DB, receives a JSON containing the
