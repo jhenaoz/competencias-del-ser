@@ -28,7 +28,7 @@ public class MailServiceTest {
 
     @Test
     public void constructMessageTextWithOneAptitude() {
-        String result = mailService.constructHTML(survey);
+        String result = mailService.constructHtml(survey);
         String expected  = "<html>\n" +
                 "<head>\n" +
                 "<style>\n" +
@@ -99,7 +99,7 @@ public class MailServiceTest {
         List<AptitudeSurvey> aptitudeSurveyList = survey.getAptitudes();
         aptitudeSurveyList.add(null);
         newSurvey.setAptitudes(aptitudeSurveyList);
-        String result = mailService.constructHTML(newSurvey);
+        String result = mailService.constructHtml(newSurvey);
         String expected = "<html>\n" +
                 "<head>\n" +
                 "<style>\n" +

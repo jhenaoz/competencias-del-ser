@@ -8,13 +8,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 
 @Service
 public class SurveyService {
