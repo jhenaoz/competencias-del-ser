@@ -210,7 +210,7 @@ public class AptitudeControllerTest {
 
     @Test
     public void deleteBehaviorShouldReturnHttpStatusAccepted() {
-        ResponseEntity<Behavior> responseEntity = aptitudeController.deleteBehavior("1", "1");
+        ResponseEntity<Aptitude> responseEntity = aptitudeController.deleteBehavior("1", "1");
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("ACCEPTED", responseStatus.name());
@@ -220,7 +220,7 @@ public class AptitudeControllerTest {
     public void deleteBehaviorWithInvalidAptitudeReturnsNotFound() {
         when(mockAptitudeService.deleteAptitudeBehavior("-1", "-1")).thenReturn(null);
 
-        ResponseEntity<Behavior> responseEntity = aptitudeController.deleteBehavior("-1", "-1");
+        ResponseEntity<Aptitude> responseEntity = aptitudeController.deleteBehavior("-1", "-1");
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());

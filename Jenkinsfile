@@ -5,6 +5,12 @@ node() {
         checkout scm
     }
 
+    stage('Checkstyle') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            sh 'mvn checkstyle:check'
+        }
+    }
+
     stage('Compile') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
@@ -13,12 +19,6 @@ node() {
                 }
                 sh 'mvn clean test-compile'
             }
-        }
-    }
-
-    stage('Checkstyle') {
-        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            sh 'mvn checkstyle:check'
         }
     }
 
