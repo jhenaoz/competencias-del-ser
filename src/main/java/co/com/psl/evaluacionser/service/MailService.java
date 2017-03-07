@@ -37,20 +37,31 @@ public class MailService {
         Session getMailSession;
         MimeMessage generateMailMessage;
 
+        /**
+         * Setup Mail Server Properties
+         */
         mailServerProperties = System.getProperties();
         mailServerProperties.put("mail.smtp.port", "587");
         mailServerProperties.put("mail.smtp.auth", "true");
         mailServerProperties.put("mail.smtp.starttls.enable", "true");
 
+        /**
+         * get Mail Session
+         */
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(mailReceiver));
         generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(mailUsername));
         generateMailMessage.setSubject("Nueva valoracion del ser");
         String emailBody = constructMessageText(survey);
-        //generateMailMessage.setContent(emailBody, "text/html");
+        /**
+         * generateMailMessage.setContent(emailBody, "text/html"); can send html text in this way
+         */
         generateMailMessage.setContent(emailBody, "text/plain");
 
+        /**
+         * Get Session and Send mail
+         */
         Transport transport = getMailSession.getTransport("smtp");
 
         transport.connect("smtp.gmail.com", mailUsername, mailPassword);
