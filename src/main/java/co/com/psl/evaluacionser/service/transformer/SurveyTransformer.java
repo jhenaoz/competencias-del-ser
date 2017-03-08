@@ -1,10 +1,6 @@
 package co.com.psl.evaluacionser.service.transformer;
 
-import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.AptitudeSurvey;
-import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorSurvey;
-import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.domain.*;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
@@ -29,13 +25,18 @@ import java.util.stream.Collectors;
 @Service
 public class SurveyTransformer {
 
-    @Autowired
     private AptitudeRepository aptitudeRepository;
 
-    @Autowired
     private AptitudeTransformer aptitudeTransformer;
 
-    private static final Logger logger = Logger.getLogger(SurveyTransformer.class);
+    static Logger logger = Logger.getLogger(SurveyTransformer.class);
+
+    @Autowired
+    public SurveyTransformer(final AptitudeRepository aptitudeRepository,
+                             final AptitudeTransformer aptitudeTransformer) {
+        this.aptitudeRepository = aptitudeRepository;
+        this.aptitudeTransformer = aptitudeTransformer;
+    }
 
     /**
      * This method calls the other methods required for the transformation
