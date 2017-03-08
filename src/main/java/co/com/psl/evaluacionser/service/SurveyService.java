@@ -41,8 +41,8 @@ public class SurveyService {
         return surveyRepository.findUserSurveys(user, startDate, endDate);
     }
 
-    public boolean existsRecentSurvey(String evaluated, String evaluator) {
-        return surveyRepository.existsRecentSurvey(evaluated, evaluator);
+    public boolean existsRecentSurvey(String evaluated, String evaluator, String aptitudeId) {
+        return surveyRepository.existsRecentSurvey(evaluated, evaluator, aptitudeId);
     }
 
     /**
