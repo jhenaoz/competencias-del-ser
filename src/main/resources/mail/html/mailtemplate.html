@@ -53,16 +53,16 @@ body {
 </head>
 <body>
 <div class="box">
-    <h2>Cordial saludo, se ha realizado una valoración del ser</h2>
+    <h2>Cordial saludo, se ha realizado una valoración del ser.</h2>
     <h4>Persona valorada:</h4>
-    <p>th:text="${evaluated}"</p>
+    <p th:text="${evaluated}"></p>
     <h4>Persona que realizó la valoración:</h4>
-    <p>th:text="${evaluator}"</p>
+    <p th:text="${evaluator}"></p>
     <h4>Tipo de valoracón:</h4>
-    <p>th:text="${type}"</p>
+    <p th:text="${type}"></p>
     <div th:if="${aptitude != null}">
         <h4>Competencia evaluada:</h4>
-        <p>th:text="${aptitude}"</p>
+        <p th:text="${aptitude}"></p>
     </div>
 </div>
 <div class="footer">This message is auto-generated - <strong>Competencias del ser PSL </strong> - </div>

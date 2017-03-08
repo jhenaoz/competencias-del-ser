@@ -23,22 +23,22 @@ public class SurveyService {
 
     private SurveyTransformer surveyTransformer;
 
-    private MailService mailService;
+    private EmailService emailService;
 
     private static final Logger logger = Logger.getLogger(SurveyService.class);
 
     @Autowired
     public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer,
-                         final MailService mailService) {
+                         final EmailService emailService) {
         this.surveyRepository = surveyRepository;
         this.surveyTransformer = surveyTransformer;
-        this.mailService = mailService;
+        this.emailService = emailService;
     }
 
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
         try {
-            mailService.newSurveyMail(survey);
+            emailService.sendSimpleMail(survey);
         } catch (AddressException ae) {
             logger.error("Can't construct the internet address with the given String " + ae);
         } catch (MessagingException me) {
