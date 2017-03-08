@@ -1,22 +1,22 @@
 package co.com.psl.evaluacionser.service.dto;
 
 public class BehaviorSurveyDto {
-    private String behaviorId;
+    private long behaviorId;
     private int score;
 
     public BehaviorSurveyDto() {
     }
 
-    public BehaviorSurveyDto(String behaviorId, int score) {
+    public BehaviorSurveyDto(long behaviorId, int score) {
         this.behaviorId = behaviorId;
         this.score = score;
     }
 
-    public String getBehaviorId() {
+    public long getBehaviorId() {
         return behaviorId;
     }
 
-    public void setBehaviorId(String behaviorId) {
+    public void setBehaviorId(long behaviorId) {
         this.behaviorId = behaviorId;
     }
 

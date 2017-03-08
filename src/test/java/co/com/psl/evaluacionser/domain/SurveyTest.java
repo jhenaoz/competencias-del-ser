@@ -14,14 +14,14 @@ public class SurveyTest {
     public void SurveyByConstructor() {
         AptitudeDto aptitudeDto = new AptitudeDto("1", "Openness", "Apertura");
         List<BehaviorSurvey> behaviors = new ArrayList<BehaviorSurvey>();
-        Behavior behavior = new Behavior("1", "Accepts review", "Acepta retroalimentacion");
+        Behavior behavior = new Behavior(1, "Accepts review", "Acepta retroalimentacion");
         behaviors.add(new BehaviorSurvey(behavior, 5));
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey(aptitudeDto, "A really good friend", behaviors);
         ArrayList<AptitudeSurvey> aptitudeSurveys = new ArrayList<>();
         aptitudeSurveys.add(aptitudeSurvey);
         Survey survey = new Survey("Juan Perez", "Jhon Doe", "Team", "1998-02-02", aptitudeSurveys);
         assertEquals("Juan Perez", survey.getEvaluator());
-        assertEquals("1", survey.getAptitudes().get(0).getBehaviors().get(0).getBehavior().getId());
+        assertEquals(1, survey.getAptitudes().get(0).getBehaviors().get(0).getBehavior().getId());
     }
 
     @Test

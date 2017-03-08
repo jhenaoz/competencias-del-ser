@@ -1,10 +1,6 @@
 package co.com.psl.evaluacionser.service.transformer;
 
-import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.AptitudeSurvey;
-import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.domain.BehaviorSurvey;
-import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.domain.*;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
@@ -29,13 +25,11 @@ import java.util.stream.Collectors;
 @Service
 public class SurveyTransformer {
 
+    private static final Logger logger = Logger.getLogger(SurveyTransformer.class);
     @Autowired
     private AptitudeRepository aptitudeRepository;
-
     @Autowired
     private AptitudeTransformer aptitudeTransformer;
-
-    private static final Logger logger = Logger.getLogger(SurveyTransformer.class);
 
     /**
      * This method calls the other methods required for the transformation
@@ -78,7 +72,7 @@ public class SurveyTransformer {
         for (BehaviorSurveyDto behaviorSurveyDto : behaviorsSurveyDto) {
             BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
             for (Behavior behavior : behaviors) {
-                if (behavior.getId().equals(behaviorSurveyDto.getBehaviorId())) {
+                if (behaviorSurveyDto.getBehaviorId() == behavior.getId()) {
                     behaviorSurvey.setBehavior(behavior);
                     behaviorSurvey.setScore(behaviorSurveyDto.getScore());
                     behaviorsSurvey.add(behaviorSurvey);
