@@ -50,5 +50,8 @@
         "competence_teamwork": "Teamwork",
         "competence_development": "Development oriented leadership",
         "competence_goal": "Achievement oriented leadership"
+    },
+    "Shared": {
+        "cancel": "Cancel"
     }
 }

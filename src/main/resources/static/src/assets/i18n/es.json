@@ -52,5 +52,8 @@
         "competence_teamwork": "Trabajo en Equipo",
         "competence_development": "Liderazgo para el Desarrollo",
         "competence_goal": "Liderazgo para el logro"
+    },
+    "Shared": {
+        "cancel": "Cancelar"
     }
 }
