@@ -75,7 +75,9 @@
         </div>
         <!--/Titles-->
         <!--Data-->
-        <form [formGroup]="surveyForm" (ngSubmit)="save()" *ngIf="showForm" novalidate>
+        <form [formGroup]="surveyForm" 
+              (ngSubmit)="save()" 
+              *ngIf="showForm" novalidate>
             <!--Looping behaviors-->
             <div *ngFor="let behavior of behaviors; let i=index">
                 <div class="row">
@@ -89,11 +91,17 @@
                         </div>
                     </div>
                     <!--Looping to create radio buttons-->
-                    <div formArrayName="behaviorSurvey" *ngFor="let answer of behaviorSurvey.controls, let y=index">
+                    <div formArrayName="behaviorSurvey" 
+                         *ngFor="let answer of behaviorSurvey.controls, let y=index">
                         <div [formGroupName]="i">
                             <div class="col-md-1">
                                 <div class="radio radio-primary">
-                                    <input class="validateRadio{{i}}" formControlName="score" type="radio" id="{{behavior.id}}radio{{y}}" value="{{4-y}}" required>
+                                    <input class="validateRadio{{i}}" 
+                                           formControlName="score" 
+                                           type="radio" 
+                                           id="{{behavior.id}}radio{{y}}" 
+                                           value="{{4-y}}" 
+                                           required>
                                     <label for="{{behavior.id}}radio{{y}}">
                                     </label>
                                 </div>
@@ -104,7 +112,12 @@
                             <div [formGroupName]="i">
                                 <div class="col-md-1">
                                     <div class="radio radio-primary">
-                                        <input class="validateRadio{{i}}" formControlName="score" type="radio" id="{{behavior.id}}radio{{y+1}}" value="{{4-y-1}}" required>
+                                        <input class="validateRadio{{i}}" 
+                                               formControlName="score" 
+                                               type="radio" 
+                                               id="{{behavior.id}}radio{{y+1}}" 
+                                               value="{{4-y-1}}" 
+                                               required>
                                         <label for="{{behavior.id}}radio{{y+1}}">
                                     </label>
                                     </div>
@@ -115,14 +128,27 @@
 
                 </div>
             </div>
-            <div class="alert alert-danger" id="radio-alert" [style.display]="(!surveyForm.valid && submitted && !textAreaIsRequired) ? 'block' : 'none'">{{ "Survey.survey_alert" | translate }}.</div>
+            <div class="alert alert-danger" 
+                 id="radio-alert" 
+                 [style.display]="(!surveyForm.valid && submitted && !textAreaIsRequired) ? 'block' : 'none'">
+                 {{ "Survey.survey_alert" | translate }}.
+            </div>
             <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
             {{ bindRadioButtons() }}
             <h4>
                 {{ "Survey.observations" | translate }}
             </h4>
-            <textarea formControlName="observation" class="form-control" rows="3" minlength="10"></textarea><br>
-            <div class="alert alert-danger" id="radio-alert" [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">{{ "Survey.survey_observations_alert" | translate }}.</div>
+            <textarea formControlName="observation" 
+                      class="form-control" 
+                      rows="3" 
+                      minlength="10">
+            </textarea>
+            <br>
+            <div class="alert alert-danger" 
+                 id="radio-alert" 
+                 [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">
+                 {{ "Survey.survey_observations_alert" | translate }}.
+            </div>
         </form>
     </div>
 </div>

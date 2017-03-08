@@ -73,11 +73,16 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
      * @return if the survey was made in the last week
      */
     @Override
-    public boolean existsRecentSurvey(String evaluated, String evaluator) {
+    public boolean existsRecentSurvey(String evaluated, String evaluator, String aptitudeId) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
                 .must(QueryBuilders.rangeQuery("timestamp").from("now-1w").to("now"))
                 .must(QueryBuilders.matchQuery("evaluated", evaluated))
                 .must(QueryBuilders.matchQuery("evaluator", evaluator));
+
+        // Only want to search for recent surveys of that aptitude, if specified
+        if (aptitudeId != null) {
+            boolQueryBuilder.must(QueryBuilders.matchQuery("aptitudes.aptitude.id", aptitudeId));
+        }
 
         List<Survey> surveysFound = findSurveys(boolQueryBuilder);
         return (surveysFound != null) && !surveysFound.isEmpty();
