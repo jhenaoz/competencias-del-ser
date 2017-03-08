@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SurveyDto {
 
-    List<AptitudeSurveyDto> aptitudes;
+    private List<AptitudeSurveyDto> aptitudes;
     private String evaluator;
     private String evaluated;
     private String role;

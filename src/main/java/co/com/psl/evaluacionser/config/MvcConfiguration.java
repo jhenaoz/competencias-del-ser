@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.EnumSet;
@@ -18,7 +19,9 @@ public class MvcConfiguration implements ServletContextInitializer, EmbeddedServ
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC);
+        EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST,
+                                                   DispatcherType.FORWARD,
+                                                   DispatcherType.ASYNC);
     }
 
     private String resolvePathPrefix() {

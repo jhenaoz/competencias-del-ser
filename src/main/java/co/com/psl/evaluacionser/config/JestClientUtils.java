@@ -5,10 +5,12 @@ import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * ElasticSearchUtils class provide a singleton client for elasticsearch as a bean
  */
+@Configuration
 public class JestClientUtils {
 
     /**
