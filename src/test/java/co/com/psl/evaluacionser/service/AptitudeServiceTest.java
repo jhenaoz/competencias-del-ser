@@ -4,6 +4,7 @@ import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.persistence.ElasticsearchAptitudeRepository;
 import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,8 @@ public class AptitudeServiceTest {
     private ElasticsearchAptitudeRepository mockAptitudeRepository;
     private AptitudeService aptitudeService;
 
+    private BehaviorDto behaviorDto;
+
     @Before
     public void setup() {
         List<Behavior> behaviorList = new ArrayList<>();
@@ -39,6 +42,11 @@ public class AptitudeServiceTest {
         when(mockAptitudeRepository.findById("1")).thenReturn(aptitude);
         when(mockAptitudeRepository.findAllBehaviors("1")).thenReturn(behaviorList);
         when(mockAptitudeRepository.findBehaviorById("1", "1")).thenReturn(behavior);
+
+        behaviorDto = new BehaviorDto(behavior.getEs(), behavior.getEn());
+        when(mockAptitudeRepository.addBehavior(behaviorDto, "1")).thenReturn(behavior);
+        when(mockAptitudeRepository.updateBehaviorById(eq("1"), any(Behavior.class))).thenReturn(behavior);
+        when(mockAptitudeRepository.deleteBehavior("1", "1")).thenReturn(aptitude);
 
         aptitudeService = new AptitudeService(mockAptitudeRepository, new AptitudeTransformer());
     }
@@ -110,6 +118,68 @@ public class AptitudeServiceTest {
         when(mockAptitudeRepository.findBehaviorById("-1", "-1")).thenReturn(null);
 
         assertNull(aptitudeService.findAptitudeBehaviorById("-1", "-1"));
+    }
+
+    @Test
+    public void createAptitudeBehaviorReturnBehaviorCreated() {
+        Behavior behaviorCreated = aptitudeService.createAptitudeBehavior("1", behaviorDto);
+
+        assertEquals("1", behaviorCreated.getId());
+        assertEquals("acepta sugerencias", behaviorCreated.getEs());
+        assertEquals("accept suggestions", behaviorCreated.getEn());
+    }
+
+    @Test
+    public void createAptitudeBehaviorWithInvalidIdReturnNull() {
+        when(mockAptitudeRepository.findById("-1")).thenReturn(null);
+
+        assertNull(aptitudeService.createAptitudeBehavior("-1", behaviorDto));
+    }
+
+    @Test
+    public void updateAptitudeBehaviorReturnBehaviorUpdated() {
+        Behavior behaviorUpdated = aptitudeService.updateAptitudeBehavior("1", "1", behaviorDto);
+
+        assertEquals("1", behaviorUpdated.getId());
+        assertEquals("acepta sugerencias", behaviorUpdated.getEs());
+        assertEquals("accept suggestions", behaviorUpdated.getEn());
+    }
+
+    @Test
+    public void updateAptitudeBehaviorWithBadAptitudeIdReturnNull() {
+        when(mockAptitudeRepository.findById("-1")).thenReturn(null);
+
+        assertNull(aptitudeService.updateAptitudeBehavior("-1", "1", behaviorDto));
+    }
+
+    @Test
+    public void updateAptitudeBehaviorWithBadBehaviorIdReturnNull() {
+        when(mockAptitudeRepository.findBehaviorById("1", "-1")).thenReturn(null);
+
+        assertNull(aptitudeService.updateAptitudeBehavior("1", "-1", behaviorDto));
+    }
+
+    @Test
+    public void deleteAptitudeBehaviorReturnAptitudeUpdated() {
+        Aptitude aptitudeReturned = aptitudeService.deleteAptitudeBehavior("1", "1");
+
+        assertEquals(1L, (long) aptitudeReturned.getId());
+        assertEquals("Apertura", aptitudeReturned.getEs());
+        assertEquals("Openness", aptitudeReturned.getEn());
+    }
+
+    @Test
+    public void deleteAptitudeBehaviorWithBadAptitudeIdReturnNull() {
+        when(mockAptitudeRepository.findById("-1")).thenReturn(null);
+
+        assertNull(aptitudeService.deleteAptitudeBehavior("-1", "1"));
+    }
+
+    @Test
+    public void deleteAptitudeBehaviorWithBadBehaviorIdReturnNull() {
+        when(mockAptitudeRepository.findBehaviorById("1", "-1")).thenReturn(null);
+
+        assertNull(aptitudeService.deleteAptitudeBehavior("1", "-1"));
     }
 
 }

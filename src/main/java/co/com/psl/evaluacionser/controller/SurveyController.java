@@ -67,9 +67,11 @@ public class SurveyController {
      */
     @RequestMapping(value = "/recentsurvey", method = RequestMethod.GET)
     public ResponseEntity<Boolean> existsRecentSurvey(@RequestParam(value = "evaluated") String evaluated,
-                                                      @RequestParam(value = "evaluator") String evaluator) {
-        boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator);
-        return new ResponseEntity<>(surveyExists, HttpStatus.OK);
+                                             @RequestParam(value = "evaluator") String evaluator,
+                                             @RequestParam(value = "aptitude", required = false) String aptitudeId) {
+        boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator, aptitudeId);
+        return new ResponseEntity<Boolean>(surveyExists, HttpStatus.OK);
+
     }
 
 }

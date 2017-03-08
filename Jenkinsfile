@@ -17,7 +17,7 @@ node() {
                 if (env.BRANCH_NAME == 'master') {
                     sh 'mvn clean'
                 }
-                sh 'mvn test-compile'
+                sh 'mvn clean test-compile'
             }
         }
     }

@@ -202,7 +202,7 @@ public class AptitudeControllerTest {
     public void modifyBehaviorWithInvalidAptitudeReturnsNotFound() {
         when(mockAptitudeService.updateAptitudeBehavior("-1", "-1", behaviorDto)).thenReturn(null);
 
-        ResponseEntity responseEntity = aptitudeController.saveBehavior("-1", behaviorDto);
+        ResponseEntity responseEntity = aptitudeController.modifyBehavior("-1", "-1", behaviorDto);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
