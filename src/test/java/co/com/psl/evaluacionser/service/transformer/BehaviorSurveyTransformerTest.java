@@ -3,9 +3,7 @@ package co.com.psl.evaluacionser.service.transformer;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.domain.BehaviorSurvey;
 import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
-import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
