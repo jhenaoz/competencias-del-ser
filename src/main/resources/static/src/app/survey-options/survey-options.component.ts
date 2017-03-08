@@ -197,8 +197,9 @@ export class SurveyOptionsComponent implements OnInit {
     if(!this.isRecent) {
       this.gotoSurvey();
     } else {
+      $('input, select').attr('disabled', 'disabled');
       this.complexForm.disable();
-       $("#evaluatedAppEmployee").prop('disabled', 'disabled');
+      this.complexForm.controls['evaluated'].disable();
     }
   }
 
@@ -208,6 +209,8 @@ export class SurveyOptionsComponent implements OnInit {
     this.router.navigate(['/survey/1']);
   }
   reset(){
+    $('input, select').removeAttr("disabled");
+    $('select').prop('selectedIndex',0);
     this.complexForm.reset();
     this.complexForm.enable();
     this.submitted = false;
@@ -220,6 +223,7 @@ export class SurveyOptionsComponent implements OnInit {
   */
   startSurvey() {
     if((this.complexForm.value.evaluator === '' || 
+        this.complexForm.value.evaluator === null ||
         this.complexForm.value.evaluator === this.complexForm.value.evaluated) && 
         !this.isSelf) {
       this.evaluatorIsValid = false;
