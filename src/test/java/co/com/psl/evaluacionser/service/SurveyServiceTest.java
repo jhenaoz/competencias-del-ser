@@ -60,8 +60,8 @@ public class SurveyServiceTest {
         aptitudes.add(aptitudeSurveyDto);
 
         surveyDto.setAptitudes(aptitudes);
-        surveyDto.setEvaluated("evaluated");
-        surveyDto.setEvaluator("evaluator");
+        surveyDto.setEvaluated("jhon doe");
+        surveyDto.setEvaluator("jane doe");
         surveyDto.setRole("teanmmate");
 
 
@@ -113,8 +113,8 @@ public class SurveyServiceTest {
         when(mockSurveyTransformer.transformer(surveyDto)).thenReturn(survey);
 
 
-        when(mockSurveyRepository.existsRecentSurvey("evaluated", "evaluator")).thenReturn(true);
-        when(mockSurveyRepository.existsRecentSurvey("not evaluated", "evaluator")).thenReturn(false);
+        when(mockSurveyRepository.existsRecentSurvey("evaluated", "evaluator",null)).thenReturn(true);
+        when(mockSurveyRepository.existsRecentSurvey("not evaluated", "evaluator",null)).thenReturn(false);
         when(mockSurveyRepository.findUserSurveys("evaluated", "2017-03-06", "2017-03-06")).thenReturn(surveys);
         when(mockSurveyRepository.findUserSurveys("evaluated", null, null)).thenReturn(surveys);
         when(mockSurveyRepository.findUserSurveys("evaluated", "invalid date", "invalid date")).thenReturn(null);
@@ -149,13 +149,13 @@ public class SurveyServiceTest {
 
     @Test
     public void recentSurveyShouldBeFound() {
-        boolean b = surveyService.existsRecentSurvey("evaluated", "evaluator");
+        boolean b = surveyService.existsRecentSurvey("evaluated", "evaluator",null);
         assertEquals(true, b);
     }
 
     @Test
     public void nonexistingSurveyShouldntBeFound() {
-        boolean b = surveyService.existsRecentSurvey("not evaluated", "evaluator");
+        boolean b = surveyService.existsRecentSurvey("not evaluated", "evaluator",null);
         assertEquals(false, b);
     }
 

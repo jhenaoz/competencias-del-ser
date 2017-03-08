@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -18,33 +17,33 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class ElasticsearchPersonRepositoryIT {
 
-    Person person = new Person();
+    Person person1 = new Person();
     Person person2 = new Person();
-    Person save = new Person();
+    Person returnedPersonFromSave = new Person();
     Person save1 = new Person();
-    boolean b;
-    boolean b1;
+    boolean person1WasDeleted;
+    boolean Person2WasDeleted;
 
     @Autowired
     private ElasticsearchPersonRepository elasticsearchPersonRepository;
 
     @Before
     public void setUp() throws Exception {
-        person.setName("el señor fulano de tal");
-        person.setId("125874");
+        person1.setName("jhon doe");
+        person1.setId("125874");
 
 
         person2.setId("12547514");
-        person2.setName("la señorita fulana");
+        person2.setName("jane doe");
 
-        save = elasticsearchPersonRepository.save(person);
+        returnedPersonFromSave = elasticsearchPersonRepository.save(person1);
         save1 = elasticsearchPersonRepository.save(person2);
     }
 
     @After
     public void tearDown() throws Exception {
 
-        elasticsearchPersonRepository.deletePersonByIdAndName(person.getId(), person.getName());
+        elasticsearchPersonRepository.deletePersonByIdAndName(person1.getId(), person1.getName());
         elasticsearchPersonRepository.deletePersonByIdAndName(person2.getId(), person2.getName());
 
     }
@@ -53,33 +52,33 @@ public class ElasticsearchPersonRepositoryIT {
     public void findAll() throws Exception {
         List<Person> personList = elasticsearchPersonRepository.findAll();
 
-        boolean contains1 = false;
+        boolean listContainsPerson1 = false;
         for (Person personInList : personList) {
 
-            if (personInList.getId().equals(person.getId())) {
-                contains1 = true;
+            if (personInList.getId().equals(person1.getId())) {
+                listContainsPerson1 = true;
             }
 
         }
 
-        boolean contains2 = false;
+        boolean listContainsPerson2 = false;
         for (Person personInList : personList) {
 
             if (personInList.getId().equals(person2.getId())) {
-                contains2 = true;
+                listContainsPerson2 = true;
             }
 
         }
 
-        assertEquals(true, contains1);
-        assertEquals(true, contains2);
+        assertEquals(true, listContainsPerson1);
+        assertEquals(true, listContainsPerson2);
 
     }
 
     @Test
     public void save() throws Exception {
-        assertEquals(person.getId(), save.getId());
-        assertEquals(person.getName(), save.getName());
+        assertEquals(person1.getId(), returnedPersonFromSave.getId());
+        assertEquals(person1.getName(), returnedPersonFromSave.getName());
         assertEquals(person2.getId(), save1.getId());
         assertEquals(person2.getName(), save1.getName());
 
@@ -87,19 +86,19 @@ public class ElasticsearchPersonRepositoryIT {
 
     @Test
     public void findPersonById() throws Exception {
-        Person foundPerson = elasticsearchPersonRepository.findPersonById(person.getId());
-        assertEquals(person.getId(), foundPerson.getId());
+        Person foundPerson = elasticsearchPersonRepository.findPersonById(person1.getId());
+        assertEquals(person1.getId(), foundPerson.getId());
 
     }
 
     @Test
     public void deletePersonByIdAndName() throws Exception {
 
-        b = elasticsearchPersonRepository.deletePersonByIdAndName(person.getId(), person.getName());
-        b1 = elasticsearchPersonRepository.deletePersonByIdAndName(person2.getId(), person2.getName());
+        person1WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(person1.getId(), person1.getName());
+        Person2WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(person2.getId(), person2.getName());
 
-        assertEquals(true,b);
-        assertEquals(true,b1);
+        assertEquals(true, person1WasDeleted);
+        assertEquals(true, Person2WasDeleted);
 
     }
 

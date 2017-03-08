@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class ElasticsearchSurveyRepositoryIT {
 
-    Survey survey = new Survey();
+    Survey survey1 = new Survey();
     Survey survey2 = new Survey();
     Survey returnedSaveSurvey;
     Survey returnedSaveSurvey2;
@@ -36,41 +36,41 @@ public class ElasticsearchSurveyRepositoryIT {
         String formatted = format1.format(cal.getTime());
 
 
-        survey.setEvaluated("evaluated");
-        survey.setEvaluator("evaluator");
-        survey.setRole("teanmmate");
-        survey.setTimestamp(formatted);
+        survey1.setEvaluated("jhon doe");
+        survey1.setEvaluator("psl");
+        survey1.setRole("teanmmate");
+        survey1.setTimestamp(formatted);
 
 
-        survey2.setEvaluated("evaluated");
-        survey2.setEvaluator("evaluator2");
+        survey2.setEvaluated("jhon doe");
+        survey2.setEvaluator("coomeva");
         survey2.setTimestamp(formatted);
 
-        returnedSaveSurvey = elasticsearchSurveyRepository.saveSurvey(survey);
+        returnedSaveSurvey = elasticsearchSurveyRepository.saveSurvey(survey1);
         returnedSaveSurvey2 = elasticsearchSurveyRepository.saveSurvey(survey2);
     }
 
     @After
     public void tearDown() throws Exception {
-        elasticsearchSurveyRepository.deleteSurvey(survey.getEvaluator(), survey.getEvaluated(), survey.getTimestamp());
+        elasticsearchSurveyRepository.deleteSurvey(survey1.getEvaluator(), survey1.getEvaluated(), survey1.getTimestamp());
         elasticsearchSurveyRepository.deleteSurvey(survey2.getEvaluator(), survey2.getEvaluated(), survey2.getTimestamp());
 
     }
 
     @Test
     public void saveSurvey() throws Exception {
-        assertEquals(survey.toString(), returnedSaveSurvey.toString());
+        assertEquals(survey1.toString(), returnedSaveSurvey.toString());
 
     }
 
     @Test
     public void findUserSurveys() throws Exception {
 
-        List<Survey> userSurveys = elasticsearchSurveyRepository.findUserSurveys(survey.getEvaluated(), survey.getTimestamp(), survey.getTimestamp());
+        List<Survey> userSurveys = elasticsearchSurveyRepository.findUserSurveys(survey1.getEvaluated(), survey1.getTimestamp(), survey1.getTimestamp());
 
         boolean evaluatorFound = false;
         for (Survey surveyInList : userSurveys) {
-            if (surveyInList.getEvaluator().equals(survey.getEvaluator())) {
+            if (surveyInList.getEvaluator().equals(survey1.getEvaluator())) {
                 evaluatorFound = true;
             }
 
@@ -90,7 +90,7 @@ public class ElasticsearchSurveyRepositoryIT {
     @Test
     public void existsRecentSurvey() throws Exception {
 
-        assertTrue(elasticsearchSurveyRepository.existsRecentSurvey(survey.getEvaluated(), survey.getEvaluator()));
+        assertTrue(elasticsearchSurveyRepository.existsRecentSurvey(survey1.getEvaluated(), survey1.getEvaluator(),null));
 
     }
 
@@ -103,12 +103,12 @@ public class ElasticsearchSurveyRepositoryIT {
 
     @Test
     public void findSurvey() throws Exception {
-        Survey surveyFound = elasticsearchSurveyRepository.findSurvey(this.survey.getEvaluator(), this.survey.getEvaluated(), this.survey.getTimestamp());
-        assertEquals(survey.getEvaluator(),surveyFound.getEvaluator());
-        assertEquals(survey.getEvaluated(),surveyFound.getEvaluated());
-        assertEquals(survey.getRole(),surveyFound.getRole());
-        assertEquals(survey.getAptitudes(),surveyFound.getAptitudes());
-        assertEquals(survey.getTimestamp(),surveyFound.getTimestamp());
+        Survey surveyFound = elasticsearchSurveyRepository.findSurvey(this.survey1.getEvaluator(), this.survey1.getEvaluated(), this.survey1.getTimestamp());
+        assertEquals(survey1.getEvaluator(),surveyFound.getEvaluator());
+        assertEquals(survey1.getEvaluated(),surveyFound.getEvaluated());
+        assertEquals(survey1.getRole(),surveyFound.getRole());
+        assertEquals(survey1.getAptitudes(),surveyFound.getAptitudes());
+        assertEquals(survey1.getTimestamp(),surveyFound.getTimestamp());
 
     }
 
