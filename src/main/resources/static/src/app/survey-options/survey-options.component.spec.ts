@@ -14,13 +14,9 @@ describe('SurveyOptionsComponent', () => {
       declarations: [ SurveyOptionsComponent ]
     })
     .compileComponents();
-  }));
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(SurveyOptionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
+  }));
 
 });
