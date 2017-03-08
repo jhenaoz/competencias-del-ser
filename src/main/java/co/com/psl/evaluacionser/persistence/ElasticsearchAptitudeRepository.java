@@ -178,17 +178,17 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     private long getNextBehaviorId(String aptitudeId) {
         String query = "{\n"
-                +"    \"query\" : {\n"
-                +"        \"match\" : {\"id\":" + aptitudeId + "}\n"
-                +"    },\n"
-                +"    \"aggs\" : {\n"
-                +"        \"max1\" : {\n"
-                +"            \"max\" : {\n"
-                +"                \"field\" : \"behaviors.id\"\n"
-                +"            }\n"
-                +"        }\n"
-                +"    }\n"
-                +"}";
+                + "    \"query\" : {\n"
+                + "        \"match\" : {\"id\":" + aptitudeId + "}\n"
+                + "    },\n"
+                + "    \"aggs\" : {\n"
+                + "        \"max1\" : {\n"
+                + "            \"max\" : {\n"
+                + "                \"field\" : \"behaviors.id\"\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }\n"
+                + "}";
         Search search = new Search.Builder(query)
                 .addIndex(aptitudeIndexName)
                 .addType(aptitudeTypeName)
@@ -229,8 +229,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         while (iter.hasNext()) {
             Behavior behaviorInList = iter.next();
 
-            if (behaviorInList.getId() == behaviorId)
+            if (behaviorInList.getId() == behaviorId) {
                 iter.remove();
+            }
         }
         aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
