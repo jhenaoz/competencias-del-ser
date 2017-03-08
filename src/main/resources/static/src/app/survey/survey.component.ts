@@ -53,7 +53,7 @@ export class SurveyComponent implements OnInit {
   surveyForm: FormGroup;
   survey: Survey;
   showForm: boolean;
-  submitted : boolean;
+  submitted: boolean;
   textAreaIsRequired: boolean;
 
   /**
@@ -161,16 +161,16 @@ export class SurveyComponent implements OnInit {
       // Filling behaviors
       this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
       // Check if some selected score is under 2
-      for(let i = 0; i < Object.keys(this.aptitude.behaviors).length; i++) {
+      for (let i = 0; i < Object.keys(this.aptitude.behaviors).length; i++) {
         if ((this.aptitude.behaviors[i].score <= 2)) {
           this.textAreaIsRequired = true;
             // Check if textarea is filled
-            if(this.surveyForm.get('observation').value.trim() === '') {
+            if (this.surveyForm.get('observation').value.trim() === '') {
               return;
             }
         }
       }
-      // Filling aptitud properties 
+      // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value;
       // Pushing aptitud into survey
@@ -217,27 +217,31 @@ export class SurveyComponent implements OnInit {
   */
   verifyStoredSurvey() {
     const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
-    this.surveyService.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
     this.surveyService.competence = localStorage.getItem('competence');
     if (storedSurvey) {
-      this.surveyService.survey = storedSurvey;
-      const evaluatedAptitudes = storedSurvey.aptitudes.length;
-      const next = evaluatedAptitudes + 1;
-      if (+this.id !== next) {
-        this.id = next.toString();
-        // this.paintButtons(this.id);
-        this.router.navigate(['survey/' + next.toString()]);
+      if (this.verifySameSurvey(storedSurvey)) {
+        this.surveyService.survey = storedSurvey;
+        const evaluatedAptitudes = storedSurvey.aptitudes.length;
+        const next = evaluatedAptitudes + 1;
+        if (+this.id !== next) {
+          this.id = next.toString();
+          // this.paintButtons(this.id);
+          this.router.navigate(['survey/' + next.toString()]);
+        }
       }
     }
-    // Show the form
-    // this.showForm = true;
-
   }
 
   paintButtons(value) {
     for (let i = 1; i < value; i++) {
       $('#' + i).next().addClass('active');
     }
+  }
+
+  verifySameSurvey(value: Survey) {
+    const typeOfSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
+    return this.surveyService.survey.evaluated === value.evaluated && this.surveyService.survey.evaluator === value.evaluator
+      && this.surveyService.oneSurvey ===  typeOfSurvey;
   }
 
 }
