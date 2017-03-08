@@ -10,5 +10,5 @@ public interface SurveyRepository {
 
     List<Survey> findUserSurveys(String user, String startDate, String endDate);
 
-    boolean existsRecentSurvey(String evaluated, String evaluator);
+    boolean existsRecentSurvey(String evaluated, String evaluator, String aptitudeId);
 }
