@@ -80,8 +80,9 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
                 .must(QueryBuilders.matchQuery("evaluator", evaluator));
 
         // Only want to search for recent surveys of that aptitude, if specified
-        if (aptitudeId != null)
+        if (aptitudeId != null) {
             boolQueryBuilder.must(QueryBuilders.matchQuery("aptitudes.aptitude.id", aptitudeId));
+        }
 
         List<Survey> surveysFound = findSurveys(boolQueryBuilder);
         return (surveysFound != null) && !surveysFound.isEmpty();
