@@ -237,13 +237,11 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = aptitude.getBehaviors();
 
-        int i = 0;
-        while (i < getNextBehaviorId(id)) {
+        for (int i = 0; i < getNextBehaviorId(id); i++) {
             if (behaviors.get(i).getId() == behavior.getId()) {
                 behaviors.set(i, behavior);
                 break;
             }
-            i++;
         }
 
         aptitude.setBehaviors(behaviors);
