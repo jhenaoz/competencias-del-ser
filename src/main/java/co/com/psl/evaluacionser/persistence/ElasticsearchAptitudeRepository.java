@@ -195,7 +195,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             SearchResult result = client.execute(search);
 
 
-            long maximumBehaviorId = result.getAggregations().getMaxAggregation("maximumBehaviorID").getMax().longValue();
+            long maximumBehaviorId = result.getAggregations().getMaxAggregation("maximumBehaviorID")
+                    .getMax().longValue();
 
             return maximumBehaviorId + 1;
 
@@ -236,7 +237,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = aptitude.getBehaviors();
 
-        for (int i = 0; true; i++) {
+        int i = 0;
+        while (true) {
             if (behaviors.get(i).getId() == behavior.getId()) {
                 behaviors.set(i, behavior);
                 break;
