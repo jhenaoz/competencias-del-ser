@@ -80,7 +80,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
                 .must(QueryBuilders.matchQuery("evaluator", evaluator));
 
         List<Survey> surveysFound = findSurveys(boolQueryBuilder);
-        return (surveysFound != null) && !surveysFound.isEmpty();
+        return surveysFound != null && !surveysFound.isEmpty();
     }
 
     /**

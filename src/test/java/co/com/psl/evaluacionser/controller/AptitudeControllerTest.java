@@ -47,9 +47,9 @@ public class AptitudeControllerTest {
         // Setup aptitude mock for save/delete methods
         Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviorList);
         behaviorDto = new BehaviorDto("acepta sugerencias", "accept suggestions");
+        when(mockAptitudeService.deleteAptitudeBehavior("1", "1")).thenReturn(aptitude);
         when(mockAptitudeService.createAptitudeBehavior("1", behaviorDto)).thenReturn(behavior);
         when(mockAptitudeService.updateAptitudeBehavior("1", "1", behaviorDto)).thenReturn(behavior);
-        when(mockAptitudeService.deleteAptitudeBehavior("1", "1")).thenReturn(aptitude);
 
         aptitudeController = new AptitudeController(mockAptitudeService);
     }

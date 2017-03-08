@@ -1,8 +1,8 @@
 package co.com.psl.evaluacionser.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class PersonTest {
 
@@ -13,12 +13,6 @@ public class PersonTest {
         person.setName("Juanito Perez");
         assertEquals("21", person.getId());
         assertEquals("Juanito Perez", person.getName());
-    }
-
-    @Test
-    public void constructorByNameIdShouldBeNull() {
-        Person person = new Person("Juanito Perez");
-        assertNull(person.getId());
     }
 
     @Test

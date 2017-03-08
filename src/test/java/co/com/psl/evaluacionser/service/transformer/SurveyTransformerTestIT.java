@@ -1,22 +1,20 @@
 package co.com.psl.evaluacionser.service.transformer;
 
-import static org.junit.Assert.*;
+import co.com.psl.evaluacionser.domain.AptitudeSurvey;
+import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
+import co.com.psl.evaluacionser.service.dto.SurveyDto;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.service.dto.SurveyDto;
-import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import co.com.psl.evaluacionser.domain.AptitudeSurvey;
-import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
-import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,7 +29,8 @@ public class SurveyTransformerTestIT {
         behaviorsSurveyDto.add(new BehaviorSurveyDto("1", 5));
         behaviorsSurveyDto.add(new BehaviorSurveyDto("2", 4));
         behaviorsSurveyDto.add(new BehaviorSurveyDto("3", 1));
-        AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
+        AptitudeSurveyDto aptitudeSurveyDto =
+                new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
         AptitudeSurvey aptitudeSurvey = surveyTransformer.aptitudeSurveyTransformer(aptitudeSurveyDto);
         assertEquals("Apertura", aptitudeSurvey.getAptitude().getEs());
     }
@@ -42,8 +41,9 @@ public class SurveyTransformerTestIT {
         behaviorsSurveyDto.add(new BehaviorSurveyDto("1", 5));
         behaviorsSurveyDto.add(new BehaviorSurveyDto("2", 4));
         behaviorsSurveyDto.add(new BehaviorSurveyDto("3", 1));
-        AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
-        List<AptitudeSurveyDto> aptitudeSurveyDtos = new ArrayList<AptitudeSurveyDto>();
+        AptitudeSurveyDto aptitudeSurveyDto =
+                new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
+        List<AptitudeSurveyDto> aptitudeSurveyDtos = new ArrayList<>();
         aptitudeSurveyDtos.add(aptitudeSurveyDto);
         SurveyDto surveyDto = new SurveyDto("Juan evaluator", "Juana evaluated", "Team", aptitudeSurveyDtos);
         Survey survey = surveyTransformer.transformer(surveyDto);

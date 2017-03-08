@@ -1,27 +1,33 @@
 package co.com.psl.evaluacionser.config;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.EnumSet;
+import java.util.Arrays;
 
 @Configuration
 public class MvcConfiguration implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
+    private final Logger log = Logger.getLogger(MvcConfiguration.class);
+
+    @Autowired
+    private Environment env;
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST,
-                                                   DispatcherType.FORWARD,
-                                                   DispatcherType.ASYNC);
+        log.info("Web application configuration, using profiles: {}" + Arrays.toString(env.getActiveProfiles()));
+        log.info("Web application fully configured");
     }
 
     private String resolvePathPrefix() {

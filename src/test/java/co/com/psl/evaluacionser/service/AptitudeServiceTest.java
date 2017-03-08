@@ -1,23 +1,22 @@
 package co.com.psl.evaluacionser.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import co.com.psl.evaluacionser.domain.Aptitude;
+import co.com.psl.evaluacionser.domain.Behavior;
+import co.com.psl.evaluacionser.persistence.ElasticsearchAptitudeRepository;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.persistence.ElasticsearchAptitudeRepository;
-import co.com.psl.evaluacionser.service.dto.AptitudeDto;
-import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AptitudeServiceTest {
