@@ -26,16 +26,11 @@ import java.util.Properties;
 @PropertySource("classpath:mail/emailconfig.properties")
 public class SpringMailConfig implements ApplicationContextAware, EnvironmentAware {
 
-    public static final String EMAIL_TEMPLATE_ENCODING = "UTF-8";
-
-    private static final String JAVA_MAIL_FILE = "classpath:mail/javamail.properties";
-
-    private static final String HOST = "mail.server.host";
-    private static final String PORT = "mail.server.port";
-    private static final String PROTOCOL = "mail.server.protocol";
-    private static final String USERNAME = "mail.server.username";
-    private static final String PASSWORD = "mail.server.password";
-
+    private String host = "mail.server.host";
+    private String port = "mail.server.port";
+    private String protocol = "mail.server.protocol";
+    private String username = "mail.server.username";
+    private String password = "mail.server.password";
 
     private ApplicationContext applicationContext;
     private Environment environment;
@@ -58,17 +53,18 @@ public class SpringMailConfig implements ApplicationContextAware, EnvironmentAwa
         /**
          * Basic mail sender configuration, based on emailconfig.properties
          */
-        mailSender.setHost(this.environment.getProperty(HOST));
-        mailSender.setPort(Integer.parseInt(this.environment.getProperty(PORT)));
-        mailSender.setProtocol(this.environment.getProperty(PROTOCOL));
-        mailSender.setUsername(this.environment.getProperty(USERNAME));
-        mailSender.setPassword(this.environment.getProperty(PASSWORD));
+        mailSender.setHost(this.environment.getProperty(host));
+        mailSender.setPort(Integer.parseInt(this.environment.getProperty(port)));
+        mailSender.setProtocol(this.environment.getProperty(protocol));
+        mailSender.setUsername(this.environment.getProperty(username));
+        mailSender.setPassword(this.environment.getProperty(password));
 
         /**
          * JavaMail-specific mail sender configuration, based on javamail.properties
          */
         final Properties javaMailProperties = new Properties();
-        javaMailProperties.load(this.applicationContext.getResource(JAVA_MAIL_FILE).getInputStream());
+        String javaMailFile = "classpath:mail/javamail.properties";
+        javaMailProperties.load(this.applicationContext.getResource(javaMailFile).getInputStream());
         mailSender.setJavaMailProperties(javaMailProperties);
 
         return mailSender;
@@ -87,7 +83,7 @@ public class SpringMailConfig implements ApplicationContextAware, EnvironmentAwa
         templateResolver.setPrefix("/mail/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML");
-        templateResolver.setCharacterEncoding(EMAIL_TEMPLATE_ENCODING);
+        templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setCacheable(false);
         return templateResolver;
     }
