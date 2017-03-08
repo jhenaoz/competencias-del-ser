@@ -22,20 +22,26 @@ import java.util.List;
 @RequestMapping(value = "/api/person")
 public class PersonController {
 
-    @Autowired
     private PersonService personService;
+
+    @Autowired
+    public PersonController(final PersonService personService) {
+        this.personService = personService;
+    }
 
     /**
      * This method returns the list of all employees in the elasticsearch
      *
-     * @return Response entity with the status of the request, ok if it exists or not_found if it is null, and if it exists returns the list
+     * @return Response entity with the status of the request, ok if it exists or not_found if it is null,
+     *         and if it exists returns the list
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Person>> getAllPeople() {
         List<Person> people = personService.findAllPeople();
 
-        if (people == null)
+        if (people == null) {
             return new ResponseEntity<List<Person>>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<List<Person>>(people, HttpStatus.OK);
     }
