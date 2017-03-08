@@ -8,7 +8,6 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
-import io.searchbox.core.search.aggregation.MaxAggregation;
 import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -166,7 +164,6 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Override
     public Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId) {
         Aptitude aptitude = findById(aptitudeId);
-        List<Behavior> behaviors = aptitude.getBehaviors();
 
         Behavior behavior = new Behavior(getNextBehaviorId(aptitudeId),
                 behaviorDto.getEs(),
@@ -182,7 +179,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 + "        \"match\" : {\"id\":" + aptitudeId + "}\n"
                 + "    },\n"
                 + "    \"aggs\" : {\n"
-                + "        \"max1\" : {\n"
+                + "        \"maximumBehaviorId\" : {\n"
                 + "            \"max\" : {\n"
                 + "                \"field\" : \"behaviors.id\"\n"
                 + "            }\n"
@@ -198,9 +195,9 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             SearchResult result = client.execute(search);
 
 
-            MaxAggregation max1 = result.getAggregations().getMaxAggregation("max1");
-            Double max = max1.getMax();
-            return max.longValue() + 1;
+            long maximumBehaviorId = result.getAggregations().getMaxAggregation("maximumBehaviorID").getMax().longValue();
+
+            return maximumBehaviorId + 1;
 
         } catch (IOException e) {
             logger.error("there was an error with the aggregation", e);
@@ -224,15 +221,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = aptitude.getBehaviors();
-        Iterator<Behavior> iter = behaviors.iterator();
 
-        while (iter.hasNext()) {
-            Behavior behaviorInList = iter.next();
-
-            if (behaviorInList.getId() == behaviorId) {
-                iter.remove();
-            }
-        }
+        behaviors.removeIf(behaviorInList -> behaviorInList.getId() == behaviorId);
         aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
         return aptitude;
@@ -251,6 +241,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 behaviors.set(i, behavior);
                 break;
             }
+            i++;
         }
 
         aptitude.setBehaviors(behaviors);
