@@ -12,7 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 public class BehaviorSurveyTransformerTest {
 
-    private SurveyTransformer surveyTransformer = new SurveyTransformer();
+    // The constructor arguments are not needed for doing the tests
+    private SurveyTransformer surveyTransformer = new SurveyTransformer(null, null);
 
     @Test
     public void behaviorsSurveyTransformerTest() {
