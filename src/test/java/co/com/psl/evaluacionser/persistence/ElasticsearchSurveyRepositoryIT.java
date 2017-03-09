@@ -20,6 +20,9 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class ElasticsearchSurveyRepositoryIT {
 
+    /*
+    as this method accesses the DB to test survey operations i need some surveys to save and test, these are the ones
+     */
     Survey survey1 = new Survey();
     Survey survey2 = new Survey();
     Survey returnedSaveSurvey;

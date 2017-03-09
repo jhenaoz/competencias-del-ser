@@ -17,10 +17,15 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class ElasticsearchPersonRepositoryIT {
 
-    Person person1 = new Person();
-    Person person2 = new Person();
+    /*
+      Local person are the ones i am creating locally for the test
+      the other person are the ones that are returned from the save method (returnedSavePerson)
+      and one person im going to save in the DB (personToSave)
+     */
+    Person localPerson1 = new Person();
+    Person localPerson2 = new Person();
     Person returnedPersonFromSave = new Person();
-    Person save1 = new Person();
+    Person personToSave = new Person();
     boolean person1WasDeleted;
     boolean Person2WasDeleted;
 
@@ -29,22 +34,22 @@ public class ElasticsearchPersonRepositoryIT {
 
     @Before
     public void setUp() throws Exception {
-        person1.setName("jhon doe");
-        person1.setId("125874");
+        localPerson1.setName("jhon doe");
+        localPerson1.setId("125874");
 
 
-        person2.setId("12547514");
-        person2.setName("jane doe");
+        localPerson2.setId("12547514");
+        localPerson2.setName("jane doe");
 
-        returnedPersonFromSave = elasticsearchPersonRepository.save(person1);
-        save1 = elasticsearchPersonRepository.save(person2);
+        returnedPersonFromSave = elasticsearchPersonRepository.save(localPerson1);
+        personToSave = elasticsearchPersonRepository.save(localPerson2);
     }
 
     @After
     public void tearDown() throws Exception {
 
-        elasticsearchPersonRepository.deletePersonByIdAndName(person1.getId(), person1.getName());
-        elasticsearchPersonRepository.deletePersonByIdAndName(person2.getId(), person2.getName());
+        elasticsearchPersonRepository.deletePersonByIdAndName(localPerson1.getId(), localPerson1.getName());
+        elasticsearchPersonRepository.deletePersonByIdAndName(localPerson2.getId(), localPerson2.getName());
 
     }
 
@@ -55,7 +60,7 @@ public class ElasticsearchPersonRepositoryIT {
         boolean listContainsPerson1 = false;
         for (Person personInList : personList) {
 
-            if (personInList.getId().equals(person1.getId())) {
+            if (personInList.getId().equals(localPerson1.getId())) {
                 listContainsPerson1 = true;
             }
 
@@ -64,7 +69,7 @@ public class ElasticsearchPersonRepositoryIT {
         boolean listContainsPerson2 = false;
         for (Person personInList : personList) {
 
-            if (personInList.getId().equals(person2.getId())) {
+            if (personInList.getId().equals(localPerson2.getId())) {
                 listContainsPerson2 = true;
             }
 
@@ -77,25 +82,25 @@ public class ElasticsearchPersonRepositoryIT {
 
     @Test
     public void save() throws Exception {
-        assertEquals(person1.getId(), returnedPersonFromSave.getId());
-        assertEquals(person1.getName(), returnedPersonFromSave.getName());
-        assertEquals(person2.getId(), save1.getId());
-        assertEquals(person2.getName(), save1.getName());
+        assertEquals(localPerson1.getId(), returnedPersonFromSave.getId());
+        assertEquals(localPerson1.getName(), returnedPersonFromSave.getName());
+        assertEquals(localPerson2.getId(), personToSave.getId());
+        assertEquals(localPerson2.getName(), personToSave.getName());
 
     }
 
     @Test
     public void findPersonById() throws Exception {
-        Person foundPerson = elasticsearchPersonRepository.findPersonById(person1.getId());
-        assertEquals(person1.getId(), foundPerson.getId());
+        Person foundPerson = elasticsearchPersonRepository.findPersonById(localPerson1.getId());
+        assertEquals(localPerson1.getId(), foundPerson.getId());
 
     }
 
     @Test
     public void deletePersonByIdAndName() throws Exception {
 
-        person1WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(person1.getId(), person1.getName());
-        Person2WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(person2.getId(), person2.getName());
+        person1WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(localPerson1.getId(), localPerson1.getName());
+        Person2WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(localPerson2.getId(), localPerson2.getName());
 
         assertEquals(true, person1WasDeleted);
         assertEquals(true, Person2WasDeleted);
