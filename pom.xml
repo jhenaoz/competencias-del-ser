@@ -18,8 +18,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <sonar.host.url>http://10.10.10.156:9000</sonar.host.url>
         <sonar.sources>pom.xml,src/main/java,src/main/resources/static/src</sonar.sources>
-        <sonar.ts.tslintpath>src/main/resources/static/node_modules/tslint/bin</sonar.ts.tslintpath>
-        <sonar.ts.tslint.configPath>src/main/resources/static/tslint.json</sonar.ts.tslint.configPath>
+        <sonar.ts.tslint.outputPath>src/main/resources/static/tslint_results.json</sonar.ts.tslint.outputPath>
     </properties>
     <dependencies>
         <dependency>
@@ -158,6 +157,15 @@
                         </configuration>
                         <phase>test</phase>
                     </execution>
+                    <execution>
+                        <id>tslint</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint</arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- Code Analysis Plugins -->
@@ -190,7 +198,6 @@
                     </suppressionsLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
                 <dependencies>
@@ -200,6 +207,12 @@
                         <version>7.6</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <!-- Coverage Plugins -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
             </plugin>
         </plugins>
     </build>

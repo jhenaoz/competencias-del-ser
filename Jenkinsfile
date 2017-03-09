@@ -5,9 +5,23 @@ node() {
         checkout scm
     }
 
+    stage('SonarQube analysis') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            withSonarQubeEnv('SonarQube Test') {
+                sh 'mvn sonar:sonar'
+            }
+        }
+    }
+
     stage('Checkstyle') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            sh 'mvn checkstyle:check'
+            sh 'mvn checkstyle:checkstyle'
+        }
+    }
+
+    stage('PMD') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            sh 'mvn pmd:pmd'
         }
     }
 
@@ -17,18 +31,17 @@ node() {
                 if (env.BRANCH_NAME == 'master') {
                     sh 'mvn clean'
                 }
-                sh 'mvn clean test-compile'
+                sh 'mvn test-compile'
             }
         }
     }
 
-    /* stage('SonarQube analysis') {
+    stage('Findbugs & TSLint') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            withSonarQubeEnv('SonarQube Test') {
-                sh 'mvn sonar:sonar'
-            }
+            sh 'mvn findbugs:check'
+            sh 'mvn frontend:npm@tslint'
         }
-    } */
+    }
 
     stage('Test') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
@@ -37,5 +50,9 @@ node() {
                 sh 'mvn frontend:npm@npm-test'
             }
         }
+    }
+
+    stage('Report') {
+
     }
 }
