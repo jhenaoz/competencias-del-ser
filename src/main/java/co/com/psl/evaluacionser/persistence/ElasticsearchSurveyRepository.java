@@ -1,22 +1,22 @@
 package co.com.psl.evaluacionser.persistence;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.log4j.Logger;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import co.com.psl.evaluacionser.domain.Survey;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
+import org.apache.log4j.Logger;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ElasticsearchSurveyRepository implements SurveyRepository {
@@ -27,10 +27,14 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     @Value("${elasticSurveyType}")
     private String surveyTypeName;
 
-    @Autowired
     private JestClient client;
 
-    static Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
+    private static final Logger logger = Logger.getLogger(ElasticsearchSurveyRepository.class);
+
+    @Autowired
+    public ElasticsearchSurveyRepository(final JestClient client) {
+        this.client = client;
+    }
 
     @Override
     public Survey saveSurvey(Survey survey) {
@@ -46,6 +50,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     /**
      * Searches all surveys made to a person within a time period.
+     *
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
@@ -53,30 +58,67 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
      */
     @Override
     public List<Survey> findUserSurveys(String user, String startDate, String endDate) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.rangeQuery("timestamp").from(startDate).to(endDate))
+                .must(QueryBuilders.matchQuery("evaluated", user));
+
+        return findSurveys(boolQueryBuilder);
+    }
+
+    /**
+     * Checks whether a survey was made in the last week.
+     *
+     * @param evaluated the person who was evaluated in the survey
+     * @param evaluator the person who made the survey
+     * @return if the survey was made in the last week
+     */
+    @Override
+    public boolean existsRecentSurvey(String evaluated, String evaluator, String aptitudeId) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.rangeQuery("timestamp").from("now-1w").to("now"))
+                .must(QueryBuilders.matchQuery("evaluated", evaluated))
+                .must(QueryBuilders.matchQuery("evaluator", evaluator));
+
+        // Only want to search for recent surveys of that aptitude, if specified
+        if (aptitudeId != null) {
+            boolQueryBuilder.must(QueryBuilders.matchQuery("aptitudes.aptitude.id", aptitudeId));
+        }
+
+        List<Survey> surveysFound = findSurveys(boolQueryBuilder);
+        return (surveysFound != null) && !surveysFound.isEmpty();
+    }
+
+    /**
+     * Utility method for retrieving a list of surveys
+     *
+     * @param boolQueryBuilder the elasticsearch query to be used
+     * @return a list with the surveys retrieved
+     */
+    private List<Survey> findSurveys(BoolQueryBuilder boolQueryBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp").from(startDate).to(endDate));
-        searchSourceBuilder.query(QueryBuilders.matchQuery("evaluated", user));
-        searchSourceBuilder.sort("timestamp");
+        searchSourceBuilder.query(boolQueryBuilder);
 
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(surveyIndexName).build();
 
         try {
             SearchResult result = client.execute(search);
 
-            if (!result.isSucceeded())
+            if (!result.isSucceeded()) {
                 return null;
+            }
 
             List<Hit<Survey, Void>> aptitudes = result.getHits(Survey.class);
             return aptitudes.stream().map(this::getSurvey).collect(Collectors.toList());
         } catch (IOException e) {
-            logger.error("The surveys of the given user couldn't be found " + e.getMessage());
+            logger.error("The surveys couldn't be found " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     private Survey getSurvey(Hit<Survey, Void> hit) {
-        if (hit == null)
+        if (hit == null) {
             return null;
+        }
 
         return hit.source;
     }

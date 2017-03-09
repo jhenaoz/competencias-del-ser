@@ -8,16 +8,13 @@
         "start": "Iniciar Valoración"
     },
     "Welcome": {
-        "title": "VALORACIÓN COMPETENCIAS DEL SER",
-        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
-        "information": "Utilice el campo observaciones para completar la valoración.",
+        "title": "Valoración competencias del ser",
+        "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas de la compañía. Es muy importante la sinceridad que cada uno tenga en este proceso de valoración, entre más sincero y transparente sea el proceso, mayor será el proceso de mejoramiento de la persona.<br><br>Seleccione: Siempre, Casi siempre, A veces, Nunca, o Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.<br><br>Utilice el campo observaciones para completar la valoración.",
         "options_title": "¿Qué valoración deseas hacer?",
         "option_one": "Una competencia para todo el equipo",
         "option_all": "Todas las competencias a una persona"
     },
     "Survey_options": {
-        "title_all": "TODAS LAS COMPETENCIAS A UNA PERSONA",
-        "title_one": "UNA COMPETENCIA PARA EL EQUIPO",
         "description": "Recuerde, en esta valoración no hay respuestas buenas ni malas, este es un medio que permite apoyar al mejoramiento de cada una de las personas; Seleccione: Siempre, Casi siempre, A veces, Nunca y Sin información, de acuerdo a la frecuencia en la que usted más ve el comportamiento en la persona a valorar.",
         "information": "Utilice el campo observaciones para completar la valoración.",
         "evaluated": "Persona a quien se le hará la valoración",
@@ -25,21 +22,25 @@
         "evaluator_alert": "Debes seleccionar a alguien",
         "relationship": "Tipo de relación",
         "relationship_alert": "Debes seleccionar una relación",
+        "competence_alert": "Debes seleccionar una competencia",
         "relation_teammate": "Equipo de trabajo",
         "relation_teammate_description": "Seleccione equipo de trabajo si a quien va a valorar, corresponde a aquellas personas a quienes ha colaborado, trabajado en su desarrollo y crecimiento, y apoyado en el direccionamiento de sus actividades",
         "relation_client": "Cliente",
         "relation_client_description": "Son las personas que han podido trabajar con el valorado desde la vista de cliente (es decir, han recibido algún entregable por parte de la persona valorada), han tenido interacción directa con la persona y cuentan con la información, gracias a la observación de sus comportamientos. El cliente puede hacer referencia tanto a clientes internos, como externos.",
         "relation_own": "Auto-Valoración",
-        "relation_own_description": " Es la valoración que la persona hace de sí mismo, de acuerdo con sus comportamientos actuales y recientes (últimos 3 meses). Esta medición es de gran importancia para conocer la percepción que el valorado tiene de sí mismo y es de gran ayuda en el análisis de los resultados para la generación de los planes de desarrollo."
+        "relation_own_description": " Es la valoración que la persona hace de sí mismo, de acuerdo con sus comportamientos actuales y recientes (últimos 3 meses). Esta medición es de gran importancia para conocer la percepción que el valorado tiene de sí mismo y es de gran ayuda en el análisis de los resultados para la generación de los planes de desarrollo.",
+        "survey_check_alert": "Encontramos que en la última semana ya valoraste a esta persona. ¿Deseas iniciar nuevamente una valoración?"
     },
     "Survey": {
+        "characters": "Caracteres",
         "always": "Siempre",
         "almost_always": "Casi Siempre",
         "occasionally": "A veces",
         "never": "Nunca",
         "information": "Sin información",
         "observations": "Observaciones",
-        "survey_alert": "¡Debes seleccionar todos los campos!"
+        "survey_observations_alert": "¡Las observaciones son requeridas!",
+        "survey_alert": "¡Debes responder en todos los campos!"
     },
     "Competences": {
         "title": "Competencia a valorar",
@@ -56,5 +57,8 @@
         "thanks": "Gracias por completar la encuesta",
         "again": "Llenar otra encuesta",
         "finish": "Finalizar"
+    },
+    "Shared": {
+        "cancel": "Cancelar"
     }
 }

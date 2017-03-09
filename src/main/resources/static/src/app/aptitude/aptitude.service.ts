@@ -17,7 +17,7 @@ export class AptitudeService {
   private _aptitudeUrl = environment.apiURL;
 
   constructor(private _http: Http) {
-      this._aptitudeUrl += '/aptitude/';
+      this._aptitudeUrl += '/api/aptitude/';
   }
 
   /*

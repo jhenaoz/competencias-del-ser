@@ -1,54 +1,85 @@
 <div class="main">
-    <p *ngIf="!surveyService.oneSurvey" class="text-center title">{{ "Survey_options.title_one" | translate}}</p>
-    <p *ngIf="surveyService.oneSurvey" class="text-center title">{{ "Survey_options.title_all" | translate}}</p>
+    <p *ngIf="!surveyService.oneSurvey" class="text-center title uppercase">{{ "Welcome.option_one" | translate}}</p>
+    <p *ngIf="surveyService.oneSurvey" class="text-center title uppercase">{{ "Welcome.option_all" | translate}}</p>
     <hr>
-    <p class="description">
-        {{ "Survey_options.description" | translate}}
-        <br><br> {{ "Survey_options.information" | translate}}
-    </p>
+    <p class="description" [innerHTML]="'Welcome.description' | translate"></p>
     <div class="container">
-        <form id="form" [formGroup]="complexForm">
+        <form id="form" [formGroup]="complexForm" (ngSubmit)="submitForm()">
             <!--Evaluated select-->
             <div class="block">
-                <label for="evaluatedSelect"><span style="color: #134C96">*</span> 
+                <label for="evaluatedSelect"><span class="blue">*</span> 
                 {{ "Survey_options.evaluated" | translate}}:</label>
-                <app-employee id="evaluatedAppEmployee" [formControl]="evaluated" ngDefaultControl>
+                <app-employee id="evaluatedAppEmployee" 
+                              formControlName="evaluated"
+                              ngDefaultControl
+                              required>
                 </app-employee>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="(complexForm.controls.evaluated.invalid && complexForm.controls.evaluated.dirty)">{{ "Survey_options.relationship_alert" | translate }}.</div>
+                <div class="alert alert-danger" 
+                     *ngIf="(complexForm.controls.evaluated.invalid && submitted)">
+                     {{ "Survey_options.evaluator_alert" | translate }}.
+                </div>
             </div>
 
             <!--Relationship select-->
             <div class="block">
-                <label for="relationshipSelect"><span style="color: #134C96">*</span> 
+                <label for="relationshipSelect"><span class="blue">*</span> 
                 {{ "Survey_options.relationship" | translate}}:</label>
-                <select class="form-control" id="relationshipSelect" [formControl]="complexForm.controls['role']" #t (change)="relationChange(t.value)">
+                <select class="form-control" 
+                        id="relationshipSelect" 
+                        formControlName="role"
+                        #t (change)="relationChange(t.value)"
+                        required>
                   <option></option>
                   <option id="team">{{ "Survey_options.relation_teammate" | translate}}</option>
                   <option id="client">{{ "Survey_options.relation_client" | translate}}</option>                  
                   <option id="own">{{ "Survey_options.relation_own" | translate}}</option>
                 </select>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="!complexForm.controls['role'].valid  && complexForm.controls['role'].dirty">{{ "Survey_options.role_alert" | translate }}</div>
+                <div class="alert alert-danger" 
+                     *ngIf="(complexForm.controls.role.invalid  && submitted)">
+                     {{ "Survey_options.relationship_alert" | translate }}
+                </div>
             </div>
             <!--Popover-->
             <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
 
             <!--Evaluator select-->
-            <div *ngIf="!isSelf" class="block" id="evaluatorBlock">
-                <label for="evaluatorSelect"><span style="color: #134C96">*</span> 
+            <div *ngIf="!isSelf" 
+                 class="block" 
+                 id="evaluatorBlock">
+                <label for="evaluatorSelect"><span class="blue">*</span> 
                 {{ "Survey_options.evaluator" | translate}}:</label>
-                <app-employee id="evaluatorAppEmployee" [formControl]="complexForm.controls['evaluator']" ngDefaultControl [class.hidden]="isClient"></app-employee>
-                <input type="text" class="form-control" id="evaluatorAppEmployeeText" class="form-control" [formControl]="complexForm.controls['evaluator']" [class.hidden]="!isClient">
+                <app-employee *ngIf="!isClient"
+                              id="evaluatorAppEmployee" 
+                              formControlName="evaluator" 
+                              ngDefaultControl>
+                </app-employee>
+                <input *ngIf="isClient"
+                       type="text" 
+                       class="form-control" 
+                       id="evaluatorAppEmployeeText" 
+                       class="form-control"
+                       pattern="[a-zA-Z ]*" 
+                       minlength="3"
+                       formControlName="evaluator">
                 <!--Validator label-->
-                <div id="alertEvaluator" class="alert alert-danger" *ngIf="complexForm.controls['evaluator'].hasError('valid')  && complexForm.controls['evaluator'].dirty">{{ "Survey_options.evaluator_alert" | translate }}</div>
+                <div id="alertEvaluator" 
+                     class="alert alert-danger" 
+                     *ngIf="(!evaluatorIsValid && submitted)">
+                     {{ "Survey_options.evaluator_alert" | translate }}
+                </div>
             </div>
 
             <!--Competence select-->
-            <div *ngIf="!surveyService.oneSurvey" class="block">
-                <label for="competencesSelect"><span style="color: #134C96">*</span> 
+            <div *ngIf="!surveyService.oneSurvey"
+                 class="block">
+                <label for="competencesSelect"><span class="blue">*</span> 
                 {{ "Competences.title" | translate}}:</label>
-                <select class="form-control" id="competencesSelect" [formControl]="complexForm.controls['competenceToEvaluate']">
+                <select class="form-control" 
+                        id="competencesSelect" 
+                        formControlName="competenceToEvaluate"
+                        required>
                     <option></option>
                     <option>{{ "Competences.competence_opening" | translate}}</option>
                     <option>{{ "Competences.competence_communication" | translate}}</option>
@@ -60,8 +91,18 @@
                     <option>{{ "Competences.competence_goal" | translate}}</option>
                 </select>
                 <!--Validator label-->
-                <div class="alert alert-danger" *ngIf="complexForm.controls['competenceToEvaluate'].invalid && complexForm.controls['competenceToEvaluate'].dirty">You must select a competence.</div>
+                <div class="alert alert-danger" 
+                     *ngIf="(complexForm.controls.competenceToEvaluate.invalid && submitted)">
+                     {{ "Survey_options.competence_alert" | translate }}
+                </div>
             </div>
+            <div class="alert alert-danger" 
+                 *ngIf="isRecent">
+            {{ "Survey_options.survey_check_alert" | translate}}
+
+            <button type="button" class="btn btn-default" (click)="gotoSurvey()">{{ "Footer.start" | translate}}</button>
+            <button type="button" class="btn btn-default" (click)="reset()">{{ "Shared.cancel" | translate}}</button>
+        </div>
         </form>
     </div>
 

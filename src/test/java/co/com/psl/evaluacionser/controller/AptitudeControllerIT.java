@@ -22,7 +22,7 @@ public class AptitudeControllerIT {
 
     @Test
     public void getAllAptitudes() throws Exception {
-        mockMvc.perform(get("/aptitude"))
+        mockMvc.perform(get("/api/aptitude"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").exists())
                 .andExpect(jsonPath("$[0].es").exists())
@@ -31,7 +31,7 @@ public class AptitudeControllerIT {
 
     @Test
     public void getSingleAptitude() throws Exception {
-        mockMvc.perform(get("/aptitude/1"))
+        mockMvc.perform(get("/api/aptitude/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.es").exists())
@@ -40,7 +40,7 @@ public class AptitudeControllerIT {
 
     @Test
     public void getBehaviorsOfAnAptitude() throws Exception {
-        mockMvc.perform(get("/aptitude/1/behavior"))
+        mockMvc.perform(get("/api/aptitude/1/behavior"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").exists())
                 .andExpect(jsonPath("$[0].es").exists())
@@ -49,7 +49,7 @@ public class AptitudeControllerIT {
 
     @Test
     public void getSingleBehavior() throws Exception {
-        mockMvc.perform(get("/aptitude/1/behavior/1"))
+        mockMvc.perform(get("/api/aptitude/1/behavior/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.es").exists())
@@ -58,19 +58,19 @@ public class AptitudeControllerIT {
 
     @Test
     public void getInvalidAptitudeShouldReturn404() throws Exception {
-        mockMvc.perform(get("/aptitude/99"))
+        mockMvc.perform(get("/api/aptitude/99"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void getBehaviorFromInvalidAptitudeShouldReturn404() throws Exception {
-        mockMvc.perform(get("/aptitude/99/behavior"))
+        mockMvc.perform(get("/api/aptitude/99/behavior"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void getInvalidBehaviorIdShouldReturn404() throws Exception {
-        mockMvc.perform(get("/aptitude/1/behavior/99"))
+        mockMvc.perform(get("/api/aptitude/1/behavior/99"))
                 .andExpect(status().isNotFound());
     }
 

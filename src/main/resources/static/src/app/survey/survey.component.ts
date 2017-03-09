@@ -53,6 +53,8 @@ export class SurveyComponent implements OnInit {
   surveyForm: FormGroup;
   survey: Survey;
   showForm: boolean;
+  submitted: boolean;
+  textAreaIsRequired: boolean;
 
   /**
    * Creates an instance of SurveyComponent.
@@ -80,15 +82,20 @@ export class SurveyComponent implements OnInit {
   * Async method to initializate survey variables
   */
   async ngOnInit() {
-
+    this.submitted = false;
+    this.textAreaIsRequired = false;
     // We wait to get the route id param
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
-    // Veryfy if there is a survey stored in localstorage to bring it and continue the survey
+    // Verify if there is a survey stored in localstorage to bring it and continue the survey
     this.verifyStoredSurvey();
     // Add visual effect on buttons
     this.paintButtons(this.id);
+
+    if (!this.surveyService.oneSurvey) {
+      this.id = this.surveyService.competenceId;
+    }
 
     // Aptitude instance
     this.aptitude = new Aptitude();
@@ -149,11 +156,23 @@ export class SurveyComponent implements OnInit {
   * XXX: Search a better way to handle routing
   */
   surveyAdvance() {
-    if (this.surveyForm.valid) {
+    this.submitted = true;
+      if (this.surveyForm.valid) {
+      // Filling behaviors
+      this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
+      // Check if some selected score is under 2
+      for (let i = 0; i < Object.keys(this.aptitude.behaviors).length; i++) {
+        if ((this.aptitude.behaviors[i].score <= 2)) {
+          this.textAreaIsRequired = true;
+            // Check if textarea is filled
+            if (this.surveyForm.get('observation').value.trim() === '') {
+              return;
+            }
+        }
+      }
       // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value;
-      this.aptitude.behaviors = this.surveyForm.controls['behaviorSurvey'].value;
       // Pushing aptitud into survey
       this.surveyService.survey.aptitudes.push(this.aptitude);
       // Stored actual survey to localstorage
@@ -198,27 +217,37 @@ export class SurveyComponent implements OnInit {
   */
   verifyStoredSurvey() {
     const storedSurvey = <Survey>JSON.parse(localStorage.getItem('storedSurvey'));
-    this.surveyService.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
     this.surveyService.competence = localStorage.getItem('competence');
+    // If there is a stored survey
     if (storedSurvey) {
-      this.surveyService.survey = storedSurvey;
-      const evaluatedAptitudes = storedSurvey.aptitudes.length;
-      const next = evaluatedAptitudes + 1;
-      if (+this.id !== next) {
-        this.id = next.toString();
-        // this.paintButtons(this.id);
-        this.router.navigate(['survey/' + next.toString()]);
+      // Call method to verify if the stored survey is the same the user wants to complete
+      if (this.verifySameSurvey(storedSurvey)) {
+        // Save into the service the stored survey
+        this.surveyService.survey = storedSurvey;
+        const evaluatedAptitudes = storedSurvey.aptitudes.length;
+        const next = evaluatedAptitudes + 1;
+        // Verify if the actual aptitudeId is different to the one loaded from localstorage to navigate to the next aptitude
+        if (+this.id !== next) {
+          this.id = next.toString();
+          this.router.navigate(['survey/' + next.toString()]);
+        }
       }
     }
-    // Show the form
-    // this.showForm = true;
-
   }
 
   paintButtons(value) {
     for (let i = 1; i < value; i++) {
       $('#' + i).next().addClass('active');
     }
+  }
+
+  /*
+   * Method to verify if the survey stored in LocalStorage is the same type of Survey and has the same evaluated and evaluator
+   */
+  verifySameSurvey(value: Survey) {
+    const typeOfSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
+    return this.surveyService.survey.evaluated === value.evaluated && this.surveyService.survey.evaluator === value.evaluator
+      && this.surveyService.oneSurvey ===  typeOfSurvey;
   }
 
 }

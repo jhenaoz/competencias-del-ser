@@ -25,12 +25,13 @@ export class SurveyService {
   survey: Survey;
   oneSurvey: boolean;
   competence = 'TESTING';
+  competenceId: string;
   evaluator: string;
   role: string;
 
   constructor(private _http: Http) {
     this.survey = new Survey();
-    this._surveyUrl += '/survey';
+    this._surveyUrl += '/api/survey';
   }
 
   startSurvey(survey) {
@@ -47,6 +48,14 @@ export class SurveyService {
     return this._http.post(this._surveyUrl, body, options)
            .toPromise()
            .then(response => { return response.json(); }, this.handleError);
+  }
+
+  checkSurveyDate(survey: Survey, competenceId: string, oneSurvey: boolean): Observable<Boolean> {
+    let _url = oneSurvey? this._surveyUrl + '/recentsurvey?evaluator='+survey.evaluator+'&evaluated='+survey.evaluated+'&aptitude='+competenceId :
+                              this._surveyUrl + '/recentsurvey?evaluator='+survey.evaluator+'&evaluated='+survey.evaluated;
+    return this._http.get(_url)
+              .map((response: Response) => <Boolean> response.json())
+              .catch(this.handleError)
   }
 
   private extractData(res: Response) {

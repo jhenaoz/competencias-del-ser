@@ -59,6 +59,10 @@ h6 {
     font-size: large;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
 .description {
     margin: 55px;
     color: #828282;
