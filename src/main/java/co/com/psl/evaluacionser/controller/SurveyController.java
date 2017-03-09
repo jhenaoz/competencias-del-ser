@@ -46,7 +46,8 @@ public class SurveyController {
      * @param endDate   ending date
      * @return Response entity with HttpStatus.OK and the Surveys retrieved
      */
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    // TODO Enable this endpoint only with an authentication token
+    // @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user") String user,
                                                   @RequestParam(value = "startdate", required = false) String startDate,
                                                   @RequestParam(value = "enddate", required = false) String endDate) {
@@ -70,7 +71,7 @@ public class SurveyController {
                                              @RequestParam(value = "evaluator") String evaluator,
                                              @RequestParam(value = "aptitude", required = false) String aptitudeId) {
         boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator, aptitudeId);
-        return new ResponseEntity<Boolean>(surveyExists, HttpStatus.OK);
+        return new ResponseEntity<>(surveyExists, HttpStatus.OK);
 
     }
 
