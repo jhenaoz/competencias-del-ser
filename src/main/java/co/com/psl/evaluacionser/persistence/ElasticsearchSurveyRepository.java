@@ -38,7 +38,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     @Override
     public Survey saveSurvey(Survey survey) {
-        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).build();
+        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).refresh(true).build();
         try {
             client.execute(index);
             return survey;
@@ -122,4 +122,53 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
         return hit.source;
     }
+
+    public boolean deleteSurvey(String evaluator, String evaluated, String timestamp) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("evaluator", evaluator))
+                .must(QueryBuilders.termQuery("evaluated", evaluated))
+                .must(QueryBuilders.termQuery("timestamp", timestamp));
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(boolQueryBuilder);
+
+        DeleteByQuery deleteSpecificSurvey = new DeleteByQuery.Builder(searchSourceBuilder.toString())
+                .addIndex(surveyIndexName)
+                .refresh(true)
+                .build();
+
+        try {
+            client.execute(deleteSpecificSurvey);
+            return true;
+        } catch (IOException e) {
+            logger.error("there was an error while trying to delete the survey ", e);
+            return false;
+        }
+    }
+
+    public Survey findSurvey(String evaluator, String evaluated, String timestamp) {
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(
+                QueryBuilders.boolQuery()
+                        .must(QueryBuilders.matchQuery("evaluated", evaluated))
+                        .must(QueryBuilders.matchQuery("evaluator", evaluator))
+                        .must(QueryBuilders.rangeQuery("timestamp").from(timestamp).to(timestamp))
+        );
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(surveyIndexName).build();
+
+        try {
+            SearchResult result = client.execute(search);
+
+            if (!result.isSucceeded()) {
+                return null;
+            }
+            return getSurvey(result.getFirstHit(Survey.class));
+        } catch (IOException e) {
+            logger.error("There was an error while searching for the survey ", e);
+            return null;
+        }
+    }
+
+
 }
