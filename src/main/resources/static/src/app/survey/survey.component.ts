@@ -180,7 +180,7 @@ export class SurveyComponent implements OnInit {
       // Checks if is only one survey (one competence to evaluate)
       if (!this.surveyService.oneSurvey) {
         // Redirect to welcome
-        this.router.navigate(['']);
+        this.router.navigate(['final']);
         // Saves survey
         localStorage.clear();
         this.surveyService.saveSurvey(this.surveyService.survey);
@@ -189,7 +189,7 @@ export class SurveyComponent implements OnInit {
         // XXX: Kind of hardcoding to me... (?)
         if (+this.id + 1 >= 9) {
           // Redirect to welcome
-          this.router.navigate(['']);
+          this.router.navigate(['final']);
           localStorage.clear();
           // Saves survey
           this.surveyService.saveSurvey(this.surveyService.survey);

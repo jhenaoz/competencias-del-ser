@@ -1,40 +1,50 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs/Rx';
+import { HttpModule } from '@angular/http';
+
+import { BrowserModule } from '@angular/platform-browser';
 
 import {
-  EmployeeService,
-  EmployeeComponent,
-  IEmployee
- } from './index';
+    FormsModule,
+    FormGroup,
+    ReactiveFormsModule
+} from '@angular/forms';
 
-xdescribe('EmployeeComponent', () => {
+import {EmployeeService} from './employee.service';
+import {IEmployee} from './employee.model';
+import {EmployeeComponent} from './employee.component';
+
+
+describe('Component: EmployeeComponent', () => {
   let component: EmployeeComponent;
   let fixture: ComponentFixture<EmployeeComponent>;
-  let mockHttp;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-    CommonModule
-  ],
-  declarations: [
-    EmployeeComponent
-  ],
-  providers: [
-    EmployeeService
-  ]
-    })
-    .compileComponents();
-  }));
+        TestBed.configureTestingModule({
+          imports: [
+            CommonModule,
+            ReactiveFormsModule,
+            HttpModule
+          ],
+          declarations: [
+            EmployeeComponent
+          ],
+          providers: [
+            EmployeeService
+          ]
+        }).compileComponents();
 
-  beforeEach(() => {
+
     fixture = TestBed.createComponent(EmployeeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
+    }));
+
+    it('should have a defined component', () => {
+        expect(component).toBeDefined();
   });
 
 });

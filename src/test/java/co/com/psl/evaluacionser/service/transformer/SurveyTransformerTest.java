@@ -1,27 +1,46 @@
 package co.com.psl.evaluacionser.service.transformer;
 
-import co.com.psl.evaluacionser.domain.AptitudeSurvey;
-import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
-import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
-import co.com.psl.evaluacionser.service.dto.SurveyDto;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class SurveyTransformerTestIT {
+import co.com.psl.evaluacionser.domain.Aptitude;
+import co.com.psl.evaluacionser.domain.AptitudeSurvey;
+import co.com.psl.evaluacionser.domain.Behavior;
+import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.persistence.AptitudeRepository;
+import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
+import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
+import co.com.psl.evaluacionser.service.dto.SurveyDto;
 
-    @Autowired
+@RunWith(MockitoJUnitRunner.class)
+public class SurveyTransformerTest {
+
+    @Mock
+    private AptitudeRepository mockAptitudeRepository;
     private SurveyTransformer surveyTransformer;
+
+    @Before
+    public void setup() {
+        List<Behavior> behaviorList = new ArrayList<>();
+        behaviorList.add(new Behavior(1, "Acepta retroalimentacion", "Accepts review"));
+        behaviorList.add(new Behavior(2, "Juega en equipo", "Play in team"));
+        behaviorList.add(new Behavior(3, "Buena persona", "Good person"));
+
+        Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviorList);
+        when(mockAptitudeRepository.findById("1")).thenReturn(aptitude);
+
+        AptitudeTransformer aptitudeTransformer = new AptitudeTransformer();
+        surveyTransformer = new SurveyTransformer(mockAptitudeRepository, aptitudeTransformer);
+    }
 
     @Test
     public void aptitudeSurveyTransformerTest() {
