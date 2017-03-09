@@ -33,6 +33,7 @@ import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/transl
 
 // CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SurveyEndComponent } from './survey-end/survey-end.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     WelcomeComponent,
     SurveyOptionsComponent,
     SurveyComponent,
-    Error404Component
+    Error404Component,
+    SurveyEndComponent
   ],
   providers: [
     EmployeeService,

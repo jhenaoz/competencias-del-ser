@@ -53,6 +53,11 @@
         "competence_development": "Liderazgo para el Desarrollo",
         "competence_goal": "Liderazgo para el logro"
     },
+    "Final":{
+        "thanks": "Gracias por completar la encuesta",
+        "again": "Llenar otra encuesta",
+        "finish": "Finalizar"
+    },
     "Shared": {
         "cancel": "Cancelar"
     }

@@ -1,0 +1,11 @@
+<link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
+<div>
+    <h1 class="text-center title">{{ "Welcome.title" | translate }}</h1>
+    <hr><br><br>
+    <div class="container text-center">
+        <h2 class="title">{{ "Final.thanks" | translate }}</h2>
+        <button *ngIf="!surveyService.oneSurvey" type="button" class="btn" (click)="evaluateMore()">{{ "Final.again" | translate }}</button>
+        <br><br>
+        <button type="button" class="btn" (click)="finish()">{{ "Final.finish" | translate }}</button>
+    </div>
+</div>
