@@ -24,15 +24,12 @@ import java.util.stream.Collectors;
 @Component
 public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
+    private static final Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
     @Value("${elasticAptitudeIndex}")
     private String aptitudeIndexName;
-
     @Value("${elasticAptitudeType}")
     private String aptitudeTypeName;
-
     private JestClient client;
-
-    private static final Logger logger = Logger.getLogger(ElasticsearchAptitudeRepository.class);
 
     @Autowired
     public ElasticsearchAptitudeRepository(final JestClient client) {
@@ -94,7 +91,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Override
     public Aptitude findById(String id) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchQuery("id", id));
+        searchSourceBuilder.query(QueryBuilders.matchQuery("_id", id));
 
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(aptitudeIndexName).build();
 
@@ -199,7 +196,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
             SearchResult result = client.execute(search);
 
 
-            long maximumBehaviorId = result.getAggregations().getMaxAggregation("maximumBehaviorID")
+            long maximumBehaviorId = result.getAggregations().getMaxAggregation("maximumBehaviorId")
                     .getMax().longValue();
 
             return maximumBehaviorId + 1;
@@ -259,7 +256,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                 .type(aptitudeTypeName)
                 .id(String.valueOf(aptitude.getId()))
                 .refresh(true)
-                               .build();
+                .build();
         try {
             client.execute(index);
             return aptitude;

@@ -44,15 +44,15 @@ public class ElasticsearchAptitudeRepositoryIT {
         behaviorDto.setEs("texto en ingles para el dto");
 
 
-        localBehavior1.setId("1");
+        localBehavior1.setId(1);
         localBehavior1.setEn("They accept suggestions regardless of who gives them");
         localBehavior1.setEs("Acepta sugerencias sin distincion de quien las de");
 
-        localBehavior2.setId("2");
+        localBehavior2.setId(2);
         localBehavior2.setEn("They recognize their mistakes");
         localBehavior2.setEs("Reconoce sus errores");
 
-        behaviorToOverwrite.setId("2");
+        behaviorToOverwrite.setId(2);
         behaviorToOverwrite.setEn("they dont recognize their mistakes");
         behaviorToOverwrite.setEs("no reconoce sus errores");
 

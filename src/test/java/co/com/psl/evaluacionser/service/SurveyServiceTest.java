@@ -43,11 +43,11 @@ public class SurveyServiceTest {
     @Before
     public void setUp() {
         BehaviorSurveyDto behaviorSurveyDto = new BehaviorSurveyDto();
-        behaviorSurveyDto.setBehaviorId("1");
+        behaviorSurveyDto.setBehaviorId(1);
         behaviorSurveyDto.setScore(5);
 
         BehaviorSurveyDto behaviorSurveyDto1 = new BehaviorSurveyDto();
-        behaviorSurveyDto1.setBehaviorId("2");
+        behaviorSurveyDto1.setBehaviorId(2);
         behaviorSurveyDto1.setScore(3);
 
         List<BehaviorSurveyDto> behaviorSurveyDtos = new ArrayList<>();
@@ -71,12 +71,12 @@ public class SurveyServiceTest {
         Behavior behavior = new Behavior();
         behavior.setEn("They accept suggestions regardless of who gives them");
         behavior.setEs("Acepta sugerencias sin distincion de quien las de");
-        behavior.setId("1");
+        behavior.setId(1);
 
         Behavior behavior1 = new Behavior();
         behavior1.setEn("They recognize their mistakes");
         behavior1.setEs("Reconoce sus errore");
-        behavior1.setId("2");
+        behavior1.setId(2);
 
         BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
         behaviorSurvey.setBehavior(behavior);
