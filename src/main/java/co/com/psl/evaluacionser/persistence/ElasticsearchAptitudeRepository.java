@@ -278,7 +278,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                     .build());
             return true;
         } catch (IOException e) {
-            logger.error("there was an error deleteting the aptitude ", e);
+            logger.error("there was an error deleting the aptitude ", e);
             return false;
         }
     }

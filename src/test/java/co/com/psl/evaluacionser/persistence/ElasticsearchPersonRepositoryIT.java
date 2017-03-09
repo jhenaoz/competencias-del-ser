@@ -34,7 +34,7 @@ public class ElasticsearchPersonRepositoryIT {
 
     @Before
     public void setUp() throws Exception {
-        localPerson1.setName("jhon doe");
+        localPerson1.setName("john doe");
         localPerson1.setId("125874");
 
 

@@ -39,13 +39,13 @@ public class ElasticsearchSurveyRepositoryIT {
         String formatted = format1.format(cal.getTime());
 
 
-        survey1.setEvaluated("jhon doe");
+        survey1.setEvaluated("john doe");
         survey1.setEvaluator("psl");
-        survey1.setRole("teanmmate");
+        survey1.setRole("teammate");
         survey1.setTimestamp(formatted);
 
 
-        survey2.setEvaluated("jhon doe");
+        survey2.setEvaluated("john doe");
         survey2.setEvaluator("coomeva");
         survey2.setTimestamp(formatted);
 
@@ -63,6 +63,7 @@ public class ElasticsearchSurveyRepositoryIT {
     @Test
     public void saveSurvey() throws Exception {
         assertEquals(survey1.toString(), returnedSaveSurvey.toString());
+        assertEquals(survey2.toString(),returnedSaveSurvey2.toString());
 
     }
 
