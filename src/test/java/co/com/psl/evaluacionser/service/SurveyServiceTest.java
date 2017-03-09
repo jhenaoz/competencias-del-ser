@@ -31,6 +31,9 @@ public class SurveyServiceTest {
     @Mock
     SurveyTransformer mockSurveyTransformer;
 
+    @Mock
+    EmailService emailService;
+
     SurveyService surveyService;
 
     SurveyDto surveyDto = new SurveyDto();
@@ -120,7 +123,7 @@ public class SurveyServiceTest {
         when(mockSurveyRepository.findUserSurveys("evaluated", "invalid date", "invalid date")).thenReturn(null);
         when(mockSurveyRepository.saveSurvey(survey)).thenReturn(survey);
 
-        surveyService = new SurveyService(mockSurveyRepository, mockSurveyTransformer);
+        surveyService = new SurveyService(mockSurveyRepository, mockSurveyTransformer, emailService);
     }
 
     @Test
@@ -149,14 +152,14 @@ public class SurveyServiceTest {
 
     @Test
     public void recentSurveyShouldBeFound() {
-        boolean b = surveyService.existsRecentSurvey("evaluated", "evaluator",null);
-        assertEquals(true, b);
+        boolean surveyWasFound = surveyService.existsRecentSurvey("evaluated", "evaluator",null);
+        assertEquals(true, surveyWasFound);
     }
 
     @Test
     public void nonexistingSurveyShouldntBeFound() {
-        boolean b = surveyService.existsRecentSurvey("not evaluated", "evaluator",null);
-        assertEquals(false, b);
+        boolean surveyWasFound = surveyService.existsRecentSurvey("not evaluated", "evaluator",null);
+        assertEquals(false, surveyWasFound);
     }
 
 }
