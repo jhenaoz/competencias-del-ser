@@ -29,11 +29,11 @@ import java.util.stream.Collectors;
 @Service
 public class SurveyTransformer {
 
+    private static Logger logger = Logger.getLogger(SurveyTransformer.class);
+
     private AptitudeRepository aptitudeRepository;
 
     private AptitudeTransformer aptitudeTransformer;
-
-    private static Logger logger = Logger.getLogger(SurveyTransformer.class);
 
     @Autowired
     public SurveyTransformer(final AptitudeRepository aptitudeRepository,
