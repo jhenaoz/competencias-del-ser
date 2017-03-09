@@ -58,7 +58,7 @@ public class AptitudeService {
         return behaviorsFound;
     }
 
-    public Behavior findAptitudeBehaviorById(String id, String behaviorId) {
+    public Behavior findAptitudeBehaviorById(String id, long behaviorId) {
         Behavior behaviorFound = aptitudeRepository.findBehaviorById(id, behaviorId);
 
         if (behaviorFound == null) {
@@ -76,7 +76,7 @@ public class AptitudeService {
         return aptitudeRepository.addBehavior(behaviorDto, id);
     }
 
-    public Behavior updateAptitudeBehavior(String id, String behaviorId, BehaviorDto behaviorDto) {
+    public Behavior updateAptitudeBehavior(String id, long behaviorId, BehaviorDto behaviorDto) {
         if (aptitudeRepository.findById(id) == null) {
             return null;
         }
@@ -89,7 +89,7 @@ public class AptitudeService {
         return aptitudeRepository.updateBehaviorById(id, behavior);
     }
 
-    public Aptitude deleteAptitudeBehavior(String id, String behaviorId) {
+    public Aptitude deleteAptitudeBehavior(String id, long behaviorId) {
         if (aptitudeRepository.findById(id) == null) {
             return null;
         }

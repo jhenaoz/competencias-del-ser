@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,16 +23,27 @@ public class SurveyService {
 
     private SurveyTransformer surveyTransformer;
 
+    private EmailService emailService;
+
     private static final Logger logger = Logger.getLogger(SurveyService.class);
 
     @Autowired
-    public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer) {
+    public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer,
+                         final EmailService emailService) {
         this.surveyRepository = surveyRepository;
         this.surveyTransformer = surveyTransformer;
+        this.emailService = emailService;
     }
 
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
+        try {
+            emailService.sendSimpleMail(survey);
+        } catch (AddressException ae) {
+            logger.error("Can't construct the internet address with the given String " + ae);
+        } catch (MessagingException me) {
+            logger.error("Can't send the email " + me);
+        }
         return surveyRepository.saveSurvey(survey);
     }
 
