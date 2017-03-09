@@ -94,7 +94,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Override
     public Aptitude findById(String id) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchQuery("_id", id));
+        searchSourceBuilder.query(QueryBuilders.matchQuery("id", id));
 
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(aptitudeIndexName).build();
 
@@ -142,7 +142,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     }
 
     @Override
-    public Behavior findBehaviorById(String aptitudeId, String id) {
+    public Behavior findBehaviorById(String aptitudeId, long id) {
         List<Behavior> behaviors = findAllBehaviors(aptitudeId);
 
         if (behaviors == null) {
@@ -150,7 +150,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         }
 
         for (Behavior behavior : behaviors) {
-            if (id.equals(behavior.getId())) {
+            if (id == behavior.getId()) {
                 return behavior;
             }
         }
@@ -168,14 +168,47 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     @Override
     public Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId) {
         Aptitude aptitude = findById(aptitudeId);
-        List<Behavior> behaviors = aptitude.getBehaviors();
 
-        Behavior behavior = new Behavior(String.valueOf(behaviors.size() + 1),
-                                         behaviorDto.getEs(),
-                                         behaviorDto.getEn());
+        Behavior behavior = new Behavior(getNextBehaviorId(aptitudeId),
+                behaviorDto.getEs(),
+                behaviorDto.getEn());
         aptitude.addBehavior(behavior);
         updateAptitude(aptitude);
         return behavior;
+    }
+
+    private long getNextBehaviorId(String aptitudeId) {
+        String query = "{\n"
+                + "    \"query\" : {\n"
+                + "        \"match\" : {\"id\":" + aptitudeId + "}\n"
+                + "    },\n"
+                + "    \"aggs\" : {\n"
+                + "        \"maximumBehaviorId\" : {\n"
+                + "            \"max\" : {\n"
+                + "                \"field\" : \"behaviors.id\"\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }\n"
+                + "}";
+        Search search = new Search.Builder(query)
+                .addIndex(aptitudeIndexName)
+                .addType(aptitudeTypeName)
+                .build();
+
+        try {
+            SearchResult result = client.execute(search);
+
+
+            long maximumBehaviorId = result.getAggregations().getMaxAggregation("maximumBehaviorID")
+                    .getMax().longValue();
+
+            return maximumBehaviorId + 1;
+
+        } catch (IOException e) {
+            logger.error("there was an error with the aggregation", e);
+        }
+
+        return -1;
     }
 
     /**
@@ -186,7 +219,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      * @return an Aptitude without the Behaviors specified
      */
     @Override
-    public Aptitude deleteBehavior(String id, String behaviorId) {
+    public Aptitude deleteBehavior(String id, long behaviorId) {
         if (findBehaviorById(id, behaviorId) == null) {
             return null;
         }
@@ -194,19 +227,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = aptitude.getBehaviors();
 
-        for (Behavior behavior : behaviors) {
-            if (behaviorId.equals(behavior.getId())) {
-                behaviors.remove(behavior);
-
-                for (int i = 0; i < behaviors.size(); i++) {
-                    behaviors.get(i).setId(String.valueOf(i + 1));
-                }
-
-                aptitude.setBehaviors(behaviors);
-                break;
-            }
-        }
-
+        behaviors.removeIf(behaviorInList -> behaviorInList.getId() == behaviorId);
+        aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
         return aptitude;
 
@@ -217,7 +239,14 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
     public Behavior updateBehaviorById(String id, Behavior behavior) {
         Aptitude aptitude = findById(id);
         List<Behavior> behaviors = aptitude.getBehaviors();
-        behaviors.set(Integer.parseInt(behavior.getId()) - 1, behavior);
+
+        for (int i = 0; i < getNextBehaviorId(id); i++) {
+            if (behaviors.get(i).getId() == behavior.getId()) {
+                behaviors.set(i, behavior);
+                break;
+            }
+        }
+
         aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
         return behavior;
@@ -226,10 +255,10 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
 
     private Aptitude updateAptitude(Aptitude aptitude) {
         Index index = new Index.Builder(aptitude)
-                               .index(aptitudeIndexName)
-                               .type(aptitudeTypeName)
-                               .id(String.valueOf(aptitude.getId()))
-                               .refresh(true)
+                .index(aptitudeIndexName)
+                .type(aptitudeTypeName)
+                .id(String.valueOf(aptitude.getId()))
+                .refresh(true)
                                .build();
         try {
             client.execute(index);

@@ -16,11 +16,11 @@ public interface AptitudeRepository {
 
     List<Behavior> findAllBehaviors(String aptitudeId);
 
-    Behavior findBehaviorById(String aptitudeId, String id);
+    Behavior findBehaviorById(String aptitudeId, long id);
 
     Behavior addBehavior(BehaviorDto behaviorDto, String aptitudeId);
 
-    Aptitude deleteBehavior(String id, String behaviorId);
+    Aptitude deleteBehavior(String id, long behaviorId);
 
     Behavior updateBehaviorById(String id, Behavior behavior);
 }
