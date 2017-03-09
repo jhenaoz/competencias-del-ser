@@ -31,9 +31,9 @@ public class SurveyTransformerTest {
     @Before
     public void setup() {
         List<Behavior> behaviorList = new ArrayList<>();
-        behaviorList.add(new Behavior("1", "Acepta retroalimentacion", "Accepts review"));
-        behaviorList.add(new Behavior("2", "Juega en equipo", "Play in team"));
-        behaviorList.add(new Behavior("3", "Buena persona", "Good person"));
+        behaviorList.add(new Behavior(1, "Acepta retroalimentacion", "Accepts review"));
+        behaviorList.add(new Behavior(2, "Juega en equipo", "Play in team"));
+        behaviorList.add(new Behavior(3, "Buena persona", "Good person"));
 
         Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviorList);
         when(mockAptitudeRepository.findById("1")).thenReturn(aptitude);
@@ -43,11 +43,22 @@ public class SurveyTransformerTest {
     }
 
     @Test
+    public void aptitudeSurveyTransformerTest() {
+        List<BehaviorSurveyDto> behaviorsSurveyDto = new ArrayList<>();
+        behaviorsSurveyDto.add(new BehaviorSurveyDto(1, 5));
+        behaviorsSurveyDto.add(new BehaviorSurveyDto(2, 4));
+        behaviorsSurveyDto.add(new BehaviorSurveyDto(3, 1));
+        AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
+        AptitudeSurvey aptitudeSurvey = surveyTransformer.aptitudeSurveyTransformer(aptitudeSurveyDto);
+        assertEquals("Apertura", aptitudeSurvey.getAptitude().getEs());
+    }
+
+    @Test
     public void surveyTransformerTest() {
         List<BehaviorSurveyDto> behaviorsSurveyDto = new ArrayList<>();
-        behaviorsSurveyDto.add(new BehaviorSurveyDto("1", 5));
-        behaviorsSurveyDto.add(new BehaviorSurveyDto("2", 4));
-        behaviorsSurveyDto.add(new BehaviorSurveyDto("3", 1));
+        behaviorsSurveyDto.add(new BehaviorSurveyDto(1, 5));
+        behaviorsSurveyDto.add(new BehaviorSurveyDto(2, 4));
+        behaviorsSurveyDto.add(new BehaviorSurveyDto(3, 1));
         AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
         List<AptitudeSurveyDto> aptitudeSurveyDtos = new ArrayList<AptitudeSurveyDto>();
         aptitudeSurveyDtos.add(aptitudeSurveyDto);

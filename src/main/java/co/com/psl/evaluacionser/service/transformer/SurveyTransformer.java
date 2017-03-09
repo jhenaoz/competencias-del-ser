@@ -83,7 +83,7 @@ public class SurveyTransformer {
         for (BehaviorSurveyDto behaviorSurveyDto : behaviorsSurveyDto) {
             BehaviorSurvey behaviorSurvey = new BehaviorSurvey();
             for (Behavior behavior : behaviors) {
-                if (behavior.getId().equals(behaviorSurveyDto.getBehaviorId())) {
+                if (behaviorSurveyDto.getBehaviorId() == behavior.getId()) {
                     behaviorSurvey.setBehavior(behavior);
                     behaviorSurvey.setScore(behaviorSurveyDto.getScore());
                     behaviorsSurvey.add(behaviorSurvey);

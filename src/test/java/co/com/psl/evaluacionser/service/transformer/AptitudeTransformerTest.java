@@ -17,8 +17,8 @@ public class AptitudeTransformerTest {
 
     @Test
     public void aptitudeTransformedToDtoUsingFullConstructor() {
-        Behavior behavior1 = new Behavior("1", "Reconoce sus errores", "Recognize his mistakes");
-        Behavior behavior2 = new Behavior("2", "Solicita sugerencias", "Asks for suggestions");
+        Behavior behavior1 = new Behavior(1, "Reconoce sus errores", "Recognize his mistakes");
+        Behavior behavior2 = new Behavior(2, "Solicita sugerencias", "Asks for suggestions");
         List<Behavior> behaviors = new ArrayList<Behavior>();
         behaviors.add(behavior1);
         behaviors.add(behavior2);
