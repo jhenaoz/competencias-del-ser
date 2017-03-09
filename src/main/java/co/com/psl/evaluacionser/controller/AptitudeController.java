@@ -90,7 +90,7 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.GET)
     public ResponseEntity<Behavior> getBehaviorById(@PathVariable("id") String id,
-                                                    @PathVariable("behaviorId") String behaviorId) {
+                                                    @PathVariable("behaviorId") long behaviorId) {
         Behavior behaviorFound = aptitudeService.findAptitudeBehaviorById(id, behaviorId);
 
         if (behaviorFound == null) {
@@ -135,7 +135,7 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.PUT)
     public ResponseEntity<Behavior> modifyBehavior(@PathVariable("id") String id,
-                                                   @PathVariable("behaviorId") String behaviorId,
+                                                   @PathVariable("behaviorId") long behaviorId,
                                                    @RequestBody BehaviorDto behaviorDto) {
         Behavior behavior = aptitudeService.updateAptitudeBehavior(id, behaviorId, behaviorDto);
 
@@ -155,7 +155,7 @@ public class AptitudeController {
      */
     @RequestMapping(value = "/{id}/behavior/{behaviorId}", method = RequestMethod.DELETE)
     public ResponseEntity<Aptitude> deleteBehavior(@PathVariable("id") String id,
-                                                   @PathVariable("behaviorId") String behaviorId) {
+                                                   @PathVariable("behaviorId") long behaviorId) {
         Aptitude aptitudeDeleted = aptitudeService.deleteAptitudeBehavior(id, behaviorId);
 
         if (aptitudeDeleted == null) {

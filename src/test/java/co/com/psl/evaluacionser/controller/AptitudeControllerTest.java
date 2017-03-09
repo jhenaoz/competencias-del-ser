@@ -39,17 +39,17 @@ public class AptitudeControllerTest {
 
         // Setup aptitude mock for getBehavior methods
         List<Behavior> behaviorList = new ArrayList<>();
-        Behavior behavior = new Behavior("1", "acepta sugerencias", "accept suggestions");
+        Behavior behavior = new Behavior(1, "acepta sugerencias", "accept suggestions");
         behaviorList.add(behavior);
         when(mockAptitudeService.findAptitudeBehaviors("1")).thenReturn(behaviorList);
-        when(mockAptitudeService.findAptitudeBehaviorById("1", "1")).thenReturn(behavior);
+        when(mockAptitudeService.findAptitudeBehaviorById("1", 1)).thenReturn(behavior);
 
         // Setup aptitude mock for save/delete methods
         Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviorList);
         behaviorDto = new BehaviorDto("acepta sugerencias", "accept suggestions");
         when(mockAptitudeService.createAptitudeBehavior("1", behaviorDto)).thenReturn(behavior);
-        when(mockAptitudeService.updateAptitudeBehavior("1", "1", behaviorDto)).thenReturn(behavior);
-        when(mockAptitudeService.deleteAptitudeBehavior("1", "1")).thenReturn(aptitude);
+        when(mockAptitudeService.updateAptitudeBehavior("1", 1, behaviorDto)).thenReturn(behavior);
+        when(mockAptitudeService.deleteAptitudeBehavior("1", 1)).thenReturn(aptitude);
 
         aptitudeController = new AptitudeController(mockAptitudeService);
     }
@@ -129,7 +129,7 @@ public class AptitudeControllerTest {
         assertEquals(1, allBehaviors.size());
 
         Behavior behaviorReturned = allBehaviors.get(0);
-        assertEquals("1", behaviorReturned.getId());
+        assertEquals(1, behaviorReturned.getId());
         assertEquals("acepta sugerencias", behaviorReturned.getEs());
         assertEquals("accept suggestions", behaviorReturned.getEn());
     }
@@ -146,7 +146,7 @@ public class AptitudeControllerTest {
 
     @Test
     public void getBehaviorByIdReturnHttpStatusOk() {
-        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", "1");
+        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", 1);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("OK", responseStatus.name());
@@ -154,19 +154,19 @@ public class AptitudeControllerTest {
 
     @Test
     public void getBehaviorByIdShouldReturnOpennessBehavior() {
-        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", "1");
+        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("1", 1);
 
         Behavior behaviorReturned = responseEntity.getBody();
-        assertEquals("1", behaviorReturned.getId());
+        assertEquals(1, behaviorReturned.getId());
         assertEquals("acepta sugerencias", behaviorReturned.getEs());
         assertEquals("accept suggestions", behaviorReturned.getEn());
     }
 
     @Test
     public void getBehaviorByIdWithInvalidAptitudeReturnsNotFound() {
-        when(mockAptitudeService.findAptitudeBehaviorById("-1", "-1")).thenReturn(null);
+        when(mockAptitudeService.findAptitudeBehaviorById("-1", -1)).thenReturn(null);
 
-        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("-1", "-1");
+        ResponseEntity<Behavior> responseEntity = aptitudeController.getBehaviorById("-1", -1);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
@@ -192,7 +192,7 @@ public class AptitudeControllerTest {
 
     @Test
     public void modifyBehaviorShouldReturnHttpStatusAccepted() {
-        ResponseEntity responseEntity = aptitudeController.modifyBehavior("1", "1", behaviorDto);
+        ResponseEntity responseEntity = aptitudeController.modifyBehavior("1", 1, behaviorDto);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("ACCEPTED", responseStatus.name());
@@ -200,9 +200,9 @@ public class AptitudeControllerTest {
 
     @Test
     public void modifyBehaviorWithInvalidAptitudeReturnsNotFound() {
-        when(mockAptitudeService.updateAptitudeBehavior("-1", "-1", behaviorDto)).thenReturn(null);
+        when(mockAptitudeService.updateAptitudeBehavior("-1", -1, behaviorDto)).thenReturn(null);
 
-        ResponseEntity responseEntity = aptitudeController.modifyBehavior("-1", "-1", behaviorDto);
+        ResponseEntity responseEntity = aptitudeController.modifyBehavior("-1", -1, behaviorDto);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
@@ -210,7 +210,7 @@ public class AptitudeControllerTest {
 
     @Test
     public void deleteBehaviorShouldReturnHttpStatusAccepted() {
-        ResponseEntity<Aptitude> responseEntity = aptitudeController.deleteBehavior("1", "1");
+        ResponseEntity<Aptitude> responseEntity = aptitudeController.deleteBehavior("1", 1);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("ACCEPTED", responseStatus.name());
@@ -218,9 +218,9 @@ public class AptitudeControllerTest {
 
     @Test
     public void deleteBehaviorWithInvalidAptitudeReturnsNotFound() {
-        when(mockAptitudeService.deleteAptitudeBehavior("-1", "-1")).thenReturn(null);
+        when(mockAptitudeService.deleteAptitudeBehavior("-1", -1)).thenReturn(null);
 
-        ResponseEntity<Aptitude> responseEntity = aptitudeController.deleteBehavior("-1", "-1");
+        ResponseEntity<Aptitude> responseEntity = aptitudeController.deleteBehavior("-1", -1);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals("NOT_FOUND", responseStatus.name());
