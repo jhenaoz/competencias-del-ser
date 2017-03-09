@@ -121,7 +121,7 @@ curl -XPUT "http://localhost:9200/survey" -d'
 
 curl -XPOST "http://localhost:9200/person/employee/_bulk?pretty" -d'
 {"index":{}}
-{"id": "1", "name": "Adrian Jimenez" }
+{"id": "1", "name": "Adrían Jimenez" }
 {"index":{}}
 {"id": "2", "name": "Fernando Castilla" }
 {"index":{}}
