@@ -5,14 +5,6 @@ node() {
         checkout scm
     }
 
-    stage('SonarQube analysis') {
-        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            withSonarQubeEnv('SonarQube Test') {
-                sh 'mvn sonar:sonar'
-            }
-        }
-    }
-
     stage('Checkstyle') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             sh 'mvn checkstyle:checkstyle'
@@ -53,6 +45,9 @@ node() {
     }
 
     stage('Report') {
-
+        step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: '**/target/checkstyle-result.xml', unstableTotalAll:'0'])
+        step([$class: 'PmdPublisher', pattern: '**/target/pmd.xml', unstableTotalAll:'0'])
+        step([$class: 'FindBugsPublisher', pattern: '**/findbugs.xml', unstableTotalAll:'0'])
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/checkstyle.html', reportFiles: 'checkstyle.html, pmd.html', reportName: 'Static Code Analysis'])
     }
 }

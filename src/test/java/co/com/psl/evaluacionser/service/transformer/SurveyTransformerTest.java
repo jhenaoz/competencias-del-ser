@@ -1,17 +1,5 @@
 package co.com.psl.evaluacionser.service.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.AptitudeSurvey;
 import co.com.psl.evaluacionser.domain.Behavior;
@@ -20,6 +8,17 @@ import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
 import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SurveyTransformerTest {
