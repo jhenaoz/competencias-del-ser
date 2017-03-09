@@ -33,7 +33,7 @@ public class SurveyTransformer {
 
     private AptitudeTransformer aptitudeTransformer;
 
-    static Logger logger = Logger.getLogger(SurveyTransformer.class);
+    private static Logger logger = Logger.getLogger(SurveyTransformer.class);
 
     @Autowired
     public SurveyTransformer(final AptitudeRepository aptitudeRepository,
