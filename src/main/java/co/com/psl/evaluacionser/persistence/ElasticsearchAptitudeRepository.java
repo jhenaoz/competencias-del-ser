@@ -4,6 +4,7 @@ import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.service.dto.BehaviorDto;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -46,7 +47,7 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).refresh(true).build();
         try {
             client.execute(index);
             return aptitude;
@@ -228,14 +229,31 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
                                .index(aptitudeIndexName)
                                .type(aptitudeTypeName)
                                .id(String.valueOf(aptitude.getId()))
+                               .refresh(true)
                                .build();
         try {
             client.execute(index);
             return aptitude;
         } catch (IOException e) {
-            logger.error("The aptitude couldn't be updated" + e.getMessage());
+            logger.error("The aptitude couldn't be updated " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
+    public boolean deleteAptitudeById(String aptitudeId) {
+        if (findById(aptitudeId) == null) {
+            return false;
+        }
+        try {
+            client.execute(new Delete.Builder(aptitudeId)
+                    .index(aptitudeIndexName)
+                    .type(aptitudeTypeName)
+                    .refresh(true)
+                    .build());
+            return true;
+        } catch (IOException e) {
+            logger.error("there was an error deleteting the aptitude ", e);
+            return false;
+        }
+    }
 }
