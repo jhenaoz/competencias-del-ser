@@ -7,6 +7,7 @@ import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
 import org.apache.log4j.Logger;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -57,27 +58,77 @@ public class ElasticsearchPersonRepository implements PersonRepository {
                 .addType(personTypeName).build();
         try {
             result = client.execute(search);
+            if (!result.isSucceeded()) {
+                return null;
+            }
             List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);
             return hits.stream().map(this::getPerson).collect(Collectors.toList());
         } catch (IOException e) {
             logger.error("The search can't be completed " + e.getMessage(), e);
             return null;
         }
+
     }
 
     private Person getPerson(Hit<Person, Void> hit) {
+        if (hit == null) {
+            return null;
+        }
+
         return hit.source;
     }
 
     @Override
     public Person save(Person person) {
-        Index index = new Index.Builder(person).index(personIndexName).type(personTypeName).build();
+        Index index = new Index.Builder(person).index(personIndexName).type(personTypeName).refresh(true).build();
         try {
             client.execute(index);
             return person;
         } catch (IOException e) {
             logger.error("The person can't be saved " + e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public Person findPersonById(String personId) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchQuery("id", personId));
+
+        Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(personIndexName).build();
+
+        try {
+            SearchResult result = client.execute(search);
+
+            if (!result.isSucceeded()) {
+                return null;
+            }
+
+            return getPerson(result.getFirstHit(Person.class));
+        } catch (IOException e) {
+            logger.error("There was an error executing the search " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deletePersonByIdAndName(String id, String name) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("id", id))
+                .must(QueryBuilders.matchPhraseQuery("name", name));
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(boolQueryBuilder);
+
+        DeleteByQuery deleteSpecificPerson = new DeleteByQuery.Builder(searchSourceBuilder.toString())
+                .addIndex(personIndexName)
+                .refresh(true)
+                .build();
+
+        try {
+            client.execute(deleteSpecificPerson);
+            return true;
+        } catch (IOException e) {
+            logger.error("There was an error while trying to delete " + name + " ", e);
+            return false;
         }
     }
 }
