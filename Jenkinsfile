@@ -54,8 +54,7 @@ node() {
     }
 
     stage('Report') {
-        step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/target/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '389'])
-        step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/src/main/resources/static/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '48'])
+        step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/target/checkstyle-result.xml,**/src/main/resources/static/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '437'])
         step([$class: 'PmdPublisher', defaultEncoding: '', healthy: '', pattern: '**/target/pmd.xml', unHealthy: ''])
         step([$class: 'FindBugsPublisher', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/target/findbugs.xml', unHealthy: ''])
         step([$class: 'AnalysisPublisher', defaultEncoding: '', healthy: '', unHealthy: ''])
