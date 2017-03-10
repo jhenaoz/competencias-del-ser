@@ -11,10 +11,13 @@ import { Survey } from '../survey/survey.model';
 })
 export class SurveyEndComponent implements OnInit {
 
+  oneSurvey: boolean;
+
   constructor(private surveyService: SurveyService,
               private router: Router) { }
 
   ngOnInit() {
+    this.oneSurvey = this.surveyService.oneSurvey;
   }
 
   evaluateMore() {

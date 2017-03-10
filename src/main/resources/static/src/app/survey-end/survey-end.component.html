@@ -4,7 +4,7 @@
     <hr><br><br>
     <div class="container text-center">
         <h2 class="title">{{ "Final.thanks" | translate }}</h2>
-        <button *ngIf="!surveyService.oneSurvey" type="button" class="btn" (click)="evaluateMore()">{{ "Final.again" | translate }}</button>
+        <button *ngIf="!oneSurvey" type="button" class="btn" (click)="evaluateMore()">{{ "Final.again" | translate }}</button>
         <br><br>
         <button type="button" class="btn" (click)="finish()">{{ "Final.finish" | translate }}</button>
     </div>

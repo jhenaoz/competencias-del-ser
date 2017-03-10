@@ -51,11 +51,12 @@ export class SurveyService {
   }
 
   checkSurveyDate(survey: Survey, competenceId: string, oneSurvey: boolean): Observable<Boolean> {
-    let _url = oneSurvey? this._surveyUrl + '/recentsurvey?evaluator='+survey.evaluator+'&evaluated='+survey.evaluated+'&aptitude='+competenceId :
-                              this._surveyUrl + '/recentsurvey?evaluator='+survey.evaluator+'&evaluated='+survey.evaluated;
+    const _url = oneSurvey
+      ? this._surveyUrl + '/recentsurvey?evaluator=' + survey.evaluator + '&evaluated=' + survey.evaluated + '&aptitude=' + competenceId
+      : this._surveyUrl + '/recentsurvey?evaluator=' + survey.evaluator + '&evaluated=' + survey.evaluated;
     return this._http.get(_url)
               .map((response: Response) => <Boolean> response.json())
-              .catch(this.handleError)
+              .catch(this.handleError);
   }
 
   private extractData(res: Response) {
