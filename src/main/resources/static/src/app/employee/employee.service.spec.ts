@@ -44,8 +44,8 @@ describe('Service: EmployeeService', () => {
                         BaseRequestOptions
                     ],
                     provide: Http,
-                    useFactory: (backendXHRB: XHRBackend, defaultOptions: BaseRequestOptions) => {
-                        return new Http(backendXHRB, defaultOptions);
+                    useFactory: (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
+                        return new Http(backend, defaultOptions);
                     }
                 }
             ]
@@ -54,8 +54,8 @@ describe('Service: EmployeeService', () => {
         service = TestBed.get(EmployeeService);
     }));
 
-  function setupConnections(backendMock: MockBackend, options: any) {
-      backendMock.connections.subscribe((connection: MockConnection) => {
+  function setupConnections(backend: MockBackend, options: any) {
+      backend.connections.subscribe((connection: MockConnection) => {
           if (connection.request.url === 'api/person') {
               const responseOptions = new ResponseOptions(options);
               const response = new Response(responseOptions);
