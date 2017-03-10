@@ -6,6 +6,15 @@
     <groupId>valoracion-del-ser</groupId>
     <artifactId>valoracion-del-ser</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Evaluación del Ser</name>
+    <url>http://10.10.10.154:8080</url>
+    <scm>
+        <url>https://github.com/jhenaoz/competencias-del-ser</url>
+    </scm>
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://10.10.10.155:8080</url>
+    </ciManagement>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -18,6 +27,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <sonar.host.url>http://10.10.10.156:9000</sonar.host.url>
         <sonar.sources>pom.xml,src/main/java,src/main/resources/static/src</sonar.sources>
+        <sonar.exclusions>src/main/resources/static/src/Gulpfile.js</sonar.exclusions>
+        <sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
         <sonar.ts.tslint.outputPath>src/main/resources/static/tslint_results.json</sonar.ts.tslint.outputPath>
     </properties>
     <dependencies>
@@ -143,7 +154,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build -- --environment=ci</arguments>
+                            <arguments>run build -- --environment=stg</arguments>
                         </configuration>
                         <phase>compile</phase>
                     </execution>

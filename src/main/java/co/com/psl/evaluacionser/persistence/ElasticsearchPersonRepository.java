@@ -9,6 +9,7 @@ import io.searchbox.core.SearchResult.Hit;
 import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -44,22 +45,24 @@ public class ElasticsearchPersonRepository implements PersonRepository {
     /**
      * This method find all indexes person with type employee
      *
-     * @return person list from the elastisearch
+     * @return person list from the Elasticsearch
      */
     @Override
     public List<Person> findAll() {
-        SearchResult result = null;
+        SearchResult result;
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.sort("name", SortOrder.ASC);
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(personIndexName)
                 .addType(personTypeName).build();
         try {
             result = client.execute(search);
+            List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);
+            return hits.stream().map(this::getPerson).collect(Collectors.toList());
         } catch (IOException e) {
-            logger.error("The search can't be completed " + e.getMessage());
+            logger.error("The search can't be completed " + e.getMessage(), e);
+            return null;
         }
-        List<SearchResult.Hit<Person, Void>> hits = result.getHits(Person.class);
-        return hits.stream().map(this::getPerson).collect(Collectors.toList());
     }
 
     private Person getPerson(Hit<Person, Void> hit) {

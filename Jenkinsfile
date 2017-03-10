@@ -20,10 +20,11 @@ node() {
     stage('Compile') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
+            sh 'mvn jacoco:prepare-agent'
                 if (env.BRANCH_NAME == 'master') {
                     sh 'mvn clean'
                 }
-                sh 'mvn test-compile'
+            sh 'mvn test-compile'
             }
         }
     }
@@ -38,7 +39,7 @@ node() {
     stage('Test') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
-                sh 'mvn surefire:test'
+                sh 'mvn surefire:test jacoco:report'
                 sh 'mvn frontend:npm@npm-test'
             }
         }
@@ -53,9 +54,13 @@ node() {
     }
 
     stage('Report') {
-        step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: '**/target/checkstyle-result.xml', unstableTotalAll:'0'])
-        step([$class: 'PmdPublisher', pattern: '**/target/pmd.xml', unstableTotalAll:'0'])
-        step([$class: 'FindBugsPublisher', pattern: '**/findbugs.xml', unstableTotalAll:'0'])
-        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/', reportFiles: 'checkstyle.html, pmd.html', reportName: 'Static Code Analysis'])
+        step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/target/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '389'])
+        step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/src/main/resources/static/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '48'])
+        step([$class: 'PmdPublisher', defaultEncoding: '', healthy: '', pattern: '**/target/pmd.xml', unHealthy: ''])
+        step([$class: 'FindBugsPublisher', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/target/findbugs.xml', unHealthy: ''])
+        step([$class: 'AnalysisPublisher', defaultEncoding: '', healthy: '', unHealthy: ''])
+        step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '**/target/site/jacoco/', reportFiles: 'index.html', reportName: 'JaCoCo Report'])
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/', reportFiles: 'checkstyle.html,pmd.html', reportName: 'Static Code Analysis'])
     }
 }

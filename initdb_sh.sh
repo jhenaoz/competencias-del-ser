@@ -1,4 +1,8 @@
 #!/bin/bash
+curl -XDELETE "http://localhost:9200/person"
+curl -XDELETE "http://localhost:9200/aptitude"
+curl -XDELETE "http://localhost:9200/survey"
+
 curl -XPUT "http://localhost:9200/aptitude" -d'
 {
 	"mappings": {
@@ -39,10 +43,10 @@ curl -XPUT "http://localhost:9200/person" -d'
 			"dynamic": "strict",
 			"properties": {
 				"id": {
-					"type": "text"
+					"type": "string"
 				},
 				"name": {
-					"type": "text",
+					"type": "string",
 					"index" : "not_analyzed"
 				}
 			}
@@ -121,7 +125,7 @@ curl -XPUT "http://localhost:9200/survey" -d'
 
 curl -XPOST "http://localhost:9200/person/employee/_bulk?pretty" -d'
 {"index":{}}
-{"id": "1", "name": "Adrían Jimenez" }
+{"id": "1", "name": "Adrian Jimenez" }
 {"index":{}}
 {"id": "2", "name": "Fernando Castilla" }
 {"index":{}}

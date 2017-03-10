@@ -8,7 +8,7 @@
     "start": "ng serve",
     "test": "ng test",
     "lint-json": "tslint --format json --out tslint_results.json --force 'src/**/*.ts'",
-    "lint-checkstyle": "tslint --format checkstyle --out checkstyle_results.xml --force 'src/**/*.ts'",
+    "lint-checkstyle": "tslint --format checkstyle --out checkstyle-result.xml --force 'src/**/*.ts'",
     "lint": "npm run lint-json && npm run lint-checkstyle",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
