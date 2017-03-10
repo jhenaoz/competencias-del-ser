@@ -29,6 +29,7 @@
         <sonar.sources>pom.xml,src/main/java,src/main/resources/static/src</sonar.sources>
         <sonar.exclusions>src/main/resources/static/src/Gulpfile.js</sonar.exclusions>
         <sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
+        <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
         <sonar.ts.tslint.outputPath>src/main/resources/static/tslint_results.json</sonar.ts.tslint.outputPath>
     </properties>
     <dependencies>
