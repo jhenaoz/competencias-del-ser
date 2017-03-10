@@ -78,6 +78,8 @@ export class SurveyOptionsComponent implements OnInit {
       }
     });
 
+    this.surveyService.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
+
     /*
     * Fetch variables from i18n .json files
     */
@@ -105,8 +107,8 @@ export class SurveyOptionsComponent implements OnInit {
   /*
   * Function to initializate formgroup variables
   */
-  createForm(){
-    if(!this.surveyService.oneSurvey) {
+  createForm() {
+    if (!this.surveyService.oneSurvey) {
       this.complexForm = this.fb.group({
         evaluated: '',
         evaluator: '',
@@ -193,8 +195,9 @@ export class SurveyOptionsComponent implements OnInit {
     this.survey.evaluated = value.evaluated;
     this.survey.role = value.role;
     this.survey.aptitudes = new Array();
-    this.isRecent = await this.surveyService.checkSurveyDate(this.survey, this.surveyService.competenceId, !this.surveyService.oneSurvey).toPromise();
-    if(!this.isRecent) {
+    this.isRecent = await this.surveyService.checkSurveyDate(this.survey, this.surveyService.competenceId, !this.surveyService.oneSurvey)
+        .toPromise();
+    if (!this.isRecent) {
       this.gotoSurvey();
     } else {
       $('input, select').attr('disabled', 'disabled');
@@ -208,9 +211,9 @@ export class SurveyOptionsComponent implements OnInit {
     // XXX: hardcoded
     this.router.navigate(['/survey/1']);
   }
-  reset(){
-    $('input, select').removeAttr("disabled");
-    $('select').prop('selectedIndex',0);
+  reset() {
+    $('input, select').removeAttr('disabled');
+    $('select').prop('selectedIndex', 0);
     this.complexForm.reset();
     this.complexForm.enable();
     this.submitted = false;
@@ -222,9 +225,9 @@ export class SurveyOptionsComponent implements OnInit {
   * Function to store the form values into the survey variable in the service
   */
   startSurvey() {
-    if((this.complexForm.value.evaluator === '' || 
+    if ((this.complexForm.value.evaluator === '' ||
         this.complexForm.value.evaluator === null ||
-        this.complexForm.value.evaluator === this.complexForm.value.evaluated) && 
+        this.complexForm.value.evaluator === this.complexForm.value.evaluated) &&
         !this.isSelf) {
       this.evaluatorIsValid = false;
     } else {
