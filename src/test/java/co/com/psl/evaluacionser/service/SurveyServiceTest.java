@@ -26,19 +26,19 @@ import static org.mockito.Mockito.when;
 public class SurveyServiceTest {
 
     @Mock
-    SurveyRepository mockSurveyRepository;
+    private SurveyRepository mockSurveyRepository;
 
     @Mock
-    SurveyTransformer mockSurveyTransformer;
+    private SurveyTransformer mockSurveyTransformer;
 
     @Mock
-    EmailService emailService;
+    private EmailService emailService;
 
-    SurveyService surveyService;
+    private SurveyService surveyService;
 
-    SurveyDto surveyDto = new SurveyDto();
-    Survey survey = new Survey();
-    List<Survey> surveys = new ArrayList<>();
+    private SurveyDto surveyDto = new SurveyDto();
+    private Survey survey = new Survey();
+    private List<Survey> surveys = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -116,12 +116,18 @@ public class SurveyServiceTest {
         when(mockSurveyTransformer.transformer(surveyDto)).thenReturn(survey);
 
 
-        when(mockSurveyRepository.existsRecentSurvey("evaluated", "evaluator",null)).thenReturn(true);
-        when(mockSurveyRepository.existsRecentSurvey("not evaluated", "evaluator",null)).thenReturn(false);
-        when(mockSurveyRepository.findUserSurveys("evaluated", "2017-03-06", "2017-03-06")).thenReturn(surveys);
-        when(mockSurveyRepository.findUserSurveys("evaluated", null, null)).thenReturn(surveys);
-        when(mockSurveyRepository.findUserSurveys("evaluated", "invalid date", "invalid date")).thenReturn(null);
-        when(mockSurveyRepository.saveSurvey(survey)).thenReturn(survey);
+        when(mockSurveyRepository.existsRecentSurvey("evaluated", "evaluator", null))
+                                 .thenReturn(true);
+        when(mockSurveyRepository.existsRecentSurvey("not evaluated", "evaluator", null))
+                                 .thenReturn(false);
+        when(mockSurveyRepository.findUserSurveys("evaluated", "2017-03-06", "2017-03-06"))
+                                 .thenReturn(surveys);
+        when(mockSurveyRepository.findUserSurveys("evaluated", null, null))
+                                 .thenReturn(surveys);
+        when(mockSurveyRepository.findUserSurveys("evaluated", "invalid date", "invalid date"))
+                                 .thenReturn(null);
+        when(mockSurveyRepository.saveSurvey(survey))
+                                 .thenReturn(survey);
 
         surveyService = new SurveyService(mockSurveyRepository, mockSurveyTransformer, emailService);
     }
@@ -140,25 +146,29 @@ public class SurveyServiceTest {
 
     @Test
     public void userSurveyWithNullDatesShouldBeFound() {
-        List<Survey> evaluated = surveyService.findUserSurveys("evaluated", null, null);
+        List<Survey> evaluated =
+                surveyService.findUserSurveys("evaluated", null, null);
         assertEquals(survey, evaluated.get(0));
     }
 
     @Test
     public void invalidSurveyShouldntBeFound() {
-        List<Survey> evaluated = surveyService.findUserSurveys("evaluated", "invalid date", "invalid date");
+        List<Survey> evaluated =
+                surveyService.findUserSurveys("evaluated", "invalid date", "invalid date");
         assertEquals(null, evaluated);
     }
 
     @Test
     public void recentSurveyShouldBeFound() {
-        boolean surveyWasFound = surveyService.existsRecentSurvey("evaluated", "evaluator",null);
+        boolean surveyWasFound =
+                surveyService.existsRecentSurvey("evaluated", "evaluator", null);
         assertEquals(true, surveyWasFound);
     }
 
     @Test
-    public void nonexistingSurveyShouldntBeFound() {
-        boolean surveyWasFound = surveyService.existsRecentSurvey("not evaluated", "evaluator",null);
+    public void nonExistingSurveyShouldNotBeFound() {
+        boolean surveyWasFound =
+                surveyService.existsRecentSurvey("not evaluated", "evaluator", null);
         assertEquals(false, surveyWasFound);
     }
 

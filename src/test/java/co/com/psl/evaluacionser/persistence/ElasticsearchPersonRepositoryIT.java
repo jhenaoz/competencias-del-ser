@@ -22,12 +22,10 @@ public class ElasticsearchPersonRepositoryIT {
       the other person are the ones that are returned from the save method (returnedSavePerson)
       and one person im going to save in the DB (personToSave)
      */
-    Person localPerson1 = new Person();
-    Person localPerson2 = new Person();
-    Person returnedPersonFromSave = new Person();
-    Person personToSave = new Person();
-    boolean person1WasDeleted;
-    boolean Person2WasDeleted;
+    private Person localPerson1 = new Person();
+    private Person localPerson2 = new Person();
+    private Person returnedPersonFromSave = new Person();
+    private Person personToSave = new Person();
 
     @Autowired
     private ElasticsearchPersonRepository elasticsearchPersonRepository;
@@ -99,11 +97,13 @@ public class ElasticsearchPersonRepositoryIT {
     @Test
     public void deletePersonByIdAndName() throws Exception {
 
-        person1WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(localPerson1.getId(), localPerson1.getName());
-        Person2WasDeleted = elasticsearchPersonRepository.deletePersonByIdAndName(localPerson2.getId(), localPerson2.getName());
+        boolean person1WasDeleted =
+                elasticsearchPersonRepository.deletePersonByIdAndName(localPerson1.getId(), localPerson1.getName());
+        boolean person2WasDeleted =
+                elasticsearchPersonRepository.deletePersonByIdAndName(localPerson2.getId(), localPerson2.getName());
 
         assertEquals(true, person1WasDeleted);
-        assertEquals(true, Person2WasDeleted);
+        assertEquals(true, person2WasDeleted);
 
     }
 

@@ -1,17 +1,5 @@
 package co.com.psl.evaluacionser.service.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import co.com.psl.evaluacionser.domain.Aptitude;
 import co.com.psl.evaluacionser.domain.AptitudeSurvey;
 import co.com.psl.evaluacionser.domain.Behavior;
@@ -20,6 +8,17 @@ import co.com.psl.evaluacionser.persistence.AptitudeRepository;
 import co.com.psl.evaluacionser.service.dto.AptitudeSurveyDto;
 import co.com.psl.evaluacionser.service.dto.BehaviorSurveyDto;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SurveyTransformerTest {
@@ -48,7 +47,8 @@ public class SurveyTransformerTest {
         behaviorsSurveyDto.add(new BehaviorSurveyDto(1, 5));
         behaviorsSurveyDto.add(new BehaviorSurveyDto(2, 4));
         behaviorsSurveyDto.add(new BehaviorSurveyDto(3, 1));
-        AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
+        AptitudeSurveyDto aptitudeSurveyDto =
+                new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
         AptitudeSurvey aptitudeSurvey = surveyTransformer.aptitudeSurveyTransformer(aptitudeSurveyDto);
         assertEquals("Apertura", aptitudeSurvey.getAptitude().getEs());
     }
@@ -59,8 +59,9 @@ public class SurveyTransformerTest {
         behaviorsSurveyDto.add(new BehaviorSurveyDto(1, 5));
         behaviorsSurveyDto.add(new BehaviorSurveyDto(2, 4));
         behaviorsSurveyDto.add(new BehaviorSurveyDto(3, 1));
-        AptitudeSurveyDto aptitudeSurveyDto = new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
-        List<AptitudeSurveyDto> aptitudeSurveyDtos = new ArrayList<AptitudeSurveyDto>();
+        AptitudeSurveyDto aptitudeSurveyDto =
+                new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
+        List<AptitudeSurveyDto> aptitudeSurveyDtos = new ArrayList<>();
         aptitudeSurveyDtos.add(aptitudeSurveyDto);
         SurveyDto surveyDto = new SurveyDto("Juan evaluator", "Juana evaluated", "Team", aptitudeSurveyDtos);
         Survey survey = surveyTransformer.transformer(surveyDto);

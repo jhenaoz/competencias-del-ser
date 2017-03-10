@@ -23,13 +23,13 @@ public class ElasticsearchSurveyRepositoryIT {
     /*
     as this method accesses the DB to test survey operations i need some surveys to save and test, these are the ones
      */
-    Survey survey1 = new Survey();
-    Survey survey2 = new Survey();
-    Survey returnedSaveSurvey;
-    Survey returnedSaveSurvey2;
+    private Survey survey1 = new Survey();
+    private Survey survey2 = new Survey();
+    private Survey returnedSaveSurvey;
+    private Survey returnedSaveSurvey2;
 
     @Autowired
-    ElasticsearchSurveyRepository elasticsearchSurveyRepository;
+    private ElasticsearchSurveyRepository elasticsearchSurveyRepository;
 
 
     @Before
@@ -38,12 +38,10 @@ public class ElasticsearchSurveyRepositoryIT {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(cal.getTime());
 
-
         survey1.setEvaluated("john doe");
         survey1.setEvaluator("psl");
         survey1.setRole("teammate");
         survey1.setTimestamp(formatted);
-
 
         survey2.setEvaluated("john doe");
         survey2.setEvaluator("coomeva");
@@ -55,22 +53,28 @@ public class ElasticsearchSurveyRepositoryIT {
 
     @After
     public void tearDown() throws Exception {
-        elasticsearchSurveyRepository.deleteSurvey(survey1.getEvaluator(), survey1.getEvaluated(), survey1.getTimestamp());
-        elasticsearchSurveyRepository.deleteSurvey(survey2.getEvaluator(), survey2.getEvaluated(), survey2.getTimestamp());
+        elasticsearchSurveyRepository.deleteSurvey(survey1.getEvaluator(),
+                                                   survey1.getEvaluated(),
+                                                   survey1.getTimestamp());
+        elasticsearchSurveyRepository.deleteSurvey(survey2.getEvaluator(),
+                                                   survey2.getEvaluated(),
+                                                   survey2.getTimestamp());
 
     }
 
     @Test
     public void saveSurvey() throws Exception {
         assertEquals(survey1.toString(), returnedSaveSurvey.toString());
-        assertEquals(survey2.toString(),returnedSaveSurvey2.toString());
+        assertEquals(survey2.toString(), returnedSaveSurvey2.toString());
 
     }
 
     @Test
     public void findUserSurveys() throws Exception {
 
-        List<Survey> userSurveys = elasticsearchSurveyRepository.findUserSurveys(survey1.getEvaluated(), survey1.getTimestamp(), survey1.getTimestamp());
+        List<Survey> userSurveys = elasticsearchSurveyRepository.findUserSurveys(survey1.getEvaluated(),
+                                                                                 survey1.getTimestamp(),
+                                                                                 survey1.getTimestamp());
 
         boolean evaluatorFound = false;
         for (Survey surveyInList : userSurveys) {
@@ -82,7 +86,7 @@ public class ElasticsearchSurveyRepositoryIT {
 
         boolean evaluator2Found = false;
         for (Survey surveyInList : userSurveys) {
-            if (surveyInList.getEvaluator().equals(survey2.getEvaluator())){
+            if (surveyInList.getEvaluator().equals(survey2.getEvaluator())) {
                 evaluator2Found = true;
             }
 
@@ -94,26 +98,30 @@ public class ElasticsearchSurveyRepositoryIT {
     @Test
     public void existsRecentSurvey() throws Exception {
 
-        assertTrue(elasticsearchSurveyRepository.existsRecentSurvey(survey1.getEvaluated(), survey1.getEvaluator(),null));
+        assertTrue(elasticsearchSurveyRepository.existsRecentSurvey(survey1.getEvaluated(),
+                                                                    survey1.getEvaluator(),
+                                                                    null));
 
     }
 
     @Test
     public void deleteSurvey() throws Exception {
 
-        assertTrue(elasticsearchSurveyRepository.deleteSurvey(survey2.getEvaluator(), survey2.getEvaluated(), survey2.getTimestamp()));
+        assertTrue(elasticsearchSurveyRepository.deleteSurvey(survey2.getEvaluator(),
+                                                              survey2.getEvaluated(),
+                                                              survey2.getTimestamp()));
 
     }
 
     @Test
     public void findSurvey() throws Exception {
-        Survey surveyFound = elasticsearchSurveyRepository.findSurvey(this.survey1.getEvaluator(), this.survey1.getEvaluated(), this.survey1.getTimestamp());
-        assertEquals(survey1.getEvaluator(),surveyFound.getEvaluator());
-        assertEquals(survey1.getEvaluated(),surveyFound.getEvaluated());
-        assertEquals(survey1.getRole(),surveyFound.getRole());
-        assertEquals(survey1.getAptitudes(),surveyFound.getAptitudes());
-        assertEquals(survey1.getTimestamp(),surveyFound.getTimestamp());
-
+        Survey surveyFound = elasticsearchSurveyRepository.findSurvey(this.survey1.getEvaluator(),
+                                                                      this.survey1.getEvaluated(),
+                                                                      this.survey1.getTimestamp());
+        assertEquals(survey1.getEvaluator(), surveyFound.getEvaluator());
+        assertEquals(survey1.getEvaluated(), surveyFound.getEvaluated());
+        assertEquals(survey1.getRole(), surveyFound.getRole());
+        assertEquals(survey1.getAptitudes(), surveyFound.getAptitudes());
+        assertEquals(survey1.getTimestamp(), surveyFound.getTimestamp());
     }
-
 }

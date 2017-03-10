@@ -1,19 +1,20 @@
 package co.com.psl.evaluacionser.domain;
 
-import static org.junit.Assert.*;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.psl.evaluacionser.service.dto.AptitudeDto;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class SurveyTest {
 
     @Test
-    public void SurveyByConstructor() {
+    public void surveyByConstructor() {
         AptitudeDto aptitudeDto = new AptitudeDto("1", "Openness", "Apertura");
-        List<BehaviorSurvey> behaviors = new ArrayList<BehaviorSurvey>();
+        List<BehaviorSurvey> behaviors = new ArrayList<>();
         Behavior behavior = new Behavior(1, "Accepts review", "Acepta retroalimentacion");
         behaviors.add(new BehaviorSurvey(behavior, 5));
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey(aptitudeDto, "A really good friend", behaviors);
@@ -25,7 +26,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void SurveyBySetter() {
+    public void surveyBySetter() {
         Survey survey = new Survey();
         survey.setEvaluator("Juan Perez");
         survey.setEvaluated("Jhon Doe");

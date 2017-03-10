@@ -1,9 +1,8 @@
 package co.com.psl.evaluacionser.service.transformer;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import co.com.psl.evaluacionser.domain.Behavior;
-import co.com.psl.evaluacionser.service.transformer.AptitudeTransformer;
+import co.com.psl.evaluacionser.service.dto.AptitudeDto;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class AptitudeTransformerTest {
     public void aptitudeTransformedToDtoUsingFullConstructor() {
         Behavior behavior1 = new Behavior(1, "Reconoce sus errores", "Recognize his mistakes");
         Behavior behavior2 = new Behavior(2, "Solicita sugerencias", "Asks for suggestions");
-        List<Behavior> behaviors = new ArrayList<Behavior>();
+        List<Behavior> behaviors = new ArrayList<>();
         behaviors.add(behavior1);
         behaviors.add(behavior2);
         Aptitude aptitude = new Aptitude(1L, "Apertura", "Openness", behaviors);

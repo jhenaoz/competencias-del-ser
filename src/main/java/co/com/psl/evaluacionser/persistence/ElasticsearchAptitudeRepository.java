@@ -247,7 +247,6 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
         aptitude.setBehaviors(behaviors);
         updateAptitude(aptitude);
         return behavior;
-
     }
 
     private Aptitude updateAptitude(Aptitude aptitude) {

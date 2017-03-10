@@ -6,6 +6,15 @@
     <groupId>valoracion-del-ser</groupId>
     <artifactId>valoracion-del-ser</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Evaluación del Ser</name>
+    <url>http://10.10.10.154:8080</url>
+    <scm>
+        <url>https://github.com/jhenaoz/competencias-del-ser</url>
+    </scm>
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://10.10.10.155:8080</url>
+    </ciManagement>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -16,9 +25,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <sonar.host.url>http://10.10.10.156:9000</sonar.host.url>
         <sonar.sources>pom.xml,src/main/java,src/main/resources/static/src</sonar.sources>
-        <sonar.ts.tslintpath>src/main/resources/static/node_modules/tslint/bin</sonar.ts.tslintpath>
-        <sonar.ts.tslint.configPath>src/main/resources/static/tslint.json</sonar.ts.tslint.configPath>
+        <sonar.exclusions>src/main/resources/static/src/Gulpfile.js</sonar.exclusions>
+        <sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
+        <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
+        <sonar.ts.tslint.outputPath>src/main/resources/static/tslint_results.json</sonar.ts.tslint.outputPath>
     </properties>
     <dependencies>
         <dependency>
@@ -143,7 +155,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build -- --environment=ci</arguments>
+                            <arguments>run build -- --environment=stg</arguments>
                         </configuration>
                         <phase>compile</phase>
                     </execution>
@@ -157,6 +169,15 @@
                         </configuration>
                         <phase>test</phase>
                     </execution>
+                    <execution>
+                        <id>tslint</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint</arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <!-- Code Analysis Plugins -->
@@ -164,6 +185,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.7</version>
+                <configuration>
+                    <printFailingErrors>true</printFailingErrors>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -186,7 +210,7 @@
                     </suppressionsLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -195,6 +219,12 @@
                         <version>7.6</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <!-- Coverage Plugins -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
             </plugin>
         </plugins>
     </build>

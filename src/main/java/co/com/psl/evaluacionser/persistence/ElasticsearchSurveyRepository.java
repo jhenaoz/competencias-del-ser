@@ -85,7 +85,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         }
 
         List<Survey> surveysFound = findSurveys(boolQueryBuilder);
-        return (surveysFound != null) && !surveysFound.isEmpty();
+        return surveysFound != null && !surveysFound.isEmpty();
     }
 
     /**
