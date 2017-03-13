@@ -51,13 +51,7 @@ public class SurveyController {
     public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user") String user,
                                                   @RequestParam(value = "startdate", required = false) String startDate,
                                                   @RequestParam(value = "enddate", required = false) String endDate) {
-        List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
-
-        if (user.isEmpty() || userSurveys == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(userSurveys, HttpStatus.OK);
+        return surveyService.getSurveysFile(user, startDate, endDate);
     }
 
     /**

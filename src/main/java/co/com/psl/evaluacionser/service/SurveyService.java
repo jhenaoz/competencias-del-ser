@@ -6,6 +6,8 @@ import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -24,6 +26,8 @@ public class SurveyService {
     private SurveyTransformer surveyTransformer;
 
     private EmailService emailService;
+
+    private FileService fileService;
 
     private static final Logger logger = Logger.getLogger(SurveyService.class);
 
@@ -82,6 +86,17 @@ public class SurveyService {
             logger.error("The Date couldn't be properly formatted " + e.getMessage());
             return false;
         }
+    }
+
+    public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
+        List<Survey> userSurveys = findUserSurveys(evaluated, startDate, endDate);
+        if (userSurveys.isEmpty() || userSurveys == null) {
+            return new ResponseEntity("no surveys found", HttpStatus.NO_CONTENT);
+        }
+
+        //ReportGenerator.createUserExcelReport(userSurveys);
+        ResponseEntity downloadResponse = fileService.getDownloadResponse(evaluated, startDate, endDate);
+        return downloadResponse;
     }
 
 }
