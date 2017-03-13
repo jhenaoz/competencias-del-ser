@@ -165,7 +165,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>test -- --single-run</arguments>
+                            <arguments>run test-cc -- --single-run</arguments>
                         </configuration>
                         <phase>test</phase>
                     </execution>

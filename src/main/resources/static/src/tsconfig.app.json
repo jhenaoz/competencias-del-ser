@@ -4,11 +4,13 @@
       "declaration": false,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "lib": ["es6", "dom"],
-      "mapRoot": "./",
+      "lib": [
+        "es6",
+        "dom"
+      ],
       "module": "es6",
       "moduleResolution": "node",
-      "outDir": "../dist/",
+      "outDir": "../dist/app",
       "sourceMap": true,
       "target": "es6",
       "typeRoots": [
@@ -16,6 +18,8 @@
       ]
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "test.ts",
+    "**/*.spec.ts"
   ]
 }

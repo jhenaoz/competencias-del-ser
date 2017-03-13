@@ -3,6 +3,11 @@
 node() {
     stage('Checkout') {
         checkout scm
+        if (env.BRANCH_NAME == 'master') {
+            withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+                sh 'mvn clean'
+            }
+        }
     }
 
     stage('Checkstyle') {
@@ -20,11 +25,8 @@ node() {
     stage('Compile') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
-            sh 'mvn jacoco:prepare-agent'
-                if (env.BRANCH_NAME == 'master') {
-                    sh 'mvn clean'
-                }
-            sh 'mvn test-compile'
+                sh 'mvn jacoco:prepare-agent'
+                sh 'mvn test-compile'
             }
         }
     }
@@ -58,6 +60,8 @@ node() {
         step([$class: 'PmdPublisher', defaultEncoding: '', healthy: '', pattern: '**/target/pmd.xml', unHealthy: ''])
         step([$class: 'FindBugsPublisher', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/target/findbugs.xml', unHealthy: ''])
         step([$class: 'AnalysisPublisher', defaultEncoding: '', healthy: '', unHealthy: ''])
+        step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/jacoco/', reportFiles: 'index.html', reportName: 'JaCoCo Report'])
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/', reportFiles: 'checkstyle.html,pmd.html', reportName: 'Static Code Analysis'])
     }
 }
