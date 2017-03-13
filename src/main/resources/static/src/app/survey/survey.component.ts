@@ -12,6 +12,8 @@ import { LocalStorageService } from 'angular-2-local-storage';
 
 import { Survey } from './survey.model';
 
+import { SurveyRouteActivator } from './survey.route.activator.service';
+
 import {
   Aptitude,
   AptitudeService,
@@ -72,7 +74,8 @@ export class SurveyComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private localStorageService: LocalStorageService) {
+    private localStorageService: LocalStorageService,
+    private guard: SurveyRouteActivator) {
     this.survey = this.surveyService.survey;
     this.currentLanguage = translate.currentLang;
     this.createForm();
@@ -195,6 +198,7 @@ export class SurveyComponent implements OnInit {
           this.surveyService.saveSurvey(this.surveyService.survey);
         } else {
           const next = (+this.id + 1).toString();
+          this.guard.allow = true;
           this.router.navigate(['survey/' + next]);
           // Change CSS class to change color to the aptitudes buttons
           // $('.active').next().addClass('active');
@@ -226,9 +230,11 @@ export class SurveyComponent implements OnInit {
         this.surveyService.survey = storedSurvey;
         const evaluatedAptitudes = storedSurvey.aptitudes.length;
         const next = evaluatedAptitudes + 1;
-        // Verify if the actual aptitudeId is different to the one loaded from localstorage to navigate to the next aptitude
+        // Verify if the actual aptitudeId is different to the
+        // one loaded from localstorage to navigate to the next aptitude
         if (+this.id !== next) {
           this.id = next.toString();
+          this.guard.allow = true;
           this.router.navigate(['survey/' + next.toString()]);
         }
       }
@@ -242,12 +248,14 @@ export class SurveyComponent implements OnInit {
   }
 
   /*
-   * Method to verify if the survey stored in LocalStorage is the same type of Survey and has the same evaluated and evaluator
+   * Method to verify if the survey stored in LocalStorage is
+   * the same type of Survey and has the same evaluated and evaluator
    */
   verifySameSurvey(value: Survey) {
     const typeOfSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
-    return this.surveyService.survey.evaluated === value.evaluated && this.surveyService.survey.evaluator === value.evaluator
-      && this.surveyService.oneSurvey ===  typeOfSurvey;
+    return this.surveyService.survey.evaluated === value.evaluated &&
+              this.surveyService.survey.evaluator === value.evaluator
+              && this.surveyService.oneSurvey ===  typeOfSurvey;
   }
 
 }

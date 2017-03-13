@@ -241,4 +241,7 @@ testem.log
 #Folder of elasticsearch
 /data/
 
+#Checkstyle results
+checkstyle-result.xml
+
 # End of https://www.gitignore.io/api/java,maven,windows,osx,eclipse,intellij,node,code
