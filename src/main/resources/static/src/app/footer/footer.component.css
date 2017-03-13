@@ -10,6 +10,14 @@ footer {
     height: 70px;
 }
 
+footer>.text {
+    width: 10px;
+}
+
+.btn:hover{
+    background-color: #5CB85C;
+    color: #FFF;
+}
 .right-button,
 .left-button {
     height: 70px;
@@ -17,15 +25,9 @@ footer {
     font-size: large;
 }
 
-footer>.text {
-    width: 10px;
-}
-
 .right-button {
     margin-right: 50px;
     float: right;
-    background-color: #5CB85C;
-    color: #FFF;
 }
 
 .left-button {
@@ -33,9 +35,6 @@ footer>.text {
     float: left;
 }
 
-.left-button>img {
-    transform: rotate(180deg);
-}
 
 
 /* /FOOTER: *
