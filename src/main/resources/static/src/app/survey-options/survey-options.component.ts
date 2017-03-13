@@ -9,6 +9,8 @@ import { Aptitude, Behavior } from '../aptitude/index';
 import { IEmployee } from '../employee/employee.model';
 import { SurveyService } from '../survey/survey.service';
 
+import { SurveyRouteActivator } from '../survey/survey.route.activator.service';
+
 import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -52,7 +54,7 @@ export class SurveyOptionsComponent implements OnInit {
   openessText: string;
   communicationText: string;
   initiativeText: string;
-  client_orientationText: string;
+  clientOrientationText: string;
   goalsText: string;
   teamworkText: string;
   developmentText: string;
@@ -64,7 +66,8 @@ export class SurveyOptionsComponent implements OnInit {
     private fb: FormBuilder,
     private surveyService: SurveyService,
     private translate: TranslateService,
-    private localStorageService: LocalStorageService) { }
+    private localStorageService: LocalStorageService,
+    private guard: SurveyRouteActivator) { }
 
   ngOnInit() {
     /*
@@ -94,7 +97,7 @@ export class SurveyOptionsComponent implements OnInit {
       this.openessText = res.competence_opening;
       this.communicationText = res.competence_communication;
       this.initiativeText = res.competence_initiative;
-      this.client_orientationText = res.competence_client_orientation;
+      this.clientOrientationText = res.competence_client_orientation;
       this.goalsText = res.competence_goals;
       this.teamworkText = res.competence_teamwork;
       this.developmentText = res.competence_development;
@@ -166,7 +169,7 @@ export class SurveyOptionsComponent implements OnInit {
         value.competenceToEvaluate = 'initiative';
         this.surveyService.competenceId = '3';
         break;
-      case this.client_orientationText:
+      case this.clientOrientationText:
         value.competenceToEvaluate = 'client_orientation';
         this.surveyService.competenceId = '4';
         break;
@@ -195,8 +198,8 @@ export class SurveyOptionsComponent implements OnInit {
     this.survey.evaluated = value.evaluated;
     this.survey.role = value.role;
     this.survey.aptitudes = new Array();
-    this.isRecent = await this.surveyService.checkSurveyDate(this.survey, this.surveyService.competenceId, !this.surveyService.oneSurvey)
-        .toPromise();
+    this.isRecent = await this.surveyService
+        .checkSurveyDate(this.survey, this.surveyService.competenceId, !this.surveyService.oneSurvey).toPromise();
     if (!this.isRecent) {
       this.gotoSurvey();
     } else {
@@ -209,6 +212,7 @@ export class SurveyOptionsComponent implements OnInit {
   gotoSurvey() {
     this.surveyService.startSurvey(this.survey);
     // XXX: hardcoded
+    this.guard.allow = true;
     this.router.navigate(['/survey/1']);
   }
   reset() {
