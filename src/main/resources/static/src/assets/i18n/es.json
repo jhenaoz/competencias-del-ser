@@ -20,6 +20,7 @@
         "evaluated": "Persona a quien se le hará la valoración",
         "evaluator": "Persona quien realiza la valoración",
         "evaluator_alert": "Debes seleccionar a alguien",
+        "evaluator_isSelf_alert": "Debes elegir a alguien diferente o cambiar la relación a autovaloración",
         "relationship": "Tipo de relación",
         "relationship_alert": "Debes seleccionar una relación",
         "competence_alert": "Debes seleccionar una competencia",

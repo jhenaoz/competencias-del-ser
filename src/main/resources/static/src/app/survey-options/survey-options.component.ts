@@ -32,6 +32,7 @@ export class SurveyOptionsComponent implements OnInit {
   survey: Survey = new Survey();
   submitted = false;
   evaluatorIsValid = true;
+  teammateIsNotSelf = true;
   isRecent: Boolean = false;
 
   /*
@@ -229,13 +230,17 @@ export class SurveyOptionsComponent implements OnInit {
         this.complexForm.value.evaluator === null ||
         this.complexForm.value.evaluator === this.complexForm.value.evaluated) &&
         !this.isSelf) {
-      this.evaluatorIsValid = false;
+          if(this.complexForm.value.evaluator === this.complexForm.value.evaluated){
+            this.teammateIsNotSelf = false;
+          } else {
+            this.evaluatorIsValid = false;
+          }
     } else {
       this.evaluatorIsValid = true;
     }
     this.submitted = true;
     // Next steps are just for testing component's communication, they are not yet the real way.
-    if (this.complexForm.valid && this.evaluatorIsValid) {
+    if (this.complexForm.valid && this.evaluatorIsValid && this.teammateIsNotSelf) {
       this.submitForm();
     }
   }

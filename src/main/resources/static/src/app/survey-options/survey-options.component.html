@@ -69,6 +69,12 @@
                      *ngIf="(!evaluatorIsValid && submitted)">
                      {{ "Survey_options.evaluator_alert" | translate }}
                 </div>
+                <!--Validator label-->
+                <div id="alertEvaluator" 
+                     class="alert alert-danger" 
+                     *ngIf="(!teammateIsSelf && submitted)">
+                     {{ "Survey_options.evaluator_isSelf_alert" | translate }}
+                </div>
             </div>
 
             <!--Competence select-->
