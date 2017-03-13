@@ -5,7 +5,9 @@
     "Footer": {
         "back": "Back",
         "forward": "Next",
-        "start": "Start Assessment"
+        "start": "Start Assessment",
+        "begining": "Back to begining",
+        "continue": "Continue"
     },
     "Welcome": {
         "title": "Soft skills assessment",

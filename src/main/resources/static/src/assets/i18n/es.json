@@ -5,7 +5,9 @@
     "Footer": {
         "back": "Anterior",
         "forward": "Siguiente",
-        "start": "Iniciar Valoración"
+        "start": "Iniciar Valoración",
+        "begining": "Volver al inicio",
+        "continue": "Continuar"
     },
     "Welcome": {
         "title": "Valoración competencias del ser",
