@@ -50,6 +50,7 @@ h6 {
     position: absolute;
     background-color: #F9F9F9;
     overflow-x: hidden;
+    padding-bottom: 85px;
 }
 
 .title {

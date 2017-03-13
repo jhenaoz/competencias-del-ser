@@ -18,6 +18,7 @@
         "evaluated": "Person being assessed",
         "evaluator": "Evaluator",
         "evaluator_alert": "You must select someone",
+        "evaluator_isSelf_alert": "You must choose someone different or change the relationship to self-assessment",
         "relationship": "Type of relationship",
         "relationship_alert": "You must select a relation",
         "competence_alert": "You must select a competence",
