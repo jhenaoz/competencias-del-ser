@@ -108,7 +108,7 @@ public class SurveyService {
     public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
 
         FileService fileService = new FileService();
-        return fileService.getDownloadResponse(evaluated, startDate, endDate);
+        return fileService.getSurveyDownloadResponse(evaluated,startDate,endDate);
     }
 
     public ResponseEntity getReportFile(String startDate, String endDate) {
