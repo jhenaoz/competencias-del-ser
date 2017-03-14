@@ -49,4 +49,8 @@ export class FooterComponent implements OnInit {
     }
   }
 
+  changeButtonsText() {
+    return this.currentUrl === '/survey-setup' || this.currentUrl === '/surveyteam-setup';
+  }
+
 }
