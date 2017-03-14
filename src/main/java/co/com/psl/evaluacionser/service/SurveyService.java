@@ -34,7 +34,7 @@ public class SurveyService {
     }
 
     /**
-     * this method receives a SurveyDto, transforms it into a Survey and saves it to the database
+     * This method receives a SurveyDto, transforms it into a Survey and saves it to the database.
      *
      * @param surveyDto the SurveyDto containing the data to be saved
      * @return the Survey result from invoking the repository save method
@@ -52,7 +52,7 @@ public class SurveyService {
     }
 
     /**
-     * this method calls the repository method to search for surveys using the parameters received
+     * This method calls the repository method to search for surveys using the parameters received.
      *
      * @param user      the person who was evaluated in the survey
      * @param startDate the start date of the survey date range
@@ -97,12 +97,12 @@ public class SurveyService {
     }
 
     /**
-     * this method redirects the response containing the xlsx to download back to the controller
+     * This method redirects the response containing the xlsx to download back to the controller.
      *
      * @param evaluated the person who was evaluated in the survey
      * @param startDate the start date from the date range
      * @param endDate   the end date of the range
-     * @return returns a response entity with BAD_REQUEST in case the survey search didnt get any surveys,
+     * @return A response entity with BAD_REQUEST in case the survey search didn't get any surveys,
      * or returns the response entity with OK and the document to download
      */
     public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
@@ -111,10 +111,18 @@ public class SurveyService {
         return fileService.getSurveyDownloadResponse(evaluated, startDate, endDate);
     }
 
+    /**
+     * This method redirects the response containing the xlsx to download back to the controller.
+     *
+     * @param startDate the start date from the date range
+     * @param endDate   the end date of the range
+     * @return A response entity with BAD_REQUEST in case the survey search didn't get any surveys,
+     * or returns the response entity with OK and the document to download
+     */
     public ResponseEntity getReportFile(String startDate, String endDate) {
 
         FileService fileService = new FileService();
-        return fileService.getReportDownloadResponse(startDate, endDate);
+        return fileService.getRelationDownloadResponse(startDate, endDate);
     }
 
 }

@@ -17,6 +17,12 @@ public class FileService {
 
     private static final Logger logger = Logger.getLogger(FileService.class);
 
+    /**
+     * This method converts the survey report into a Response entity.
+     *
+     * @param fileName the name the file will have when downloaded
+     * @return response entity OK containing the file to be downloaded
+     */
     public ResponseEntity getDownloadResponse(String fileName) {
         String separator = File.separator;
 
@@ -39,14 +45,14 @@ public class FileService {
     }
 
     /**
-     * this method builds the file name according to the received params
+     * This method builds the file name according to the received params.
      *
      * @param evaluated the name of the person evaluated in the survey
      * @param startDate the start date of the search range
      * @param endDate   the end date of the search range
      * @return a String with the file name, .xlsx extension included
      */
-    public String getFileName(String evaluated, String startDate, String endDate) {
+    public String getSurveysName(String evaluated, String startDate, String endDate) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Valoración Competencias Ser");
@@ -65,7 +71,14 @@ public class FileService {
         return stringBuilder.toString();
     }
 
-    public String getReportName(String startDate, String endDate) {
+    /**
+     * This method builds the file name according to the received params.
+     *
+     * @param startDate the start date of the search range
+     * @param endDate   the end date of the search range
+     * @return a String with the file name, .xlsx extension included
+     */
+    public String getRelationSurveysName(String startDate, String endDate) {
 
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -82,16 +95,31 @@ public class FileService {
         return stringBuilder.toString();
     }
 
-    public ResponseEntity getReportDownloadResponse(String startDate, String endDate) {
+    /**
+     * This method builds the report name and returns the response with the download.
+     *
+     * @param startDate the start date used to search for surveys
+     * @param endDate   the end date used to search for surveys
+     * @return response entity containing the file to be downloaded
+     */
+    public ResponseEntity getRelationDownloadResponse(String startDate, String endDate) {
 
-        String reportFileName = getReportName(startDate, endDate);
-        return getDownloadResponse(reportFileName);
+        String relationFileName = getRelationSurveysName(startDate, endDate);
+        return getDownloadResponse(relationFileName);
 
     }
 
+    /**
+     * This method builds the report name and returns the response with the download.
+     *
+     * @param evaluated the name of the person who was evaluated
+     * @param startDate the start date used to search for surveys
+     * @param endDate   the end date used to search for surveys
+     * @return response entity containing the file to be downloaded
+     */
     public ResponseEntity getSurveyDownloadResponse(String evaluated, String startDate, String endDate) {
 
-        String surveyFileName = getFileName(evaluated, startDate, endDate);
+        String surveyFileName = getSurveysName(evaluated, startDate, endDate);
         return getDownloadResponse(surveyFileName);
     }
 }

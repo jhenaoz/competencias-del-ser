@@ -30,7 +30,7 @@ public class SurveyController {
 
     /**
      * This method saves a Survey to the DB, receives a JSON containing the
-     * Survey basic data (DTO)
+     * Survey basic data (DTO).
      *
      * @return Response entity with HttpStatus.ACCEPTED and the Survey saved
      */
@@ -42,10 +42,10 @@ public class SurveyController {
     /**
      * Get all surveys made to a person within a time period.
      *
-     * @param user      the person to search
-     * @param startDate starting date
-     * @param endDate   ending date
-     * @return Response entity with HttpStatus.OK and the report
+     * @param user      the person used to search for surveys
+     * @param startDate starting date used to search for surveys
+     * @param endDate   ending date used to search for surveys
+     * @return Response entity with HttpStatus.OK and the report, triggers a download
      */
     @RequestMapping(value = "/report/user", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
@@ -69,7 +69,7 @@ public class SurveyController {
      *
      * @param startDate starting date
      * @param endDate   ending date
-     * @return Response entity with HttpStatus.OK and the downloaded report
+     * @return Response entity with HttpStatus.OK and the downloaded report, triggers a download
      */
     @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getRelationReport(
