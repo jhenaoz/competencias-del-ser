@@ -237,6 +237,7 @@ export class SurveyOptionsComponent implements OnInit {
           if(this.complexForm.value.evaluator === this.complexForm.value.evaluated){
             this.teammateIsNotSelf = false;
           } else {
+            this.teammateIsNotSelf = true;
             this.evaluatorIsValid = false;
           }
     } else {

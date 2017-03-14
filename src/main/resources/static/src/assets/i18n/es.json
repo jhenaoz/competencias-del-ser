@@ -62,6 +62,7 @@
         "finish": "Finalizar"
     },
     "Shared": {
-        "cancel": "Cancelar"
+        "cancel": "Cancelar",
+        "characters": "Caracteres"
     }
 }
