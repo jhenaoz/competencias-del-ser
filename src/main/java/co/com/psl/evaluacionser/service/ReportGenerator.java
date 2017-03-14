@@ -27,7 +27,7 @@ public class ReportGenerator {
     private Logger logger = Logger.getLogger(ReportGenerator.class);
 
     /**
-     * This method is the main and Orchestrate the call of all the methods.
+     * This method is the main for the users report and Orchestrate the call of all the methods.
      *
      * @param surveys List with the selected surveys to generated the report.
      */
@@ -35,18 +35,32 @@ public class ReportGenerator {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("User Reports");
 
-        addColumnsHeaders(sheet, workbook);
-        addSurveysToSheet(surveys, sheet);
+        addUserColumnsHeaders(sheet, workbook);
+        addUserSurveysToSheet(surveys, sheet);
         saveWorkbookToDisk(workbook);
     }
 
     /**
-     * This method create the header with the correct format.
+     * This method is the main for the relations report and Orchestrate the call of all the methods.
+     *
+     * @param surveys List with the selected surveys to generated the report.
+     */
+    public void createRelationExcelReport(List<Survey> surveys) {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Relation Reports");
+
+        addRelationColumnsHeaders(sheet, workbook);
+        addRelationSurveysToSheet(surveys, sheet);
+        saveWorkbookToDisk(workbook);
+    }
+
+    /**
+     * This method create the header with the correct format for the users report.
      *
      * @param sheet    is the excel page to be modified.
      * @param workbook is the excel document to be modified.
      */
-    public void addColumnsHeaders(Sheet sheet, Workbook workbook) {
+    private void addUserColumnsHeaders(Sheet sheet, Workbook workbook) {
         int cellNum = 0;
         Row row = sheet.createRow(sheet.getLastRowNum());
         row.createCell(cellNum++).setCellValue("Valorado");
@@ -57,6 +71,29 @@ public class ReportGenerator {
         row.createCell(cellNum++).setCellValue("Evaluador");
         row.createCell(cellNum++).setCellValue("Tipo de relación");
         row.createCell(cellNum).setCellValue("Comentario");
+        createCellStyle(workbook, row);
+    }
+
+    /**
+     * This method create the header with the correct format for relations report.
+     *
+     * @param sheet    is the excel page to be modified.
+     * @param workbook is the excel document to be modified.
+     */
+    private void addRelationColumnsHeaders(Sheet sheet, Workbook workbook) {
+        int cellNum = 0;
+        Row row = sheet.createRow(sheet.getLastRowNum());
+        row.createCell(cellNum++).setCellValue("Valorado");
+        row.createCell(cellNum).setCellValue("Persona que hace la valoración");
+        createCellStyle(workbook, row);
+    }
+
+    /**
+     * This method create the style for the cells in the header row
+     * @param workbook
+     * @param row
+     */
+    private void createCellStyle(Workbook workbook, Row row) {
         Font font = workbook.createFont();
         CellStyle style = workbook.createCellStyle();
         font.setBold(true);
@@ -72,7 +109,7 @@ public class ReportGenerator {
      * @param surveys List with the selected surveys to generated the report.
      * @param sheet   is the excel page to be modified.
      */
-    private void addSurveysToSheet(List<Survey> surveys, Sheet sheet) {
+    private void addUserSurveysToSheet(List<Survey> surveys, Sheet sheet) {
         for (Survey survey : surveys) {
             for (AptitudeSurvey aptitude : survey.getAptitudes()) {
                 for (BehaviorSurvey behavior : aptitude.getBehaviors()) {
@@ -90,6 +127,31 @@ public class ReportGenerator {
             }
         }
 
+        sheetFormat(sheet);
+    }
+
+    /**
+     * The method interpolate the data of the relations from a survey to the excel document.
+     *
+     * @param surveys List with the selected surveys to generated the report.
+     * @param sheet   is the excel page to be modified.
+     */
+    private void addRelationSurveysToSheet(List<Survey> surveys, Sheet sheet) {
+        for (Survey survey : surveys) {
+            int cellNum = 0;
+            Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+            row.createCell(cellNum++).setCellValue(survey.getEvaluated());
+            row.createCell(cellNum).setCellValue(survey.getEvaluator());
+        }
+
+        sheetFormat(sheet);
+    }
+
+    /**
+     * This method give the correct format to the sheet, like the cells size and the filter
+     * @param sheet is the excel page to be modified.
+     */
+    private void sheetFormat(Sheet sheet) {
         for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
             sheet.autoSizeColumn(i);
         }
