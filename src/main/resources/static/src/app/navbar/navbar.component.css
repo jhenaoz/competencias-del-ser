@@ -19,6 +19,10 @@
     height: 32px;
 }
 
+.navbar-brand:hover {
+    cursor: hand;
+}
+
 .navbar .navbar-nav>li>a {
     color: #FFF;
     text-transform: uppercase;

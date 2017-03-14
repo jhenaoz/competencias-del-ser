@@ -60,6 +60,7 @@
         "finish": "Finish"
     },
     "Shared": {
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "characters": "Characters"
     }
 }

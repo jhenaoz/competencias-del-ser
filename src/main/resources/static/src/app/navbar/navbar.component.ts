@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { TranslateService } from 'ng2-translate';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -9,10 +11,11 @@ import { TranslateService } from 'ng2-translate';
 })
 export class NavbarComponent implements OnInit  {
 
-
-  constructor(private translate: TranslateService) {}
+  currentUrl;
+  constructor(private translate: TranslateService, private router: Router) {}
 
   ngOnInit() {
+    this.currentUrl = this.router.url;
   }
 
 /*
@@ -20,6 +23,13 @@ export class NavbarComponent implements OnInit  {
 */
   changeLang(lang: string) {
     this.translate.use(lang);
+  }
+
+/*
+* Method to verify the current ulr to activate/deactivate the changeLang button
+*/
+  disableChangeLanguage() {
+    return (this.currentUrl === '/welcome');
   }
 
 }
