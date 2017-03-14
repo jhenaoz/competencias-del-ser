@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This class is in charge of generate the excel reports that can be download, the excel format is xlsx
+ * This class generates the excel reports that can be download, the excel format is xlsx
  */
 @Service
 public class ReportGenerator {
