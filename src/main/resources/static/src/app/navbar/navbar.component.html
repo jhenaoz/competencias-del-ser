@@ -9,7 +9,7 @@
                 <img alt="logo" src="/assets/images/logo.png">
             </a>
         </div>
-        <ul class="nav navbar-nav navbar-right">
+        <ul *ngIf="disableChangeLanguage()" class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     {{ "Navbar.language_change" | translate }} <span class="caret"></span>
