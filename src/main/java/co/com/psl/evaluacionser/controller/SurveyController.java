@@ -1,6 +1,7 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.service.ReportGenerator;
 import co.com.psl.evaluacionser.service.SurveyService;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,20 +45,44 @@ public class SurveyController {
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
-     * @return Response entity with HttpStatus.OK and the Surveys retrieved
+     * @return Response entity with HttpStatus.OK and the report
      */
-    // TODO Enable this endpoint only with an authentication token
-    // @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user") String user,
-                                                  @RequestParam(value = "startdate", required = false) String startDate,
-                                                  @RequestParam(value = "enddate", required = false) String endDate) {
+    @RequestMapping(value = "/report/user", method = RequestMethod.GET)
+    public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
+                                                @RequestParam(value = "startdate", required = false) String startDate,
+                                                @RequestParam(value = "enddate", required = false) String endDate) {
+
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
 
-        if (user.isEmpty() || userSurveys == null) {
+        if ((user != null && user.isEmpty()) || userSurveys == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.createUserExcelReport(userSurveys);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(userSurveys, HttpStatus.OK);
+    /**
+     * Get all realtions from the surveys made to a person within a time period.
+     *
+     * @param user      the person to search
+     * @param startDate starting date
+     * @param endDate   ending date
+     * @return Response entity with HttpStatus.OK and the downloaded report
+     */
+    @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
+    public ResponseEntity<HttpStatus> getRelationReport(@RequestParam(value = "user", required = false) String user,
+                                                @RequestParam(value = "startdate", required = false) String startDate,
+                                                @RequestParam(value = "enddate", required = false) String endDate) {
+
+        List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
+
+        if ((user != null && user.isEmpty()) || userSurveys == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.createRelationExcelReport(userSurveys);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
