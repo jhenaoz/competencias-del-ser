@@ -6,7 +6,6 @@ import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +35,7 @@ public class SurveyService {
 
     /**
      * this method receives a SurveyDto, transforms it into a Survey and saves it to the database
+     *
      * @param surveyDto the SurveyDto containing the data to be saved
      * @return the Survey result from invoking the repository save method
      */
@@ -108,7 +108,7 @@ public class SurveyService {
     public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
 
         FileService fileService = new FileService();
-        return fileService.getSurveyDownloadResponse(evaluated,startDate,endDate);
+        return fileService.getSurveyDownloadResponse(evaluated, startDate, endDate);
     }
 
     public ResponseEntity getReportFile(String startDate, String endDate) {

@@ -40,6 +40,7 @@ public class FileService {
 
     /**
      * this method builds the file name according to the received params
+     *
      * @param evaluated the name of the person evaluated in the survey
      * @param startDate the start date of the search range
      * @param endDate   the end date of the search range
@@ -83,14 +84,14 @@ public class FileService {
 
     public ResponseEntity getReportDownloadResponse(String startDate, String endDate) {
 
-        String reportFileName = getReportName(startDate,endDate);
+        String reportFileName = getReportName(startDate, endDate);
         return getDownloadResponse(reportFileName);
 
     }
 
-    public ResponseEntity getSurveyDownloadResponse(String evaluated, String startDate, String endDate){
+    public ResponseEntity getSurveyDownloadResponse(String evaluated, String startDate, String endDate) {
 
-        String surveyFileName = getFileName(evaluated,startDate,endDate);
+        String surveyFileName = getFileName(evaluated, startDate, endDate);
         return getDownloadResponse(surveyFileName);
     }
 }

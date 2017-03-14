@@ -49,8 +49,8 @@ public class SurveyController {
      */
     @RequestMapping(value = "/report/user", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
-                                                @RequestParam(value = "startdate", required = false) String startDate,
-                                                @RequestParam(value = "enddate", required = false) String endDate) {
+                                                  @RequestParam(value = "startdate", required = false) String startDate,
+                                                  @RequestParam(value = "enddate", required = false) String endDate) {
 
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
 
@@ -61,41 +61,43 @@ public class SurveyController {
         ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createUserExcelReport(userSurveys);
 
-        return surveyService.getSurveysFile(user,startDate,endDate);
+        return surveyService.getSurveysFile(user, startDate, endDate);
     }
 
     /**
      * Get all relations from the surveys made to a person within a time period.
+     *
      * @param startDate starting date
      * @param endDate   ending date
      * @return Response entity with HttpStatus.OK and the downloaded report
      */
     @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getRelationReport(
-                                                @RequestParam(value = "startdate", required = false) String startDate,
-                                                @RequestParam(value = "enddate", required = false) String endDate) {
+            @RequestParam(value = "startdate", required = false) String startDate,
+            @RequestParam(value = "enddate", required = false) String endDate) {
 
-        List<Survey> userSurveys = surveyService.findUserSurveys(null,startDate, endDate);
+        List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
 
-        if (userSurveys == null){
+        if (userSurveys == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createRelationExcelReport(userSurveys);
 
-        return surveyService.getReportFile(startDate,endDate);
+        return surveyService.getReportFile(startDate, endDate);
     }
 
     /**
      * Checks whether a survey was made in the last week.
+     *
      * @param evaluated the person who was evaluated in the survey
      * @param evaluator the person who made the survey
      * @return Response entity with HttpStatus.OK and if the survey exists
      */
     @RequestMapping(value = "/recentsurvey", method = RequestMethod.GET)
     public ResponseEntity<Boolean> existsRecentSurvey(@RequestParam(value = "evaluated") String evaluated,
-                                             @RequestParam(value = "evaluator") String evaluator,
-                                             @RequestParam(value = "aptitude", required = false) String aptitudeId) {
+                                                @RequestParam(value = "evaluator") String evaluator,
+                                                @RequestParam(value = "aptitude", required = false) String aptitudeId) {
         boolean surveyExists = surveyService.existsRecentSurvey(evaluated, evaluator, aptitudeId);
         return new ResponseEntity<>(surveyExists, HttpStatus.OK);
 
