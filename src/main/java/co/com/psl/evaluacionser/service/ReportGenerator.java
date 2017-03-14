@@ -90,8 +90,9 @@ public class ReportGenerator {
 
     /**
      * This method create the style for the cells in the header row
-     * @param workbook
-     * @param row
+     *
+     * @param workbook is the excel document to be modified.
+     * @param row      is the header row of the sheet
      */
     private void createCellStyle(Workbook workbook, Row row) {
         Font font = workbook.createFont();
@@ -149,6 +150,7 @@ public class ReportGenerator {
 
     /**
      * This method give the correct format to the sheet, like the cells size and the filter
+     *
      * @param sheet is the excel page to be modified.
      */
     private void sheetFormat(Sheet sheet) {
@@ -195,21 +197,16 @@ public class ReportGenerator {
      */
     private void saveWorkbookToDisk(Workbook workbook) {
         String separator = File.separator;
-        FileOutputStream fileOut = null;
-        try {
-            fileOut = new FileOutputStream("src" + separator + "main" + separator
-                    + "resources" + separator + "Survey_Reports.xlsx");
+        try (FileOutputStream fileOut = new FileOutputStream("src" + separator + "main" + separator
+                + "resources" + separator + "Survey_Reports.xlsx")) {
             workbook.write(fileOut);
         } catch (IOException e) {
             logger.error("The file can't be saved ", e);
         } finally {
             try {
-                if (fileOut != null) {
-                    fileOut.close();
-                }
                 workbook.close();
             } catch (IOException e) {
-                logger.error("Can't close the stream ", e);
+                logger.error("Can't close the workbook ", e);
             }
         }
     }
