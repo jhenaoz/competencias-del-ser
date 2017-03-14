@@ -3,10 +3,8 @@
 node() {
     stage('Checkout') {
         checkout scm
-        if (env.BRANCH_NAME == 'master') {
-            withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-                sh 'mvn clean'
-            }
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            sh 'mvn clean'
         }
     }
 
@@ -39,19 +37,14 @@ node() {
         }
     }
 
-    stage('Test') {
-        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
-                sh 'mvn jacoco:prepare-agent surefire:test jacoco:report'
-                sh 'mvn frontend:npm@npm-test'
-            }
-        }
-    }
-
-   stage('SonarQube analysis') {
+    stage('Test & SonarQube') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withSonarQubeEnv('SonarQube Test') {
-                sh 'mvn sonar:sonar'
+                withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
+                    sh 'mvn jacoco:prepare-agent surefire:test jacoco:report'
+                    sh 'mvn frontend:npm@npm-test'
+                    sh 'mvn sonar:sonar'
+                }
             }
         }
     }
