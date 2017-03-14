@@ -28,10 +28,10 @@ public class FileService {
     public ResponseEntity getDownloadResponse(String evaluated, String startDate, String endDate) {
         String separator = File.separator;
 
-        File file2Upload = new File("src" + separator + "main" + separator + "resources"
+        File fileToUpload = new File("src" + separator + "main" + separator + "resources"
                 + separator + "Survey_Reports.xlsx");
 
-        Path path = Paths.get(file2Upload.getAbsolutePath());
+        Path path = Paths.get(fileToUpload.getAbsolutePath());
         ByteArrayResource resource = null;
         try {
             resource = new ByteArrayResource(Files.readAllBytes(path));
@@ -41,7 +41,7 @@ public class FileService {
 
 
         return ResponseEntity.ok()
-                .contentLength(file2Upload.length())
+                .contentLength(fileToUpload.length())
                 .header("Content-disposition", "attachment;filename=" + getFileName(evaluated, startDate, endDate))
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(resource);
