@@ -45,7 +45,6 @@ public class ReporterGeneratorTest {
         surveys.add(juanSurvey);
     }
 
-
     @Test
     public void roleTranslateClientShouldReturnCliente() {
         String result = reportGenerator.roleTranslate("client");

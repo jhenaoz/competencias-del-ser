@@ -5,10 +5,11 @@ import co.com.psl.evaluacionser.domain.BehaviorSurvey;
 import co.com.psl.evaluacionser.domain.Survey;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class ReportGenerator {
      * @param surveys List with the selected surveys to generated the report.
      */
     public void createUserExcelReport(List<Survey> surveys) {
-        XSSFWorkbook workbook = new XSSFWorkbook();
+        Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("User Reports");
 
         addColumnsHeaders(sheet, workbook);
@@ -45,7 +46,7 @@ public class ReportGenerator {
      * @param sheet    is the excel page to be modified.
      * @param workbook is the excel document to be modified.
      */
-    public void addColumnsHeaders(Sheet sheet, XSSFWorkbook workbook) {
+    public void addColumnsHeaders(Sheet sheet, Workbook workbook) {
         int cellNum = 0;
         Row row = sheet.createRow(sheet.getLastRowNum());
         row.createCell(cellNum++).setCellValue("Valorado");
@@ -56,7 +57,7 @@ public class ReportGenerator {
         row.createCell(cellNum++).setCellValue("Evaluador");
         row.createCell(cellNum++).setCellValue("Tipo de relación");
         row.createCell(cellNum).setCellValue("Comentario");
-        XSSFFont font = workbook.createFont();
+        Font font = workbook.createFont();
         CellStyle style = workbook.createCellStyle();
         font.setBold(true);
         style.setFont(font);
@@ -130,15 +131,24 @@ public class ReportGenerator {
      *
      * @param workbook is the excel document tha was modified.
      */
-    private void saveWorkbookToDisk(XSSFWorkbook workbook) {
+    private void saveWorkbookToDisk(Workbook workbook) {
         String separator = File.separator;
+        FileOutputStream fileOut = null;
         try {
-            FileOutputStream fileOut = new FileOutputStream("src" + separator + "main" + separator
+            fileOut = new FileOutputStream("src" + separator + "main" + separator
                     + "resources" + separator + "Survey_Reports.xlsx");
             workbook.write(fileOut);
-            fileOut.close();
         } catch (IOException e) {
             logger.error("The file can't be saved ", e);
+        } finally {
+            try {
+                if (fileOut != null) {
+                    fileOut.close();
+                }
+                workbook.close();
+            } catch (IOException e) {
+                logger.error("Can't close the stream ", e);
+            }
         }
     }
 }
