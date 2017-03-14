@@ -85,7 +85,7 @@ public class AptitudeService {
             return null;
         }
 
-        Behavior behavior = new Behavior(behaviorId, behaviorDto.getEn(), behaviorDto.getEs());
+        Behavior behavior = new Behavior(behaviorId, behaviorDto.getEs(), behaviorDto.getEn());
         return aptitudeRepository.updateBehaviorById(id, behavior);
     }
 
