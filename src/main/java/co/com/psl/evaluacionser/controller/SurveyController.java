@@ -44,7 +44,7 @@ public class SurveyController {
      * @param user      the person to search
      * @param startDate starting date
      * @param endDate   ending date
-     * @return Response entity with HttpStatus.OK and the Surveys retrieved
+     * @return Response entity with HttpStatus.OK and the Surveys retrieved, the response entity will trigger a download
      */
     // TODO Enable this endpoint only with an authentication token
     // @RequestMapping(value = "/report", method = RequestMethod.GET)

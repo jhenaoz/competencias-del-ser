@@ -88,13 +88,26 @@ public class SurveyService {
         }
     }
 
+    /**
+     * this method redirects the response containing the xlsx to download back to the controller
+     *
+     * @param evaluated the person who was evaluated in the survey
+     * @param startDate the start date from the date range
+     * @param endDate   the end date of the range
+     * @return returns a response entity with BAD_REQUEST in case the survey search didnt get any surveys,
+     * or returns the response entity with OK and the document to download
+     */
     public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
+
         List<Survey> userSurveys = findUserSurveys(evaluated, startDate, endDate);
         if (userSurveys.isEmpty() || userSurveys == null) {
-            return new ResponseEntity("no surveys found", HttpStatus.NO_CONTENT);
+            return new ResponseEntity("no surveys found", HttpStatus.BAD_REQUEST);
         }
 
-        //ReportGenerator.createUserExcelReport(userSurveys);
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.createUserExcelReport(userSurveys);
+
+        fileService = new FileService();
         ResponseEntity downloadResponse = fileService.getDownloadResponse(evaluated, startDate, endDate);
         return downloadResponse;
     }

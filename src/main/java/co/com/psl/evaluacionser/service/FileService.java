@@ -17,6 +17,14 @@ public class FileService {
 
     private static final Logger logger = Logger.getLogger(FileService.class);
 
+    /**
+     * this is the method who takes the xlsx file and turns it into a response entity to be downloaded
+     *
+     * @param evaluated the person who was evaluated in the survey
+     * @param startDate the start date from the date range
+     * @param endDate the end date of the range
+     * @return a response entity with the xlsx file to be downloaded from the browser
+     */
     public ResponseEntity getDownloadResponse(String evaluated, String startDate, String endDate) {
         String separator = File.separator;
 
