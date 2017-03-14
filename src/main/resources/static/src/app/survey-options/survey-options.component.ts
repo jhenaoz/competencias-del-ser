@@ -234,12 +234,13 @@ export class SurveyOptionsComponent implements OnInit {
         this.complexForm.value.evaluator === null ||
         this.complexForm.value.evaluator === this.complexForm.value.evaluated) &&
         !this.isSelf) {
-          if(this.complexForm.value.evaluator === this.complexForm.value.evaluated){
+          if (this.complexForm.value.evaluator === this.complexForm.value.evaluated) {
             this.teammateIsNotSelf = false;
           } else {
             this.evaluatorIsValid = false;
           }
     } else {
+      this.teammateIsNotSelf = true;
       this.evaluatorIsValid = true;
     }
     this.submitted = true;

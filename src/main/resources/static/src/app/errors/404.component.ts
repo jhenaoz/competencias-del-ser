@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   template: `
+    <app-navbar></app-navbar>
     <h1 class="errorMessage">404</h1>
   `,
   styles: [`

@@ -9,6 +9,11 @@
     font-size: large;
 }
 
+.btn:hover{
+    background-color: #5CB85C;
+    color: #FFF;
+}
+
 
 /* /BUTTONS: *
 **********************************************************/
