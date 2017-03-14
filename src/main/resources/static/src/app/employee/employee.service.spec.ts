@@ -101,7 +101,8 @@ describe('Service: EmployeeService', () => {
       spyOn(console, 'error');
 
       service.getEmployee(null).subscribe(null, () => {
-          expect(console.error).toHaveBeenCalledWith(`We got an error on the method getEmployees(), that's what we expected`);
+          expect(console.error)
+            .toHaveBeenCalledWith(`We got an error on the method getEmployees(), that's what we expected`);
       });
     });
   });
@@ -131,7 +132,8 @@ describe('Service: EmployeeService', () => {
         spyOn(console, 'error');
 
         service.getEmployees().subscribe(null, () => {
-            expect(console.error).toHaveBeenCalledWith(`We got an error on the method getEmployee(), that's what we expected`);
+            expect(console.error)
+                .toHaveBeenCalledWith(`We got an error on the method getEmployee(), that's what we expected`);
         });
     });
   });
