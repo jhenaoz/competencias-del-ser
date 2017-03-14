@@ -100,7 +100,7 @@ public class SurveyService {
     public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
 
         List<Survey> userSurveys = findUserSurveys(evaluated, startDate, endDate);
-        if (userSurveys.isEmpty() || userSurveys == null) {
+        if (userSurveys == null || userSurveys.isEmpty()) {
             return new ResponseEntity("no surveys found", HttpStatus.BAD_REQUEST);
         }
 
