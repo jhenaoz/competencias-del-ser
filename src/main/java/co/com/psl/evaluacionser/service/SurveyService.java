@@ -107,16 +107,14 @@ public class SurveyService {
      */
     public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
 
-        List<Survey> userSurveys = findUserSurveys(evaluated, startDate, endDate);
-        if (userSurveys == null || userSurveys.isEmpty()) {
-            return new ResponseEntity("no surveys found", HttpStatus.BAD_REQUEST);
-        }
-
-        ReportGenerator reportGenerator = new ReportGenerator();
-        reportGenerator.createUserExcelReport(userSurveys);
-
         FileService fileService = new FileService();
         return fileService.getDownloadResponse(evaluated, startDate, endDate);
+    }
+
+    public ResponseEntity getReportFile(String startDate, String endDate) {
+
+        FileService fileService = new FileService();
+        return fileService.getReportDownloadResponse(startDate, endDate);
     }
 
 }

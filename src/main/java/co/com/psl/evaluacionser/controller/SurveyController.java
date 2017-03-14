@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/survey")
@@ -55,32 +57,33 @@ public class SurveyController {
         if ((user != null && user.isEmpty()) || userSurveys == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
         ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createUserExcelReport(userSurveys);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return surveyService.getSurveysFile(user,startDate,endDate);
     }
 
     /**
-     * Get all realtions from the surveys made to a person within a time period.
-     *
-     * @param user      the person to search
+     * Get all relations from the surveys made to a person within a time period.
      * @param startDate starting date
      * @param endDate   ending date
      * @return Response entity with HttpStatus.OK and the downloaded report
      */
     @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> getRelationReport(@RequestParam(value = "user", required = false) String user,
+    public ResponseEntity<HttpStatus> getRelationReport(
                                                 @RequestParam(value = "startdate", required = false) String startDate,
                                                 @RequestParam(value = "enddate", required = false) String endDate) {
 
-        List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
+        List<Survey> userSurveys = surveyService.findUserSurveys(null,startDate, endDate);
 
-        if ((user != null && user.isEmpty()) || userSurveys == null) {
+        if (userSurveys == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createRelationExcelReport(userSurveys);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return surveyService.getReportFile(startDate,endDate);
     }
 
     /**
