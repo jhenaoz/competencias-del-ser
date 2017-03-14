@@ -37,17 +37,22 @@ node() {
         }
     }
 
-    stage('Test & SonarQube') {
+    stage('Test') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            withSonarQubeEnv('SonarQube Test') {
-                withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
-                    sh 'mvn jacoco:prepare-agent surefire:test jacoco:report'
-                    sh 'mvn frontend:npm@npm-test'
-                    sh 'mvn sonar:sonar'
-                }
+            withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
+                sh 'mvn jacoco:prepare-agent surefire:test jacoco:report'
+                sh 'mvn frontend:npm@npm-test'
             }
         }
     }
+
+   stage('SonarQube analysis') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            withSonarQubeEnv('SonarQube Test') {
+                sh 'mvn sonar:sonar'
+            }
+        }
+   }
 
     stage('Report') {
         step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/target/checkstyle-result.xml,**/src/main/resources/static/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '550'])
