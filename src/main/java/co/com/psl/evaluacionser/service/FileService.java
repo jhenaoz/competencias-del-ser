@@ -47,7 +47,14 @@ public class FileService {
                 .body(resource);
     }
 
-    public StringBuilder getFileName(String evaluated, String startDate, String endDate) {
+    /**
+     * this method builds the file name according to the received params
+     * @param evaluated the name of the person evaluated in the survey
+     * @param startDate the start date of the search range
+     * @param endDate the end date of the search range
+     * @return a String with the file name, .xlsx extension included
+     */
+    public String getFileName(String evaluated, String startDate, String endDate) {
 
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -61,6 +68,6 @@ public class FileService {
         }
 
         stringBuilder.append(".xlsx");
-        return stringBuilder;
+        return stringBuilder.toString();
     }
 }

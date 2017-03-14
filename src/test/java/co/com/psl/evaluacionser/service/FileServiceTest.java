@@ -10,7 +10,7 @@ public class FileServiceTest {
 
     @Test
     public void getFileNameWithBothDates() throws Exception {
-        StringBuilder fileName = fileService.getFileName("Josias Montoya",
+        String fileName = fileService.getFileName("Josias Montoya",
                 "1993-07-05", "2017-03-14");
 
         assertEquals("Valoración Competencias Ser Josias Montoya del 1993-07-05 al 2017-03-14.xlsx",
@@ -19,14 +19,14 @@ public class FileServiceTest {
 
     @Test
     public void getFileNameWithoutDates() throws Exception {
-        StringBuilder fileName = fileService.getFileName("Josias Montoya", null, null);
+        String fileName = fileService.getFileName("Josias Montoya", null, null);
 
         assertEquals("Valoración Competencias Ser Josias Montoya.xlsx", fileName.toString());
     }
 
     @Test
     public void getFileNameWithOneDates() throws Exception {
-        StringBuilder fileName = fileService.getFileName("Josias Montoya",
+        String fileName = fileService.getFileName("Josias Montoya",
                 null, "2017-03-14");
 
         assertEquals("Valoración Competencias Ser Josias Montoya al 2017-03-14.xlsx", fileName.toString());
