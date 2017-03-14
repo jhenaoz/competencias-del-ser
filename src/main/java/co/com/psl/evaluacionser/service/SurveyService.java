@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,15 +20,10 @@ import java.util.List;
 @Service
 public class SurveyService {
 
-    private SurveyRepository surveyRepository;
-
-    private SurveyTransformer surveyTransformer;
-
-    private EmailService emailService;
-
-    private FileService fileService;
-
     private static final Logger logger = Logger.getLogger(SurveyService.class);
+    private SurveyRepository surveyRepository;
+    private SurveyTransformer surveyTransformer;
+    private EmailService emailService;
 
     @Autowired
     public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer,
@@ -39,6 +33,11 @@ public class SurveyService {
         this.emailService = emailService;
     }
 
+    /**
+     * this method receives a SurveyDto, transforms it into a Survey and saves it to the database
+     * @param surveyDto the SurveyDto containing the data to be saved
+     * @return the Survey result from invoking the repository save method
+     */
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
         try {
@@ -51,6 +50,14 @@ public class SurveyService {
         return surveyRepository.saveSurvey(survey);
     }
 
+    /**
+     * this method calls the repository method to search for surveys using the parameters received
+     *
+     * @param user      the person who was evaluated in the survey
+     * @param startDate the start date of the survey date range
+     * @param endDate   the end date of the survey date range
+     * @return returns a List containing all the surveys found in the database
+     */
     public List<Survey> findUserSurveys(String user, String startDate, String endDate) {
 
         if (!isDateRangeValid(startDate, endDate)) {
@@ -107,9 +114,8 @@ public class SurveyService {
         ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createUserExcelReport(userSurveys);
 
-        fileService = new FileService();
-        ResponseEntity downloadResponse = fileService.getDownloadResponse(evaluated, startDate, endDate);
-        return downloadResponse;
+        FileService fileService = new FileService();
+        return fileService.getDownloadResponse(evaluated, startDate, endDate);
     }
 
 }
