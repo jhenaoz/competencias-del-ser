@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/survey")
@@ -48,7 +46,7 @@ public class SurveyController {
      */
     // TODO Enable this endpoint only with an authentication token
     // @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public ResponseEntity<List<Survey>> getSurveys(@RequestParam(value = "user") String user,
+    public ResponseEntity getSurveys(@RequestParam(value = "user") String user,
                                                   @RequestParam(value = "startdate", required = false) String startDate,
                                                   @RequestParam(value = "enddate", required = false) String endDate) {
         return surveyService.getSurveysFile(user, startDate, endDate);

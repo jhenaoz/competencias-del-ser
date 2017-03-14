@@ -22,7 +22,7 @@ public class FileService {
      *
      * @param evaluated the person who was evaluated in the survey
      * @param startDate the start date from the date range
-     * @param endDate the end date of the range
+     * @param endDate   the end date of the range
      * @return a response entity with the xlsx file to be downloaded from the browser
      */
     public ResponseEntity getDownloadResponse(String evaluated, String startDate, String endDate) {
@@ -39,6 +39,17 @@ public class FileService {
             logger.error("there was an error getting the file bytes ", e);
         }
 
+
+        return ResponseEntity.ok()
+                .contentLength(file2Upload.length())
+                .header("Content-disposition", "attachment;filename=" + getFileName(evaluated, startDate, endDate))
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(resource);
+    }
+
+    public StringBuilder getFileName(String evaluated, String startDate, String endDate) {
+
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Valoración Competencias Ser " + evaluated);
 
@@ -50,10 +61,6 @@ public class FileService {
         }
 
         stringBuilder.append(".xlsx");
-        return ResponseEntity.ok()
-                .contentLength(file2Upload.length())
-                .header("Content-disposition", "attachment;filename=" + stringBuilder)
-                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-                .body(resource);
+        return stringBuilder;
     }
 }
