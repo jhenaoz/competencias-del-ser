@@ -27,7 +27,7 @@ public class ReportGenerator {
     private Logger logger = Logger.getLogger(ReportGenerator.class);
 
     /**
-     * This method is the main for the users report and Orchestrate the call of all the methods.
+     * This method is the main for the users report and orchestrates the call of all the methods.
      *
      * @param surveys List with the selected surveys to generated the report.
      */
@@ -41,7 +41,7 @@ public class ReportGenerator {
     }
 
     /**
-     * This method is the main for the relations report and Orchestrate the call of all the methods.
+     * This method is the main for the relations report and orchestrates the call of all the methods.
      *
      * @param surveys List with the selected surveys to generated the report.
      */
@@ -55,7 +55,7 @@ public class ReportGenerator {
     }
 
     /**
-     * This method create the header with the correct format for the users report.
+     * This method creates the header with the correct format for the users report.
      *
      * @param sheet    is the excel page to be modified.
      * @param workbook is the excel document to be modified.
@@ -75,7 +75,7 @@ public class ReportGenerator {
     }
 
     /**
-     * This method create the header with the correct format for relations report.
+     * This method creates the header with the correct format for relations report.
      *
      * @param sheet    is the excel page to be modified.
      * @param workbook is the excel document to be modified.
@@ -89,7 +89,7 @@ public class ReportGenerator {
     }
 
     /**
-     * This method create the style for the cells in the header row
+     * This method creates the style for the cells in the header row
      *
      * @param workbook is the excel document to be modified.
      * @param row      is the header row of the sheet
@@ -105,9 +105,9 @@ public class ReportGenerator {
     }
 
     /**
-     * The method interpolate the data from a survey to the excel document.
+     * The method interpolates the data from a survey to the excel document.
      *
-     * @param surveys List with the selected surveys to generated the report.
+     * @param surveys List with the selected surveys to generate the report.
      * @param sheet   is the excel page to be modified.
      */
     private void addUserSurveysToSheet(List<Survey> surveys, Sheet sheet) {
@@ -132,7 +132,7 @@ public class ReportGenerator {
     }
 
     /**
-     * The method interpolate the data of the relations from a survey to the excel document.
+     * The method interpolates the data of the relations from a survey to the excel document.
      *
      * @param surveys List with the selected surveys to generated the report.
      * @param sheet   is the excel page to be modified.
@@ -149,7 +149,7 @@ public class ReportGenerator {
     }
 
     /**
-     * This method give the correct format to the sheet, like the cells size and the filter
+     * This method gives the correct format to the sheet, like the cells size and the filter
      *
      * @param sheet is the excel page to be modified.
      */
@@ -191,7 +191,7 @@ public class ReportGenerator {
     }
 
     /**
-     * This save the excel document in the resources package, and overwrite the file if it exist.
+     * This method saves the excel document in the resources package, and overwrite the file if it exists.
      *
      * @param workbook is the excel document tha was modified.
      */
