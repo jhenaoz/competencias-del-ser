@@ -25,7 +25,7 @@ public class ReporterGeneratorTest {
         Behavior behavior = new Behavior(1, "Acepta sugerencias sin distincion de quien las de",
                 "They accept suggestions regardless of who gives them");
 
-        Behavior behavior1 = new Behavior(2, "Reconoce sus errore", "They recognize their mistakes");
+        Behavior behavior1 = new Behavior(2, "Reconoce sus errores", "They recognize their mistakes");
 
         List<BehaviorSurvey> behaviorSurveys = new ArrayList<>();
         behaviorSurveys.add(new BehaviorSurvey(behavior, 5));
