@@ -25,7 +25,6 @@ node() {
     stage('Compile') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
-                sh 'mvn jacoco:prepare-agent'
                 sh 'mvn test-compile'
             }
         }
@@ -33,15 +32,17 @@ node() {
 
     stage('Findbugs & TSLint') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
-            sh 'mvn findbugs:check'
-            sh 'mvn frontend:npm@tslint'
+            withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
+                sh 'mvn findbugs:check'
+                sh 'mvn frontend:npm@tslint'
+            }
         }
     }
 
     stage('Test') {
         withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
             withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
-                sh 'mvn surefire:test jacoco:report'
+                sh 'mvn jacoco:prepare-agent surefire:test jacoco:report'
                 sh 'mvn frontend:npm@npm-test'
             }
         }

@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-      "baseUrl": "",
-      "declaration": false,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "lib": [
-        "es6",
-        "dom"
-      ],
-      "module": "es6",
-      "moduleResolution": "node",
-      "outDir": "../dist/app",
-      "sourceMap": true,
-      "target": "es6",
-      "typeRoots": [
-          "../node_modules/@types"
-      ]
+    "baseUrl": "",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "../out-tsc/app",
+    "sourceMap": true,
+    "target": "es6",
+    "typeRoots": [
+        "../node_modules/@types"
+    ]
   },
   "exclude": [
     "node_modules",
