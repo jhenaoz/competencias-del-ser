@@ -160,7 +160,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build -- --environment=stg</arguments>
+                            <arguments>run build-np -- --environment=stg</arguments>
                         </configuration>
                         <phase>compile</phase>
                     </execution>
@@ -170,7 +170,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>test -- --single-run</arguments>
+                            <arguments>run test-cc -- --single-run</arguments>
                         </configuration>
                         <phase>test</phase>
                     </execution>
@@ -229,7 +229,22 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.7.5.201505241946</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
