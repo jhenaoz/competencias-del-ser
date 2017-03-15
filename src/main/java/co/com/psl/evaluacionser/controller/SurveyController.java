@@ -22,9 +22,11 @@ import java.util.List;
 public class SurveyController {
 
     private SurveyService surveyService;
+    private ReportGenerator reportGenerator;
 
     @Autowired
-    public SurveyController(final SurveyService surveyService) {
+    public SurveyController(final SurveyService surveyService, final ReportGenerator reportGenerator) {
+        this.reportGenerator = reportGenerator;
         this.surveyService = surveyService;
     }
 
@@ -57,7 +59,6 @@ public class SurveyController {
         if ((user != null && user.isEmpty()) || userSurveys == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createUserExcelReport(userSurveys);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -80,7 +81,6 @@ public class SurveyController {
         if ((user != null && user.isEmpty()) || userSurveys == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.createRelationExcelReport(userSurveys);
         return new ResponseEntity<>(HttpStatus.OK);
     }
