@@ -34,6 +34,7 @@ import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/transl
 // CSS & Javascript imports
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SurveyEndComponent } from './survey-end/survey-end.component';
+import { PopoverModule } from 'ng2-bootstrap';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { SurveyEndComponent } from './survey-end/survey-end.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    PopoverModule.forRoot(),
     LocalStorageModule.withConfig({
             prefix: 'comp-del-ser',
             storageType: 'localStorage'

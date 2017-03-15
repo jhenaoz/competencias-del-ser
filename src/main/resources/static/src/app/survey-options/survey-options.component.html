@@ -3,6 +3,7 @@
     <p *ngIf="!surveyService.oneSurvey" class="text-center title uppercase">{{ "Welcome.option_one" | translate}}</p>
     <p *ngIf="surveyService.oneSurvey" class="text-center title uppercase">{{ "Welcome.option_all" | translate}}</p>
     <hr>
+
     <p class="description" [innerHTML]="'Welcome.description' | translate"></p>
     <div class="container">
         <form id="form" [formGroup]="complexForm" (ngSubmit)="submitForm()">
@@ -43,7 +44,10 @@
                 </div>
             </div>
             <!--Popover-->
-            <a rel="popover" data-toggle="popover" data-placement="left" data-trigger="hover" data-popover-content="#myPopover"><img src="assets/images/see-more.png"></a>
+            <a [popover]="popTemplate"
+               placement="left">
+               <img src="assets/images/see-more.png">
+            </a>
 
             <!--Evaluator select-->
             <div *ngIf="!isSelf" 
@@ -114,7 +118,8 @@
     </div>
 
     <!--Popover content-->
-    <div class="hide" id="myPopover">
+    <template #popTemplate>
+    <div>
         <h4>{{ "Survey_options.relation_teammate" | translate}}</h4>
         <p>
             {{ "Survey_options.relation_teammate_description" | translate}}
@@ -128,6 +133,9 @@
             {{ "Survey_options.relation_own_description" | translate}}
         </p>
     </div>
+    </template>
 </div>
+
+
 
 <app-footer (startNewSurvey)="startSurvey()"></app-footer>

@@ -30,7 +30,6 @@ describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let service: TranslateService;
   let fixture: ComponentFixture<SurveyComponent>;
-  let formGroup: FormGroup;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

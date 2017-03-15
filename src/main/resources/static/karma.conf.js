@@ -14,7 +14,8 @@ module.exports = function (config) {
       require('karma-phantomjs-launcher')
     ],
     files: [
-      { pattern: './src/test.ts', watched: false }
+      { pattern: './node_modules/jquery/dist/jquery.min.js', watched: false }, 
+      { pattern: './src/test.ts', watched: false },
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']
