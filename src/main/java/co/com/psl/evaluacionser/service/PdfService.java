@@ -7,6 +7,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.GrayColor;
@@ -40,6 +41,9 @@ public class PdfService {
         Font smallFont = new Font(Font.FontFamily.HELVETICA, 9);
         Font headerFont = new Font(Font.FontFamily.HELVETICA,10,Font.BOLD);
         Font titleFont = new Font(Font.FontFamily.HELVETICA,24,Font.BOLD);
+
+        Image img = Image.getInstance(ClassLoader.getSystemResource("psl logo.PNG"));
+        img.setAlignment(Element.ALIGN_LEFT);
 
         Paragraph title = new Paragraph("Valoración competencias del ser\n\n",titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
@@ -89,6 +93,7 @@ public class PdfService {
                 }
             }
         }
+        document.add(img);
         document.add(title);
         document.add(table);
         document.close();
