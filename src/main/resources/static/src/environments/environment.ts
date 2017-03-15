@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  // apiURL: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/9626f05b-5baf-4721-8077-9a79ea6e929d'
-  apiURL: 'http://selene:8080'
+  apiURL: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mocksvc.mulesoft.com/mocks/9626f05b-5baf-4721-8077-9a79ea6e929d'
+
 };

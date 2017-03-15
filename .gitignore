@@ -94,7 +94,7 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 tslint_results.json
-checkstyle_results.xml
+checkstyle-result.xml
 
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
@@ -154,7 +154,6 @@ jspm_packages
 
 # dotenv environment variables file
 .env
-
 
 ### OSX ###
 *.DS_Store
@@ -240,8 +239,5 @@ testem.log
 
 #Folder of elasticsearch
 /data/
-
-#Checkstyle results
-checkstyle-result.xml
 
 # End of https://www.gitignore.io/api/java,maven,windows,osx,eclipse,intellij,node,code
