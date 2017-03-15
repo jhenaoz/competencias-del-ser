@@ -42,9 +42,6 @@ curl -XPUT "http://localhost:9200/person" -d'
 		"employee": {
 			"dynamic": "strict",
 			"properties": {
-				"id": {
-					"type": "string"
-				},
 				"name": {
 					"type": "string",
 					"index" : "not_analyzed"
