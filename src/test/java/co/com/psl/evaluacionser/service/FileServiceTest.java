@@ -13,8 +13,9 @@ public class FileServiceTest {
 
     @Test
     public void getFileNameWithBothDates() throws Exception {
-        String fileName = fileService.getSurveysName("Josias Montoya",
-                "1993-07-05", "2017-03-14");
+        String fileName = "Valoración Competencias Ser";
+        fileName = fileName.concat(fileService.getSurveysName("Josias Montoya",
+                "1993-07-05", "2017-03-14"));
 
         assertEquals("Valoración Competencias Ser Josias Montoya del 1993-07-05 al 2017-03-14.xlsx",
                 fileName.toString());
@@ -22,17 +23,27 @@ public class FileServiceTest {
 
     @Test
     public void getFileNameWithoutDates() throws Exception {
-        String fileName = fileService.getSurveysName("Josias Montoya", null, null);
+        String fileName = "Valoración Competencias Ser";
+        fileName = fileName.concat(fileService.getSurveysName("Josias Montoya", null, null));
 
-        assertEquals("Valoración Competencias Ser Josias Montoya.xlsx", fileName.toString());
+        assertEquals("Valoración Competencias Ser Josias Montoya.xlsx", fileName);
     }
 
     @Test
     public void getFileNameWithOneDates() throws Exception {
-        String fileName = fileService.getSurveysName("Josias Montoya",
-                null, "2017-03-14");
+        String fileName = "Valoración Competencias Ser";
+        fileName = fileName.concat(fileService.getSurveysName("Josias Montoya",
+                null, "2017-03-14"));
 
-        assertEquals("Valoración Competencias Ser Josias Montoya al 2017-03-14.xlsx", fileName.toString());
+        assertEquals("Valoración Competencias Ser Josias Montoya al 2017-03-14.xlsx", fileName);
+    }
+
+    @Test
+    public void getFileNameWithNothing() throws Exception {
+        String fileName = "Valoración Competencias Ser";
+        fileName = fileName.concat(fileService.getSurveysName(null, null, null));
+
+        assertEquals("Valoración Competencias Ser.xlsx", fileName);
     }
 
 }

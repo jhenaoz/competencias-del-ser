@@ -23,7 +23,7 @@ public class FileService {
      * @param fileName the name the file will have when downloaded
      * @return response entity OK containing the file to be downloaded
      */
-    public ResponseEntity getDownloadResponse(String fileName) {
+    private ResponseEntity getDownloadResponse(String fileName) {
         String separator = File.separator;
 
         File fileToUpload = new File("src" + separator + "main" + separator + "resources"
@@ -52,7 +52,7 @@ public class FileService {
      * @param endDate   the end date of the search range
      * @return a String with the file name, .xlsx extension included
      */
-    public String getSurveysName(String evaluated, String startDate, String endDate) {
+    String getSurveysName(String evaluated, String startDate, String endDate) {
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -77,7 +77,7 @@ public class FileService {
      * @param endDate   the end date used to search for surveys
      * @return response entity containing the file to be downloaded
      */
-    public ResponseEntity getRelationDownloadResponse(String startDate, String endDate) {
+    ResponseEntity getRelationDownloadResponse(String startDate, String endDate) {
 
         StringBuilder relationFileName = new StringBuilder();
         relationFileName.append("Personas que han sido valoradas");
@@ -94,7 +94,7 @@ public class FileService {
      * @param endDate   the end date used to search for surveys
      * @return response entity containing the file to be downloaded
      */
-    public ResponseEntity getSurveyDownloadResponse(String evaluated, String startDate, String endDate) {
+    ResponseEntity getSurveyDownloadResponse(String evaluated, String startDate, String endDate) {
 
         StringBuilder surveyFileName = new StringBuilder();
         surveyFileName.append("Valoración Competencias Ser");
