@@ -59,7 +59,6 @@ public class SurveyController {
         if ((user != null && user.isEmpty()) || userSurveys == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
         reportGenerator.createUserExcelReport(userSurveys);
 
         return surveyService.getSurveysFile(user, startDate, endDate);
