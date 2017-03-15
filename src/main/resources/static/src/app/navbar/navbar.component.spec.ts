@@ -65,6 +65,19 @@ describe('Component: NavbarComponent', () => {
 
   });
 
+  describe('Method: disableChangeLanguage', () => {
+    it('should return true given "/welcome" as url', () => {
+      component.currentUrl = '/welcome';
+      expect(component.disableChangeLanguage()).toBeTruthy();
+    });
+    it('should return false given a random url', () => {
+      component.currentUrl = '/';
+      expect(component.disableChangeLanguage()).toBeFalsy();
+      component.currentUrl = '/survey';
+      expect(component.disableChangeLanguage()).toBeFalsy();
+    });
+  });
+
 });
 
 function translateLoaderFactory(http: any) {
