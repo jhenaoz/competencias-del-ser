@@ -8,11 +8,14 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-remap-istanbul'),
-      require('@angular/cli/plugins/karma'),
+      require('karma-phantomjs-launcher'),
       require('karma-junit-reporter'),
-      require('karma-phantomjs-launcher')
+      require('karma-coverage-istanbul-reporter'),
+      require('@angular/cli/plugins/karma')
     ],
+    client:{
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
     files: [
       { pattern: './src/test.ts', watched: false }
     ],
@@ -22,20 +25,17 @@ module.exports = function (config) {
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
-    remapIstanbulReporter: {
-      reports: {
-        html: 'coverage',
-        lcovonly: './coverage/coverage.lcov',
-        cobertura: './coverage/karma-cobertura.xml'
-      }
+    coverageIstanbulReporter: {
+      reports: [ 'html', 'lcovonly', 'cobertura'],
+      dir: './coverage',
+      fixWebpackSourcePaths: true
     },
     angularCli: {
-      config: './.angular-cli.json',
       environment: 'dev'
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['progress', 'dots', 'karma-remap-istanbul']
-              : ['progress', 'dots'],
+              ? ['progress', 'coverage-istanbul']
+              : ['progress', 'kjhtml'],
     autoWatch: true,
     failOnEmptyTestSuite: false,
     port: 9876,
@@ -46,17 +46,19 @@ module.exports = function (config) {
   };
 
   console.log("ENV= ", process.env.ENV);
-  if(process.env.ENV === 'CI'){
+  if (process.env.ENV === 'CI' || process.env.ENV == 'STG') {
     defaultConfig.autoWatch = false;
     defaultConfig.singleRun = true;
     defaultConfig.browsers = ['PhantomJS'];
     defaultConfig.reporters.push('junit');
     defaultConfig.junitReporter = {
-       outputDir: 'test_results',
-       outputFile: 'test-results.xml'
+      outputDir: 'test_results',
+      outputFile: 'test-results.xml'
     };
+    defaultConfig.angularCli = {
+      environment: process.env.ENV.toLowerCase()
+    }
     console.log('CONFIG FOR JENKINS EXECUTION', defaultConfig);
   }
-
   config.set(defaultConfig);
 };

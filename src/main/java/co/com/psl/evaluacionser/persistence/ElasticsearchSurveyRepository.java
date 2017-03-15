@@ -59,8 +59,11 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     @Override
     public List<Survey> findUserSurveys(String user, String startDate, String endDate) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
-                .must(QueryBuilders.rangeQuery("timestamp").from(startDate).to(endDate))
-                .must(QueryBuilders.matchQuery("evaluated", user));
+                .must(QueryBuilders.rangeQuery("timestamp").from(startDate).to(endDate));
+
+        if (user != null) {
+            boolQueryBuilder.must(QueryBuilders.matchQuery("evaluated", user));
+        }
 
         return findSurveys(boolQueryBuilder);
     }
