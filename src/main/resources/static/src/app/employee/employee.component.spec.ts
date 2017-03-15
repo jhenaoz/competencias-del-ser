@@ -2,14 +2,9 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 
-import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 
-import { BrowserModule } from '@angular/platform-browser';
-
 import {
-    FormsModule,
-    FormGroup,
     ReactiveFormsModule
 } from '@angular/forms';
 
@@ -25,7 +20,6 @@ describe('Component: EmployeeComponent', () => {
   beforeEach(async(() => {
         TestBed.configureTestingModule({
           imports: [
-            CommonModule,
             ReactiveFormsModule,
             HttpModule
           ],
@@ -45,6 +39,6 @@ describe('Component: EmployeeComponent', () => {
 
     it('should have a defined component', () => {
         expect(component).toBeDefined();
-  });
+    });
 
 });

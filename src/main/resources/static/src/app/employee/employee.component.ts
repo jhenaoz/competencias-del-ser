@@ -11,8 +11,6 @@ import {
   styleUrls: ['../survey-options/survey-options.component.css']
 })
 export class EmployeeComponent implements OnInit {
-  pageTitle = 'Product List';
-
   errorMessage: string;
   employees: IEmployee[];
 
