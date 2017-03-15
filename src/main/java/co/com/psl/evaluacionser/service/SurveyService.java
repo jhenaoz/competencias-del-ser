@@ -6,6 +6,8 @@ import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -19,13 +21,10 @@ import java.util.List;
 @Service
 public class SurveyService {
 
-    private SurveyRepository surveyRepository;
-
-    private SurveyTransformer surveyTransformer;
-
-    private EmailService emailService;
-
     private static final Logger logger = Logger.getLogger(SurveyService.class);
+    private SurveyRepository surveyRepository;
+    private SurveyTransformer surveyTransformer;
+    private EmailService emailService;
 
     @Autowired
     public SurveyService(final SurveyRepository surveyRepository, final SurveyTransformer surveyTransformer,
@@ -35,6 +34,11 @@ public class SurveyService {
         this.emailService = emailService;
     }
 
+    /**
+     * this method receives a SurveyDto, transforms it into a Survey and saves it to the database
+     * @param surveyDto the SurveyDto containing the data to be saved
+     * @return the Survey result from invoking the repository save method
+     */
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
         try {
@@ -47,6 +51,14 @@ public class SurveyService {
         return surveyRepository.saveSurvey(survey);
     }
 
+    /**
+     * this method calls the repository method to search for surveys using the parameters received
+     *
+     * @param user      the person who was evaluated in the survey
+     * @param startDate the start date of the survey date range
+     * @param endDate   the end date of the survey date range
+     * @return returns a List containing all the surveys found in the database
+     */
     public List<Survey> findUserSurveys(String user, String startDate, String endDate) {
 
         if (!isDateRangeValid(startDate, endDate)) {
@@ -82,6 +94,27 @@ public class SurveyService {
             logger.error("The Date couldn't be properly formatted " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * this method redirects the response containing the xlsx to download back to the controller
+     *
+     * @param evaluated the person who was evaluated in the survey
+     * @param startDate the start date from the date range
+     * @param endDate   the end date of the range
+     * @return returns a response entity with BAD_REQUEST in case the survey search didnt get any surveys,
+     * or returns the response entity with OK and the document to download
+     */
+    public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
+
+        FileService fileService = new FileService();
+        return fileService.getDownloadResponse(evaluated, startDate, endDate);
+    }
+
+    public ResponseEntity getReportFile(String startDate, String endDate) {
+
+        FileService fileService = new FileService();
+        return fileService.getReportDownloadResponse(startDate, endDate);
     }
 
 }

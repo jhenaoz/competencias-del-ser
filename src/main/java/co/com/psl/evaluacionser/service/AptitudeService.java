@@ -32,10 +32,8 @@ public class AptitudeService {
             return null;
         }
 
-        List<AptitudeDto> aptitudesDto = aptitudes.stream().map(aptitudeTransformer::convertToDto)
+        return aptitudes.stream().map(aptitudeTransformer::convertToDto)
                 .collect(Collectors.toList());
-
-        return aptitudesDto;
     }
 
     public AptitudeDto findAptitudeById(String id) {
