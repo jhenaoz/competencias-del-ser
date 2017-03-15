@@ -81,7 +81,7 @@ public class FileService {
 
         StringBuilder relationFileName = new StringBuilder();
         relationFileName.append("Personas que han sido valoradas");
-        relationFileName.append(getSurveysName(null,startDate,endDate));
+        relationFileName.append(getSurveysName(null, startDate, endDate));
         return getDownloadResponse(relationFileName.toString());
 
     }

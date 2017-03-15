@@ -49,8 +49,8 @@ public class SurveyController {
      */
     @RequestMapping(value = "/report/user", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
-                                                  @RequestParam(value = "startdate", required = false) String startDate,
-                                                  @RequestParam(value = "enddate", required = false) String endDate) {
+                                                @RequestParam(value = "startdate", required = false) String startDate,
+                                                @RequestParam(value = "enddate", required = false) String endDate) {
 
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
 
@@ -73,8 +73,8 @@ public class SurveyController {
      */
     @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getRelationReport(
-            @RequestParam(value = "startdate", required = false) String startDate,
-            @RequestParam(value = "enddate", required = false) String endDate) {
+                                                @RequestParam(value = "startdate", required = false) String startDate,
+                                                @RequestParam(value = "enddate", required = false) String endDate) {
 
         List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
 
