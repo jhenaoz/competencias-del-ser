@@ -24,10 +24,8 @@ public class FileService {
      * @return response entity OK containing the file to be downloaded
      */
     private ResponseEntity getDownloadResponse(String fileName) {
-        String separator = File.separator;
-
-        File fileToUpload = new File("src" + separator + "main" + separator + "resources"
-                + separator + "Survey_Reports.xlsx");
+        ClassLoader classLoader = getClass().getClassLoader();
+        File fileToUpload = new File(classLoader.getResource("Survey_Reports.xlsx").getFile());
 
         Path path = Paths.get(fileToUpload.getAbsolutePath());
         ByteArrayResource resource = null;
@@ -52,7 +50,7 @@ public class FileService {
      * @param endDate   the end date of the search range
      * @return a String with the file name, .xlsx extension included
      */
-    String getSurveysName(String evaluated, String startDate, String endDate) {
+    private String getSurveysName(String evaluated, String startDate, String endDate) {
 
         StringBuilder stringBuilder = new StringBuilder();
 
