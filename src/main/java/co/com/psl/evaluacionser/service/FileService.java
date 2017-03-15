@@ -18,7 +18,7 @@ public class FileService {
     private static final Logger logger = Logger.getLogger(FileService.class);
 
     /**
-     * This method converts the survey report into a Response entity.
+     * This method converts the survey report from a xlsx file into a Response entity.
      *
      * @param fileName the name the file will have when downloaded
      * @return response entity OK containing the file to be downloaded
@@ -55,35 +55,10 @@ public class FileService {
     public String getSurveysName(String evaluated, String startDate, String endDate) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Valoración Competencias Ser");
 
         if (evaluated != null) {
             stringBuilder.append(" " + evaluated);
         }
-        if (startDate != null) {
-            stringBuilder.append(" del " + startDate);
-        }
-        if (endDate != null) {
-            stringBuilder.append(" al " + endDate);
-        }
-
-        stringBuilder.append(".xlsx");
-        return stringBuilder.toString();
-    }
-
-    /**
-     * This method builds the file name according to the received params.
-     *
-     * @param startDate the start date of the search range
-     * @param endDate   the end date of the search range
-     * @return a String with the file name, .xlsx extension included
-     */
-    public String getRelationSurveysName(String startDate, String endDate) {
-
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Personas que han sido valoradas");
-
         if (startDate != null) {
             stringBuilder.append(" del " + startDate);
         }
@@ -104,8 +79,10 @@ public class FileService {
      */
     public ResponseEntity getRelationDownloadResponse(String startDate, String endDate) {
 
-        String relationFileName = getRelationSurveysName(startDate, endDate);
-        return getDownloadResponse(relationFileName);
+        StringBuilder relationFileName = new StringBuilder();
+        relationFileName.append("Personas que han sido valoradas");
+        relationFileName.append(getSurveysName(null,startDate,endDate));
+        return getDownloadResponse(relationFileName.toString());
 
     }
 
@@ -119,7 +96,9 @@ public class FileService {
      */
     public ResponseEntity getSurveyDownloadResponse(String evaluated, String startDate, String endDate) {
 
-        String surveyFileName = getSurveysName(evaluated, startDate, endDate);
-        return getDownloadResponse(surveyFileName);
+        StringBuilder surveyFileName = new StringBuilder();
+        surveyFileName.append("Valoración Competencias Ser");
+        surveyFileName.append(getSurveysName(evaluated, startDate, endDate));
+        return getDownloadResponse(surveyFileName.toString());
     }
 }
