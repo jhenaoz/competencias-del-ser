@@ -1,22 +1,23 @@
 package co.com.psl.evaluacionser.config;
 
+import org.apache.log4j.Logger;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
 @Component
+@SuppressWarnings("checkstyle:magicnumber")
 public class PasswordEncoderImpl implements PasswordEncoder {
 
     private static final Logger logger = Logger.getLogger(PasswordEncoderImpl.class);
 
     @Override
     public String encode(CharSequence rawPassword) {
-        return getSHA512SecurePassword(rawPassword.toString());
+        return getSha512SecurePassword(rawPassword.toString());
     }
 
     @Override
@@ -26,12 +27,11 @@ public class PasswordEncoderImpl implements PasswordEncoder {
 
     /**
      * Generate a hash String from the password provided.
-     * 
+     *
      * @param passwordToHash password to hash
-     * 
      * @return a String
      */
-    private String getSHA512SecurePassword(String passwordToHash) {
+    private String getSha512SecurePassword(String passwordToHash) {
         String salt = generateSalt(passwordToHash.hashCode());
         String generatedPassword = null;
 
@@ -55,9 +55,8 @@ public class PasswordEncoderImpl implements PasswordEncoder {
 
     /**
      * Generate a random String, based on the seed provided
-     * 
+     *
      * @param saltSeed the seed to use for the random generator
-     * 
      * @return Random String;
      */
     private String generateSalt(int saltSeed) {

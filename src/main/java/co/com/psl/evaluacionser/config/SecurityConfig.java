@@ -31,15 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * This method validates the user login.
      *
      * @param auth Authenticator
-     *
      * @throws Exception if the authentication fails
      */
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .inMemoryAuthentication()
-            .passwordEncoder(passwordEncoder)
-            .withUser(username).password(password).roles(ADMIN_ROLE);
+                .inMemoryAuthentication()
+                .passwordEncoder(passwordEncoder)
+                .withUser(username).password(password).roles(ADMIN_ROLE);
     }
 
     /**
@@ -47,16 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Specifies the URIs that require authentication.
      *
      * @param http an http security
-     *
      * @throws Exception
      */
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
-            .and().formLogin()
-            .and().logout();
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
+                .and().formLogin()
+                .and().logout();
     }
 }

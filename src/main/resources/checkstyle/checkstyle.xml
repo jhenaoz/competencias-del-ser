@@ -62,6 +62,9 @@
         <property name="message" value="Line has trailing spaces."/>
     </module>
 
+    <!-- Enable SupressWarnings annotation                 -->
+    <module name="SuppressWarningsFilter" />
+
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
     <!-- <module name="Header"> -->
@@ -261,6 +264,8 @@
         <module name="OuterTypeFilename"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
+
+        <module name="SuppressWarningsHolder" />
 
     </module>
 
