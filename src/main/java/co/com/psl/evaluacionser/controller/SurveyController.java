@@ -51,7 +51,7 @@ public class SurveyController {
      * @param endDate   ending date used to search for surveys
      * @return Response entity with HttpStatus.OK and the report, triggers a download
      */
-    @RequestMapping(value = "/report/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/report/user/xlsx", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
                                                 @RequestParam(value = "startdate", required = false) String startDate,
                                                 @RequestParam(value = "enddate", required = false) String endDate) {
@@ -62,7 +62,8 @@ public class SurveyController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         reportGenerator.createUserExcelReport(userSurveys);
-pdfService.getUserPdf(userSurveys);        return surveyService.getSurveysFile(user, startDate, endDate);
+
+        return surveyService.getSurveysFile(user, startDate, endDate);
     }
 
     /**
@@ -72,7 +73,7 @@ pdfService.getUserPdf(userSurveys);        return surveyService.getSurveysFile(u
      * @param endDate   ending date
      * @return Response entity with HttpStatus.OK and the downloaded report, triggers a download
      */
-    @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
+    @RequestMapping(value = "/report/relation/xlsx", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> getRelationReport(
                                                 @RequestParam(value = "startdate", required = false) String startDate,
                                                 @RequestParam(value = "enddate", required = false) String endDate) {
@@ -85,8 +86,6 @@ pdfService.getUserPdf(userSurveys);        return surveyService.getSurveysFile(u
         reportGenerator.createRelationExcelReport(userSurveys);
 
         return surveyService.getReportFile(startDate, endDate);
-        pdfService.getRelationPdf(userSurveys);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
