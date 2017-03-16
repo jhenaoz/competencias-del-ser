@@ -3,7 +3,7 @@ package co.com.psl.evaluacionser.controller;
 import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.service.ExcelReportGenerator;
 import co.com.psl.evaluacionser.service.NameService;
-import co.com.psl.evaluacionser.service.PdfService;
+import co.com.psl.evaluacionser.service.PdfReportGenerator;
 import co.com.psl.evaluacionser.service.SurveyService;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class SurveyController {
 
     private SurveyService surveyService;
     private ExcelReportGenerator excelReportGenerator;
-    private PdfService pdfService = new PdfService();
+    private PdfReportGenerator pdfReportGenerator = new PdfReportGenerator();
     private NameService nameService = new NameService();
 
     @Autowired
@@ -84,7 +84,7 @@ public class SurveyController {
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
         String fileName = nameService.getUserFileName(user, startDate, endDate);
 
-        pdfService.getUserPdf(userSurveys, response, fileName);
+        pdfReportGenerator.getUserPdf(userSurveys, response, fileName);
 
     }
 
@@ -121,7 +121,7 @@ public class SurveyController {
         List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
         String fileName = nameService.getRelationFileName(startDate, endDate);
 
-        pdfService.getRelationPdf(userSurveys, response, fileName);
+        pdfReportGenerator.getRelationPdf(userSurveys, response, fileName);
 
     }
 

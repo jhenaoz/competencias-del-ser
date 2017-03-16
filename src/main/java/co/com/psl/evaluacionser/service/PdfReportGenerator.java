@@ -22,10 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class PdfService {
+/**
+ * This class is used to build the pdf report (in memory) and send the response download.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
+public class PdfReportGenerator {
 
     private ExcelReportGenerator excelReportGenerator = new ExcelReportGenerator();
-    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfService.class);
+    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfReportGenerator.class);
 
     /**
      * This method receives the params from the controller, builds the pdf and triggers the download.

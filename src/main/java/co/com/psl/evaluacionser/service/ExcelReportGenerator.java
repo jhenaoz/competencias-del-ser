@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This class generates the excel reports that can be download, the excel format is xlsx
+ * This class generates the excel reports that can be download, the excel format is xlsx.
  */
 @Service
 public class ExcelReportGenerator {
@@ -62,7 +62,7 @@ public class ExcelReportGenerator {
     }
 
     /**
-     * This method writes the excel report to the response
+     * This method writes the excel report to the response.
      *
      * @param response The HttpServletResponse recived from the controller
      * @param workbook The excel file
@@ -84,8 +84,8 @@ public class ExcelReportGenerator {
     /**
      * This method creates the header with the correct format for the users report.
      *
-     * @param sheet    is the excel page to be modified.
-     * @param workbook is the excel document to be modified.
+     * @param sheet    Is the excel page to be modified.
+     * @param workbook Is the excel document to be modified.
      */
     private void addUserColumnsHeaders(Sheet sheet, Workbook workbook) {
         int cellNum = 0;
@@ -104,8 +104,8 @@ public class ExcelReportGenerator {
     /**
      * This method creates the header with the correct format for relations report.
      *
-     * @param sheet    is the excel page to be modified.
-     * @param workbook is the excel document to be modified.
+     * @param sheet    Is the excel page to be modified.
+     * @param workbook Is the excel document to be modified.
      */
     private void addRelationColumnsHeaders(Sheet sheet, Workbook workbook) {
         int cellNum = 0;
@@ -160,7 +160,7 @@ public class ExcelReportGenerator {
     }
 
     /**
-     * This method gives the correct format to the sheet, like the cells size and the filter
+     * This method gives the correct format to the sheet, like the cells size and the filter.
      *
      * @param sheet is the excel page to be modified.
      */
@@ -174,7 +174,7 @@ public class ExcelReportGenerator {
     }
 
     /**
-     * This method creates the style for the cells in the header row
+     * This method creates the style for the cells in the header row.
      *
      * @param workbook is the excel document to be modified.
      * @param row      is the header row of the sheet
