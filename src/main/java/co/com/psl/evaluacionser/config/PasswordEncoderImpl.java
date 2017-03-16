@@ -54,7 +54,7 @@ public class PasswordEncoderImpl implements PasswordEncoder {
     }
 
     /**
-     * Generate a random String, based on the seed provided
+     * Generate a random String, based on the seed provided.
      *
      * @param saltSeed the seed to use for the random generator
      * @return Random String;
