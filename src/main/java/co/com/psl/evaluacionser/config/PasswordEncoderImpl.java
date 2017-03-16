@@ -64,7 +64,7 @@ public class PasswordEncoderImpl implements PasswordEncoder {
         StringBuilder saltBuilder = new StringBuilder();
 
         for (int i = 0; i < 16; i++) {
-            saltBuilder.append((char) rgn.nextInt(93) + 33);
+            saltBuilder.append((char) (rgn.nextInt(93) + 33));
         }
 
         return saltBuilder.toString();
