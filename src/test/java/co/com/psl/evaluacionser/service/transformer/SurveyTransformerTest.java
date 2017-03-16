@@ -1,7 +1,6 @@
 package co.com.psl.evaluacionser.service.transformer;
 
 import co.com.psl.evaluacionser.domain.Aptitude;
-import co.com.psl.evaluacionser.domain.AptitudeSurvey;
 import co.com.psl.evaluacionser.domain.Behavior;
 import co.com.psl.evaluacionser.domain.Survey;
 import co.com.psl.evaluacionser.persistence.AptitudeRepository;
