@@ -1,8 +1,8 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Survey;
-import co.com.psl.evaluacionser.service.ReportGenerator;
 import co.com.psl.evaluacionser.service.PdfService;
+import co.com.psl.evaluacionser.service.ReportGenerator;
 import co.com.psl.evaluacionser.service.SurveyService;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import com.itextpdf.text.DocumentException;
@@ -98,6 +98,7 @@ public class SurveyController {
 
     /**
      * Checks whether a survey was made in the last week.
+     *
      * @param evaluated the person who was evaluated in the survey
      * @param evaluator the person who made the survey
      * @return Response entity with HttpStatus.OK and if the survey exists

@@ -10,6 +10,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -39,15 +40,32 @@ public class PdfService {
 
 
         Font smallFont = new Font(Font.FontFamily.HELVETICA, 9);
-        Font headerFont = new Font(Font.FontFamily.HELVETICA,10,Font.BOLD);
-        Font titleFont = new Font(Font.FontFamily.HELVETICA,24,Font.BOLD);
+        Font titleFont = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD);
+
 
         Image img = Image.getInstance(ClassLoader.getSystemResource("psl logo.PNG"));
-        img.setAlignment(Element.ALIGN_LEFT);
+        img.setAlignment(Element.ALIGN_BOTTOM);
 
-        Paragraph title = new Paragraph("Valoración competencias del ser\n\n",titleFont);
+        Paragraph title = new Paragraph("Valoración competencias del ser\n\n", titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
 
+        PdfPTable headerTable = new PdfPTable(2);
+        headerTable.setWidths(new float[]{1.2f, 4});
+        headerTable.setWidthPercentage(100);
+
+        PdfPCell headerCell = new PdfPCell();
+        headerCell.setBorder(Rectangle.NO_BORDER);
+        headerCell.addElement(img);
+        headerCell.setFixedHeight(10f);
+        headerTable.addCell(headerCell);
+
+        headerCell = new PdfPCell();
+        headerCell.addElement(title);
+        headerCell.setBorder(Rectangle.NO_BORDER);
+        headerCell.setFixedHeight(47f);
+        headerTable.addCell(headerCell);
+
+        Font headerFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
         GrayColor gray = new GrayColor(0.8f);
 
         PdfPCell cell = new PdfPCell(new Phrase("Evaluado", headerFont));
@@ -93,8 +111,7 @@ public class PdfService {
                 }
             }
         }
-        document.add(img);
-        document.add(title);
+        document.add(headerTable);
         document.add(table);
         document.close();
     }
