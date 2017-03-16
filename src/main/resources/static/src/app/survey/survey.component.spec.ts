@@ -12,7 +12,9 @@ import { AptitudeService } from '../aptitude/aptitude.service';
 
 import { LocalStorageService, LocalStorageModule } from 'angular-2-local-storage';
 
-import { FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 
 import { Http } from '@angular/http';
 
@@ -47,7 +49,7 @@ describe('SurveyComponent', () => {
         })
       ],
       declarations: [ SurveyComponent, NavbarComponent, FooterComponent ],
-      providers: [{provide: APP_BASE_HREF, useValue : '/' }, 
+      providers: [{provide: APP_BASE_HREF, useValue : '/' },
                    SurveyService,
                    AptitudeService,
                    LocalStorageService,
