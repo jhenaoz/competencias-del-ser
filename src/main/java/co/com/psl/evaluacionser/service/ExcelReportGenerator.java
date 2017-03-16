@@ -64,7 +64,7 @@ public class ExcelReportGenerator {
     /**
      * This method writes the excel report to the response.
      *
-     * @param response The HttpServletResponse recived from the controller
+     * @param response The HttpServletResponse received from the controller
      * @param workbook The excel file
      */
     private void responseWriter(HttpServletResponse response, Workbook workbook) {
@@ -195,7 +195,7 @@ public class ExcelReportGenerator {
      * @param role the role in english, from the data base.
      * @return the role in spanish.
      */
-    public String roleTranslate(String role) {
+    String roleTranslate(String role) {
         if (role == null) {
             return "N/A";
         }

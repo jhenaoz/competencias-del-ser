@@ -167,12 +167,10 @@ public class PdfReportGenerator {
         Image img = null;
         try {
             img = Image.getInstance(ClassLoader.getSystemResource("psl logo.PNG"));
-        } catch (BadElementException e) {
-            logger.error("There was a problem getting the instance of the logo image. ", e);
-        } catch (IOException e) {
+            img.setAlignment(Element.ALIGN_BOTTOM);
+        } catch (BadElementException | IOException e) {
             logger.error("There was a problem getting the instance of the logo image. ", e);
         }
-        img.setAlignment(Element.ALIGN_BOTTOM);
 
         Font titleFont = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD);
         Paragraph title = new Paragraph(pdfName + "\n\n", titleFont);
@@ -182,7 +180,7 @@ public class PdfReportGenerator {
         try {
             headerTable.setWidths(new float[]{1.2f, 4});
         } catch (DocumentException e) {
-            logger.error("There was a problem while modifiying the header table width. ", e);
+            logger.error("There was a problem while modifying the header table width. ", e);
         }
         headerTable.setWidthPercentage(100);
 
