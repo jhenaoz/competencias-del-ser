@@ -6,7 +6,6 @@ import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -94,35 +93,6 @@ public class SurveyService {
             logger.error("The Date couldn't be properly formatted " + e.getMessage());
             return false;
         }
-    }
-
-    /**
-     * This method redirects the response containing the xlsx to download back to the controller.
-     *
-     * @param evaluated the person who was evaluated in the survey
-     * @param startDate the start date from the date range
-     * @param endDate   the end date of the range
-     * @return A response entity with BAD_REQUEST in case the survey search didn't get any surveys,
-     * or returns the response entity with OK and the document to download
-     */
-    public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
-
-        FileService fileService = new FileService();
-        return fileService.getSurveyDownloadResponse(evaluated, startDate, endDate);
-    }
-
-    /**
-     * This method redirects the response containing the xlsx to download back to the controller.
-     *
-     * @param startDate the start date from the date range
-     * @param endDate   the end date of the range
-     * @return A response entity with BAD_REQUEST in case the survey search didn't get any surveys,
-     * or returns the response entity with OK and the document to download
-     */
-    public ResponseEntity getReportFile(String startDate, String endDate) {
-
-        FileService fileService = new FileService();
-        return fileService.getRelationDownloadResponse(startDate, endDate);
     }
 
 }

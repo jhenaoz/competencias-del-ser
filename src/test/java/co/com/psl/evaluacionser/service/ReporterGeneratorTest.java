@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ReporterGeneratorTest {
 
-    private ReportGenerator reportGenerator = new ReportGenerator();
+    private ExcelReportGenerator excelReportGenerator = new ExcelReportGenerator();
 
     private Survey survey = new Survey();
     private List<Survey> surveys = new ArrayList<>();
@@ -47,19 +47,19 @@ public class ReporterGeneratorTest {
 
     @Test
     public void roleTranslateClientShouldReturnCliente() {
-        String result = reportGenerator.roleTranslate("client");
+        String result = excelReportGenerator.roleTranslate("client");
         assertEquals("Cliente", result);
     }
 
     @Test
     public void roleTranslateNoValidShouldReturnNa() {
-        String result = reportGenerator.roleTranslate("Relation no defined");
+        String result = excelReportGenerator.roleTranslate("Relation no defined");
         assertEquals("N/A", result);
     }
 
     @Test
     public void roleTranslateNullShouldReturnNa() {
-        String result = reportGenerator.roleTranslate(null);
+        String result = excelReportGenerator.roleTranslate(null);
         assertEquals("N/A", result);
     }
 }

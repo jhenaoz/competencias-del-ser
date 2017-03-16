@@ -1,8 +1,9 @@
 package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.domain.Survey;
+import co.com.psl.evaluacionser.service.ExcelReportGenerator;
+import co.com.psl.evaluacionser.service.NameService;
 import co.com.psl.evaluacionser.service.PdfService;
-import co.com.psl.evaluacionser.service.ReportGenerator;
 import co.com.psl.evaluacionser.service.SurveyService;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 @CrossOrigin
@@ -23,12 +26,13 @@ import java.util.List;
 public class SurveyController {
 
     private SurveyService surveyService;
-    private ReportGenerator reportGenerator;
+    private ExcelReportGenerator excelReportGenerator;
     private PdfService pdfService = new PdfService();
+    private NameService nameService = new NameService();
 
     @Autowired
-    public SurveyController(final SurveyService surveyService, final ReportGenerator reportGenerator) {
-        this.reportGenerator = reportGenerator;
+    public SurveyController(final SurveyService surveyService, final ExcelReportGenerator excelReportGenerator) {
+        this.excelReportGenerator = excelReportGenerator;
         this.surveyService = surveyService;
     }
 
@@ -44,48 +48,81 @@ public class SurveyController {
     }
 
     /**
-     * Get all surveys made to a person within a time period.
+     * Get all surveys made to a person within a time period, the surveys are downloaded in a xlsx file.
      *
      * @param user      the person used to search for surveys
      * @param startDate starting date used to search for surveys
      * @param endDate   ending date used to search for surveys
-     * @return Response entity with HttpStatus.OK and the report, triggers a download
      */
     @RequestMapping(value = "/report/user/xlsx", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
-                                                @RequestParam(value = "startdate", required = false) String startDate,
-                                                @RequestParam(value = "enddate", required = false) String endDate) {
+    public void getUserReport(@RequestParam(value = "name", required = false) String user,
+                              @RequestParam(value = "startdate", required = false) String startDate,
+                              @RequestParam(value = "enddate", required = false) String endDate,
+                              HttpServletResponse response) {
 
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
 
-        if ((user != null && user.isEmpty()) || userSurveys == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        reportGenerator.createUserExcelReport(userSurveys);
 
-        return surveyService.getSurveysFile(user, startDate, endDate);
+        String userFileName = nameService.getUserFileName(user, startDate, endDate);
+        excelReportGenerator.createUserExcelReport(userSurveys, response, userFileName);
+
     }
 
     /**
-     * Get all relations from the surveys made to a person within a time period.
+     * Get all surveys made to a person within a time period, the surveys are downloaded in a pdf file.
+     *
+     * @param user      the person used to search for surveys
+     * @param startDate starting date used to search for surveys
+     * @param endDate   ending date used to search for surveys
+     */
+    @RequestMapping(value = "/report/user/pdf", method = RequestMethod.GET)
+    public void getUserReportPdf(@RequestParam(value = "user", required = false) String user,
+                                 @RequestParam(value = "startdate", required = false) String startDate,
+                                 @RequestParam(value = "enddate", required = false) String endDate,
+                                 HttpServletResponse response) {
+
+        List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
+        String fileName = nameService.getUserFileName(user, startDate, endDate);
+
+        pdfService.getUserPdf(userSurveys, response, fileName);
+
+    }
+
+    /**
+     * Get all relations from the surveys made in time period, the relations are downloaded in a xlsx file.
      *
      * @param startDate starting date
      * @param endDate   ending date
-     * @return Response entity with HttpStatus.OK and the downloaded report, triggers a download
      */
     @RequestMapping(value = "/report/relation/xlsx", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> getRelationReport(
-                                                @RequestParam(value = "startdate", required = false) String startDate,
-                                                @RequestParam(value = "enddate", required = false) String endDate) {
+    public void getRelationReport(
+            @RequestParam(value = "startdate", required = false) String startDate,
+            @RequestParam(value = "enddate", required = false) String endDate,
+            HttpServletResponse response) {
 
         List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
 
-        if (userSurveys == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        reportGenerator.createRelationExcelReport(userSurveys);
+        String relationFileName = nameService.getRelationFileName(startDate, endDate);
+        excelReportGenerator.createRelationExcelReport(userSurveys, response, relationFileName);
 
-        return surveyService.getReportFile(startDate, endDate);
+    }
+
+    /**
+     * Get all surveys made to a person within a time period, the relations are downloaded in a pdf file.
+     *
+     * @param startDate starting date used to search for surveys
+     * @param endDate   ending date used to search for surveys
+     */
+    @RequestMapping(value = "/report/relation/pdf", method = RequestMethod.GET)
+    public void getRelationReportPdf(@RequestParam(value = "startdate", required = false) String startDate,
+                                     @RequestParam(value = "enddate", required = false) String endDate,
+                                     HttpServletResponse response) {
+
+        List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
+        String fileName = nameService.getRelationFileName(startDate, endDate);
+
+        pdfService.getRelationPdf(userSurveys, response, fileName);
+
     }
 
     /**

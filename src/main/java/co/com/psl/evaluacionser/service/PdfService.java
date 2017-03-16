@@ -17,31 +17,52 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 
 public class PdfService {
 
-    private ReportGenerator reportGenerator = new ReportGenerator();
+    private ExcelReportGenerator excelReportGenerator = new ExcelReportGenerator();
     private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfService.class);
 
-    public void getUserPdf(List<Survey> surveys) {
+    /**
+     * This method receives the params from the controller, builds the pdf and triggers the download.
+     *
+     * @param surveys  the list of all the surveys used to extract the data
+     * @param response the HttpServletResponse used to trigger the download
+     * @param fileName the name the file will have when downloaded
+     */
+    public void getUserPdf(List<Survey> surveys, HttpServletResponse response, String fileName) {
         String pdfName = "Valoración competencias del ser";
         Element headerTable = getHeaderTable(pdfName);
         Element bodyTable = getBodyUserTable(surveys);
-        createPdf(headerTable, bodyTable);
+        response.addHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
+        createPdf(headerTable, bodyTable, response);
     }
 
-    public void getRelationPdf(List<Survey> surveys) {
+    /**
+     * This method receives the params from the controller, builds the pdf and triggers the download.
+     *
+     * @param surveys  the list of all the surveys used to extract the data
+     * @param response the HttpServletResponse used to trigger the download
+     * @param fileName the name the file will have when downloaded
+     */
+    public void getRelationPdf(List<Survey> surveys, HttpServletResponse response, String fileName) {
         String pdfName = "Personas que han sido valoradas";
         Element headerTable = getHeaderTable(pdfName);
         Element bodyTable = getBodyRelationTable(surveys);
-        createPdf(headerTable, bodyTable);
+        response.addHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
+        createPdf(headerTable, bodyTable, response);
     }
 
+    /**
+     * This method uses the survey list to build the body table of the relation pdf.
+     *
+     * @param surveys the list of all the surveys required in the report
+     * @return returns the body table as an Element ready to be added to the pdf document
+     */
     private Element getBodyRelationTable(List<Survey> surveys) {
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100);
@@ -66,6 +87,12 @@ public class PdfService {
         return table;
     }
 
+    /**
+     * This method uses the survey list to build the body table of the user pdf.
+     *
+     * @param surveys the list of all the surveys required in the report
+     * @return returns the body table as an Element ready to be added to the pdf document
+     */
     private Element getBodyUserTable(List<Survey> surveys) {
         PdfPTable table = new PdfPTable(8);
         table.setWidthPercentage(100);
@@ -111,7 +138,7 @@ public class PdfService {
 
                     table.addCell(new Phrase(survey.getEvaluated(), smallFont));
                     table.addCell(new Phrase(survey.getEvaluator(), smallFont));
-                    table.addCell(new Phrase(reportGenerator.roleTranslate(survey.getRole()), smallFont));
+                    table.addCell(new Phrase(excelReportGenerator.roleTranslate(survey.getRole()), smallFont));
                     table.addCell(new Phrase(survey.getTimestamp(), smallFont));
 
                     table.addCell(new Phrase(aptitude.getAptitude().getEs(), smallFont));
@@ -125,6 +152,13 @@ public class PdfService {
         return table;
     }
 
+    /**
+     * This body builds the header table of the pdf, the header table contains 2 columns and 2 cells, one with the logo.
+     * and one with the title of the title of the pdf
+     *
+     * @param pdfName the name to be included in the header table
+     * @return returns the header table as an Element ready to be added to the pdf document
+     */
     private Element getHeaderTable(String pdfName) {
         Image img = null;
         try {
@@ -162,22 +196,24 @@ public class PdfService {
         return headerTable;
     }
 
-    private void createPdf(Element headerTable, Element bodyTable) {
+    /**
+     * This method gathers the tables to be included in the pdf and builds the file so it can be downloaded.
+     *
+     * @param headerTable the header table of the pdf
+     * @param bodyTable   the body table of the pdf
+     * @param response    the HttpServletResponse used to trigger the download
+     */
+    private void createPdf(Element headerTable, Element bodyTable, HttpServletResponse response) {
 
-        String separator = File.separator;
-
-        FileOutputStream fileOut = null;
-        try {
-            fileOut = new FileOutputStream("src" + separator + "main" + separator
-                    + "resources" + separator + "Survey_Reports.pdf");
-        } catch (FileNotFoundException e) {
-            logger.error("There was a problem while writting the PDF file. ");
-        }
 
         Document document = new Document();
 
         try {
-            PdfWriter.getInstance(document, fileOut);
+            try {
+                PdfWriter.getInstance(document, response.getOutputStream());
+            } catch (IOException e) {
+                logger.error("The PdfWriter instance could not be gotten. ", e);
+            }
         } catch (DocumentException e) {
             logger.error("There was a problem getting the instance of the document. ", e);
         }

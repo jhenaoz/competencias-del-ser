@@ -13,8 +13,8 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -22,36 +22,63 @@ import java.util.List;
  * This class generates the excel reports that can be download, the excel format is xlsx
  */
 @Service
-public class ReportGenerator {
+public class ExcelReportGenerator {
 
-    private Logger logger = Logger.getLogger(ReportGenerator.class);
+    private Logger logger = Logger.getLogger(ExcelReportGenerator.class);
 
     /**
      * This method is the main for the users report and orchestrates the call of all the methods.
      *
      * @param surveys List with the selected surveys to generated the report.
      */
-    public void createUserExcelReport(List<Survey> surveys) {
+    public void createUserExcelReport(List<Survey> surveys, HttpServletResponse response, String fileName) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Competencias del ser");
 
         addUserColumnsHeaders(sheet, workbook);
         addUserSurveysToSheet(surveys, sheet);
-        saveWorkbookToDisk(workbook);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+        responseWriter(response, workbook);
     }
+
 
     /**
      * This method is the main for the relations report and orchestrates the call of all the methods.
      *
      * @param surveys List with the selected surveys to generated the report.
      */
-    public void createRelationExcelReport(List<Survey> surveys) {
+    public void createRelationExcelReport(List<Survey> surveys, HttpServletResponse response, String fileName) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Relación de personas a generar");
 
         addRelationColumnsHeaders(sheet, workbook);
         addRelationSurveysToSheet(surveys, sheet);
-        saveWorkbookToDisk(workbook);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+        responseWriter(response, workbook);
+    }
+
+    /**
+     * This method writes the excel report to the response
+     *
+     * @param response The HttpServletResponse recived from the controller
+     * @param workbook The excel file
+     */
+    private void responseWriter(HttpServletResponse response, Workbook workbook) {
+        try {
+            workbook.write(response.getOutputStream());
+        } catch (IOException e) {
+            logger.error("The response can't be write from the excel file ", e);
+        } finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                logger.error("The excel workbook can't be close ", e);
+            }
+        }
     }
 
     /**
@@ -86,22 +113,6 @@ public class ReportGenerator {
         row.createCell(cellNum++).setCellValue("Valorado");
         row.createCell(cellNum).setCellValue("Persona que hace la valoración");
         createCellStyle(workbook, row);
-    }
-
-    /**
-     * This method creates the style for the cells in the header row
-     *
-     * @param workbook is the excel document to be modified.
-     * @param row      is the header row of the sheet
-     */
-    private void createCellStyle(Workbook workbook, Row row) {
-        Font font = workbook.createFont();
-        CellStyle style = workbook.createCellStyle();
-        font.setBold(true);
-        style.setFont(font);
-        for (int i = 0; i < row.getLastCellNum(); i++) {
-            row.getCell(i).setCellStyle(style);
-        }
     }
 
     /**
@@ -163,6 +174,22 @@ public class ReportGenerator {
     }
 
     /**
+     * This method creates the style for the cells in the header row
+     *
+     * @param workbook is the excel document to be modified.
+     * @param row      is the header row of the sheet
+     */
+    private void createCellStyle(Workbook workbook, Row row) {
+        Font font = workbook.createFont();
+        CellStyle style = workbook.createCellStyle();
+        font.setBold(true);
+        style.setFont(font);
+        for (int i = 0; i < row.getLastCellNum(); i++) {
+            row.getCell(i).setCellStyle(style);
+        }
+    }
+
+    /**
      * This method translate the role because the reporter is in spanish.
      *
      * @param role the role in english, from the data base.
@@ -190,24 +217,4 @@ public class ReportGenerator {
         return roleSpanish;
     }
 
-    /**
-     * This method saves the excel document in the resources package, and overwrite the file if it exists.
-     *
-     * @param workbook is the excel document tha was modified.
-     */
-    private void saveWorkbookToDisk(Workbook workbook) {
-        String separator = File.separator;
-        try (FileOutputStream fileOut = new FileOutputStream("src" + separator + "main" + separator
-                + "resources" + separator + "Survey_Reports.xlsx")) {
-            workbook.write(fileOut);
-        } catch (IOException e) {
-            logger.error("The file can't be saved ", e);
-        } finally {
-            try {
-                workbook.close();
-            } catch (IOException e) {
-                logger.error("Can't close the workbook ", e);
-            }
-        }
-    }
 }
