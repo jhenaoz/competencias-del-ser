@@ -61,14 +61,13 @@ public class PasswordEncoderImpl implements PasswordEncoder {
      */
     private String generateSalt(int saltSeed) {
         Random rgn = new Random(saltSeed);
-        String salt = "";
+        StringBuilder saltBuilder = new StringBuilder();
 
         for (int i = 0; i < 16; i++) {
-            int randomNum = (int) (rgn.nextDouble() * 93) + 33;
-            salt += (char) randomNum;
+            saltBuilder.append((char) rgn.nextInt(93) + 33);
         }
 
-        return salt;
+        return saltBuilder.toString();
     }
 
 }
