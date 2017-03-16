@@ -2,6 +2,8 @@ package co.com.psl.evaluacionser.persistence;
 
 import co.com.psl.evaluacionser.domain.Person;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Count;
+import io.searchbox.core.CountResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -54,6 +56,7 @@ public class ElasticsearchPersonRepository implements PersonRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchSourceBuilder.sort("name", SortOrder.ASC);
+        searchSourceBuilder.size(getTotalCount());
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(personIndexName)
                 .addType(personTypeName).build();
         try {
@@ -68,6 +71,20 @@ public class ElasticsearchPersonRepository implements PersonRepository {
             return null;
         }
 
+    }
+
+    private int getTotalCount() {
+
+        int count;
+        Count countBuilder = new Count.Builder().addIndex(personIndexName).addType(personTypeName).build();
+        try {
+            CountResult countResult = client.execute(countBuilder);
+            count = countResult.getCount().intValue();
+            return count;
+        } catch (IOException e) {
+            logger.error("There was an error doing the count.", e);
+            return 0;
+        }
     }
 
     private Person getPerson(Hit<Person, Void> hit) {
