@@ -5,14 +5,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+
+@Component
 public class PasswordEncryptor {
+
+    private static final Logger logger = Logger.getLogger(PasswordEncryptor.class);
 
     /**
      * Generate a random String, based on the seed provided
-     * 
+     *
+     * @param saltSeed the seed to use for the random generator
+     *
      * @return Random String;
      */
-    public static String generateSalt(int saltSeed) {
+    private String generateSalt(int saltSeed) {
         Random rgn = new Random(saltSeed);
         String salt = "";
 
@@ -28,12 +36,13 @@ public class PasswordEncryptor {
 
     /**
      * Generate a hash String from the password provided.
-     * 
-     * @param passwordToHash password to change
-     * @param salt the salt to use
+     *
+     * @param passwordToHash password to hash
+     *
      * @return a String
      */
-    public static String getSHA512SecurePassword(String passwordToHash, String salt) {
+    public String getSecurePassword(String passwordToHash) {
+        String salt = generateSalt(passwordToHash.hashCode());
         String generatedPassword = null;
 
         try {
@@ -46,12 +55,15 @@ public class PasswordEncryptor {
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error("Couldn't find the algorithm to encrypt the password" + e.getMessage());
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("Couldn't encode the String to UTF-8" + e.getMessage());
         }
 
         return generatedPassword;
     }
+
+}
+
 
 }
