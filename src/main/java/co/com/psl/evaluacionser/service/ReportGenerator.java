@@ -33,7 +33,7 @@ public class ReportGenerator {
      */
     public void createUserExcelReport(List<Survey> surveys) {
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("User Reports");
+        Sheet sheet = workbook.createSheet("Competencias del ser");
 
         addUserColumnsHeaders(sheet, workbook);
         addUserSurveysToSheet(surveys, sheet);
@@ -47,7 +47,7 @@ public class ReportGenerator {
      */
     public void createRelationExcelReport(List<Survey> surveys) {
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Relation Reports");
+        Sheet sheet = workbook.createSheet("Relación de personas a generar");
 
         addRelationColumnsHeaders(sheet, workbook);
         addRelationSurveysToSheet(surveys, sheet);

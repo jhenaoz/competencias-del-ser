@@ -40,9 +40,9 @@ public class PersonController {
         List<Person> people = personService.findAllPeople();
 
         if (people == null) {
-            return new ResponseEntity<List<Person>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<List<Person>>(people, HttpStatus.OK);
+        return new ResponseEntity<>(people, HttpStatus.OK);
     }
 }
