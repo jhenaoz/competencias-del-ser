@@ -6,42 +6,32 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordEncryptor {
+public class PasswordEncoderImpl implements PasswordEncoder {
 
-    private static final Logger logger = Logger.getLogger(PasswordEncryptor.class);
+    private static final Logger logger = Logger.getLogger(PasswordEncoderImpl.class);
 
-    /**
-     * Generate a random String, based on the seed provided
-     *
-     * @param saltSeed the seed to use for the random generator
-     *
-     * @return Random String;
-     */
-    private String generateSalt(int saltSeed) {
-        Random rgn = new Random(saltSeed);
-        String salt = "";
+    @Override
+    public String encode(CharSequence rawPassword) {
+        return getSHA512SecurePassword(rawPassword.toString());
+    }
 
-        char randomChar;
-        for (int i = 0; i < 16; i++) {
-            int randomNum = (int) (rgn.nextDouble() * 93) + 33;
-            randomChar = (char) randomNum;
-            salt = salt + randomChar;
-        }
-
-        return salt;
+    @Override
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        return encode(rawPassword).equals(encodedPassword);
     }
 
     /**
      * Generate a hash String from the password provided.
-     *
+     * 
      * @param passwordToHash password to hash
-     *
+     * 
      * @return a String
      */
-    public String getSecurePassword(String passwordToHash) {
+    private String getSHA512SecurePassword(String passwordToHash) {
         String salt = generateSalt(passwordToHash.hashCode());
         String generatedPassword = null;
 
@@ -63,7 +53,23 @@ public class PasswordEncryptor {
         return generatedPassword;
     }
 
-}
+    /**
+     * Generate a random String, based on the seed provided
+     * 
+     * @param saltSeed the seed to use for the random generator
+     * 
+     * @return Random String;
+     */
+    private String generateSalt(int saltSeed) {
+        Random rgn = new Random(saltSeed);
+        String salt = "";
 
+        for (int i = 0; i < 16; i++) {
+            int randomNum = (int) (rgn.nextDouble() * 93) + 33;
+            salt += (char) randomNum;
+        }
+
+        return salt;
+    }
 
 }
