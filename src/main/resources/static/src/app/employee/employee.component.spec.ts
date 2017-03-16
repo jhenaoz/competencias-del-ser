@@ -16,6 +16,7 @@ import {EmployeeComponent} from './employee.component';
 describe('Component: EmployeeComponent', () => {
   let component: EmployeeComponent;
   let fixture: ComponentFixture<EmployeeComponent>;
+  let service: EmployeeService;
 
   beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -34,6 +35,7 @@ describe('Component: EmployeeComponent', () => {
 
     fixture = TestBed.createComponent(EmployeeComponent);
     component = fixture.componentInstance;
+    service = TestBed.get(EmployeeService);
     // fixture.detectChanges();
     }));
 
@@ -42,7 +44,8 @@ describe('Component: EmployeeComponent', () => {
     });
 
      it('should create a list of employees', async(() => {
-       expect(true).toBeTruthy();
+
+      expect(true).toBeTruthy();
         // expect(component.employees.length).toBeGreaterThan(0);
     }));
 

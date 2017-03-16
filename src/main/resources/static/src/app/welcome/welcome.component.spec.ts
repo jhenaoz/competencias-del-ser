@@ -25,7 +25,6 @@ describe('Component: WelcomeComponent', () => {
   let fixture: ComponentFixture<WelcomeComponent>;
   const appRoutes: Routes = [];
   let service: SurveyService;
-  let localService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -50,7 +49,6 @@ describe('Component: WelcomeComponent', () => {
       providers: [
         {provide: APP_BASE_HREF, useValue : '/' },
         SurveyService,
-        LocalStorageService
       ]
     })
     .compileComponents();
@@ -60,7 +58,6 @@ describe('Component: WelcomeComponent', () => {
     fixture = TestBed.createComponent(WelcomeComponent);
     component = fixture.componentInstance;
     service = TestBed.get(SurveyService);
-    localService = TestBed.get(localStorage);
     fixture.detectChanges();
   });
 
