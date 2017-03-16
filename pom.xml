@@ -35,24 +35,24 @@
         <repository>
             <id>pslNexus</id>
             <name>PSL Nexus</name>
-            <url>http://teseo:8081/nexus/content/groups/public/</url>
+            <url>http://teseo.pslcol.com.co:8081/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>central</id>
             <name>central</name>
-            <url>http://teseo:8081/nexus/content/repositories/central/</url>
+            <url>http://teseo.pslcol.com.co:8081/nexus/content/repositories/central/</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>pslNexus</id>
             <name>PSL Nexus</name>
-            <url>http://teseo:8081/nexus/content/groups/public/</url>
+            <url>http://teseo.pslcol.com.co:8081/nexus/content/groups/public/</url>
         </pluginRepository>
         <pluginRepository>
             <id>central</id>
             <name>central</name>
-            <url>http://teseo:8081/nexus/content/repositories/central/</url>
+            <url>http://teseo.pslcol.com.co:8081/nexus/content/repositories/central/</url>
         </pluginRepository>
     </pluginRepositories>
     <dependencies>
