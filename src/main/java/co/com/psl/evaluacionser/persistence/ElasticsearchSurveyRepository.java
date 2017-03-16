@@ -38,7 +38,8 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
 
     @Override
     public Survey saveSurvey(Survey survey) {
-        Index index = new Index.Builder(survey).index(surveyIndexName).type(surveyTypeName).refresh(true).build();
+        Index index = new Index.Builder(survey).index(surveyIndexName)
+                .type(surveyTypeName).refresh(true).build();
         try {
             client.execute(index);
             return survey;

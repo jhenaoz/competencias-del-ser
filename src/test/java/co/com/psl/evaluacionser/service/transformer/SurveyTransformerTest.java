@@ -42,18 +42,6 @@ public class SurveyTransformerTest {
     }
 
     @Test
-    public void aptitudeSurveyTransformerTest() {
-        List<BehaviorSurveyDto> behaviorsSurveyDto = new ArrayList<>();
-        behaviorsSurveyDto.add(new BehaviorSurveyDto(1, 5));
-        behaviorsSurveyDto.add(new BehaviorSurveyDto(2, 4));
-        behaviorsSurveyDto.add(new BehaviorSurveyDto(3, 1));
-        AptitudeSurveyDto aptitudeSurveyDto =
-                new AptitudeSurveyDto("1", "Siempre abierto a cambios", behaviorsSurveyDto);
-        AptitudeSurvey aptitudeSurvey = surveyTransformer.aptitudeSurveyTransformer(aptitudeSurveyDto);
-        assertEquals("Apertura", aptitudeSurvey.getAptitude().getEs());
-    }
-
-    @Test
     public void surveyTransformerTest() {
         List<BehaviorSurveyDto> behaviorsSurveyDto = new ArrayList<>();
         behaviorsSurveyDto.add(new BehaviorSurveyDto(1, 5));

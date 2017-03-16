@@ -50,7 +50,7 @@ public class SurveyController {
      * @return Response entity with HttpStatus.OK and the report, triggers a download
      */
     @RequestMapping(value = "/report/user", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "user", required = false) String user,
+    public ResponseEntity<HttpStatus> getUserReport(@RequestParam(value = "name", required = false) String user,
                                                 @RequestParam(value = "startdate", required = false) String startDate,
                                                 @RequestParam(value = "enddate", required = false) String endDate) {
 

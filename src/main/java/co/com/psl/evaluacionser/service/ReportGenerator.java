@@ -168,7 +168,7 @@ public class ReportGenerator {
      * @param role the role in english, from the data base.
      * @return the role in spanish.
      */
-    public String roleTranslate(String role) {
+    private String roleTranslate(String role) {
         if (role == null) {
             return "N/A";
         }
