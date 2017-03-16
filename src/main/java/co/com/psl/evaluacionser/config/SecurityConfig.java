@@ -36,9 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser(username).password(password).roles(ADMIN_ROLE);
+        .inMemoryAuthentication()
+        .passwordEncoder(passwordEncoder)
+        .withUser(username).password(password).roles(ADMIN_ROLE);
     }
 
     /**
@@ -51,10 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
-                .and().formLogin()
-                .and().logout();
+        .csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
+        .and().formLogin()
+        .and().logout();
     }
 }
