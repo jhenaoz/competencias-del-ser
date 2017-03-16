@@ -15,6 +15,10 @@ class MockRouter {
     navigate(url: string) { return url; }
 }
 
+function translateLoaderFactory(http: any) {
+    return new TranslateStaticLoader(http, '', '');
+}
+
 describe('Component: FooterComponent', () => {
   // const appRoutes: Routes = [];
   let component: FooterComponent;
@@ -149,43 +153,43 @@ describe('Component: FooterComponent', () => {
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/2" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/2';
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/3" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/3';
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/4" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/4';
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/5" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/5';
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/6" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/6';
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/7" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/7';
         component.advance();
         expect(component.surveyAdvance.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
+    it('should call event emitter given "survey/8" as url', inject([Router], (router: Router) => {
         spyOn(component.surveyAdvance, 'emit');
         component.currentUrl = '/survey/8';
         component.advance();
@@ -197,6 +201,3 @@ describe('Component: FooterComponent', () => {
 
 });
 
-function translateLoaderFactory(http: any) {
-    return new TranslateStaticLoader(http, '', '');
-}
