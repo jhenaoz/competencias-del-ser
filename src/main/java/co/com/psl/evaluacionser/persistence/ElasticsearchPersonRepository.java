@@ -97,7 +97,8 @@ public class ElasticsearchPersonRepository implements PersonRepository {
 
     @Override
     public Person save(Person person) {
-        Index index = new Index.Builder(person).index(personIndexName).type(personTypeName).refresh(true).build();
+        Index index = new Index.Builder(person).index(personIndexName)
+                .type(personTypeName).refresh(true).build();
         try {
             client.execute(index);
             return person;
