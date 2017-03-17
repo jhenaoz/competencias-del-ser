@@ -45,8 +45,8 @@ public class NameService {
      */
     public String getRelationFileName(String startDate, String endDate) {
 
-        return "Personas que han sido valoradas" +
-                getSurveysName(null, startDate, endDate);
+        return "Personas que han sido valoradas"
+                + getSurveysName(null, startDate, endDate);
 
     }
 
@@ -60,7 +60,7 @@ public class NameService {
      */
     public String getUserFileName(String evaluated, String startDate, String endDate) {
 
-        return "Valoración Competencias Ser" +
-                getSurveysName(evaluated, startDate, endDate);
+        return "Valoración Competencias Ser"
+                + getSurveysName(evaluated, startDate, endDate);
     }
 }
