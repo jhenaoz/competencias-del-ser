@@ -71,7 +71,7 @@ public class SurveyController {
         Workbook userExcelReport = excelReportGenerator.createUserExcelReport(userSurveys);
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.addHeader("Content-Disposition", "attachment; filename=" + userFileName + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + userFileName + ".xlsx");
 
 
         try {
