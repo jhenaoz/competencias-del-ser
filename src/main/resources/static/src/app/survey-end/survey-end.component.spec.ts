@@ -24,7 +24,7 @@ function translateLoaderFactory(http: any) {
     return new TranslateStaticLoader(http, '', '');
 }
 
-xdescribe('Component: SurveyEndComponent', () => {
+describe('Component: SurveyEndComponent', () => {
   let component: SurveyEndComponent;
   let fixture: ComponentFixture<SurveyEndComponent>;
   const appRoutes: Routes = [];
@@ -47,7 +47,7 @@ xdescribe('Component: SurveyEndComponent', () => {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue : '/' },
-        { provide: Router, useClass: MockRouter },
+        // { provide: Router, useClass: MockRouter },
         SurveyService
       ]
     })
@@ -61,9 +61,40 @@ xdescribe('Component: SurveyEndComponent', () => {
     fixture.detectChanges();
   });
 
-    it('should have a defined component', () => {
-        expect(component).toBeDefined();
+  it('should have a defined component', () => {
+      expect(component).toBeDefined();
   });
 
+  describe('Method: ngOnInit', () => {
+    it('should set the value to oneSurvey if service has it true', () => {
+      service.oneSurvey = true;
+      component.ngOnInit();
+      expect(component.oneSurvey).toBeTruthy();
+    });
+    it('should set the value to oneSurvey if service has it false', () => {
+      service.oneSurvey = false;
+      component.ngOnInit();
+      expect(component.oneSurvey).toBeFalsy();
+    });
+  });
+
+  describe('Method: evaluateMore', () => {
+    it('should create a new survey', () => {
+      component.evaluateMore();
+      expect(service.survey).toBeDefined();
+      expect(service.survey.evaluator).toBe('');
+      expect(service.survey.role).toBe('');
+      expect(service.survey.evaluated).toBe('');
+    });
+    it('should navigate to surveyteam-setup', inject([Router], (router: Router) => {
+        spyOn(router, 'navigate');
+        component.evaluateMore();
+        expect(router.navigate).toHaveBeenCalledWith(['/surveyteam-setup']);
+    }));
+  });
+
+  /*it('should have a defined component', inject([Router], (router: Router) => {
+      // expect(component).toBeDefined();
+    }));*/
 
 });
