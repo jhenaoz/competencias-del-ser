@@ -6,6 +6,8 @@ import co.com.psl.evaluacionser.service.NameService;
 import co.com.psl.evaluacionser.service.PdfReportGenerator;
 import co.com.psl.evaluacionser.service.SurveyService;
 import co.com.psl.evaluacionser.service.dto.SurveyDto;
+import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 @CrossOrigin
@@ -25,15 +30,19 @@ import java.util.List;
 @RequestMapping(value = "/api/survey")
 public class SurveyController {
 
+    private static final Logger logger = Logger.getLogger(SurveyController.class);
     private SurveyService surveyService;
     private ExcelReportGenerator excelReportGenerator;
-    private PdfReportGenerator pdfReportGenerator = new PdfReportGenerator();
-    private NameService nameService = new NameService();
+    private PdfReportGenerator pdfReportGenerator;
+    private NameService nameService;
 
     @Autowired
-    public SurveyController(final SurveyService surveyService, final ExcelReportGenerator excelReportGenerator) {
+    public SurveyController(final SurveyService surveyService, final ExcelReportGenerator excelReportGenerator,
+                            final PdfReportGenerator pdfReportGenerator, final NameService nameService) {
         this.excelReportGenerator = excelReportGenerator;
         this.surveyService = surveyService;
+        this.pdfReportGenerator = pdfReportGenerator;
+        this.nameService = nameService;
     }
 
     /**
@@ -64,7 +73,16 @@ public class SurveyController {
 
 
         String userFileName = nameService.getUserFileName(user, startDate, endDate);
-        excelReportGenerator.createUserExcelReport(userSurveys, response, userFileName);
+        Workbook userExcelReport = excelReportGenerator.createUserExcelReport(userSurveys);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=" + userFileName + ".xlsx");
+
+        try {
+            userExcelReport.write(response.getOutputStream());
+        } catch (IOException e) {
+            logger.error("The excel workbook could not write to the outputStream ", e);
+        }
 
     }
 
@@ -84,8 +102,34 @@ public class SurveyController {
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
         String fileName = nameService.getUserFileName(user, startDate, endDate);
 
-        pdfReportGenerator.getUserPdf(userSurveys, response, fileName);
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".pdf");
 
+        ByteArrayOutputStream userPdf = pdfReportGenerator.getUserPdf(userSurveys);
+
+        OutputStream outputStream = null;
+        try {
+            outputStream = response.getOutputStream();
+        } catch (IOException e) {
+            logger.error("The outputStream from the response could not be gotten. ", e);
+        }
+        if (outputStream != null) {
+            try {
+                userPdf.writeTo(outputStream);
+            } catch (IOException e) {
+                logger.error("Error while writting the pdf document to the outputStream ", e);
+            }
+            try {
+                outputStream.flush();
+            } catch (IOException e) {
+                logger.error("The outputStream could not be flushed. ", e);
+            }
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                logger.error("The outputStream could not be closed. ", e);
+            }
+
+        }
     }
 
     /**
@@ -103,7 +147,16 @@ public class SurveyController {
         List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
 
         String relationFileName = nameService.getRelationFileName(startDate, endDate);
-        excelReportGenerator.createRelationExcelReport(userSurveys, response, relationFileName);
+        Workbook relationExcelReport = excelReportGenerator.createRelationExcelReport(userSurveys);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=" + relationFileName + ".xlsx");
+
+        try {
+            relationExcelReport.write(response.getOutputStream());
+        } catch (IOException e) {
+            logger.error("The excel workbook could not write to the outputStream ", e);
+        }
 
     }
 
@@ -121,8 +174,33 @@ public class SurveyController {
         List<Survey> userSurveys = surveyService.findUserSurveys(null, startDate, endDate);
         String fileName = nameService.getRelationFileName(startDate, endDate);
 
-        pdfReportGenerator.getRelationPdf(userSurveys, response, fileName);
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
 
+        ByteArrayOutputStream relationPdf = pdfReportGenerator.getRelationPdf(userSurveys);
+
+        OutputStream outputStream = null;
+        try {
+            outputStream = response.getOutputStream();
+        } catch (IOException e) {
+            logger.error("The outputStream from the response could not be gotten. ", e);
+        }
+        if (outputStream != null) {
+            try {
+                relationPdf.writeTo(outputStream);
+            } catch (IOException e) {
+                logger.error("Error while writing the pdf report to the outputStream ", e);
+            }
+            try {
+                outputStream.flush();
+            } catch (IOException e) {
+                logger.error("The outputStream could not be flushed. ", e);
+            }
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                logger.error("The outputStream could not be closed ", e);
+            }
+        }
     }
 
     /**

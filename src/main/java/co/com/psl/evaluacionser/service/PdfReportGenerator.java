@@ -16,8 +16,10 @@ import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,39 +28,40 @@ import java.util.List;
  * This class is used to build the pdf report (in memory) and send the response download.
  */
 @SuppressWarnings("checkstyle:magicnumber")
+@Service
 public class PdfReportGenerator {
 
-    private ExcelReportGenerator excelReportGenerator = new ExcelReportGenerator();
+    private ExcelReportGenerator excelReportGenerator;
     private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfReportGenerator.class);
 
-    /**
-     * This method receives the params from the controller, builds the pdf and triggers the download.
-     *
-     * @param surveys  the list of all the surveys used to extract the data
-     * @param response the HttpServletResponse used to trigger the download
-     * @param fileName the name the file will have when downloaded
-     */
-    public void getUserPdf(List<Survey> surveys, HttpServletResponse response, String fileName) {
-        String pdfName = "Valoración competencias del ser";
-        Element headerTable = getHeaderTable(pdfName);
-        Element bodyTable = getBodyUserTable(surveys);
-        response.addHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
-        createPdf(headerTable, bodyTable, response);
+    @Autowired
+    public PdfReportGenerator(ExcelReportGenerator excelReportGenerator) {
+        this.excelReportGenerator = excelReportGenerator;
     }
 
     /**
      * This method receives the params from the controller, builds the pdf and triggers the download.
      *
-     * @param surveys  the list of all the surveys used to extract the data
-     * @param response the HttpServletResponse used to trigger the download
-     * @param fileName the name the file will have when downloaded
+     * @param surveys the list of all the surveys used to extract the data
      */
-    public void getRelationPdf(List<Survey> surveys, HttpServletResponse response, String fileName) {
+    public ByteArrayOutputStream getUserPdf(List<Survey> surveys) {
+        String pdfName = "Valoración competencias del ser";
+        Element headerTable = getHeaderTable(pdfName);
+        Element bodyTable = getBodyUserTable(surveys);
+        return createPdf(headerTable, bodyTable);
+    }
+
+    /**
+     * This method receives the params from the controller, builds the pdf and triggers the download.
+     *
+     * @param surveys the list of all the surveys used to extract the data
+     */
+    public ByteArrayOutputStream getRelationPdf(List<Survey> surveys) {
         String pdfName = "Personas que han sido valoradas";
         Element headerTable = getHeaderTable(pdfName);
         Element bodyTable = getBodyRelationTable(surveys);
-        response.addHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
-        createPdf(headerTable, bodyTable, response);
+
+        return createPdf(headerTable, bodyTable);
     }
 
     /**
@@ -203,34 +206,35 @@ public class PdfReportGenerator {
      *
      * @param headerTable the header table of the pdf
      * @param bodyTable   the body table of the pdf
-     * @param response    the HttpServletResponse used to trigger the download
      */
-    private void createPdf(Element headerTable, Element bodyTable, HttpServletResponse response) {
+    private ByteArrayOutputStream createPdf(Element headerTable, Element bodyTable) {
 
 
         Document document = new Document();
 
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
-            try {
-                PdfWriter.getInstance(document, response.getOutputStream());
-            } catch (IOException e) {
-                logger.error("The PdfWriter instance could not be gotten. ", e);
-            }
+            PdfWriter.getInstance(document, byteArrayOutputStream);
         } catch (DocumentException e) {
-            logger.error("There was a problem getting the instance of the document. ", e);
+            e.printStackTrace();
         }
+
         document.open();
 
         try {
+
             document.add(headerTable);
         } catch (DocumentException e) {
-            logger.error("There was a problem adding the header table. ", e);
+            logger.error("error adding the header table", e);
         }
         try {
             document.add(bodyTable);
         } catch (DocumentException e) {
-            logger.error("There was a problem while adding the table ", e);
+            logger.error("Error adding the body table. ", e);
         }
+
         document.close();
+        return byteArrayOutputStream;
+
     }
 }

@@ -13,9 +13,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,16 +28,14 @@ public class ExcelReportGenerator {
      *
      * @param surveys List with the selected surveys to generated the report.
      */
-    public void createUserExcelReport(List<Survey> surveys, HttpServletResponse response, String fileName) {
+    public Workbook createUserExcelReport(List<Survey> surveys) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Competencias del ser");
 
         addUserColumnsHeaders(sheet, workbook);
         addUserSurveysToSheet(surveys, sheet);
 
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-        responseWriter(response, workbook);
+        return workbook;
     }
 
 
@@ -49,36 +44,14 @@ public class ExcelReportGenerator {
      *
      * @param surveys List with the selected surveys to generated the report.
      */
-    public void createRelationExcelReport(List<Survey> surveys, HttpServletResponse response, String fileName) {
+    public Workbook createRelationExcelReport(List<Survey> surveys) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Relación de personas a generar");
 
         addRelationColumnsHeaders(sheet, workbook);
         addRelationSurveysToSheet(surveys, sheet);
 
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-        responseWriter(response, workbook);
-    }
-
-    /**
-     * This method writes the excel report to the response.
-     *
-     * @param response The HttpServletResponse received from the controller
-     * @param workbook The excel file
-     */
-    private void responseWriter(HttpServletResponse response, Workbook workbook) {
-        try {
-            workbook.write(response.getOutputStream());
-        } catch (IOException e) {
-            logger.error("The response can't be write from the excel file ", e);
-        } finally {
-            try {
-                workbook.close();
-            } catch (IOException e) {
-                logger.error("The excel workbook can't be close ", e);
-            }
-        }
+        return workbook;
     }
 
     /**
@@ -133,7 +106,7 @@ public class ExcelReportGenerator {
                     row.createCell(cellNum++).setCellValue(behavior.getBehavior().getEs());
                     row.createCell(cellNum++).setCellValue(behavior.getScore());
                     row.createCell(cellNum++).setCellValue(survey.getEvaluator());
-                    row.createCell(cellNum++).setCellValue(this.roleTranslate(survey.getRole()));
+                    row.createCell(cellNum++).setCellValue(roleTranslate(survey.getRole()));
                     row.createCell(cellNum).setCellValue(aptitude.getObservation());
                 }
             }
