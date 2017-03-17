@@ -2,6 +2,8 @@ package co.com.psl.evaluacionser.persistence;
 
 import co.com.psl.evaluacionser.domain.Survey;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Count;
+import io.searchbox.core.CountResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -101,6 +103,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     private List<Survey> findSurveys(BoolQueryBuilder boolQueryBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
+        searchSourceBuilder.size(getTotalCount());
 
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(surveyIndexName).build();
 
@@ -119,6 +122,29 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
         }
     }
 
+    /**
+     * This method goes to the database to make a count of how many surveys exist to be used in the main search
+     * @return the number of surveys in the database
+     */
+    private int getTotalCount() {
+
+        int count;
+        Count countBuilder = new Count.Builder().addIndex(surveyIndexName).build();
+        try {
+            CountResult countResult = client.execute(countBuilder);
+            count = countResult.getCount().intValue();
+            return count;
+        } catch (IOException e) {
+            logger.error("There was an error doing the count.", e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns just the hits in the total query
+     * @param hit All the query
+     * @return Just the objects needed from the query
+     */
     private Survey getSurvey(Hit<Survey, Void> hit) {
         if (hit == null) {
             return null;
@@ -153,6 +179,7 @@ public class ElasticsearchSurveyRepository implements SurveyRepository {
     public Survey findSurvey(String evaluator, String evaluated, String timestamp) {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.size(getTotalCount());
         searchSourceBuilder.query(
                 QueryBuilders.boolQuery()
                         .must(QueryBuilders.matchQuery("evaluated", evaluated))
