@@ -23,13 +23,13 @@ public class NameService {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (evaluated != null) {
-            stringBuilder.append(" " + evaluated);
+            stringBuilder.append(" ").append(evaluated);
         }
         if (startDate != null) {
-            stringBuilder.append(" del " + startDate);
+            stringBuilder.append(" del ").append(startDate);
         }
         if (endDate != null) {
-            stringBuilder.append(" al " + endDate);
+            stringBuilder.append(" al ").append(endDate);
         }
 
 
@@ -45,10 +45,8 @@ public class NameService {
      */
     public String getRelationFileName(String startDate, String endDate) {
 
-        StringBuilder relationFileName = new StringBuilder();
-        relationFileName.append("Personas que han sido valoradas");
-        relationFileName.append(getSurveysName(null, startDate, endDate));
-        return relationFileName.toString();
+        return "Personas que han sido valoradas" +
+                getSurveysName(null, startDate, endDate);
 
     }
 
@@ -62,9 +60,7 @@ public class NameService {
      */
     public String getUserFileName(String evaluated, String startDate, String endDate) {
 
-        StringBuilder surveyFileName = new StringBuilder();
-        surveyFileName.append("Valoración Competencias Ser");
-        surveyFileName.append(getSurveysName(evaluated, startDate, endDate));
-        return surveyFileName.toString();
+        return "Valoración Competencias Ser" +
+                getSurveysName(evaluated, startDate, endDate);
     }
 }
