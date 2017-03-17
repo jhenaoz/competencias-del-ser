@@ -216,7 +216,7 @@ public class PdfReportGenerator {
         try {
             PdfWriter.getInstance(document, byteArrayOutputStream);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("Could not get the instance of PdfWriter. ", e);
         }
 
         document.open();
