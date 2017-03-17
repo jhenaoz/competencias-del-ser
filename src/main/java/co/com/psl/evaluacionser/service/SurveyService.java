@@ -6,7 +6,6 @@ import co.com.psl.evaluacionser.service.dto.SurveyDto;
 import co.com.psl.evaluacionser.service.transformer.SurveyTransformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -17,6 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This is the class that will interact with both the SurveyController and the SurveyRepository, its used as a service
+ * to avoid direct interaction between the controller and the repo, this class is also used to apply transformation
+ * methods or to call other services which shouldn't be called on either the repo or the controller
+ */
 @Service
 public class SurveyService {
 
@@ -67,6 +71,14 @@ public class SurveyService {
         return surveyRepository.findUserSurveys(user, startDate, endDate);
     }
 
+    /**
+     * This method calls the repository method to check the existence of a survey as of recently.
+     *
+     * @param evaluated Person who was evaluated, the one who will be checked to not have received a recent survey
+     * @param evaluator Person who did the evaluation
+     * @param aptitudeId the aptitude id for which we will check no recent surveys exists
+     * @return true if a survey with this params has been done recently; false otherwise
+     */
     public boolean existsRecentSurvey(String evaluated, String evaluator, String aptitudeId) {
         return surveyRepository.existsRecentSurvey(evaluated, evaluator, aptitudeId);
     }
@@ -74,8 +86,8 @@ public class SurveyService {
     /**
      * Checks if the dates provided form a valid range of dates.
      *
-     * @param startDate starting date
-     * @param endDate   ending date
+     * @param startDate Starting date used to search for recent surveys
+     * @param endDate   Ending date used to search for recent surveys
      * @return whether the starting date is smaller than the ending date
      */
     private boolean isDateRangeValid(String startDate, String endDate) {
@@ -94,35 +106,6 @@ public class SurveyService {
             logger.error("The Date couldn't be properly formatted " + e.getMessage());
             return false;
         }
-    }
-
-    /**
-     * This method redirects the response containing the xlsx to download back to the controller.
-     *
-     * @param evaluated the person who was evaluated in the survey
-     * @param startDate the start date from the date range
-     * @param endDate   the end date of the range
-     * @return A response entity with BAD_REQUEST in case the survey search didn't get any surveys,
-     * or returns the response entity with OK and the document to download
-     */
-    public ResponseEntity getSurveysFile(String evaluated, String startDate, String endDate) {
-
-        FileService fileService = new FileService();
-        return fileService.getSurveyDownloadResponse(evaluated, startDate, endDate);
-    }
-
-    /**
-     * This method redirects the response containing the xlsx to download back to the controller.
-     *
-     * @param startDate the start date from the date range
-     * @param endDate   the end date of the range
-     * @return A response entity with BAD_REQUEST in case the survey search didn't get any surveys,
-     * or returns the response entity with OK and the document to download
-     */
-    public ResponseEntity getReportFile(String startDate, String endDate) {
-
-        FileService fileService = new FileService();
-        return fileService.getRelationDownloadResponse(startDate, endDate);
     }
 
 }
