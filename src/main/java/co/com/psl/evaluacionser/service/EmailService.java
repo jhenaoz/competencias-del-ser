@@ -2,6 +2,7 @@ package co.com.psl.evaluacionser.service;
 
 import co.com.psl.evaluacionser.domain.Survey;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ public class EmailService {
     @Value("${mailUsername}")
     private String mailUsername;
 
-    private String mailTemplate = "html/mailtemplate";
+    private static final Logger logger = Logger.getLogger(EmailService.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -40,42 +41,63 @@ public class EmailService {
     @Qualifier("emailTemplateEngine")
     private TemplateEngine htmlTemplateEngine;
 
+
     /**
-     * Send the Mail with the defined beans
-     * @param survey
+     * Send the Mail with the defined beans this prepare message using a Spring helper
+     *
      * @throws MessagingException when the message can't be sent
      */
-    public void sendSimpleMail(Survey survey) throws MessagingException {
-        /**
-         * Prepare the context with the parameters that should be change in the html template
-         */
-        final Context ctx = new Context();
-        ctx.setVariable("evaluated", survey.getEvaluated());
-        ctx.setVariable("evaluator", survey.getEvaluator());
-        if (survey.getAptitudes().size() == 1) {
-            ctx.setVariable("type", "Una competencia de una persona");
-            ctx.setVariable("aptitude", survey.getAptitudes().get(0).getAptitude().getEs());
-        } else {
-            ctx.setVariable("type", "Todas las competencias de una persona");
-            ctx.setVariable("aptitude", null);
-        }
+    private void sendSimpleMail(Context context, String mailTemplate, String subject) throws MessagingException {
 
-        /**
-         * Prepare message using a Spring helper
-         */
         final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
         final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
-        message.setSubject("Nueva valoracion del ser");
+        message.setSubject(subject);
         message.setFrom(mailUsername);
         message.setTo(mailReceiver);
 
-        /**
-         * Create the HTML body using Thymeleaf
-         */
-        final String htmlContent = this.htmlTemplateEngine.process(mailTemplate, ctx);
-        message.setText(htmlContent, true /* isHtml */);
+        final String htmlContent = this.htmlTemplateEngine.process(mailTemplate, context);
+        message.setText(htmlContent, true);
 
         this.mailSender.send(mimeMessage);
+    }
+
+    /**
+     * Prepare the context with the survey parameters that should be changed in the html template
+     *
+     * @param survey The new survey
+     */
+    public void setSurveyContext(Survey survey) {
+        final Context context = new Context();
+        context.setVariable("evaluated", survey.getEvaluated());
+        context.setVariable("evaluator", survey.getEvaluator());
+        if (survey.getAptitudes().size() == 1) {
+            context.setVariable("type", "Una competencia de una persona");
+            context.setVariable("aptitude", survey.getAptitudes().get(0).getAptitude().getEs());
+        } else {
+            context.setVariable("type", "Todas las competencias de una persona");
+            context.setVariable("aptitude", null);
+        }
+        try {
+            sendSimpleMail(context, "html/mailtemplate", "Nueva valoracion del ser");
+        } catch (MessagingException e) {
+            logger.error("The survey mail can't be sent ", e);
+        }
+    }
+
+    /**
+     * Prepare the context with the new password that should be changed in the html template
+     *
+     * @param newPassword the new password to the admin
+     */
+    public void setPasswordContext(String newPassword) {
+        final Context context = new Context();
+        context.setVariable("password", newPassword);
+        try {
+            sendSimpleMail(context, "html/passwordmailtemplate",
+                    "Nueva contraseña valoración del ser");
+        } catch (MessagingException e) {
+            logger.error("The new password mail can't be sent ", e);
+        }
     }
 }
 
