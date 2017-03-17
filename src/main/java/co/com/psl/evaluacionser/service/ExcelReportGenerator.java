@@ -3,7 +3,6 @@ package co.com.psl.evaluacionser.service;
 import co.com.psl.evaluacionser.domain.AptitudeSurvey;
 import co.com.psl.evaluacionser.domain.BehaviorSurvey;
 import co.com.psl.evaluacionser.domain.Survey;
-import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
