@@ -28,7 +28,7 @@
         "relation_teammate_description": "Choose teammate if the person you are evaluating corresponds to a person you have collaborated with, worked towards their development and growth, and supported in the improvement of their activities",
         "relation_client": "Client",
         "relation_client_description": "The people who have worked with the evaluated from a client perspective (that is, they've received a deliverable from the person being assessed), they've had direct interaction with the person and have the respective information, thanks to the observation of their behavior. Client can reference both internal and external clients.",
-        "relation_own": "Self_assessment",
+        "relation_own": "Self-assessment",
         "relation_own_description": "It's the assessment a person makes of themselves, according to their current and recent behavior (last 3 months). This measurement is of great importance to recognize the perception the assessed has of themselves and it's of great help in the analysis of the results to aid the creation of development plans.",
         "survey_check_alert": "We found an evaluation of this person done by you in the last week. Do you wish to start another evaluation?"
     },
