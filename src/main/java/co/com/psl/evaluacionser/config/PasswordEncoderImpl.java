@@ -45,9 +45,9 @@ public class PasswordEncoderImpl implements PasswordEncoder {
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            logger.error("Couldn't find the algorithm to encrypt the password" + e.getMessage());
+            logger.error("Couldn't find the algorithm to encrypt the password", e);
         } catch (UnsupportedEncodingException e) {
-            logger.error("Couldn't encode the String to UTF-8" + e.getMessage());
+            logger.error("Couldn't encode the String to UTF-8", e);
         }
 
         return generatedPassword;
