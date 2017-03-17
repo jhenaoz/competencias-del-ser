@@ -21,8 +21,6 @@ import java.util.List;
 @Service
 public class ExcelReportGenerator {
 
-    private Logger logger = Logger.getLogger(ExcelReportGenerator.class);
-
     /**
      * This method is the main for the users report and orchestrates the call of all the methods.
      *

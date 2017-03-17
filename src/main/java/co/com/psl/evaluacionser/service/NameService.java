@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class NameService {
 
-    private static final Logger logger = Logger.getLogger(NameService.class);
-
     /**
      * This method builds the file name according to the received params.
      *
