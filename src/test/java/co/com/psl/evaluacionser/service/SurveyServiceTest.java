@@ -112,7 +112,6 @@ public class SurveyServiceTest {
 
         surveys.add(survey);
 
-        when(mockSurveyTransformer.aptitudeSurveyTransformer(aptitudeSurveyDto)).thenReturn(aptitudeSurvey);
         when(mockSurveyTransformer.transformer(surveyDto)).thenReturn(survey);
 
 

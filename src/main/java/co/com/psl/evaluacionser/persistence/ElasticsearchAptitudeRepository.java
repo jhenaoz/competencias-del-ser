@@ -44,7 +44,8 @@ public class ElasticsearchAptitudeRepository implements AptitudeRepository {
      */
     @Override
     public Aptitude save(Aptitude aptitude) {
-        Index index = new Index.Builder(aptitude).index(aptitudeIndexName).type(aptitudeTypeName).refresh(true).build();
+        Index index = new Index.Builder(aptitude).index(aptitudeIndexName)
+                .type(aptitudeTypeName).refresh(true).build();
         try {
             client.execute(index);
             return aptitude;
