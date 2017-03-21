@@ -36,10 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        Administrator administrator = administratorRepository.findAdministrator();
         auth
-        .inMemoryAuthentication()
-        .passwordEncoder(passwordEncoder)
-        .withUser(username).password(password).roles(ADMIN_ROLE);
+                .inMemoryAuthentication()
+                .passwordEncoder(passwordEncoder)
+                .withUser(administrator.getUsername()).password(administrator.getPassword()).roles(ADMIN_ROLE);
     }
 
     /**

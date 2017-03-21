@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/password")
+@RequestMapping(value = "api/password")
 public class AdministratorController {
 
     private PasswordService passwordService;
@@ -26,17 +26,11 @@ public class AdministratorController {
     @RequestMapping(value = "/change", method = RequestMethod.POST)
     public ResponseEntity changePassword(@RequestBody Password password,
                                          HttpServletRequest httpServletRequest) {
-        try {
-            httpServletRequest.logout();
-        } catch (ServletException e) {
-            //TODO log this
-        }
         return passwordService.updatePassword(password);
     }
 
-    @RequestMapping(value = "/forgot", method = RequestMethod.POST)
+    @RequestMapping(value = "/forgot", method = RequestMethod.GET)
     public ResponseEntity forgotPassword() {
-
-        return new ResponseEntity(HttpStatus.OK);
+        return passwordService.forgotPassword();
     }
 }
