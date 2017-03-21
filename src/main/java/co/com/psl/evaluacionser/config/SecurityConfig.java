@@ -1,7 +1,8 @@
 package co.com.psl.evaluacionser.config;
 
+import co.com.psl.evaluacionser.persistence.AdministratorRepository;
+import co.com.psl.evaluacionser.service.dto.Administrator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,14 +19,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ROLE = "ADMIN";
 
-    @Value("${securityUsername}")
     private String username;
-
-    @Value("${securityPassword}")
     private String password;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
     /**
      * This method validates the user login.
@@ -56,5 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
         .and().formLogin()
         .and().logout();
+    }
+
+    @Autowired
+    private void initUser() {
+        Administrator administrator = administratorRepository.findAdministrator();
+        this.password = administrator.getPassword();
+        this.username = administrator.getUsername();
     }
 }
