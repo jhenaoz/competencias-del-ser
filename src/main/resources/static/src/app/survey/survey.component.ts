@@ -167,15 +167,17 @@ export class SurveyComponent implements OnInit {
       for (let i = 0; i < Object.keys(this.aptitude.behaviors).length; i++) {
         if ((this.aptitude.behaviors[i].score <= 2)) {
           this.textAreaIsRequired = true;
-            // Check if textarea is filled
-            if (this.surveyForm.get('observation').value.trim() === '') {
-              return;
-            }
         }
+      }
+      const observations = this.surveyForm.get('observation').value.trim();
+      // Check if textarea is filled
+      if (observations.length < 10
+          || this.hasWhiteSpace(observations)) {
+        return;
       }
       // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
-      this.aptitude.observation = this.surveyForm.controls['observation'].value;
+      this.aptitude.observation = this.surveyForm.controls['observation'].value.trim();
       // Pushing aptitud into survey
       this.surveyService.survey.aptitudes.push(this.aptitude);
       // Stored actual survey to localstorage
@@ -256,6 +258,10 @@ export class SurveyComponent implements OnInit {
     return this.surveyService.survey.evaluated === value.evaluated &&
               this.surveyService.survey.evaluator === value.evaluator
               && this.surveyService.oneSurvey ===  typeOfSurvey;
+  }
+
+  hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 3;
   }
 
 }
