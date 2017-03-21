@@ -62,7 +62,7 @@ public class EmailService {
     }
 
     /**
-     * Prepare the context with the survey parameters that should be changed in the html template
+     * Prepare the context with the survey parameters that should be changed in the html template and send the mail
      *
      * @param survey The new survey
      */
@@ -85,7 +85,7 @@ public class EmailService {
     }
 
     /**
-     * Prepare the context with the new password that should be changed in the html template
+     * Prepare the context with the new password that should be changed in the html template and send the mail
      *
      * @param newPassword the new password to the admin
      */
