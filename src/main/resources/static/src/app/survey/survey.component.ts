@@ -171,8 +171,7 @@ export class SurveyComponent implements OnInit {
       }
       const observations = this.surveyForm.get('observation').value.trim();
       // Check if textarea is filled
-      if (observations.length < 10
-          || this.hasWhiteSpace(observations)) {
+      if (observations.length < 10 || this.hasWhiteSpace(observations)) {
         return;
       }
       // Filling aptitud properties
