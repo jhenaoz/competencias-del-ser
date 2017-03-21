@@ -61,6 +61,6 @@
     },
     "Shared": {
         "cancel": "Cancel",
-        "characters": "Characters"
+        "characters": "Minimum 10 Characters"
     }
 }

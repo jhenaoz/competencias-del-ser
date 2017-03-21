@@ -144,12 +144,12 @@
                       rows="3" 
                       minlength="10">
             </textarea>
-            <p>Min* 10 {{ "Shared.characters" | translate }}.</p>
+            <em>{{ "Shared.characters" | translate }}.</em>
             <br>
             <div class="alert alert-danger" 
                  id="radio-alert" 
                  [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">
-                 {{ "Survey.survey_observations_alert" | translate }}.
+                 {{ "Survey.survey_observations_alert" | translate }}
             </div>
         </form>
     </div>
