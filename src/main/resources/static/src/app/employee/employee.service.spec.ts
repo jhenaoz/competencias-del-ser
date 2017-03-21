@@ -62,10 +62,6 @@ describe('Service: EmployeeService', () => {
       });
   }
 
-//    it('should construct', async(inject([EmployeeService], (service) => {
-//     expect(service).toBeDefined();
-//   })));
-
  it('should construct employee mock', async(inject(
     [EmployeeService, MockBackend], (service, mockBackend) => {
     expect(service).toBeDefined();

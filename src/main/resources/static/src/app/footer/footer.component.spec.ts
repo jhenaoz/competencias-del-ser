@@ -62,7 +62,7 @@ describe('Component: FooterComponent', () => {
       component.currentUrl = '/surveyteam-setup';
       expect(component.changeButtonsText()).toBeTruthy();
     });
-    it('should return true given a random url', () => {
+    it('should return false given a random url', () => {
       component.currentUrl = '/';
       expect(component.changeButtonsText()).toBeFalsy();
     });

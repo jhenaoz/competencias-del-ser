@@ -25,7 +25,7 @@ describe('Component: EmployeeComponent', () => {
             HttpModule
           ],
           declarations: [
-            EmployeeComponent,
+            EmployeeComponent
           ],
           providers: [
             EmployeeService
@@ -43,10 +43,9 @@ describe('Component: EmployeeComponent', () => {
         expect(component).toBeDefined();
     });
 
-     it('should create a list of employees', async(() => {
+     xit('should create a list of employees', async(() => {
 
       expect(true).toBeTruthy();
-        // expect(component.employees.length).toBeGreaterThan(0);
     }));
 
 });
