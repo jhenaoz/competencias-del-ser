@@ -66,7 +66,7 @@ public class EmailService {
      *
      * @param survey The new survey
      */
-    public void setSurveyContext(Survey survey) {
+    public void sendSurveyMail(Survey survey) {
         final Context context = new Context();
         context.setVariable("evaluated", survey.getEvaluated());
         context.setVariable("evaluator", survey.getEvaluator());
@@ -89,7 +89,7 @@ public class EmailService {
      *
      * @param newPassword the new password to the admin
      */
-    public void setPasswordContext(String newPassword) {
+    public void sendNewPassword(String newPassword) {
         final Context context = new Context();
         context.setVariable("password", newPassword);
         try {

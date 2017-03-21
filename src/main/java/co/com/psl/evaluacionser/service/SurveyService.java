@@ -42,7 +42,7 @@ public class SurveyService {
      */
     public Survey saveSurvey(SurveyDto surveyDto) {
         Survey survey = surveyTransformer.transformer(surveyDto);
-        emailService.setSurveyContext(survey);
+        emailService.sendSurveyMail(survey);
         return surveyRepository.saveSurvey(survey);
     }
 
