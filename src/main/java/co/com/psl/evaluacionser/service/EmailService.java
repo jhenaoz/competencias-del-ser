@@ -43,7 +43,7 @@ public class EmailService {
 
 
     /**
-     * Send the Mail with the defined beans this prepare message using a Spring helper
+     * Sends the Mail with the defined beans, this prepares the message using a Spring helper
      *
      * @throws MessagingException when the message can't be sent
      */
