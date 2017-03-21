@@ -13,7 +13,15 @@ import { AptitudeService } from '../aptitude/aptitude.service';
 
 import { LocalStorageService, LocalStorageModule } from 'angular-2-local-storage';
 
-import { FormGroup, FormControl,  ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidatorFn,
+  FormArray } from '@angular/forms';
 
 import { Http } from '@angular/http';
 
@@ -36,13 +44,12 @@ describe('SurveyOptionsComponent', () => {
   const appRoutes: Routes = [];
   let component: SurveyOptionsComponent;
   let fixture: ComponentFixture<SurveyOptionsComponent>;
-  let service: TranslateService;
 
   let de: DebugElement;
   let el: HTMLElement;
 
   interface JQuery {
-      popover():void;
+      popover(): void;
   }
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -60,8 +67,8 @@ describe('SurveyOptionsComponent', () => {
             deps: [Http]
         })
       ],
-      declarations: [ SurveyOptionsComponent, 
-                      NavbarComponent, 
+      declarations: [ SurveyOptionsComponent,
+                      NavbarComponent,
                       FooterComponent,
                       EmployeeComponent ],
       providers: [{provide: APP_BASE_HREF, useValue : '/' },
@@ -106,7 +113,7 @@ describe('SurveyOptionsComponent', () => {
         component.relationChange('Cliente');
         expect(component.isClient).toBe(true);
       });
-      it('should return isClient true if clientText is equal to value ES' , () => {
+      it('should return isClient true if clientText is equal to value EN' , () => {
         component.clientText = 'Client';
         component.relationChange('Client');
         expect(component.isClient).toBe(true);
