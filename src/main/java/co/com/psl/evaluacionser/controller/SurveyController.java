@@ -75,8 +75,8 @@ public class SurveyController {
         String userFileName = nameService.getUserFileName(user, startDate, endDate);
         Workbook userExcelReport = excelReportGenerator.createUserExcelReport(userSurveys);
 
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=" + userFileName + ".xlsx");
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + userFileName + ".xlsx\"");
 
         try {
             userExcelReport.write(response.getOutputStream());
@@ -149,8 +149,8 @@ public class SurveyController {
         String relationFileName = nameService.getRelationFileName(startDate, endDate);
         Workbook relationExcelReport = excelReportGenerator.createRelationExcelReport(userSurveys);
 
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=" + relationFileName + ".xlsx");
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + relationFileName + ".xlsx\"");
 
         try {
             relationExcelReport.write(response.getOutputStream());
