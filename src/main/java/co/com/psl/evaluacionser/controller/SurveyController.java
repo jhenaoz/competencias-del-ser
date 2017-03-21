@@ -71,8 +71,7 @@ public class SurveyController {
         Workbook userExcelReport = excelReportGenerator.createUserExcelReport(userSurveys);
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=" + userFileName + ".xlsx");
-
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + userFileName + ".xlsx\"");
 
         try {
             userExcelReport.write(response.getOutputStream());
@@ -100,7 +99,7 @@ public class SurveyController {
         Workbook relationExcelReport = excelReportGenerator.createRelationExcelReport(userSurveys);
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=" + relationFileName + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + relationFileName + ".xlsx\"");
 
         try {
             relationExcelReport.write(response.getOutputStream());
