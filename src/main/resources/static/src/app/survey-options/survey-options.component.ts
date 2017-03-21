@@ -34,9 +34,9 @@ export class SurveyOptionsComponent implements OnInit {
   */
   complexForm: FormGroup;
   survey: Survey = new Survey();
-  submitted = false;
-  evaluatorIsValid = true;
-  teammateIsNotSelf = true;
+  submitted: boolean = false;
+  evaluatorIsValid: boolean = true;
+  teammateIsNotSelf: boolean = true;
   isRecent: Boolean = false;
 
   /*

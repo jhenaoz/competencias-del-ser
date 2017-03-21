@@ -13,7 +13,7 @@ import { AptitudeService } from '../aptitude/aptitude.service';
 
 import { LocalStorageService, LocalStorageModule } from 'angular-2-local-storage';
 
-import { FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+import { FormGroup, FormControl,  ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 
 import { Http } from '@angular/http';
 
@@ -37,6 +37,10 @@ describe('SurveyOptionsComponent', () => {
   let component: SurveyOptionsComponent;
   let fixture: ComponentFixture<SurveyOptionsComponent>;
   let service: TranslateService;
+
+  let de: DebugElement;
+  let el: HTMLElement;
+
   interface JQuery {
       popover():void;
   }
@@ -77,8 +81,54 @@ describe('SurveyOptionsComponent', () => {
       return new TranslateStaticLoader(http, '', '');
     }
 
-     it('should have a defined component', () => {
+    it('should have a defined component', () => {
         expect(component).toBeDefined();
+    });
+
+    it('should return true if the form control is valid', () => {
+        const formControl = new FormControl('test');
+        expect(formControl.valid).toBe(true);
+    });
+
+    describe('Method: relationChange()' , () => {
+      it('should return isSef true if selfText is equal to value ES' , () => {
+        component.selfText = 'Auto-Valoración';
+        component.relationChange('Auto-Valoración');
+        expect(component.isSelf).toBe(true);
+      });
+      it('should return isSef true if selfText is equal to value EN' , () => {
+        component.selfText = 'Self-assessment';
+        component.relationChange('Self-assessment');
+        expect(component.isSelf).toBe(true);
+      });
+       it('should return isClient true if clientText is equal to value ES' , () => {
+        component.clientText = 'Cliente';
+        component.relationChange('Cliente');
+        expect(component.isClient).toBe(true);
+      });
+      it('should return isClient true if clientText is equal to value ES' , () => {
+        component.clientText = 'Client';
+        component.relationChange('Client');
+        expect(component.isClient).toBe(true);
+      });
+    });
+
+    describe('Method: reset()' , () => {
+      it('should return submitted false' , () => {
+        component.submitted = true;
+        component.reset();
+        expect(component.submitted).toBe(false);
+      });
+      it('should return isRecent false' , () => {
+        component.isRecent = true;
+        component.reset();
+        expect(component.submitted).toBe(false);
+      });
+      it('inpuut elements should be enabled' , () => {
+        de = fixture.debugElement.query(By.css('input'));
+        el = de.nativeElement;
+        expect(el.hasAttribute('disabled')).toBe(false);
+      });
     });
 
 });
