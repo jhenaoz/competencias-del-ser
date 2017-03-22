@@ -1,4 +1,6 @@
 /* tslint:disable:no-unused-variable */
+import {APP_BASE_HREF} from '@angular/common';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 
@@ -11,7 +13,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { NavbarComponent } from './navbar.component';
 
+import { RouterModule, Routes } from '@angular/router';
+
 describe('Component: NavbarComponent', () => {
+  const appRoutes: Routes = [];
   let component: NavbarComponent;
   let service: TranslateService;
   let fixture: ComponentFixture<NavbarComponent>;
@@ -20,6 +25,7 @@ describe('Component: NavbarComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        RouterModule.forRoot(appRoutes),
         TranslateModule.forRoot({
             provide: TranslateLoader,
             useFactory: translateLoaderFactory,
@@ -27,6 +33,7 @@ describe('Component: NavbarComponent', () => {
         })
       ],
       declarations: [ NavbarComponent ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     })
     .compileComponents();
   }));
@@ -58,8 +65,22 @@ describe('Component: NavbarComponent', () => {
 
   });
 
+  describe('Method: disableChangeLanguage', () => {
+    it('should return true given "/welcome" as url', () => {
+      component.currentUrl = '/welcome';
+      expect(component.disableChangeLanguage()).toBeTruthy();
+    });
+    it('should return false given a random url', () => {
+      component.currentUrl = '/';
+      expect(component.disableChangeLanguage()).toBeFalsy();
+      component.currentUrl = '/survey';
+      expect(component.disableChangeLanguage()).toBeFalsy();
+    });
+  });
+
 });
 
 function translateLoaderFactory(http: any) {
     return new TranslateStaticLoader(http, '', '');
 }
+
