@@ -82,55 +82,15 @@ describe('Component: FooterComponent', () => {
         component.cancel();
         expect(router.navigate).toHaveBeenCalledWith(['welcome']);
     }));
-    it('should call Router.navigate(["welcome"]) with "survey/1" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/1';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/2" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/2';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/3" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/3';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/4" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/4';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/5" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/5';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/6" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/6';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/7" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/7';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-    it('should call Router.navigate(["welcome"]) with "survey/8" as url', inject([Router], (router: Router) => {
-        spyOn(router, 'navigate');
-        component.currentUrl = '/survey/8';
-        component.cancel();
-        expect(router.navigate).toHaveBeenCalledWith(['welcome']);
-    }));
-
+    for (let i = 1; i <= 8; i++) {
+        it('should call Router.navigate(["welcome"]) with "survey/' + i + '" as url',
+             inject([Router], (router: Router) => {
+                spyOn(router, 'navigate');
+                component.currentUrl = '/survey/' + i;
+                component.cancel();
+                expect(router.navigate).toHaveBeenCalledWith(['welcome']);
+        }));
+    }
   });
 
   describe('Method: advance', () => {
@@ -147,55 +107,14 @@ describe('Component: FooterComponent', () => {
         component.advance();
         expect(component.startNewSurvey.emit).toHaveBeenCalled();
     }));
-    it('should call event emitter given "survey/1" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/1';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/2" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/2';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/3" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/3';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/4" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/4';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/5" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/5';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/6" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/6';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/7" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/7';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-    it('should call event emitter given "survey/8" as url', inject([Router], (router: Router) => {
-        spyOn(component.surveyAdvance, 'emit');
-        component.currentUrl = '/survey/8';
-        component.advance();
-        expect(component.surveyAdvance.emit).toHaveBeenCalled();
-    }));
-
+    for (let i = 1; i <= 8; i++) {
+        it('should call event emitter given "survey/' + i + '" as url', inject([Router], (router: Router) => {
+            spyOn(component.surveyAdvance, 'emit');
+            component.currentUrl = '/survey/' + i;
+            component.advance();
+            expect(component.surveyAdvance.emit).toHaveBeenCalled();
+        }));
+    }
   });
 
 
