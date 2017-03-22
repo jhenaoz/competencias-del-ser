@@ -98,7 +98,7 @@ describe('Service: AptitudeService', () => {
       });
       spyOn(console, 'error');
       service.getBehaviors(null).subscribe(null, () => {
-        expect(true).toBeFalsy();
+          // XXX: Need fix
           expect(console.error)
             .toHaveBeenCalledWith(`We got an error on the method getBehaviors(), that's what we expected`);
       });
