@@ -57,6 +57,7 @@ export class SurveyComponent implements OnInit {
   showForm: boolean;
   submitted: boolean;
   textAreaIsRequired: boolean;
+  observationShort: boolean;
 
   /**
    * Creates an instance of SurveyComponent.
@@ -171,6 +172,15 @@ export class SurveyComponent implements OnInit {
       }
       const observations = this.surveyForm.get('observation').value.trim();
       // Check if textarea is filled
+/*      let observationShort;
+      if (observations.length < 10) {
+        observationShort ==
+      }else {
+
+      }*/
+      this.observationShort = observations.length < 10 ? true : false;
+      // const observationShort = ((observations.length < 10) === true);
+      console.log(this.observationShort);
       if (observations.length < 10 || this.hasWhiteSpace(observations)) {
         return;
       }
@@ -259,8 +269,11 @@ export class SurveyComponent implements OnInit {
               && this.surveyService.oneSurvey ===  typeOfSurvey;
   }
 
+  /*
+   * Method to verify the amount of whitespaces contained in the string
+   */
   hasWhiteSpace(s) {
-    return s.indexOf(' ') >= 3;
+    return s.indexOf('   ') >= 1;
   }
 
 }

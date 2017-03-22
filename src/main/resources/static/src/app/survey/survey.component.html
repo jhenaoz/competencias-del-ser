@@ -151,6 +151,11 @@
                  [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">
                  {{ "Survey.survey_observations_alert" | translate }}
             </div>
+            <div class="alert alert-danger" 
+                 id="radio-alert" 
+                 [style.display]="((textAreaIsRequired && submitted) && observationShort) ? 'block' : 'none'">
+                {{observationShort}}
+            </div>
         </form>
     </div>
 </div>
