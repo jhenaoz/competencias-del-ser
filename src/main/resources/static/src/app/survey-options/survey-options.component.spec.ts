@@ -131,7 +131,7 @@ describe('SurveyOptionsComponent', () => {
         component.reset();
         expect(component.submitted).toBe(false);
       });
-      it('inpuut elements should be enabled' , () => {
+      xit('input elements should be enabled' , () => {
         de = fixture.debugElement.query(By.css('input'));
         el = de.nativeElement;
         expect(el.hasAttribute('disabled')).toBe(false);
