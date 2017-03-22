@@ -1,6 +1,6 @@
 package co.com.psl.evaluacionser.config;
 
-import co.com.psl.evaluacionser.persistence.AdministratorRepository;
+import co.com.psl.evaluacionser.service.PasswordService;
 import co.com.psl.evaluacionser.service.dto.Administrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ROLE = "ADMIN";
 
-    private String username;
-    private String password;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private AdministratorRepository administratorRepository;
+    private PasswordService passwordService;
 
     /**
      * This method validates the user login.
@@ -36,11 +33,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        Administrator administrator = administratorRepository.findAdministrator();
+        Administrator administrator = passwordService.checkTimestamp();
         auth
                 .inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder)
                 .withUser(administrator.getUsername()).password(administrator.getPassword()).roles(ADMIN_ROLE);
+        if (administrator.getToken() != null) {
+            auth
+                    .inMemoryAuthentication()
+                    .passwordEncoder(passwordEncoder)
+                    .withUser(administrator.getUsername()).password(administrator.getToken()).roles(ADMIN_ROLE);
+        }
+
     }
 
     /**
@@ -60,10 +64,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().logout();
     }
 
-    @Autowired
-    private void initUser() {
-        Administrator administrator = administratorRepository.findAdministrator();
-        this.password = administrator.getPassword();
-        this.username = administrator.getUsername();
-    }
 }
