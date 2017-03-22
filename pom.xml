@@ -170,7 +170,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run test-cc -- --single-run</arguments>
+                            <arguments>run test-cc -- --single-run --progress false</arguments>
                         </configuration>
                         <phase>test</phase>
                     </execution>
