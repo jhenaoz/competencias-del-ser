@@ -41,7 +41,8 @@
         "information": "No information",
         "observations": "Observations",
         "survey_observations_alert": "Observations are required!",
-        "survey_alert": "You must answer in all fields!"
+        "survey_alert": "You must answer in all fields!",
+        "characters_alert": "Remember: 10 Characters Minimum"
     },
     "Competences": {
         "title": "Skill to assess",
