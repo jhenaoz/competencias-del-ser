@@ -57,7 +57,6 @@ export class SurveyComponent implements OnInit {
   showForm: boolean;
   submitted: boolean;
   textAreaIsRequired: boolean;
-  observationShort: boolean;
 
   /**
    * Creates an instance of SurveyComponent.
@@ -170,18 +169,9 @@ export class SurveyComponent implements OnInit {
           this.textAreaIsRequired = true;
         }
       }
-      const observations = this.surveyForm.get('observation').value.trim();
       // Check if textarea is filled
-/*      let observationShort;
-      if (observations.length < 10) {
-        observationShort ==
-      }else {
-
-      }*/
-      this.observationShort = observations.length < 10 ? true : false;
-      // const observationShort = ((observations.length < 10) === true);
-      console.log(this.observationShort);
-      if (observations.length < 10 || this.hasWhiteSpace(observations)) {
+      this.observation = this.surveyForm.get('observation').value.trim();
+      if ((this.observation.length < 10 || this.hasWhiteSpace(this.observation)) && this.textAreaIsRequired) {
         return;
       }
       // Filling aptitud properties
