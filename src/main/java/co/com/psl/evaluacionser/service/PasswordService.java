@@ -6,8 +6,6 @@ import co.com.psl.evaluacionser.service.dto.Administrator;
 import co.com.psl.evaluacionser.service.dto.Password;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -17,7 +15,7 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * This class implements the business logic required to manage the administrator password
+ * This class implements the logic required to manage the administrator password
  */
 @Service
 public class PasswordService {
@@ -43,7 +41,7 @@ public class PasswordService {
      * @param password the object with the old password or token and the new password
      * @return a response entity with the status of the operation
      */
-    public ResponseEntity updatePassword(Password password) {
+    public boolean updatePassword(Password password) {
         Administrator administrator = administratorRepository.findAdministrator();
         boolean oldPassMatchAdminPass = passwordEncoder.matches(password.getOldPassword(), administrator.getPassword());
         boolean timeAllowed = allowedTimestamp(administrator.getTimestamp());
@@ -55,16 +53,16 @@ public class PasswordService {
             if (oldPassMatchAdminToken && timeAllowed) {
                 deleteToken(administrator);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return true;
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return false;
     }
 
     /**
      * This method implements the logic to generated a new token and sends it to the administrator
      * @return a response entity with the status of the operation
      */
-    public ResponseEntity forgotPassword() {
+    public void forgotPassword() {
         Random random = new Random();
         int seed = random.nextInt();
         String newPassword = passwordEncoder.generateSalt(seed);
@@ -76,7 +74,6 @@ public class PasswordService {
         administrator.setTimestamp(dateFormat.format(date));
         administratorRepository.updateAdministrator(administrator);
         emailService.sendNewPassword(newPassword);
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -86,18 +83,15 @@ public class PasswordService {
      */
     private boolean allowedTimestamp(String timestamp) {
         final long thirtyMinutesToMill = 1800000L;
-        if (timestamp != null && !"".equals(timestamp)) {
+        if (timestamp != null && !timestamp.isEmpty()) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 Date timestampDate = dateFormat.parse(timestamp);
-                long timestampToMills = timestampDate.getTime();
                 Date actualDate = new Date();
-                long actualDateToMills = actualDate.getTime();
-
-                timestampToMills += thirtyMinutesToMill;
-                return timestampToMills >= actualDateToMills;
+                //Date.getTime() returns the date in milliseconds
+                return timestampDate.getTime() + thirtyMinutesToMill >= actualDate.getTime();
             } catch (ParseException e) {
-                logger.error("The date from the base date cannot be parsed");
+                logger.error("The date from the database cannot be parsed");
             }
         }
         return false;
