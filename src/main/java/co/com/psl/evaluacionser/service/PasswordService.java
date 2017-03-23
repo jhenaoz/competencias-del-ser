@@ -16,6 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * This class implements the business logic required to manage the administrator password
+ */
 @Service
 public class PasswordService {
 
@@ -35,10 +38,15 @@ public class PasswordService {
         this.emailService = emailService;
     }
 
+    /**
+     * This method implements the logic to update a password and saves it in the database
+     * @param password the object with the old password or token and the new password
+     * @return a response entity with the status of the operation
+     */
     public ResponseEntity updatePassword(Password password) {
         Administrator administrator = administratorRepository.findAdministrator();
         boolean oldPassMatchAdminPass = passwordEncoder.matches(password.getOldPassword(), administrator.getPassword());
-        boolean timeAllowed = allowedTimestamp(administrator.getTimeStamp());
+        boolean timeAllowed = allowedTimestamp(administrator.getTimestamp());
         boolean oldPassMatchAdminToken = passwordEncoder.matches(password.getOldPassword(), administrator.getToken());
         if (oldPassMatchAdminPass || (oldPassMatchAdminToken && timeAllowed)) {
             String encodePassword = passwordEncoder.encode(password.getNewPassword());
@@ -52,6 +60,10 @@ public class PasswordService {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * This method implements the logic to generated a new token and sends it to the administrator
+     * @return a response entity with the status of the operation
+     */
     public ResponseEntity forgotPassword() {
         Random random = new Random();
         int seed = random.nextInt();
@@ -61,13 +73,19 @@ public class PasswordService {
         administrator.setToken(passwordEncoder.encode(newPassword));
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
-        administrator.setTimeStamp(dateFormat.format(date));
+        administrator.setTimestamp(dateFormat.format(date));
         administratorRepository.updateAdministrator(administrator);
         emailService.sendNewPassword(newPassword);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    /**
+     * This method makes the time verification because the token only can be used 30 minutes after being solicited
+     * @param timestamp is the date when the token was solicited
+     * @return True if the time is right or false if the token expired
+     */
     private boolean allowedTimestamp(String timestamp) {
+        final long thirtyMinutesToMill = 1800000L;
         if (timestamp != null && !"".equals(timestamp)) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
@@ -75,7 +93,8 @@ public class PasswordService {
                 long timestampToMills = timestampDate.getTime();
                 Date actualDate = new Date();
                 long actualDateToMills = actualDate.getTime();
-                timestampToMills += 1800000L;
+
+                timestampToMills += thirtyMinutesToMill;
                 return timestampToMills >= actualDateToMills;
             } catch (ParseException e) {
                 logger.error("The date from the base date cannot be parsed");
@@ -84,9 +103,13 @@ public class PasswordService {
         return false;
     }
 
+    /**
+     * This method update the administrator if the token was used, so this deletes that token form the database
+     * @param administrator to be updated
+     */
     private void deleteToken(Administrator administrator) {
         administrator.setToken(null);
-        administrator.setTimeStamp(null);
+        administrator.setTimestamp(null);
         administratorRepository.updateAdministrator(administrator);
     }
 }

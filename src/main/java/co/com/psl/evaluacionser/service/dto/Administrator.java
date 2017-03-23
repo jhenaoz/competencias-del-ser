@@ -7,7 +7,9 @@ public class Administrator {
     private String token;
     private String timestamp;
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -29,11 +31,11 @@ public class Administrator {
         this.token = token;
     }
 
-    public String getTimeStamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimeStamp(String timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

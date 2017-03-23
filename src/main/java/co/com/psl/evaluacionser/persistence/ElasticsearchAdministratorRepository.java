@@ -36,7 +36,7 @@ public class ElasticsearchAdministratorRepository implements AdministratorReposi
     }
 
     /**
-     * This method find all indexes user with type password
+     * This method finds all indexes user with type password
      *
      * @return Administrator list from the Elasticsearch
      */
@@ -61,6 +61,11 @@ public class ElasticsearchAdministratorRepository implements AdministratorReposi
 
     }
 
+    /**
+     * This method takes all elasticsearch response and returns just the administrator object
+     * @param hit all elasticsearch response
+     * @return all the administrator objects that must be one
+     */
     private Administrator getAdministrator(SearchResult.Hit<Administrator, Void> hit) {
         if (hit == null) {
             return null;
@@ -68,6 +73,11 @@ public class ElasticsearchAdministratorRepository implements AdministratorReposi
         return hit.source;
     }
 
+    /**
+     * This method updates the administrator's params in the database
+     * @param administrator the administrator that is going to be updated
+     * @return the updated administrator
+     */
     @Override
     public Administrator updateAdministrator(Administrator administrator) {
         Index index = new Index.Builder(administrator)

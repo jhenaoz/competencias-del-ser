@@ -51,5 +51,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().formLogin()
         .and().logout();
     }
-
 }
