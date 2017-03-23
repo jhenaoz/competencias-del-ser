@@ -1,5 +1,6 @@
 package co.com.psl.evaluacionser.service;
 
+import co.com.psl.evaluacionser.config.AdminUserDetailsService;
 import co.com.psl.evaluacionser.config.PasswordEncoderImpl;
 import co.com.psl.evaluacionser.config.SecurityConfig;
 import co.com.psl.evaluacionser.persistence.AdministratorRepository;
@@ -47,7 +48,7 @@ public class PasswordService {
             String encodePassword = passwordEncoder.encode(password.getNewPassword());
             administrator.setPassword(encodePassword);
             administratorRepository.updateAdministrator(administrator);
-            //TODO update admin
+            AdminUserDetailsService.setPassword(encodePassword);
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -66,9 +67,7 @@ public class PasswordService {
         administratorRepository.updateAdministrator(administrator);
 
         emailService.sendNewPassword(newPassword);
-        /**
-         * TODO update admin
-         */
+        AdminUserDetailsService.setToken(passwordEncoder.encode(newPassword));
         return new ResponseEntity(HttpStatus.OK);
     }
 

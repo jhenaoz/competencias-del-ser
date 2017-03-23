@@ -1,13 +1,21 @@
 package co.com.psl.evaluacionser.config;
 
+import co.com.psl.evaluacionser.persistence.AdministratorRepository;
 import co.com.psl.evaluacionser.service.PasswordService;
 import co.com.psl.evaluacionser.service.dto.Administrator;
+import org.elasticsearch.common.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -15,9 +23,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ROLE = "ADMIN";
+
+    GrantedAuthority admin = new SimpleGrantedAuthority("ROLE_ADMIN");
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,27 +37,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordService passwordService;
 
-    /**
-     * This method validates the user login.
-     *
-     * @param auth Authenticator
-     * @throws Exception if the authentication fails
-     */
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        Administrator administrator = passwordService.checkTimestamp();
-        auth
-                .inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser(administrator.getUsername()).password(administrator.getPassword()).roles(ADMIN_ROLE);
-        if (administrator.getToken() != null) {
-            auth
-                    .inMemoryAuthentication()
-                    .passwordEncoder(passwordEncoder)
-                    .withUser(administrator.getUsername()).password(administrator.getToken()).roles(ADMIN_ROLE);
-        }
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
+    @Inject
+    @Qualifier("userDetailsService")
+    private UserDetailsService userDetailsService;
+
+
+    @Inject
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService);
     }
+
 
     /**
      * Configure the HttpSecurity. <br>
@@ -57,11 +62,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-        .csrf().disable()
-        .authorizeRequests()
-        .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
-        .and().formLogin()
-        .and().logout();
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
+                .and().formLogin()
+                .and().logout();
     }
+
+    @Autowired
+    private void init(){
+        Administrator administrator = administratorRepository.findAdministrator();
+        AdminUserDetailsService.setUsername(administrator.getUsername());
+        AdminUserDetailsService.setPassword(administrator.getPassword());
+    }
+
 
 }
