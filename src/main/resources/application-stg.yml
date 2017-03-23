@@ -1,3 +1,7 @@
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/dist,classpath:/public/
+
 server:
   port: 9000
 
