@@ -8,7 +8,4 @@ describe('SurveyService', () => {
     });
   });
 
-  xit('should ...', inject([SurveyService], (service: SurveyService) => {
-    expect(service).toBeTruthy();
-  }));
 });
