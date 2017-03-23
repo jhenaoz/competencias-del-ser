@@ -63,4 +63,13 @@ node() {
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/jacoco/', reportFiles: 'index.html', reportName: 'JaCoCo Report'])
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/', reportFiles: 'checkstyle.html,pmd.html', reportName: 'Static Code Analysis'])
     }
+
+    stage('Package & Install') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
+                sh 'mvn war:war spring-boot:repackage install:install'
+                archiveArtifacts 'target/*.war'
+            }
+        }
+    }
 }
