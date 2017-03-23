@@ -1,7 +1,6 @@
 package co.com.psl.evaluacionser.config;
 
-import co.com.psl.evaluacionser.service.PasswordService;
-import co.com.psl.evaluacionser.service.dto.Administrator;
+import co.com.psl.evaluacionser.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordService passwordService;
+    private UserDetailsServiceImpl userDetailsService;
 
     /**
      * This method validates the user login.
@@ -33,18 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        Administrator administrator = passwordService.checkTimestamp();
-        auth
-                .inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser(administrator.getUsername()).password(administrator.getPassword()).roles(ADMIN_ROLE);
-        if (administrator.getToken() != null) {
-            auth
-                    .inMemoryAuthentication()
-                    .passwordEncoder(passwordEncoder)
-                    .withUser(administrator.getUsername()).password(administrator.getToken()).roles(ADMIN_ROLE);
-        }
-
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     /**
