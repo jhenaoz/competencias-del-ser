@@ -15,6 +15,8 @@ import { TranslateService } from 'ng2-translate/src/translate.service';
 
 import { LocalStorageService } from 'angular-2-local-storage';
 
+import { PopoverModule } from 'ng2-bootstrap';
+
 import * as jQuery from 'jquery';
 
 @Component({
@@ -32,9 +34,9 @@ export class SurveyOptionsComponent implements OnInit {
   */
   complexForm: FormGroup;
   survey: Survey = new Survey();
-  submitted = false;
-  evaluatorIsValid = true;
-  teammateIsNotSelf = true;
+  submitted: boolean = false;
+  evaluatorIsValid: boolean = true;
+  teammateIsNotSelf: boolean = true;
   isRecent: Boolean = false;
 
   /*
@@ -71,16 +73,6 @@ export class SurveyOptionsComponent implements OnInit {
     private guard: SurveyRouteActivator) { }
 
   ngOnInit() {
-    /*
-    * Popover function
-    */
-    (<any>$('[data-toggle="popover"]')).popover({
-      html: true,
-      content: function () {
-        const clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
-        return clone;
-      }
-    });
 
     this.surveyService.oneSurvey = (localStorage.getItem('typeOfSurvey') === 'true');
 

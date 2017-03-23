@@ -2,14 +2,9 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 
-import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 
-import { BrowserModule } from '@angular/platform-browser';
-
 import {
-    FormsModule,
-    FormGroup,
     ReactiveFormsModule
 } from '@angular/forms';
 
@@ -21,11 +16,11 @@ import {EmployeeComponent} from './employee.component';
 describe('Component: EmployeeComponent', () => {
   let component: EmployeeComponent;
   let fixture: ComponentFixture<EmployeeComponent>;
+  let service: EmployeeService;
 
   beforeEach(async(() => {
         TestBed.configureTestingModule({
           imports: [
-            CommonModule,
             ReactiveFormsModule,
             HttpModule
           ],
@@ -40,11 +35,17 @@ describe('Component: EmployeeComponent', () => {
 
     fixture = TestBed.createComponent(EmployeeComponent);
     component = fixture.componentInstance;
+    service = TestBed.get(EmployeeService);
     // fixture.detectChanges();
     }));
 
     it('should have a defined component', () => {
         expect(component).toBeDefined();
-  });
+    });
+
+     xit('should create a list of employees', async(() => {
+
+      expect(true).toBeTruthy();
+    }));
 
 });

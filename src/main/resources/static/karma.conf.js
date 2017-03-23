@@ -7,6 +7,7 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
+      require('karma-jasmine-html-reporter'),
       require('karma-chrome-launcher'),
       require('karma-phantomjs-launcher'),
       require('karma-junit-reporter'),
@@ -17,7 +18,8 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
-      { pattern: './src/test.ts', watched: false }
+      { pattern: './node_modules/jquery/dist/jquery.min.js', watched: false }, 
+      { pattern: './src/test.ts', watched: false },
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']
