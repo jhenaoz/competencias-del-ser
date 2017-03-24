@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable()
         .authorizeRequests()
         .antMatchers("/api/survey/report/**").hasRole(ADMIN_ROLE)
-        .and().formLogin()
+        .and().formLogin().loginPage("/login")
         .and().logout();
     }
 }

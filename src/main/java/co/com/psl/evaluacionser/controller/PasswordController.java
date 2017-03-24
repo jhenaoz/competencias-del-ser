@@ -5,12 +5,7 @@ import co.com.psl.evaluacionser.service.dto.Password;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -35,7 +30,7 @@ public class PasswordController {
      * @return a response entity with a OK status if the password was changed or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/change", method = RequestMethod.POST)
-    public ResponseEntity changePassword(@RequestBody Password password) {
+    public @ResponseBody ResponseEntity changePassword(Password password) {
         if (passwordService.updatePassword(password)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
