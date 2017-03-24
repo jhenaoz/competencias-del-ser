@@ -134,6 +134,7 @@
                  [style.display]="(!surveyForm.valid && submitted && surveyForm.get('observation').pristine) ? 'block' : 'none'">
                  {{ "Survey.survey_alert" | translate }}.
             </div>
+            <button type="button" (click)="test()" id="fillSurvey">Prueba</button>
             <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
             {{ bindRadioButtons() }}
             <h4>
@@ -142,7 +143,8 @@
             <textarea formControlName="observation" 
                       class="form-control" 
                       rows="3" 
-                      minlength="10">
+                      minlength="10"
+                      id="observationTextArea">
             </textarea>
             <em>{{ "Shared.characters" | translate }}.</em>
             <br>
@@ -159,5 +161,5 @@
         </form>
     </div>
 </div>
-
+    
 <app-footer (surveyAdvance)="surveyAdvance()"></app-footer>

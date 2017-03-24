@@ -112,6 +112,7 @@ export class SurveyComponent implements OnInit {
     // Show the form
     this.showForm = true;
 
+    // $(document).ready(this.test);
   }
 
   /*
@@ -141,8 +142,8 @@ export class SurveyComponent implements OnInit {
   */
   bindRadioButtons() {
     for (let i = 0; i < 5; i++) {
-      $('.validateRadio' + i + '').click(function () {
-        $('.validateRadio' + i + '').not(this).prop('checked', false);
+      $('.validateRadio' + i).click(function () {
+        $('.validateRadio' + i).not(this).prop('checked', false);
       });
     }
   }
@@ -264,6 +265,18 @@ export class SurveyComponent implements OnInit {
    */
   hasWhiteSpace(s) {
     return s.indexOf('   ') >= 1;
+  }
+
+  test() {
+    $('#1radio0').trigger('click');
+    $('#2radio0').trigger('click');
+    $('#3radio0').trigger('click');
+    $('#4radio0').trigger('click');
+    $('#observationTextArea').val('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  }
+
+  goBack() {
+    console.log('back');
   }
 
 }
