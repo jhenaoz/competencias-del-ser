@@ -1,4 +1,40 @@
 <html>
+<meta charset="UTF-8">
+<style>
+input[type=text], input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 20px;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #134C96;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #5CB85C;
+    color: #FFF;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 300px;
+}
+</style>
 <head>
     <title>Please Login</title>
 </head>
@@ -6,14 +42,12 @@
 <div>
     <form name="f" action="/login" method="post">
         <fieldset>
-            <legend>Please Login</legend>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"/>
-            <div class="form-actions">
-                <button type="submit" class="btn">Log in</button>
-            </div>
+            <legend>Autenticación</legend>
+            <label for="username">Usuario:</label><br>
+            <input type="text" id="username" placeholder="Username"/><br>
+            <label for="password">Contraseña:</label><br>
+            <input type="password" id="password" placeholder="Password"/><br><br>
+            <input type="submit" value="Log in"></input>
         </fieldset>
     </form>
 </div>
