@@ -5,11 +5,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping({"/welcome", "/survey-setup", "/surveyteam-setup", "/survey/{id}", "/final", "/404"})
 public class ViewController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = {"/welcome", "/survey-setup", "/surveyteam-setup", "/survey/{id}", "/final", "/404"},
+            method = RequestMethod.GET)
     public String index() {
         return "forward:/index.html";
+    }
+
+    @RequestMapping(value = "/change", method = RequestMethod.GET)
+    public String forgotPassword() {
+        return "changepassword";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "login";
     }
 }
