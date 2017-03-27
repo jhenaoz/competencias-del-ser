@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ViewController {
 
-    @RequestMapping(value = {"/welcome", "/survey-setup", "/surveyteam-setup", "/survey/{id}", "/final", "/404"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/welcome", "/survey-setup", "/surveyteam-setup", "/survey/{id}", "/final", "/404"},
+            method = RequestMethod.GET)
     public String index() {
         return "forward:/index.html";
     }
