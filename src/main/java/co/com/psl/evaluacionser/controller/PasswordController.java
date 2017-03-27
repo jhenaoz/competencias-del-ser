@@ -7,26 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-
-
-/**
- * This controller class gives access to the password services
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
 
 /**
+ * This controller class gives access to the password services
+ * import org.springframework.web.bind.annotation.RequestMapping;
+ * import org.springframework.web.bind.annotation.RequestMethod;
+ * import org.springframework.web.bind.annotation.ResponseBody;
+ * import org.springframework.web.bind.annotation.RestController;
+ * <p>
+ * import javax.servlet.http.HttpServletResponse;
+ * <p>
+ * import java.io.IOException;
+ * <p>
+ * <p>
+ * /**
  * This controller class gives the access to the password services
  */
 @CrossOrigin
@@ -34,9 +35,8 @@ import java.io.IOException;
 @RequestMapping(value = "api/password")
 public class PasswordController {
 
-    private PasswordService passwordService;
-
     private static final Logger logger = Logger.getLogger(PasswordController.class);
+    private PasswordService passwordService;
 
     @Autowired
     public PasswordController(final PasswordService passwordService) {
@@ -46,11 +46,12 @@ public class PasswordController {
     /**
      * This method receives a post request and allows the administrator to update their own password,
      * it receives in the request a new password and either the old password or a password reset token
+     *
      * @param password the object password contains the password to compare and the new password
      * @return a response entity with a OK status if the password was changed or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/change", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity changePassword(Password password, HttpServletResponse response) {
+    public ResponseEntity changePassword(Password password, HttpServletResponse response) {
         if (passwordService.updatePassword(password)) {
             try {
                 response.sendRedirect("/login");
@@ -65,6 +66,7 @@ public class PasswordController {
 
     /**
      * This method receives a get request and sends a token to the admin's email to change the password
+     *
      * @return a response entity with a OK status if the token was sent or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/forgot", method = RequestMethod.GET)
