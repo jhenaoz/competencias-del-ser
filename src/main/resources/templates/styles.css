@@ -1,0 +1,87 @@
+input[type=text], input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 20px;
+    font-family: "arial";
+}
+
+input[type=submit], input[type=button] {
+    width: 100%;
+    background-color: #134C96;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "arial";
+}
+
+input[type=submit]:hover {
+    background-color: #5CB85C;
+    color: #FFF;
+}
+
+body {
+    background-color: #f2f2f2;
+}
+
+div.login {
+    display: flex;
+    display: -webkit-flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+div.form {
+    padding: 20px;
+    width: 500px;
+    height: 270px;
+    font-family: "arial";
+}
+
+a {
+    color: #134C96;
+    font-family: "arial";
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.navbar {
+  height: 70px;
+  background-color: #134C96;
+  border-radius: 0 !important;
+}
+
+.admin-header{
+  font-weight: bold;
+  font-family: arial;
+  color: white;
+  position: relative;
+  top: 20%;
+  padding-left: 1%;
+}
+
+.logo {
+  height: 35px;
+  float:right;
+  top: 20%;
+  position: relative;
+  right: 1%;
+}
+
+.password-links {
+    margin: auto;
+    width: 50%;
+}
+
+p[class=error] {
+ color: red;
+}
