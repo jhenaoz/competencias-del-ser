@@ -38,6 +38,7 @@ public class PasswordService {
 
     /**
      * This method implements the logic to update a password and saves it in the database
+     * The attribute oldPassword in the password object could be the actual password or the generated token
      * @param password the object with the old password or token and the new password
      * @return a response entity with the status of the operation
      */
@@ -98,7 +99,7 @@ public class PasswordService {
     }
 
     /**
-     * This method updates the administrator if the token was used, so this deletes that token form the database
+     * This method updates the administrator after the token is used, deleting the token from the database
      * @param administrator to be updated
      */
     private void deleteToken(Administrator administrator) {

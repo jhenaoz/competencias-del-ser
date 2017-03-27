@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * This controller class gives the access to the password services
+ * This controller class gives access to the password services
  */
 @CrossOrigin
 @RestController
@@ -30,7 +30,7 @@ public class PasswordController {
 
     /**
      * This method receives a post request and allows the administrator to update their own password,
-     * this method receives in the request a new password and either the old password or a password reset token
+     * it receives in the request a new password and either the old password or a password reset token
      * @param password the object password contains the password to compare and the new password
      * @return a response entity with a OK status if the password was changed or a BAD_REQUEST if it was not
      */
