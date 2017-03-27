@@ -36,7 +36,7 @@ public class ElasticsearchAdministratorRepository implements AdministratorReposi
     }
 
     /**
-     * This method finds all indexes user with type password
+     * This method finds the administrator in the database
      *
      * @return Administrator list from the Elasticsearch
      */

@@ -5,6 +5,7 @@ import co.com.psl.evaluacionser.service.dto.Administrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * UserDetailsService checks the credentials for login from the persistence layer
+ * This is a custom implementation of the UserDetailsService class, this class manages the admin username and
+ * password using the persistence layer
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -35,17 +37,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (administrator == null) {
             throw new UsernameNotFoundException("No user found with username: ");
         }
-        return new org.springframework.security.core.userdetails.User(administrator.getUsername(),
+        return new User(administrator.getUsername(),
                 administrator.getPassword(), getAuthorities(Collections.singletonList("ROLE_ADMIN")));
     }
 
     /**
-     * This method generates the role for the admin
+     * This method casts the roles from a String List to a GrantedAuthority List to construct the User
      *
      * @param roles name of the role
      * @return the level of authority for the admin
      */
-    private static List<GrantedAuthority> getAuthorities(List<String> roles) {
+    private List<GrantedAuthority> getAuthorities(List<String> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));
