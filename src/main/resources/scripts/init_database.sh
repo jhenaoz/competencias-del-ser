@@ -1140,7 +1140,7 @@ curl -XPOST "http://localhost:9200/person/employee/_bulk?pretty" -d'
 
 curl -XPOST "http://localhost:9200/aptitude/aptitude/_bulk?pretty" -d'
 {"index":{"_id": "1"}}
-{"id":1, "es": "Apertura","en": "Openness", "behaviors": [{"id": "1", "es": "Acepta sugerencias sin distinción de quien las de", "en": "They accept suggestions regardless of who gives them"}, {"id": "2", "es": "Reconoce sus errores", "en": "They recognize their mistakes"}, {"id": "3", "es": "Solicita sugerencias", "en": "They ask for suggestions"}, {"id": "4", "es": "Se evidencian sus acciones de mejora", "en": "Their actions towards improvement are apparent"}, {"id": "5", "es": "Informa oportunamente situaciones que representan riesgos u obstáculos para el equipo", "en": "They opportunely inform of situations that represent risks and obstacles for the team"}]}
+{"id":1, "es": "Apertura","en": "Openness", "behaviors": [{"id": "1", "es": "Acepta sugerencias sin distinción de quien las dé", "en": "They accept suggestions regardless of who gives them"}, {"id": "2", "es": "Reconoce sus errores", "en": "They recognize their mistakes"}, {"id": "3", "es": "Solicita sugerencias", "en": "They ask for suggestions"}, {"id": "4", "es": "Se evidencian sus acciones de mejora", "en": "Their actions towards improvement are apparent"}, {"id": "5", "es": "Informa oportunamente situaciones que representan riesgos u obstáculos para el equipo", "en": "They opportunely inform of situations that represent risks and obstacles for the team"}]}
 {"index":{"_id": "2"}}
 {"id":2, "es": "Comunicación","en": "Communication", "behaviors": [{"id": "1", "es": "Comunica sus ideas de manera clara, garantizando que las otras personas entiendan el mensaje", "en": "They communicate their ideas clearly, ensuring that other people understand the message"}, {"id": "2", "es": "Al transmitir sus ideas lo hace en buenos términos y con un tono de voz adecuado", "en": "When transmitting their ideas they do it in good terms and with an appropriate voice tone"}, {"id": "3", "es": "Escucha a los demás permitiendo que expresen de forma completa sus ideas y acepta como válidas opiniones diferentes", "en": "They listen to those around, allowing people to express their ideas in a complete manner, and accept different opinions as valid"}, {"id": "4", "es": "Basa su comunicación en ejemplos y situaciones evitando suponer", "en": "They base their communication on examples and situations, avoiding making assumptions"}, {"id": "5", "es": "Antes de entablar la comunicación entiende cómo se siente o está la otra persona, para saber si es el momento adecuado", "en": "Before establishing communication they try to understand how the other feels, seeking to ensure that the moment is appropriate"}]}
 {"index":{"_id": "3"}}
@@ -1160,5 +1160,6 @@ curl -XPOST "http://localhost:9200/aptitude/aptitude/_bulk?pretty" -d'
 curl -XPOST "http://localhost:9200/user/administrator/1" -d'
 {
   "username":"admin",
-  "password":"ac6d4c32be1e5e250711e0ad9e813e5d44c9588609b46b267fcd7373354c5baca71c4b7f4c358c4cdcc644fd27624168e9e6e141cd445410496662f10d35cae8"
+  "password":"ac6d4c32be1e5e250711e0ad9e813e5d44c9588609b46b267fcd7373354c5baca71c4b7f4c358c4cdcc644fd27624168e9e6e141cd445410496662f10d35cae8",
+  "email":"lusago19@gmail.com"
 }'
