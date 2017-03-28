@@ -134,7 +134,6 @@
                  [style.display]="(!surveyForm.valid && submitted && surveyForm.get('observation').pristine) ? 'block' : 'none'">
                  {{ "Survey.survey_alert" | translate }}.
             </div>
-            <button type="button" (click)="test()" id="fillSurvey">Prueba</button>
             <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
             {{ bindRadioButtons() }}
             <h4>
@@ -162,4 +161,4 @@
     </div>
 </div>
     
-<app-footer (surveyAdvance)="surveyAdvance()"></app-footer>
+<app-footer (surveyAdvance)="surveyAdvance()" (goBack)="goBack()"></app-footer>

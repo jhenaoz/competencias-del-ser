@@ -57,6 +57,7 @@ export class SurveyComponent implements OnInit {
   showForm: boolean;
   submitted: boolean;
   textAreaIsRequired: boolean;
+  tempAptitude: Aptitude;
 
   /**
    * Creates an instance of SurveyComponent.
@@ -91,8 +92,13 @@ export class SurveyComponent implements OnInit {
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
-    // Verify if there is a survey stored in localstorage to bring it and continue the survey
-    this.verifyStoredSurvey();
+    // Verify if we are coming back to an aptitude already evaluated
+    if (this.surveyService.goingBack) {
+      this.tempAptitude = this.surveyService.survey.aptitudes.pop();
+    }else {
+      // Verify if there is a survey stored in localstorage to bring it and continue the survey
+      this.verifyStoredSurvey();
+    }
     // Add visual effect on buttons
     this.paintButtons(this.id);
 
@@ -112,7 +118,13 @@ export class SurveyComponent implements OnInit {
     // Show the form
     this.showForm = true;
 
-    // $(document).ready(this.test);
+    if (this.surveyService.goingBack) {
+      this.surveyService.goingBack = false;
+      // If we are coming back, so lets fill the form with the values completed by the user.
+      $(document).ready(() => {
+        this.refillSurvey(this.tempAptitude);
+      });
+    }
   }
 
   /*
@@ -184,7 +196,7 @@ export class SurveyComponent implements OnInit {
       localStorage.setItem('storedSurvey', JSON.stringify(this.surveyService.survey));
       // Checks if is only one survey (one competence to evaluate)
       if (!this.surveyService.oneSurvey) {
-        // Redirect to welcome
+        // Redirect to final
         this.router.navigate(['final']);
         // Saves survey
         localStorage.clear();
@@ -193,7 +205,7 @@ export class SurveyComponent implements OnInit {
         // Change route to advance
         // XXX: Kind of hardcoding to me... (?)
         if (+this.id + 1 >= 9) {
-          // Redirect to welcome
+          // Redirect to final
           this.router.navigate(['final']);
           localStorage.clear();
           // Saves survey
@@ -202,8 +214,6 @@ export class SurveyComponent implements OnInit {
           const next = (+this.id + 1).toString();
           this.guard.allow = true;
           this.router.navigate(['survey/' + next]);
-          // Change CSS class to change color to the aptitudes buttons
-          // $('.active').next().addClass('active');
           // Hide survey form until data is ok
           this.showForm = false;
           // Set time to wait functions to complete
@@ -267,16 +277,43 @@ export class SurveyComponent implements OnInit {
     return s.indexOf('   ') >= 1;
   }
 
-  test() {
-    $('#1radio0').trigger('click');
-    $('#2radio0').trigger('click');
-    $('#3radio0').trigger('click');
-    $('#4radio0').trigger('click');
-    $('#observationTextArea').val('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  /*
+   * Method to fill the form with the values that were given by the user
+   */
+  refillSurvey(value) {
+    // Fill the observations
+    $('#observationTextArea').val(value.observation);
+    // Fill each radio button with the score
+    value.behaviors.forEach(behavior => {
+      // it has the '4 -' because the radio buttons from left to side but the max score '4'
+      // is the one from the left
+      const score = 4 - behavior.score;
+      $('#' + behavior.behaviorId + 'radio' + score).trigger('click');
+    });
   }
 
+  /*
+   * Method to go back to the previous aptitude
+   */
   goBack() {
-    console.log('back');
+    // If we have not completed any aptitude, then we have not an aptitud to go back
+    if (!this.surveyService.oneSurvey || this.id === '1') {
+      this.router.navigate(['welcome']);
+    } else {
+      this.surveyService.goingBack = true;
+      const previous = (+this.id - 1).toString();
+      // remove the blue color on the actual button
+      $('#' + this.id).removeClass('active');
+      this.guard.allow = true;
+      this.router.navigate(['survey/' + previous]).then(() => {
+         // Hide survey form until data is ok
+        this.showForm = false;
+        // Clear form
+        this.createForm();
+        // Init all variables again
+        this.ngOnInit();
+      });
+    }
   }
 
 }
