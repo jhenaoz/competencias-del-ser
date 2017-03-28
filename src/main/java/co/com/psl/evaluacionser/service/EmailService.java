@@ -1,21 +1,17 @@
 package co.com.psl.evaluacionser.service;
 
-import co.com.psl.evaluacionser.service.dto.Administrator;
 import co.com.psl.evaluacionser.domain.Survey;
-
 import co.com.psl.evaluacionser.persistence.ElasticsearchAdministratorRepository;
+import co.com.psl.evaluacionser.service.dto.Administrator;
 import org.apache.log4j.Logger;
-import org.elasticsearch.index.mapper.SourceToParse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import sun.java2d.pipe.SpanIterator;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -25,13 +21,10 @@ import javax.mail.internet.MimeMessage;
  * and thymeleaf to generate the body through a html template
  */
 @Service
+@PropertySource("classpath:mail/emailconfig.properties")
 public class EmailService {
 
-    @Value("${mailReceiver}")
-    private String mailReceiver;
-
-    @Value("${mailUsername}")
-    private String mailUsername;
+    private String mailUsername = "mail.server.username";
 
     private static final Logger logger = Logger.getLogger(EmailService.class);
 
