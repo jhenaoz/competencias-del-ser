@@ -20,7 +20,7 @@ import { Error404Component } from './errors/404.component';
 import { LoginComponent } from './login/login.component';
 
 // Service import
-import { LoginService } from './login/login.service'
+import { LoginService } from './login/login.service';
 import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';

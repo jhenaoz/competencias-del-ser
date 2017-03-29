@@ -16,6 +16,5 @@ export const appRoutes: Routes = [
     { path: 'survey/:id', component: SurveyComponent, canActivate: [SurveyRouteActivator] },
     { path: 'final', component: SurveyEndComponent },
     { path: '404', component: Error404Component },
-    { path: 'login', component: LoginComponent},
-
+    { path: 'login', component: LoginComponent}
 ];

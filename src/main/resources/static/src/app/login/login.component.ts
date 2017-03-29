@@ -1,11 +1,8 @@
 import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import {Http} from '@angular/http';
-
-import {LoginService} from './login.service'
-
-import { FormGroup, FormControl, Validators, FormBuilder } 
-from '@angular/forms' ;
+import {LoginService} from './login.service';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms' ;
 
 @Component({
   templateUrl: './login.component.html',
@@ -14,29 +11,25 @@ from '@angular/forms' ;
 })
 
 
-export class LoginComponent{
+export class LoginComponent {
+  username: String;
+  password: String;
+  error: String = '';
 
-  username:String
-  password:String
-  error:String = '';
- constructor(private router: Router,private loginService : LoginService){}
+ constructor(private router: Router, private loginService: LoginService) {}
 
-  
-  
-  
-login(value: any){
+login(value: any) {
    this
      .loginService
      .login(this.username, this.password)
      .subscribe(next => {
-        this.router.navigateByUrl("/"); // login succeed
+        this.router.navigateByUrl('/'); // login succeed
      }, error => {
-        this.error = "Bad credentials"; // or extract smth from <error> object
+        this.error = 'Bad credentials'; // or extract smth from <error> object
      });
+  }
 }
-  
-}
- 
+
 
 
 
