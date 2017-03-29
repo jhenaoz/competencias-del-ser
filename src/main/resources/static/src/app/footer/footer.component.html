@@ -10,8 +10,8 @@
     </button>
     <button *ngIf="!(this.currentUrl == '/welcome')" (click)="cancel()" type="button" class="btn left-button">
     <i class="fa fa-chevron-left" aria-hidden="true"></i> 
-    <span *ngIf="changeButtonsText()" >{{ "Footer.back" | translate }} </span>
-    <span *ngIf="!changeButtonsText()" >{{ "Footer.beginning" | translate }} </span>
+    <span *ngIf="changeButtonsText()" >{{ "Footer.beginning" | translate }} </span>
+    <span *ngIf="!changeButtonsText()" >{{ "Footer.back" | translate }} </span>
     
     </button>
 </footer>
