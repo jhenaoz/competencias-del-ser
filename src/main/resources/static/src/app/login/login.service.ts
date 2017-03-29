@@ -29,7 +29,7 @@ export class LoginService {
     }
 
     private handleError(error: Response | any) {// here we handle any error that could occur
-        const errMsg: string = error.message;
+        const errMsg: string = error.message;// gets the message from the response error 
         return Observable.throw(errMsg);
         // throws the error message in case we want to display it to the user (for security reasons we do not want to)
     }

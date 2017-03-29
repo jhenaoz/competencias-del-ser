@@ -100,7 +100,6 @@ public class PasswordService {
 
     /**
      * This method updates the administrator after the token is used, deleting the token from the database
-     * This method update the administrator if the token was used, so this deletes that token form the database
      * @param administrator to be updated
      */
     private void deleteToken(Administrator administrator) {

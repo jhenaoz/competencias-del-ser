@@ -77,7 +77,7 @@ import { PopoverModule } from 'ng2-bootstrap';
     AptitudeService,
     SurveyRouteActivator,
     LoginService,
-    PasswordService
+    PasswordService,
   ],
   bootstrap: [AppComponent]
 })
