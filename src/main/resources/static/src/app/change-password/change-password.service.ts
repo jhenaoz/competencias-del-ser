@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 export class PasswordService {
   private passwordUrl = environment.apiURL; // this gets the url according to the environment
   constructor(private http: Http) {
-    this.passwordUrl += '/password/change';// this is the backend endpoint, not the view
+    this.passwordUrl += '/password/change'; // this is the backend endpoint, not the view
     // remember that the get petition is for the view and the post is for the procesing
   }
 

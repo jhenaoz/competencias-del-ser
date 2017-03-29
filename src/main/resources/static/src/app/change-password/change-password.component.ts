@@ -28,7 +28,7 @@ export class PasswordComponent {
                 this.error = 'Las contraseñas no coinciden';
                 return;
             }
-            this.error = '';// leaves error blank if passwords are not empty && matching
+            this.error = ''; // leaves error blank if passwords are not empty && matching
 
             const password = {// create an object to conver into json for the post body
                 'newPassword': this.newPassword,
