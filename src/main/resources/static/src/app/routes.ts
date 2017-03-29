@@ -6,6 +6,7 @@ import { Error404Component } from './errors/404.component';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
 import { SurveyEndComponent } from './survey-end/survey-end.component';
 import { LoginComponent } from './login/login.component';
+import { PasswordComponent } from './change-password/change-password.component';
 
 export const appRoutes: Routes = [
     // {path: 'path/to/somewhere', component: ComponentForSomeWhere}
@@ -16,5 +17,6 @@ export const appRoutes: Routes = [
     { path: 'survey/:id', component: SurveyComponent, canActivate: [SurveyRouteActivator] },
     { path: 'final', component: SurveyEndComponent },
     { path: '404', component: Error404Component },
-    { path: 'login', component: LoginComponent}
+    { path: 'login', component: LoginComponent},
+    { path: 'password/change', component: PasswordComponent}
 ];

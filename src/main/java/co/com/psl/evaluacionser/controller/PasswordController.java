@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ import java.io.IOException;
  */
 
 @RestController
-@RequestMapping(value = "api/password")
+@RequestMapping(value = "/password")
 public class PasswordController {
 
     private static final Logger logger = Logger.getLogger(PasswordController.class);
@@ -51,7 +52,7 @@ public class PasswordController {
      * @return a response entity with a OK status if the password was changed or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/change", method = RequestMethod.POST)
-    public ResponseEntity changePassword(Password password, HttpServletResponse response) {
+    public ResponseEntity changePassword(@RequestBody  Password password, HttpServletResponse response) {
         if (passwordService.updatePassword(password)) {
             try {
                 response.sendRedirect("/login");
