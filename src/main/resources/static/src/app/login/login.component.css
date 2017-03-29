@@ -1,3 +1,38 @@
+.navbar {
+  height: 70px;
+  background-color: #134C96;
+  border-radius: 0 !important;
+  font-weight: bold;
+  font-family: arial;
+  color: white;
+  position: relative;
+  padding-left: 1%;
+}
+
+.logo {
+  height: 35px;
+  float:right;
+  top: 20%;
+  position: relative;
+  right: 1%;
+}
+
+div.login {
+    display: flex;
+    display: -webkit-flex;
+   
+    width: 100%;
+    
+    justify-content: center;
+}
+
+div.form {
+    padding: 20px;
+    width: 500px;
+    height: 270px;
+    font-family: "arial";
+}
+
 input[type=text], input[type=password], select {
     width: 100%;
     padding: 12px 20px;
@@ -27,61 +62,9 @@ input[type=submit]:hover {
     color: #FFF;
 }
 
-body {
-    background-color: #f2f2f2;
-}
-
-div.login {
-    display: flex;
-    display: -webkit-flex;
+html, body {
     height: 100%;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+    height:100vh;
+     background-color: #f2f2f2;
 }
 
-div.form {
-    padding: 20px;
-    width: 500px;
-    height: 270px;
-    font-family: "arial";
-}
-
-a {
-    color: #134C96;
-    font-family: "arial";
-    font-size: 13px;
-    text-decoration: none;
-}
-
-.navbar {
-  height: 70px;
-  background-color: #134C96;
-  border-radius: 0 !important;
-}
-
-.admin-header{
-  font-weight: bold;
-  font-family: arial;
-  color: white;
-  position: relative;
-  top: 20%;
-  padding-left: 1%;
-}
-
-.logo {
-  height: 35px;
-  float:right;
-  top: 20%;
-  position: relative;
-  right: 1%;
-}
-
-.password-links {
-    margin: auto;
-    width: 50%;
-}
-
-p[class=error] {
- color: red;
-}

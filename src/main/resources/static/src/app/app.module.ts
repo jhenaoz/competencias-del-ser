@@ -17,8 +17,10 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { SurveyOptionsComponent } from './survey-options/survey-options.component';
 import { SurveyComponent } from './survey/survey.component';
 import { Error404Component } from './errors/404.component';
+import { LoginComponent } from './login/login.component';
 
 // Service import
+import { LoginService } from './login/login.service'
 import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';
@@ -63,13 +65,15 @@ import { PopoverModule } from 'ng2-bootstrap';
     SurveyOptionsComponent,
     SurveyComponent,
     Error404Component,
-    SurveyEndComponent
+    SurveyEndComponent,
+    LoginComponent
   ],
   providers: [
     EmployeeService,
     SurveyService,
     AptitudeService,
     SurveyRouteActivator,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

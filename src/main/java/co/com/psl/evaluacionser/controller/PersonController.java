@@ -17,7 +17,6 @@ import java.util.List;
  */
 //Controller for the person requests
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/person")
 public class PersonController {

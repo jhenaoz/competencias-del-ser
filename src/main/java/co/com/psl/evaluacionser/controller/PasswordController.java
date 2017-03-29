@@ -30,7 +30,7 @@ import java.io.IOException;
  * /**
  * This controller class gives the access to the password services
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "api/password")
 public class PasswordController {
