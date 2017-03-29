@@ -2,6 +2,7 @@
 curl -XDELETE "http://localhost:9200/person"
 curl -XDELETE "http://localhost:9200/aptitude"
 curl -XDELETE "http://localhost:9200/survey"
+curl -XDELETE "http://localhost:9200/user"
 
 curl -XPUT "http://localhost:9200/aptitude" -d'
 {
@@ -118,6 +119,30 @@ curl -XPUT "http://localhost:9200/survey" -d'
             }
         }
     }
+}'
+
+curl -XPUT "http://localhost:9200/user" -d'
+{
+	"mappings": {
+		"administrator": {
+			"dynamic": "strict",
+			"properties": {
+				"username": {
+					"type": "string"
+				},
+				"password": {
+				  "type": "string"
+				},
+				"token": {
+				  "type": "string"
+				},
+				"timestamp": {
+				  "type": "date",
+				  "format": "yyyy-MM-dd HH:mm:ss"
+				}
+			}
+		}
+	}
 }'
 
 curl -XPOST "http://localhost:9200/person/employee/_bulk?pretty" -d'
@@ -1115,7 +1140,7 @@ curl -XPOST "http://localhost:9200/person/employee/_bulk?pretty" -d'
 
 curl -XPOST "http://localhost:9200/aptitude/aptitude/_bulk?pretty" -d'
 {"index":{"_id": "1"}}
-{"id":1, "es": "Apertura","en": "Openness", "behaviors": [{"id": "1", "es": "Acepta sugerencias sin distinción de quien las de", "en": "They accept suggestions regardless of who gives them"}, {"id": "2", "es": "Reconoce sus errores", "en": "They recognize their mistakes"}, {"id": "3", "es": "Solicita sugerencias", "en": "They ask for suggestions"}, {"id": "4", "es": "Se evidencian sus acciones de mejora", "en": "Their actions towards improvement are apparent"}, {"id": "5", "es": "Informa oportunamente situaciones que representan riesgos u obstáculos para el equipo", "en": "They opportunely inform of situations that represent risks and obstacles for the team"}]}
+{"id":1, "es": "Apertura","en": "Openness", "behaviors": [{"id": "1", "es": "Acepta sugerencias sin distinción de quien las dé", "en": "They accept suggestions regardless of who gives them"}, {"id": "2", "es": "Reconoce sus errores", "en": "They recognize their mistakes"}, {"id": "3", "es": "Solicita sugerencias", "en": "They ask for suggestions"}, {"id": "4", "es": "Se evidencian sus acciones de mejora", "en": "Their actions towards improvement are apparent"}, {"id": "5", "es": "Informa oportunamente situaciones que representan riesgos u obstáculos para el equipo", "en": "They opportunely inform of situations that represent risks and obstacles for the team"}]}
 {"index":{"_id": "2"}}
 {"id":2, "es": "Comunicación","en": "Communication", "behaviors": [{"id": "1", "es": "Comunica sus ideas de manera clara, garantizando que las otras personas entiendan el mensaje", "en": "They communicate their ideas clearly, ensuring that other people understand the message"}, {"id": "2", "es": "Al transmitir sus ideas lo hace en buenos términos y con un tono de voz adecuado", "en": "When transmitting their ideas they do it in good terms and with an appropriate voice tone"}, {"id": "3", "es": "Escucha a los demás permitiendo que expresen de forma completa sus ideas y acepta como válidas opiniones diferentes", "en": "They listen to those around, allowing people to express their ideas in a complete manner, and accept different opinions as valid"}, {"id": "4", "es": "Basa su comunicación en ejemplos y situaciones evitando suponer", "en": "They base their communication on examples and situations, avoiding making assumptions"}, {"id": "5", "es": "Antes de entablar la comunicación entiende cómo se siente o está la otra persona, para saber si es el momento adecuado", "en": "Before establishing communication they try to understand how the other feels, seeking to ensure that the moment is appropriate"}]}
 {"index":{"_id": "3"}}
@@ -1131,3 +1156,10 @@ curl -XPOST "http://localhost:9200/aptitude/aptitude/_bulk?pretty" -d'
 {"index":{"_id": "8"}}
 {"id":8, "es": "Liderazgo para el logro","en": "Achievement oriented leadership", "behaviors": [{"id": "1", "es": "Comunica claramente los objetivos del equipo y los requisitos para alcanzarlos", "en": "They communicate clearly the team\u0027s objectives and requirements to reaching them"}, {"id": "2", "es": "Obtiene los recursos y gestiona lo requerido para el logro de los objetivos", "en": "They obtain the resources and manage the requirements needed to reach the objectives"}, {"id": "3", "es": "Pregunta y entiende los puntos de vista de todas las personas del equipo acerca de los objetivos, requisitos y actividades ", "en": "They request and understand every team member\u0027s point of view about the objectives, requirements and agenda"}, {"id": "4", "es": "Reconoce que el equipo es quien toma las decisiones y respalda las mismas", "en": "They recognize that the team is the one that makes the decisions and support those decisions"}]}
 '
+
+curl -XPOST "http://localhost:9200/user/administrator/1" -d'
+{
+  "username":"admin",
+  "password":"ac6d4c32be1e5e250711e0ad9e813e5d44c9588609b46b267fcd7373354c5baca71c4b7f4c358c4cdcc644fd27624168e9e6e141cd445410496662f10d35cae8",
+  "email":"lusago19@gmail.com"
+}'

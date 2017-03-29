@@ -44,7 +44,7 @@ public class ElasticsearchAdministratorRepository implements AdministratorReposi
     public Administrator findAdministrator() {
         SearchResult result;
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.query(QueryBuilders.matchQuery("_id", "1"));
         Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(administratorIndex)
                 .addType(administratorType).build();
         try {

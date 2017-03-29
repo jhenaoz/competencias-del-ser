@@ -4,6 +4,7 @@ public class Administrator {
 
     private String username;
     private String password;
+    private String email;
     private String token;
     private String timestamp;
 
@@ -23,6 +24,14 @@ public class Administrator {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getToken() {
         return token;
     }
@@ -38,4 +47,5 @@ public class Administrator {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
 }

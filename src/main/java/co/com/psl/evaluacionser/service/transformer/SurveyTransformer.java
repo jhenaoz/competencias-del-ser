@@ -62,7 +62,7 @@ public class SurveyTransformer {
         return survey;
     }
 
-    public AptitudeSurvey aptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
+    private AptitudeSurvey aptitudeSurveyTransformer(AptitudeSurveyDto aptitudeSurveyDto) {
         AptitudeSurvey aptitudeSurvey = new AptitudeSurvey();
         try {
             Aptitude aptitude = aptitudeRepository.findById(aptitudeSurveyDto.getAptitudeId());
@@ -77,7 +77,7 @@ public class SurveyTransformer {
         return aptitudeSurvey;
     }
 
-    public List<BehaviorSurvey> behaviorsSurveyTransformer(List<Behavior> behaviors,
+    private List<BehaviorSurvey> behaviorsSurveyTransformer(List<Behavior> behaviors,
                                                            List<BehaviorSurveyDto> behaviorsSurveyDto) {
         List<BehaviorSurvey> behaviorsSurvey = new ArrayList<>();
         for (BehaviorSurveyDto behaviorSurveyDto : behaviorsSurveyDto) {
