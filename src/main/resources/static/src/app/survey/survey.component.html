@@ -142,7 +142,8 @@
             <textarea formControlName="observation" 
                       class="form-control" 
                       rows="3" 
-                      minlength="10">
+                      minlength="10"
+                      id="observationTextArea">
             </textarea>
             <em>{{ "Shared.characters" | translate }}.</em>
             <br>
@@ -159,5 +160,5 @@
         </form>
     </div>
 </div>
-
-<app-footer (surveyAdvance)="surveyAdvance()"></app-footer>
+    
+<app-footer (surveyAdvance)="surveyAdvance()" (goBack)="goBack()"></app-footer>

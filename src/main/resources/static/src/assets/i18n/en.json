@@ -3,10 +3,10 @@
         "language_change": "Change language"
     },
     "Footer": {
-        "back": "Back",
+        "back": "Previous",
         "forward": "Next",
         "start": "Start Assessment",
-        "beginning": "Back to beginning",
+        "beginning": "Go Back",
         "continue": "Continue"
     },
     "Welcome": {
