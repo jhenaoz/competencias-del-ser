@@ -29,12 +29,8 @@ export class LoginService {
 }
  
  private handleError(error: Response | any) {
-     console.log("llego hasta el error")
     let errMsg: string;
-
-    let errorMsg = error.message || `Yikes! There was was a problem with our hyperdrive device and we couldn't retrieve your data!`
-  console.error(errorMsg);
-
+    let errorMsg = error.message
     return Observable.throw(errMsg);
   }
     

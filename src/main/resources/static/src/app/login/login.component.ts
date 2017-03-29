@@ -18,7 +18,7 @@ export class LoginComponent{
 
   username:String
   password:String
-  error:String
+  error:String = '';
  constructor(private router: Router,private loginService : LoginService){}
 
   

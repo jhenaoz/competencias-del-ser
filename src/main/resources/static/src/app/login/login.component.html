@@ -20,11 +20,11 @@
                 [(ngModel)]="password"
                  /><br><br>
 
-                <p id="error" class="error"></p>
+                <p *ngIf="error !=''  " class="error">El usuario y la contraseña no coinciden</p>
                 <input type="submit" value="Ingresar">
                 <div class="password-links">
                     <a href="/change">Cambiar contraseña</a>
-                    <a href="/api/password/forgot">Recuperar contraseña</a>
+                    <a class="recover-pass-link" href="/api/password/forgot">Recuperar contraseña</a>
                 </div>
             </form>
         </div>
