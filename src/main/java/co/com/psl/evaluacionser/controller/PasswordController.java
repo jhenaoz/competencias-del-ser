@@ -2,16 +2,18 @@ package co.com.psl.evaluacionser.controller;
 
 import co.com.psl.evaluacionser.service.PasswordService;
 import co.com.psl.evaluacionser.service.dto.Password;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 
 /**
  * This controller class gives access to the password services
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PasswordController {
 
     private PasswordService passwordService;
+
+    private static final Logger logger = Logger.getLogger(PasswordController.class);
 
     @Autowired
     public PasswordController(final PasswordService passwordService) {
@@ -35,10 +39,20 @@ public class PasswordController {
      * @return a response entity with a OK status if the password was changed or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/change", method = RequestMethod.POST)
-    public ResponseEntity changePassword(@RequestBody Password password) {
+    public ResponseEntity changePassword(Password password, HttpServletResponse response) {
         if (passwordService.updatePassword(password)) {
+            try {
+                response.sendRedirect("/logout");
+            } catch (IOException e) {
+                logger.error("The endpoint can't redirect to the login page", e);
+            }
             return new ResponseEntity(HttpStatus.OK);
         } else {
+            try {
+                response.sendRedirect("/api/password/change?error");
+            } catch (IOException e) {
+                logger.error("The controller couldn't redirect to the view with the param error", e);
+            }
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
@@ -48,8 +62,13 @@ public class PasswordController {
      * @return a response entity with a OK status if the token was sent or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/forgot", method = RequestMethod.GET)
-    public ResponseEntity forgotPassword() {
+    public ResponseEntity forgotPassword(HttpServletResponse response) {
         passwordService.forgotPassword();
+        try {
+            response.sendRedirect("/welcome");
+        } catch (IOException e) {
+            logger.error("The endpoint can't redirect to the main page", e);
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 }
