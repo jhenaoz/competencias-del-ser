@@ -2,6 +2,7 @@
 curl -XDELETE "http://localhost:9200/person"
 curl -XDELETE "http://localhost:9200/aptitude"
 curl -XDELETE "http://localhost:9200/survey"
+curl -XDELETE "http://localhost:9200/user"
 
 curl -XPUT "http://localhost:9200/aptitude" -d'
 {
@@ -118,6 +119,30 @@ curl -XPUT "http://localhost:9200/survey" -d'
             }
         }
     }
+}'
+
+curl -XPUT "http://localhost:9200/user" -d'
+{
+	"mappings": {
+		"administrator": {
+			"dynamic": "strict",
+			"properties": {
+				"username": {
+					"type": "string"
+				},
+				"password": {
+				  "type": "string"
+				},
+				"token": {
+				  "type": "string"
+				},
+				"timestamp": {
+				  "type": "date",
+				  "format": "yyyy-MM-dd HH:mm:ss"
+				}
+			}
+		}
+	}
 }'
 
 curl -XPOST "http://localhost:9200/person/employee/_bulk?pretty" -d'
@@ -1131,3 +1156,9 @@ curl -XPOST "http://localhost:9200/aptitude/aptitude/_bulk?pretty" -d'
 {"index":{"_id": "8"}}
 {"id":8, "es": "Liderazgo para el logro","en": "Achievement oriented leadership", "behaviors": [{"id": "1", "es": "Comunica claramente los objetivos del equipo y los requisitos para alcanzarlos", "en": "They communicate clearly the team\u0027s objectives and requirements to reaching them"}, {"id": "2", "es": "Obtiene los recursos y gestiona lo requerido para el logro de los objetivos", "en": "They obtain the resources and manage the requirements needed to reach the objectives"}, {"id": "3", "es": "Pregunta y entiende los puntos de vista de todas las personas del equipo acerca de los objetivos, requisitos y actividades ", "en": "They request and understand every team member\u0027s point of view about the objectives, requirements and agenda"}, {"id": "4", "es": "Reconoce que el equipo es quien toma las decisiones y respalda las mismas", "en": "They recognize that the team is the one that makes the decisions and support those decisions"}]}
 '
+
+curl -XPOST "http://localhost:9200/user/administrator/1" -d'
+{
+  "username":"admin",
+  "password":"ac6d4c32be1e5e250711e0ad9e813e5d44c9588609b46b267fcd7373354c5baca71c4b7f4c358c4cdcc644fd27624168e9e6e141cd445410496662f10d35cae8"
+}'
