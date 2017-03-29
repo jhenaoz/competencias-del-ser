@@ -40,7 +40,7 @@ public class PasswordController {
      * @return a response entity with a OK status if the password was changed or a BAD_REQUEST if it was not
      */
     @RequestMapping(value = "/change", method = RequestMethod.POST)
-    @ResponseBody public ResponseEntity changePassword(Password password, HttpServletResponse response) {
+    public ResponseEntity changePassword(Password password, HttpServletResponse response) {
         if (passwordService.updatePassword(password)) {
             try {
                 response.sendRedirect("/logout");
