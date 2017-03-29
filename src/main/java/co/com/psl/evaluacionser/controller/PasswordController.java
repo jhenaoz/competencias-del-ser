@@ -44,12 +44,17 @@ public class PasswordController {
     public @ResponseBody ResponseEntity changePassword(Password password, HttpServletResponse response) {
         if (passwordService.updatePassword(password)) {
             try {
-                response.sendRedirect("/login");
+                response.sendRedirect("/logout");
             } catch (IOException e) {
                 logger.error("The endpoint can't redirect to the login page", e);
             }
             return new ResponseEntity(HttpStatus.OK);
         } else {
+            try {
+                response.sendRedirect("/change?error");
+            } catch (IOException e) {
+                logger.error("The controller couldn't redirect to the view with the param error", e);
+            }
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
@@ -62,7 +67,7 @@ public class PasswordController {
     public ResponseEntity forgotPassword(HttpServletResponse response) {
         passwordService.forgotPassword();
         try {
-            response.sendRedirect("/");
+            response.sendRedirect("/welcome");
         } catch (IOException e) {
             logger.error("The endpoint can't redirect to the main page", e);
         }
