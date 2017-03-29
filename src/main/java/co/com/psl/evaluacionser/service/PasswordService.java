@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * This class implements the logic required to manage the administrator password
+ * This class implements the business logic required to manage the administrator password
  */
 @Service
 public class PasswordService {
@@ -38,6 +38,7 @@ public class PasswordService {
 
     /**
      * This method implements the logic to update a password and saves it in the database
+     * The attribute oldPassword in the password object could be the actual password or the generated token
      * @param password the object with the old password or token and the new password
      * @return a response entity with the status of the operation
      */
@@ -59,25 +60,25 @@ public class PasswordService {
     }
 
     /**
-     * This method implements the logic to generated a new token and sends it to the administrator
+     * This method implements the logic to generate a new token, and sends it to the administrator
      * @return a response entity with the status of the operation
      */
     public void forgotPassword() {
         Random random = new Random();
         int seed = random.nextInt();
-        String newPassword = passwordEncoder.generateSalt(seed);
+        String newToken = passwordEncoder.generateSalt(seed);
 
         Administrator administrator = administratorRepository.findAdministrator();
-        administrator.setToken(passwordEncoder.encode(newPassword));
+        administrator.setToken(passwordEncoder.encode(newToken));
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         administrator.setTimestamp(dateFormat.format(date));
         administratorRepository.updateAdministrator(administrator);
-        emailService.sendNewPassword(newPassword);
+        emailService.sendTokenEmail(newToken);
     }
 
     /**
-     * This method makes the time verification because the token only can be used 30 minutes after being solicited
+     * This method makes the time verification because the token can only be used 30 minutes after being solicited
      * @param timestamp is the date when the token was solicited
      * @return True if the time is right or false if the token expired
      */
@@ -98,7 +99,7 @@ public class PasswordService {
     }
 
     /**
-     * This method update the administrator if the token was used, so this deletes that token form the database
+     * This method updates the administrator after the token is used, deleting the token from the database
      * @param administrator to be updated
      */
     private void deleteToken(Administrator administrator) {

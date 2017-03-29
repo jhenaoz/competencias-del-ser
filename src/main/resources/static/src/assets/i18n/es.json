@@ -43,7 +43,8 @@
         "information": "Sin información",
         "observations": "Observaciones",
         "survey_observations_alert": "¡Las observaciones son requeridas!",
-        "survey_alert": "¡Debes responder en todos los campos!"
+        "survey_alert": "¡Debes responder en todos los campos!",
+        "characters_alert": "Recuerda: Mínimo 10 Caracteres"
     },
     "Competences": {
         "title": "Competencia a valorar",

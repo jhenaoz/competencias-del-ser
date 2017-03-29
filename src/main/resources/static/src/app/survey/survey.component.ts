@@ -169,9 +169,9 @@ export class SurveyComponent implements OnInit {
           this.textAreaIsRequired = true;
         }
       }
-      const observations = this.surveyForm.get('observation').value.trim();
       // Check if textarea is filled
-      if (observations.length < 10 || this.hasWhiteSpace(observations)) {
+      this.observation = this.surveyForm.get('observation').value.trim();
+      if ((this.observation.length < 10 || this.hasWhiteSpace(this.observation)) && this.textAreaIsRequired) {
         return;
       }
       // Filling aptitud properties
@@ -259,8 +259,11 @@ export class SurveyComponent implements OnInit {
               && this.surveyService.oneSurvey ===  typeOfSurvey;
   }
 
+  /*
+   * Method to verify the amount of whitespaces contained in the string
+   */
   hasWhiteSpace(s) {
-    return s.indexOf(' ') >= 3;
+    return s.indexOf('   ') >= 1;
   }
 
 }

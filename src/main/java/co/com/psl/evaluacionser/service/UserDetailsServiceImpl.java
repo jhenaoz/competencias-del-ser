@@ -26,7 +26,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private AdministratorRepository administratorRepository;
 
     /**
-     * This method take the credentials of the administrator from the database to check them with the login
+     * This method takes the credentials of the administrator from the database and validates them against the
+     * login information
      *
      * @param username username in case of multiple administrators
      * @return The administrator with the credentials
