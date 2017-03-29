@@ -50,7 +50,7 @@ public class PasswordController {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             try {
-                response.sendRedirect("/change?error");
+                response.sendRedirect("/api/password/change?error");
             } catch (IOException e) {
                 logger.error("The controller couldn't redirect to the view with the param error", e);
             }

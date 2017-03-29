@@ -13,7 +13,7 @@ public class ViewController {
         return "forward:/index.html";
     }
 
-    @RequestMapping(value = "/change", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/password/change", method = RequestMethod.GET)
     public String forgotPassword() {
         return "changepassword";
     }
