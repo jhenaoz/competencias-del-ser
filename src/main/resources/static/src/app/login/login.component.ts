@@ -4,7 +4,7 @@ import { LoginService } from './login.service';
 
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', '../change-password/change-password.component.css']
 
 })
 
@@ -17,7 +17,7 @@ export class LoginComponent {
 
   constructor(private router: Router, private loginService: LoginService) { }
 
-  login(value: any) {
+  login() {
     this
       .loginService
       .login(this.username, this.password)

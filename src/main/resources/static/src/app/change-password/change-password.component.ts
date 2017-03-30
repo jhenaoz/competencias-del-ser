@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './change-password.component.html',
-    styleUrls: ['./change-password.component.css']
+    styleUrls: ['../navbar/navbar.component.css', './change-password.component.css']
 })
 
 export class PasswordComponent {
@@ -17,18 +17,8 @@ export class PasswordComponent {
 
     constructor(private passwordService: PasswordService, private router: Router) { }
 // this method gets called in the html, makes the password validations and post to the backend
-    verifyAndPost() {
-        if (this.newPassword === '' || this.oldPassword === '' ||
-            this.repeatedPassword === '') {// the passwords can't be empty
-            this.error = 'No puede haber campos vacios';
-            return;
-        } else {
-
-            if (this.newPassword !== this.repeatedPassword) {// the new password must be verified by being typed again
-                this.error = 'Las contraseñas no coinciden';
-                return;
-            }
-            this.error = ''; // leaves error blank if passwords are not empty && matching
+    postPasswordChangeRequest() {
+           this.error = ''; // leaves error blank if passwords are not empty && matching
 
             const password = {// create an object to conver into json for the post body
                 'newPassword': this.newPassword,
@@ -43,4 +33,3 @@ export class PasswordComponent {
                 });
         }
     }
-}
