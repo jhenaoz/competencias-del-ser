@@ -12,13 +12,13 @@ export class PasswordComponent {
     newPassword: String = '';
     oldPassword: String = '';
     repeatedPassword: String = '';
-    error: String = '';
+    error = false;
 
 
     constructor(private passwordService: PasswordService, private router: Router) { }
 // this method gets called in the html, makes the password validations and post to the backend
     postPasswordChangeRequest() {
-           this.error = ''; // leaves error blank if passwords are not empty && matching
+           this.error = false; // leaves error blank if passwords are not empty && matching
 
             const password = {// create an object to conver into json for the post body
                 'newPassword': this.newPassword,
@@ -29,7 +29,7 @@ export class PasswordComponent {
                 .subscribe(next => {// subscribe to the post method to check if successful password change
                     this.router.navigateByUrl('/login'); // redirect to login after successful password change
                 }, error => {// this checks if an error was thrown by the service
-                    this.error = 'Password change error'; // show error on password backend error
+                    this.error = true; // show error on password backend error
                 });
         }
     }

@@ -66,13 +66,14 @@
         "cancel": "Cancelar",
         "characters": "Mínimo 10 Caracteres",
         "changePassword": "Cambiar contraseña",
-        "emptyValues": "Hay campos vacios en el formulario"
+        "emptyValues": "Hay campos vacíos en el formulario"
     },
     "Password": {
         "oldPassword": "Antigua contraseña o token",
         "newPassword": "Nueva contraseña",
         "repeatedPassword": "Confirme su nueva contraseña",
-        "mismatchingPasswords": "La nueva contraseña debe coincidir en ambos campos"
+        "mismatchingPasswords": "La nueva contraseña debe coincidir en ambos campos",
+        "error": "La contraseña (o el token) no es válida"
     },
     "Login": {
         "username": "Usuario",

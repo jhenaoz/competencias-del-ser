@@ -70,7 +70,8 @@
         "oldPassword": "Old password or token",
         "newPassword": "New password",
         "repeatedPassword": "Confirm your new password",
-        "mismatchingPasswords": "The new password must match in both fields"
+        "mismatchingPasswords": "The new password must match in both fields",
+        "error": "The password (or token) is not valid"
     },
     "Login": {
         "username": "Username",
