@@ -63,5 +63,15 @@
     "Shared": {
         "cancel": "Cancel",
         "characters": "10 Characters Minimum"
+    },
+    "Admin": {
+        "valorations": "Valorations",
+        "relationTree": "Relationship Tree",
+        "labelValoration": "Soft skills assessment file",
+        "labelRelation": "Evaluated people relation file",
+        "evaluated": "Evaluated",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "download": "Download"
     }
 }

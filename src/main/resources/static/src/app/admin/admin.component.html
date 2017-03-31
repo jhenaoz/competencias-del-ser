@@ -1,0 +1,68 @@
+<html>
+
+<body>
+    <app-navbar></app-navbar>
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" class="active"><a data-toggle="tab" href="#valorations">{{ "Admin.valorations" | translate }}</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#relationTree">{{ "Admin.relationTree" | translate }}</a></li>
+    </ul>
+
+    <!--here are the tab contents, each for a admin function  -->
+    <!--first the survey function, a form to make survey request to the backend  -->
+    <div class="tab-content form">
+        <div id="valorations" class="tab-pane fade in active">
+            <!-- body of the valorations -->
+            <div class="container">
+                <form class="form" [formGroup]="adminForm">
+                    <div class="form-group">
+                        <div class="radio">
+                            <label>
+                                 <input type="radio" formControlName="fileType" name="fileType" id="optionsRadios1" value="user">
+                                 {{ "Admin.labelValoration" | translate }}
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" formControlName="fileType" name="fileType" id="optionsRadios2" value="relation">
+                                {{ "Admin.labelRelation" | translate }}
+                             </label>
+                        </div>
+                        <label>{{ "Admin.evaluated" | translate }}:</label>
+                        <app-employee 
+                        id="evaluatedEmployee"
+                        formControlName="evaluated"
+                        ngDefaultControl
+                        class="admin-employee-selector"></app-employee>
+                        
+                        <div class="block">
+                            
+                            <label>{{ "Admin.startDate" | translate }}</label>
+                            <input type="text" class="form-control" formControlName="startDate" id="startDate" placeholder="yyyy-mm-dd">
+                        </div>
+                        <div class="block">
+                            <label>{{ "Admin.endDate" | translate }}</label>
+                            <input type="text" class="form-control" formControlName="endDate" id="endDate" placeholder="yyyy-mm-dd">
+                        </div>
+                    </div>
+                    <button type="submit" (click)="fileRequest()" class="btn btn-primary btn-block">{{ "Admin.download" | translate }}</button>
+                </form>
+            </div>
+        
+        evaluated: {{adminForm.get('evaluated').value}}<br>
+        startDate: {{adminForm.get('startDate').value}}<br>
+        endDate:   {{adminForm.get('endDate').value}}<br>
+        file type: {{adminForm.get('fileType').value}}<br>
+        <!-- end of valoration's body -->
+
+</div>
+
+
+        <div id="relationTree" class="tab-pane fade">
+
+            <h1>Work in progress</h1>
+
+        </div>
+    </div>
+</body>
+
+</html>

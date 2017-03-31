@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit  {
 * Method to verify the current ulr to activate/deactivate the changeLang button
 */
   disableChangeLanguage() {
-    return (this.currentUrl === '/welcome');
+    return (this.currentUrl === '/welcome' || this.currentUrl === '/admin');
   }
 
 }

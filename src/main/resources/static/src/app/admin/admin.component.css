@@ -1,0 +1,47 @@
+html, body {
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+h1 {
+    text-align: center;
+}
+
+li {
+    color: #fff;
+    background-color: lightsteelblue; 
+}
+
+li :hover {
+    color: #fff;
+    background-color: #5CB85C
+}
+
+li.active>a {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+
+div.container {
+     display: flex;
+     width: 100%;
+     justify-content: center;
+ }
+ 
+div.form {
+    padding: 20px;
+    font-family: "arial";
+}
+
+label {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+button:hover {
+    background-color: #5CB85C;
+    color: #FFF;
+}

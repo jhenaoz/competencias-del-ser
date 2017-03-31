@@ -65,5 +65,15 @@
     "Shared": {
         "cancel": "Cancelar",
         "characters": "Mínimo 10 Caracteres"
+    },
+    "Admin": {
+        "valorations": "Valoraciónes",
+        "relationTree": "Árbol de relación",
+        "labelValoration": "Archivo de valoración del ser",
+        "labelRelation": "Archivo de relacion de personas evaluadas",
+        "evaluated": "Evaluado",
+        "startDate": "Fecha inicial",
+        "endDate": "Fecha final",
+        "download": "Descargar"
     }
 }
