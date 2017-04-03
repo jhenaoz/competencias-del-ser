@@ -24,7 +24,6 @@ import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
-import { AdminService } from './admin/admin.service';
 
 // Local Storage import
 import { LocalStorageModule } from 'angular-2-local-storage';
@@ -73,7 +72,6 @@ import { PopoverModule } from 'ng2-bootstrap';
     SurveyService,
     AptitudeService,
     SurveyRouteActivator,
-    AdminService,
   ],
   bootstrap: [AppComponent]
 })

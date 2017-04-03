@@ -44,14 +44,10 @@
                             <input type="text" class="form-control" formControlName="endDate" id="endDate" placeholder="yyyy-mm-dd">
                         </div>
                     </div>
-                    <button type="submit" (click)="fileRequest()" class="btn btn-primary btn-block">{{ "Admin.download" | translate }}</button>
+                    
+                    <button type="submit" (click)="fileRequest()" href="fileRequest()" class="btn btn-primary btn-block">{{ "Admin.download" | translate }}</button>
                 </form>
             </div>
-        
-        evaluated: {{adminForm.get('evaluated').value}}<br>
-        startDate: {{adminForm.get('startDate').value}}<br>
-        endDate:   {{adminForm.get('endDate').value}}<br>
-        file type: {{adminForm.get('fileType').value}}<br>
         <!-- end of valoration's body -->
 
 </div>

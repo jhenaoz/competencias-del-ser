@@ -1,41 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AdminService } from './admin.service';
-import { Observable } from 'rxjs/Observable';
-import { Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
+import { environment } from '../../environments/environment';
 
 @Component({
-    moduleId: module.id,
-    selector: 'app-admin',
-    templateUrl: 'admin.component.html',
-    styleUrls: ['../app.component.css', './admin.component.css']
+  moduleId: module.id,
+  selector: 'app-admin',
+  templateUrl: 'admin.component.html',
+  styleUrls: ['../app.component.css', './admin.component.css']
 })
 
 export class AdminComponent implements OnInit {
   adminForm: FormGroup;
-    url: String;
+  url: string = environment.apiURL;
+  private dataTypeUrl: string;
 
- constructor( private adminService: AdminService) { }
+  constructor() { }
 
 
-    ngOnInit(): void {
-      this.adminForm = new FormGroup({
-        evaluated: new FormControl(),
-        startDate: new FormControl(),
-        endDate: new FormControl(),
-        fileType: new FormControl('user')
-      });
+  ngOnInit(): void {
+    this.adminForm = new FormGroup({
+      evaluated: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      fileType: new FormControl('user')
+    });
+  }
+
+  fileRequest() {
+    this.url += '/api/survey/report/';
+    this.url += this.adminForm.get('fileType').value;
+
+    if (this.adminForm.get('evaluated').value !== '' || this.adminForm.get('startDate').value !== ''
+      || this.adminForm.get('endDate').value !== '') {
+      this.url += '?';
+
+
+      if (this.adminForm.get('evaluated').value !== null) {
+        this.url += '&name=';
+        this.url += this.adminForm.get('evaluated').value;
+      }
+
+      if (this.adminForm.get('startDate').value !== null && this.adminForm.get('startDate').value !== '') {
+        this.url += '&startdate=';
+        this.url += this.adminForm.get('startDate').value;
+      }
+
+      if (this.adminForm.get('endDate').value !== null  && this.adminForm.get('endDate').value !== '') {
+        this.url += '&enddate=';
+        this.url += this.adminForm.get('endDate').value;
+      }
     }
 
-    fileRequest() {
+    window.location.href = this.url;
 
-      this.adminService.fileRequest(this.adminForm.get('evaluated').value,
-      this.adminForm.get('startDate').value,
-      this.adminForm.get('endDate').value,
-      this.adminForm.get('fileType').value);
+    this.url = environment.apiURL;
 
-
-    }
+  }
 
 }
