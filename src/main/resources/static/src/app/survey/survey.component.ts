@@ -281,7 +281,8 @@ export class SurveyComponent implements OnInit {
    */
   refillSurvey(value) {
     // Fill the observations
-    $('#observationTextArea').val(value.observation);
+    // $('#observationTextArea').val(value.observation);
+    this.surveyForm.get('observation').setValue(value.observation);
     // Fill each radio button with the score
     value.behaviors.forEach(behavior => {
       // it has the '4 -' because the radio buttons from left to side but the max score '4'
