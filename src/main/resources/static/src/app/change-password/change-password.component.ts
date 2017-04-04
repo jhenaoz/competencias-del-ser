@@ -20,7 +20,7 @@ export class PasswordComponent {
     postPasswordChangeRequest() {
            this.error = false; // leaves error blank if passwords are not empty && matching
 
-            const password = {// create an object to conver into json for the post body
+            const password = {// create an object to convert into json for the post body
                 'newPassword': this.newPassword,
                 'oldPassword': this.oldPassword
             };
