@@ -182,7 +182,7 @@ export class SurveyComponent implements OnInit {
       // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value.trim();
-      // Pushing aptitud into survey
+      // Pushing aptitude into survey
       if (this.surveyService.goingBack) {
         this.surveyService.survey.aptitudes[+this.id - 1] = this.aptitude;
       } else {
