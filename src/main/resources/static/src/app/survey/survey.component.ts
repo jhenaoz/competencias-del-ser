@@ -53,11 +53,9 @@ export class SurveyComponent implements OnInit {
   id: string;
   observation: string;
   surveyForm: FormGroup;
-  survey: Survey;
   showForm: boolean;
   submitted: boolean;
   textAreaIsRequired: boolean;
-  tempAptitude: Aptitude;
 
   /**
    * Creates an instance of SurveyComponent.
@@ -77,7 +75,6 @@ export class SurveyComponent implements OnInit {
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
     private guard: SurveyRouteActivator) {
-    this.survey = this.surveyService.survey;
     this.currentLanguage = translate.currentLang;
     this.createForm();
   }
@@ -92,22 +89,16 @@ export class SurveyComponent implements OnInit {
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
-    // Verify if we are coming back to an aptitude already evaluated
-    if (this.surveyService.goingBack) {
-      this.tempAptitude = this.surveyService.survey.aptitudes.pop();
-    }else {
-      // Verify if there is a survey stored in localstorage to bring it and continue the survey
-      this.verifyStoredSurvey();
-    }
     // Add visual effect on buttons
     this.paintButtons(this.id);
 
     if (!this.surveyService.oneSurvey) {
       this.id = this.surveyService.competenceId;
     }
-
     // Aptitude instance
     this.aptitude = new Aptitude();
+    // Verify if there is a survey stored in localstorage to bring it and continue the survey
+    this.verifyStoredSurvey();
     // We wait to get the behaviors from aptitudeService
     const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
     this.behaviors = behaviors;
@@ -117,12 +108,13 @@ export class SurveyComponent implements OnInit {
     }
     // Show the form
     this.showForm = true;
-
-    if (this.surveyService.goingBack) {
+    if (+this.id > this.surveyService.survey.aptitudes.length) {
       this.surveyService.goingBack = false;
+    }
+    if (this.surveyService.goingBack) {
       // If we are coming back, so lets fill the form with the values completed by the user.
       $(document).ready(() => {
-        this.refillSurvey(this.tempAptitude);
+        this.refillSurvey(this.surveyService.survey.aptitudes[+this.id - 1]);
       });
     }
   }
@@ -190,8 +182,12 @@ export class SurveyComponent implements OnInit {
       // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value.trim();
-      // Pushing aptitud into survey
-      this.surveyService.survey.aptitudes.push(this.aptitude);
+      // Pushing aptitude into survey
+      if (this.surveyService.goingBack) {
+        this.surveyService.survey.aptitudes[+this.id - 1] = this.aptitude;
+      } else {
+        this.surveyService.survey.aptitudes.push(this.aptitude);
+      }
       // Stored actual survey to localstorage
       localStorage.setItem('storedSurvey', JSON.stringify(this.surveyService.survey));
       // Checks if is only one survey (one competence to evaluate)
@@ -241,13 +237,8 @@ export class SurveyComponent implements OnInit {
         // Save into the service the stored survey
         this.surveyService.survey = storedSurvey;
         const evaluatedAptitudes = storedSurvey.aptitudes.length;
-        const next = evaluatedAptitudes + 1;
-        // Verify if the actual aptitudeId is different to the
-        // one loaded from localstorage to navigate to the next aptitude
-        if (+this.id !== next) {
-          this.id = next.toString();
-          this.guard.allow = true;
-          this.router.navigate(['survey/' + next.toString()]);
+        if (+this.id < evaluatedAptitudes) {
+          this.surveyService.goingBack = true;
         }
       }
     }
@@ -282,7 +273,7 @@ export class SurveyComponent implements OnInit {
    */
   refillSurvey(value) {
     // Fill the observations
-    $('#observationTextArea').val(value.observation);
+    this.surveyForm.get('observation').setValue(value.observation);
     // Fill each radio button with the score
     value.behaviors.forEach(behavior => {
       // it has the '4 -' because the radio buttons from left to side but the max score '4'
