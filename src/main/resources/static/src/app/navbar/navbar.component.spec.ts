@@ -68,13 +68,13 @@ describe('Component: NavbarComponent', () => {
   describe('Method: disableChangeLanguage', () => {
     it('should return true given "/welcome" as url', () => {
       component.currentUrl = '/welcome';
-      expect(component.disableChangeLanguage()).toBeTruthy();
+      expect(component.enableChangeLanguage()).toBeTruthy();
     });
     it('should return false given a random url', () => {
       component.currentUrl = '/';
-      expect(component.disableChangeLanguage()).toBeFalsy();
+      expect(component.enableChangeLanguage()).toBeFalsy();
       component.currentUrl = '/survey';
-      expect(component.disableChangeLanguage()).toBeFalsy();
+      expect(component.enableChangeLanguage()).toBeFalsy();
     });
   });
 

@@ -6,8 +6,12 @@ import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletCont
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -60,5 +64,15 @@ public class MvcConfiguration implements ServletContextInitializer, EmbeddedServ
         if (root.exists() && root.isDirectory()) {
             container.setDocumentRoot(root);
         }
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
     }
 }
