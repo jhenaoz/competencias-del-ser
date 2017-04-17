@@ -3,10 +3,10 @@
         "language_change": "Change language"
     },
     "Footer": {
-        "back": "Back",
+        "back": "Previous",
         "forward": "Next",
         "start": "Start Assessment",
-        "beginning": "Back to beginning",
+        "beginning": "Go Back",
         "continue": "Continue"
     },
     "Welcome": {
@@ -41,7 +41,8 @@
         "information": "No information",
         "observations": "Observations",
         "survey_observations_alert": "Observations are required!",
-        "survey_alert": "You must answer in all fields!"
+        "survey_alert": "You must answer in all fields!",
+        "characters_alert": "Remember: 10 Characters Minimum"
     },
     "Competences": {
         "title": "Skill to assess",
@@ -54,13 +55,29 @@
         "competence_development": "Development oriented leadership",
         "competence_goal": "Achievement oriented leadership"
     },
-    "Final":{
+    "Final": {
         "thanks": "Thank you for completing the survey",
         "again": "Fill another survey",
         "finish": "Finish"
     },
     "Shared": {
         "cancel": "Cancel",
-        "characters": "10 Characters Minimum"
+        "characters": "10 Characters Minimum",
+        "changePassword": "Change Password",
+        "emptyValues": "There are empty fields in the form"
+    },
+    "Password": {
+        "oldPassword": "Old password or token",
+        "newPassword": "New password",
+        "repeatedPassword": "Confirm your new password",
+        "mismatchingPasswords": "The new password must match in both fields",
+        "error": "The password (or token) is not valid"
+    },
+    "Login": {
+        "username": "Username",
+        "password": "Password",
+        "login": "Login",
+        "recoverPassword": "Recover password",
+        "error": "The username and password don't match"
     }
 }

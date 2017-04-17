@@ -34,7 +34,7 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     /**
-     * It's necessary to define de qualifier in order to define which bean you want to use because spring
+     * It's necessary to define the qualifier in order to define which bean you want to use because spring
      * boot implements another one
      */
     @Autowired
@@ -62,7 +62,8 @@ public class EmailService {
     }
 
     /**
-     * Prepare the context with the survey parameters that should be changed in the html template and send the mail
+     * Prepare the context with the survey parameters that should be changed in the html template
+     * and calls the send mail method
      *
      * @param survey The new survey
      */
@@ -85,13 +86,14 @@ public class EmailService {
     }
 
     /**
-     * Prepare the context with the new password that should be changed in the html template and send the mail
+     * Prepare the context with the new token that should be changed in the html template
+     * and calls the send mail method
      *
-     * @param newPassword the new password to the admin
+     * @param newToken the new access token used to change the password
      */
-    public void sendNewPassword(String newPassword) {
+    public void sendTokenEmail(String newToken) {
         final Context context = new Context();
-        context.setVariable("password", newPassword);
+        context.setVariable("password", newToken);
         try {
             sendSimpleMail(context, "html/passwordmailtemplate",
                     "Nueva contraseña valoración del ser");

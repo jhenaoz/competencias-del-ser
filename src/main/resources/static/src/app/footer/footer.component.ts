@@ -10,6 +10,7 @@ import 'rxjs/add/operator/pairwise';
 export class FooterComponent implements OnInit {
   @Output() startNewSurvey = new EventEmitter;
   @Output() surveyAdvance = new EventEmitter;
+  @Output() goBack = new EventEmitter;
   currentUrl;
   constructor(private router: Router) { }
 
@@ -22,11 +23,10 @@ export class FooterComponent implements OnInit {
 */
   cancel() {
     switch (this.currentUrl) {
-      case '/survey-setup': this.router.navigate(['welcome']); break;
-      case '/surveyteam-setup': this.router.navigate(['welcome']); break;
-      case '/survey/1': case '/survey/2': case '/survey/3': case '/survey/4':
-      case '/survey/5': case '/survey/6': case '/survey/7': case '/survey/8':
+      case '/survey-setup': case '/surveyteam-setup':
         this.router.navigate(['welcome']); break;
+      case '/survey/1':
+        this.goBack.emit(); break;
       default:
         break;
     }
@@ -41,8 +41,7 @@ export class FooterComponent implements OnInit {
         break;
       case '/surveyteam-setup': this.startNewSurvey.emit();
         break;
-      case '/survey/1': case '/survey/2': case '/survey/3': case '/survey/4':
-      case '/survey/5': case '/survey/6': case '/survey/7': case '/survey/8':
+      case '/survey/1':
         this.surveyAdvance.emit(); break;
       default:
         break;

@@ -13,7 +13,7 @@ elasticAptitudeIndex: aptitude
 elasticAptitudeType: aptitude
 elasticSurveyIndex: survey
 elasticSurveyType: survey
+elasticAdministratorIndex: user
+elasticAdministratorType: administrator
 mailReceiver: lusago19@gmail.com
 mailUsername: competencias.del.ser@gmail.com
-securityUsername: admin
-securityPassword: pass

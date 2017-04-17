@@ -28,6 +28,7 @@ export class SurveyService {
   competenceId: string;
   evaluator: string;
   role: string;
+  goingBack: boolean;
 
   constructor(private _http: Http) {
     this.survey = new Survey();

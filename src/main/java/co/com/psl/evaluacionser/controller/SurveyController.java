@@ -10,7 +10,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/survey")
 public class SurveyController {
@@ -59,13 +57,12 @@ public class SurveyController {
      * @param endDate   ending date used to search for surveys
      */
     @RequestMapping(value = "/report/user", method = RequestMethod.GET)
-    public void getUserReport(@RequestParam(value = "name", required = false) String user,
+    public ResponseEntity getUserReport(@RequestParam(value = "name", required = false) String user,
                               @RequestParam(value = "startdate", required = false) String startDate,
                               @RequestParam(value = "enddate", required = false) String endDate,
                               HttpServletResponse response) {
 
         List<Survey> userSurveys = surveyService.findUserSurveys(user, startDate, endDate);
-
 
         String userFileName = nameService.getUserFileName(user, startDate, endDate);
         Workbook userExcelReport = excelReportGenerator.createUserExcelReport(userSurveys);
@@ -75,10 +72,13 @@ public class SurveyController {
 
         try {
             userExcelReport.write(response.getOutputStream());
+            userExcelReport.close();
+            response.flushBuffer();
+            return new ResponseEntity(HttpStatus.OK);
         } catch (IOException e) {
             logger.error("The excel workbook could not write to the outputStream ", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     /**
@@ -88,7 +88,7 @@ public class SurveyController {
      * @param endDate   ending date
      */
     @RequestMapping(value = "/report/relation", method = RequestMethod.GET)
-    public void getRelationReport(
+    public ResponseEntity getRelationReport(
             @RequestParam(value = "startdate", required = false) String startDate,
             @RequestParam(value = "enddate", required = false) String endDate,
             HttpServletResponse response) {
@@ -103,8 +103,12 @@ public class SurveyController {
 
         try {
             relationExcelReport.write(response.getOutputStream());
+            relationExcelReport.close();
+            response.flushBuffer();
+            return new ResponseEntity(HttpStatus.OK);
         } catch (IOException e) {
             logger.error("The excel workbook could not write to the outputStream ", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

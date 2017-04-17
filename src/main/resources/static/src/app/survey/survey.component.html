@@ -131,7 +131,7 @@
             </div>
             <div class="alert alert-danger" 
                  id="radio-alert" 
-                 [style.display]="(!surveyForm.valid && submitted && !textAreaIsRequired) ? 'block' : 'none'">
+                 [style.display]="(!surveyForm.valid && submitted && surveyForm.get('observation').pristine) ? 'block' : 'none'">
                  {{ "Survey.survey_alert" | translate }}.
             </div>
             <!--XXX: This is hardcoded but is one way to do-it, i'll search how to do it better-->
@@ -142,17 +142,23 @@
             <textarea formControlName="observation" 
                       class="form-control" 
                       rows="3" 
-                      minlength="10">
+                      minlength="10"
+                      id="observationTextArea">
             </textarea>
             <em>{{ "Shared.characters" | translate }}.</em>
             <br>
             <div class="alert alert-danger" 
                  id="radio-alert" 
-                 [style.display]="(textAreaIsRequired && submitted) ? 'block' : 'none'">
+                 [style.display]="(textAreaIsRequired && submitted && surveyForm.get('observation').pristine) ? 'block' : 'none'">
                  {{ "Survey.survey_observations_alert" | translate }}
+            </div>
+            <div class="alert alert-danger" 
+                 id="radio-alert" 
+                 [style.display]="(submitted && surveyForm.get('observation').invalid) ? 'block' : 'none'">
+                {{ "Survey.characters_alert" | translate }}.
             </div>
         </form>
     </div>
 </div>
-
-<app-footer (surveyAdvance)="surveyAdvance()"></app-footer>
+    
+<app-footer (surveyAdvance)="surveyAdvance()" (goBack)="goBack()"></app-footer>

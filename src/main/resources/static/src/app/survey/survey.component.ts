@@ -53,7 +53,6 @@ export class SurveyComponent implements OnInit {
   id: string;
   observation: string;
   surveyForm: FormGroup;
-  survey: Survey;
   showForm: boolean;
   submitted: boolean;
   textAreaIsRequired: boolean;
@@ -76,7 +75,6 @@ export class SurveyComponent implements OnInit {
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
     private guard: SurveyRouteActivator) {
-    this.survey = this.surveyService.survey;
     this.currentLanguage = translate.currentLang;
     this.createForm();
   }
@@ -91,17 +89,16 @@ export class SurveyComponent implements OnInit {
     await this.route.params.subscribe(param => {
       this.id = param['id'];
     });
-    // Verify if there is a survey stored in localstorage to bring it and continue the survey
-    this.verifyStoredSurvey();
     // Add visual effect on buttons
     this.paintButtons(this.id);
 
     if (!this.surveyService.oneSurvey) {
       this.id = this.surveyService.competenceId;
     }
-
     // Aptitude instance
     this.aptitude = new Aptitude();
+    // Verify if there is a survey stored in localstorage to bring it and continue the survey
+    this.verifyStoredSurvey();
     // We wait to get the behaviors from aptitudeService
     const behaviors: Behavior[] = await this._aptitudeService.getBehaviors(this.id).toPromise();
     this.behaviors = behaviors;
@@ -111,7 +108,15 @@ export class SurveyComponent implements OnInit {
     }
     // Show the form
     this.showForm = true;
-
+    if (+this.id > this.surveyService.survey.aptitudes.length) {
+      this.surveyService.goingBack = false;
+    }
+    if (this.surveyService.goingBack) {
+      // If we are coming back, so lets fill the form with the values completed by the user.
+      $(document).ready(() => {
+        this.refillSurvey(this.surveyService.survey.aptitudes[+this.id - 1]);
+      });
+    }
   }
 
   /*
@@ -141,8 +146,8 @@ export class SurveyComponent implements OnInit {
   */
   bindRadioButtons() {
     for (let i = 0; i < 5; i++) {
-      $('.validateRadio' + i + '').click(function () {
-        $('.validateRadio' + i + '').not(this).prop('checked', false);
+      $('.validateRadio' + i).click(function () {
+        $('.validateRadio' + i).not(this).prop('checked', false);
       });
     }
   }
@@ -169,21 +174,25 @@ export class SurveyComponent implements OnInit {
           this.textAreaIsRequired = true;
         }
       }
-      const observations = this.surveyForm.get('observation').value.trim();
       // Check if textarea is filled
-      if (observations.length < 10 || this.hasWhiteSpace(observations)) {
+      this.observation = this.surveyForm.get('observation').value.trim();
+      if ((this.observation.length < 10 || this.hasWhiteSpace(this.observation)) && this.textAreaIsRequired) {
         return;
       }
       // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value.trim();
-      // Pushing aptitud into survey
-      this.surveyService.survey.aptitudes.push(this.aptitude);
+      // Pushing aptitude into survey
+      if (this.surveyService.goingBack) {
+        this.surveyService.survey.aptitudes[+this.id - 1] = this.aptitude;
+      } else {
+        this.surveyService.survey.aptitudes.push(this.aptitude);
+      }
       // Stored actual survey to localstorage
       localStorage.setItem('storedSurvey', JSON.stringify(this.surveyService.survey));
       // Checks if is only one survey (one competence to evaluate)
       if (!this.surveyService.oneSurvey) {
-        // Redirect to welcome
+        // Redirect to final
         this.router.navigate(['final']);
         // Saves survey
         localStorage.clear();
@@ -192,7 +201,7 @@ export class SurveyComponent implements OnInit {
         // Change route to advance
         // XXX: Kind of hardcoding to me... (?)
         if (+this.id + 1 >= 9) {
-          // Redirect to welcome
+          // Redirect to final
           this.router.navigate(['final']);
           localStorage.clear();
           // Saves survey
@@ -201,8 +210,6 @@ export class SurveyComponent implements OnInit {
           const next = (+this.id + 1).toString();
           this.guard.allow = true;
           this.router.navigate(['survey/' + next]);
-          // Change CSS class to change color to the aptitudes buttons
-          // $('.active').next().addClass('active');
           // Hide survey form until data is ok
           this.showForm = false;
           // Set time to wait functions to complete
@@ -230,13 +237,8 @@ export class SurveyComponent implements OnInit {
         // Save into the service the stored survey
         this.surveyService.survey = storedSurvey;
         const evaluatedAptitudes = storedSurvey.aptitudes.length;
-        const next = evaluatedAptitudes + 1;
-        // Verify if the actual aptitudeId is different to the
-        // one loaded from localstorage to navigate to the next aptitude
-        if (+this.id !== next) {
-          this.id = next.toString();
-          this.guard.allow = true;
-          this.router.navigate(['survey/' + next.toString()]);
+        if (+this.id < evaluatedAptitudes) {
+          this.surveyService.goingBack = true;
         }
       }
     }
@@ -259,8 +261,50 @@ export class SurveyComponent implements OnInit {
               && this.surveyService.oneSurvey ===  typeOfSurvey;
   }
 
+  /*
+   * Method to verify the amount of whitespaces contained in the string
+   */
   hasWhiteSpace(s) {
-    return s.indexOf(' ') >= 3;
+    return s.indexOf('   ') >= 1;
+  }
+
+  /*
+   * Method to fill the form with the values that were given by the user
+   */
+  refillSurvey(value) {
+    // Fill the observations
+    this.surveyForm.get('observation').setValue(value.observation);
+    // Fill each radio button with the score
+    value.behaviors.forEach(behavior => {
+      // it has the '4 -' because the radio buttons from left to side but the max score '4'
+      // is the one from the left
+      const score = 4 - behavior.score;
+      $('#' + behavior.behaviorId + 'radio' + score).trigger('click');
+    });
+  }
+
+  /*
+   * Method to go back to the previous aptitude
+   */
+  goBack() {
+    // If we have not completed any aptitude, then we have not an aptitud to go back
+    if (!this.surveyService.oneSurvey || this.id === '1') {
+      this.router.navigate(['welcome']);
+    } else {
+      this.surveyService.goingBack = true;
+      const previous = (+this.id - 1).toString();
+      // remove the blue color on the actual button
+      $('#' + this.id).removeClass('active');
+      this.guard.allow = true;
+      this.router.navigate(['survey/' + previous]).then(() => {
+         // Hide survey form until data is ok
+        this.showForm = false;
+        // Clear form
+        this.createForm();
+        // Init all variables again
+        this.ngOnInit();
+      });
+    }
   }
 
 }

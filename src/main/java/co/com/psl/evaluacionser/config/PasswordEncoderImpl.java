@@ -59,7 +59,7 @@ public class PasswordEncoderImpl implements PasswordEncoder {
      * @param saltSeed the seed to use for the random generator
      * @return Random String;
      */
-    private String generateSalt(int saltSeed) {
+    public String generateSalt(int saltSeed) {
         Random rgn = new Random(saltSeed);
         StringBuilder saltBuilder = new StringBuilder();
 

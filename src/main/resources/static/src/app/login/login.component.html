@@ -1,0 +1,31 @@
+<html class="login-html">
+
+<body>
+    <app-navbar></app-navbar>
+    <div class="login">
+        <div class="form">
+            <form name="f" #form="ngForm" (ngSubmit)="login(form.value)">
+                <div class="form-group" [class.has-error]="usernamef.invalid && usernamef.dirty">
+                    <label class="control-label">{{ "Login.username" | translate }}</label>
+                    <input type="text" id="username" placeholder="{{ 'Login.username' | translate }}" name="username" [(ngModel)]="username"
+                        #usernamef="ngModel" class="form-control" required/>
+                </div>
+                <div class="form-group" [class.has-error]="passwordf.invalid && passwordf.dirty">
+                    <label class="control-label">{{ "Login.password" | translate }}</label><br>
+                    <input type="password" id="password" placeholder="{{ 'Login.password' | translate }}" name="password" [(ngModel)]="password"
+                        #passwordf="ngModel" class="form-control" required/>
+                </div>
+                <div *ngIf="error !='' " class="alert alert-danger">{{ "Login.error" | translate }}</div>
+                <div *ngIf="(usernamef.dirty && usernamef.invalid) || (passwordf.dirty && passwordf.invalid)" class="alert alert-danger"
+                    role="alert">{{"Shared.emptyValues" | translate}}</div>
+                <button type="button" (click)="login()" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid">{{"Login.login" | translate}}</button>
+                <div class="password-links">
+                    <a href="/password/change">{{ "Shared.changePassword" | translate }}</a>
+                    <a class="recover-pass-link" href="/password/forgot">{{ "Login.recoverPassword" | translate }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
