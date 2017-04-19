@@ -57,10 +57,17 @@ node() {
     stage('Report') {
         step([$class: 'CheckStylePublisher', defaultEncoding: '', failedTotalHigh: '0', healthy: '', pattern: '**/target/checkstyle-result.xml,**/src/main/resources/static/checkstyle-result.xml', unHealthy: '', unstableTotalNormal: '550'])
         step([$class: 'PmdPublisher', defaultEncoding: '', healthy: '', pattern: '**/target/pmd.xml', unHealthy: ''])
-        step([$class: 'FindBugsPublisher', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/target/findbugs.xml', unHealthy: ''])
         step([$class: 'AnalysisPublisher', defaultEncoding: '', healthy: '', unHealthy: ''])
         step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/jacoco/', reportFiles: 'index.html', reportName: 'JaCoCo Report'])
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/', reportFiles: 'checkstyle.html,pmd.html', reportName: 'Static Code Analysis'])
+    }
+
+    stage('Package & Install') {
+        withMaven(jdk: 'JDK 1.8', maven: 'Maven 3.3.9') {
+            withEnv(['ENV=CI', 'SPRING_PROFILES_ACTIVE=stg']) {
+                sh 'mvn war:war spring-boot:repackage install:install'
+            }
+        }
     }
 }

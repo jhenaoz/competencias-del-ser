@@ -13,10 +13,10 @@ export const appRoutes: Routes = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'welcome', component: WelcomeComponent },
     { path: 'survey-setup', component: SurveyOptionsComponent },
-    { path: 'surveyteam-setup', component: SurveyOptionsComponent},
+    { path: 'surveyteam-setup', component: SurveyOptionsComponent },
     { path: 'survey/:id', component: SurveyComponent, canActivate: [SurveyRouteActivator] },
     { path: 'final', component: SurveyEndComponent },
     { path: '404', component: Error404Component },
-    { path: 'login', component: LoginComponent},
-    { path: 'password/change', component: PasswordComponent}
+    { path: 'login', component: LoginComponent },
+    { path: 'password/change', component: PasswordComponent }
 ];
