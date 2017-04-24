@@ -182,7 +182,7 @@ export class SurveyComponent implements OnInit {
       // Filling aptitud properties
       this.aptitude.aptitudeId = this.id;
       this.aptitude.observation = this.surveyForm.controls['observation'].value.trim();
-      // Pushing aptitud into survey
+      // Pushing aptitude into survey
       if (this.surveyService.goingBack) {
         this.surveyService.survey.aptitudes[+this.id - 1] = this.aptitude;
       } else {
@@ -240,14 +240,6 @@ export class SurveyComponent implements OnInit {
         if (+this.id < evaluatedAptitudes) {
           this.surveyService.goingBack = true;
         }
-        /*const next = evaluatedAptitudes + 1;
-        // Verify if the actual aptitudeId is different to the
-        // one loaded from localstorage to navigate to the next aptitude
-        if (+this.id !== next) {
-          this.id = next.toString();
-          this.guard.allow = true;
-          this.router.navigate(['survey/' + next.toString()]);
-        }*/
       }
     }
   }
@@ -281,7 +273,6 @@ export class SurveyComponent implements OnInit {
    */
   refillSurvey(value) {
     // Fill the observations
-    // $('#observationTextArea').val(value.observation);
     this.surveyForm.get('observation').setValue(value.observation);
     // Fill each radio button with the score
     value.behaviors.forEach(behavior => {
@@ -314,16 +305,6 @@ export class SurveyComponent implements OnInit {
         this.ngOnInit();
       });
     }
-  }
-
-  test(value) {
-    $('#observationTextArea').val('Prueba de pruebas');
-    $('#1radio0').trigger('click');
-    $('#2radio0').trigger('click');
-    $('#3radio0').trigger('click');
-    $('#4radio0').trigger('click');
-    // console.log(this.surveyService.survey.aptitudes.length);
-    // console.log(this.surveyService.survey.aptitudes[value - 2]);
   }
 
 }

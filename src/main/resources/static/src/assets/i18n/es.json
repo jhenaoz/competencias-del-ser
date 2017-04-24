@@ -57,14 +57,30 @@
         "competence_development": "Liderazgo para el Desarrollo",
         "competence_goal": "Liderazgo para el logro"
     },
-    "Final":{
+    "Final": {
         "thanks": "Gracias por completar la encuesta",
         "again": "Llenar otra encuesta",
         "finish": "Finalizar"
     },
     "Shared": {
         "cancel": "Cancelar",
-        "characters": "Mínimo 10 Caracteres"
+        "characters": "Mínimo 10 Caracteres",
+        "changePassword": "Cambiar contraseña",
+        "emptyValues": "Hay campos vacíos en el formulario"
+    },
+    "Password": {
+        "oldPassword": "Antigua contraseña o token",
+        "newPassword": "Nueva contraseña",
+        "repeatedPassword": "Confirme su nueva contraseña",
+        "mismatchingPasswords": "La nueva contraseña debe coincidir en ambos campos",
+        "error": "La contraseña (o el token) no es válida"
+    },
+    "Login": {
+        "username": "Usuario",
+        "password": "Contraseña",
+        "login": "Ingresar",
+        "recoverPassword": "Recuperar contraseña",
+        "error": "El usuario y la contraseña no coinciden"
     },
     "Admin": {
         "valorations": "Valoraciónes",

@@ -17,13 +17,17 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { SurveyOptionsComponent } from './survey-options/survey-options.component';
 import { SurveyComponent } from './survey/survey.component';
 import { Error404Component } from './errors/404.component';
+import { LoginComponent } from './login/login.component';
+import { PasswordComponent } from './change-password/change-password.component';
 import { AdminComponent } from './admin/admin.component';
 
 // Service import
+import { LoginService } from './login/login.service';
 import { SurveyService } from './survey/survey.service';
 import { EmployeeService } from './employee/index';
 import { AptitudeService } from './aptitude/index';
 import { SurveyRouteActivator } from './survey/survey.route.activator.service';
+import { PasswordService } from './change-password/change-password.service';
 
 // Local Storage import
 import { LocalStorageModule } from 'angular-2-local-storage';
@@ -65,6 +69,8 @@ import { PopoverModule } from 'ng2-bootstrap';
     SurveyComponent,
     Error404Component,
     SurveyEndComponent,
+    LoginComponent,
+    PasswordComponent,
     AdminComponent
   ],
   providers: [
@@ -72,6 +78,8 @@ import { PopoverModule } from 'ng2-bootstrap';
     SurveyService,
     AptitudeService,
     SurveyRouteActivator,
+    LoginService,
+    PasswordService,
   ],
   bootstrap: [AppComponent]
 })

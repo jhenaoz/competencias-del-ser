@@ -55,14 +55,30 @@
         "competence_development": "Development oriented leadership",
         "competence_goal": "Achievement oriented leadership"
     },
-    "Final":{
+    "Final": {
         "thanks": "Thank you for completing the survey",
         "again": "Fill another survey",
         "finish": "Finish"
     },
     "Shared": {
         "cancel": "Cancel",
-        "characters": "10 Characters Minimum"
+        "characters": "10 Characters Minimum",
+        "changePassword": "Change Password",
+        "emptyValues": "There are empty fields in the form"
+    },
+    "Password": {
+        "oldPassword": "Old password or token",
+        "newPassword": "New password",
+        "repeatedPassword": "Confirm your new password",
+        "mismatchingPasswords": "The new password must match in both fields",
+        "error": "The password (or token) is not valid"
+    },
+    "Login": {
+        "username": "Username",
+        "password": "Password",
+        "login": "Login",
+        "recoverPassword": "Recover password",
+        "error": "The username and password don't match"
     },
     "Admin": {
         "valorations": "Valorations",

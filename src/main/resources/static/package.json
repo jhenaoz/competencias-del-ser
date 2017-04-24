@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",
-    "test-cc": "ng test --code-coverage",
+    "test-cc": "ng test --code-coverage --progress false",
     "lint-json": "tslint --format json --out tslint_results.json --force 'src/**/*.ts'",
     "lint-checkstyle": "tslint --format checkstyle --out checkstyle-result.xml --force 'src/**/*.ts'",
     "lint": "npm run lint-json && npm run lint-checkstyle",
