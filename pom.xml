@@ -222,7 +222,7 @@
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>run build-np -- --environment=stg</arguments>
+              <arguments>run build-np</arguments>
             </configuration>
           </execution>
           <execution>
